@@ -39,4 +39,58 @@
 }
 .nav-link:hover, .currentpage {
     background: #EEEEEE;
+body {
+    background-color: #EEEEEE;
+    color: #FFFFFF;
+}
+
+.white {
+    background-color: #FFFFFF;
+    color: black;
+    border: 1px solid #FFAD4F;
+}
+
+.iced-mango {
+    background-color: #FFAD4F;
+}
+
+.light-blue {
+    background-color: #4FCBFF;
+}
+
+.dark-blue {
+    background-color: #1484B3;
+}
+
+.yellow {
+    background-color: #FFD042;
+}
+
+.grey {
+    background-color: #EEEEEE;
+}
+
+.black {
+    background-color: #000000;
+}
+
+.btn-details {
+    width: 100px;
+    background-color: #4FCBFF;
+    border-color: #1484B3;
+}
+
+.btn-details:hover {
+    background: #1484B3;
+    width: 100px;
+}
+
+.auction-article-large img {
+    width: 90%;
+    height: 16em;
+}
+
+.auction-article-small img {
+    width: 80%;
+    height: 10em;
 }
