@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="col-lg-2 my-auto text-center">
-                <button type="button" class="bg-lightblue btn mb-1"><i class="fas fa-user"></i> &nbsp; aanmelden</button>
+                <button type="button" class="bg-lightblue btn mb-1" data-toggle="modal" data-target="#loginMenu"><i class="fas fa-user"></i> &nbsp; aanmelden</button>
             </div>
         </div>
     </div>
@@ -33,5 +33,136 @@
             ?>
         </ul>
     </nav>
+
+
+    <!-- The Modal -->
+    <div class="modal fade" id="loginMenu">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">inloggen</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <form method="POST" action="" name="registreren">
+                                    <label class="invisible" for="Username">Username<span
+                                                class="error">*</span></label>
+                                    <input class="form-control" placeholder="Username" type="text"
+                                           name="Username"
+                                           id="Username"
+                                           maxlength="20" required><br>
+                                    <label class="invisible" for="Password">Password<span
+                                                class="error">*</span></label>
+                                    <input class="form-control" placeholder="Password"
+                                           type="password" name="Password"
+                                           id="Password"
+                                           maxlength="50" required><br>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <button type="button" class="btn bg-lightblue" data-toggle="modal"
+                                                    data-target="#registerMenu">
+                                                New account
+                                            </button>
+
+                                        </div>
+                                        <div class="col">
+                                            <input class="btn bg-lightblue" type="submit" name="next"
+                                                   value="inloggen">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal fade" id="registerMenu">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="">
+                        <div class="row">
+                            <div class="col">
+                                <h1 style="font-size:15px">Create an account</h1>
+                                <div class="form-row">
+                                    <form method="POST" action="" name="registreren">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label class="invisible" for="Firstname">First name:<span
+                                                            class="error">*</span></label>
+                                                <input class="form-control" placeholder="First name" type="text"
+                                                       name="First name"
+                                                       id="Firstname" maxlength="20" required><br>
+                                            </div>
+                                            <div class="col">
+                                                <label class="invisible" for="Lastname">Last name<span
+                                                            class="error">*</span></label>
+                                                <input class="form-control" placeholder="Last name" type="text"
+                                                       name="Last name"
+                                                       id="Lastname"
+                                                       maxlength="20" required><br>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label class="invisible" for="Username">Username<span
+                                                            class="error">*</span></label>
+                                                <input class="form-control" placeholder="Username" type="text"
+                                                       name="regUsername"
+                                                       id="regUsername"
+                                                       maxlength="20" required><br>
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label class="invisible" for="Password">Password<span
+                                                            class="error">*</span></label>
+                                                <input class="form-control" placeholder="Password" type="password"
+                                                       name="regPassword"
+                                                       id="regPassword"
+                                                       maxlength="50" required><br>
+                                            </div>
+                                            <div class="col">
+                                                <label class="invisible" for="confirm">confirm<span
+                                                            class="error">*</span></label>
+                                                <input class="form-control" placeholder="confirm" type="password"
+                                                       name="confirm"
+                                                       id="confirm"
+                                                       maxlength="50" required><br>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <input class="btn btn-primary" type="submit" name="next" value="next">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </header>
