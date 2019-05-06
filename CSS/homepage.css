@@ -1,0 +1,33 @@
+.logo {
+    width: 75px;
+    height: 75px;
+}
+
+.bg-orange{
+    background: #FFAD4F;
+}
+
+.bg-yellow{
+    background: #FFD042;
+}
+
+.bg-darkblue{
+    background: #1484B3;
+}
+
+.bg-lightblue{
+    background: #4FCBFF;
+}
+
+.bg-gray{
+    background: #EEEEEE;
+}
+
+.btn{
+    width:200px;
+    border-color: #1484B3;
+}
+.btn:hover{
+    background:#1484B3;
+    width: 200px;
+}
