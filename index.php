@@ -34,7 +34,7 @@
                         </dd>
                     </div>
                     <div class="col text-right">
-                        <button>Details</button>
+                        <button class="btn btn-details">Details</button>
                     </div>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                         </dd>
                     </div>
                     <div class="col text-right">
-                        <button>Details</button>
+                        <button class="btn btn-details">Details</button>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                         </dd>
                     </div>
                     <div class="col text-right">
-                        <button>Details</button>
+                        <button class="btn btn-details">Details</button>
                     </div>
                 </div>
             </div>
@@ -117,7 +117,7 @@
                         </dd>
                     </div>
                     <div class="col text-right">
-                        <button>Details</button>
+                        <button class="btn btn-details">Details</button>
                     </div>
                 </div>
             </div>
@@ -144,7 +144,7 @@
                         </dd>
                     </div>
                     <div class="col text-right">
-                        <button>Details</button>
+                        <button class="btn btn-details">Details</button>
                     </div>
                 </div>
             </div>
@@ -171,7 +171,7 @@
                         </dd>
                     </div>
                     <div class="col text-right">
-                        <button>Details</button>
+                        <button class="btn btn-details">Details</button>
                     </div>
                 </div>
             </div>
