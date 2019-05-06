@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="col-lg-2 my-auto text-center">
-                <button type="button" class="bg-lightblue btn mb-1">aanmelden</button>
+                <button type="button" class="bg-lightblue btn mb-1"><i class="fas fa-user"></i> &nbsp; aanmelden</button>
             </div>
         </div>
     </div>
