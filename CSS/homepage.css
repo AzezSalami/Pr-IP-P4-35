@@ -1,0 +1,36 @@
+body {
+    background-color: #EEEEEE;
+    color: #FFFFFF;
+}
+.white {
+    background-color: #FFFFFF;
+    color: black;
+    border: 1px solid #FFAD4F;
+}
+.iced-mango {
+    background-color: #FFAD4F;
+}
+.light-blue {
+    background-color: #4FCBFF;
+}
+.dark-blue {
+    background-color: #1484B3;
+}
+.yellow {
+    background-color: #FFD042;
+}
+.grey {
+    background-color: #EEEEEE;
+}
+.black {
+    background-color: #000000;
+}
+
+.auction-article-large img {
+    width: 300px;
+    height: 300px;
+}
+.auction-article-small img {
+    width: 150px;
+    height: 150px;
+}
