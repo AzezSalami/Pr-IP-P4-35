@@ -20,7 +20,7 @@
     <nav class="bg-yellow pt-3">
         <ul class="nav nav-tabs justify-content-center">
             <?php
-                $pages = ["home" => "homepage.php", "link" => "link.php", "test" => "test.php"];
+                $pages = ["home" => "homepage.php", "1" => "1.php", "2" => "2.php", "3" => "3.php", "4" => "4.php", "5" => "5.php", "6" => "6.php", "7" => "7.php"];
                 $html = "";
                 foreach ($pages as $page => $link) {
                     $html .= "<li class='nav-item'><a class='nav-link";
@@ -31,30 +31,6 @@
                 }
                 echo $html;
             ?>
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="#">home</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="#">Link</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="#">Link</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="#">link</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link " href="#">link</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="#">Link</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="#">Link</a>-->
-<!--            </li>-->
-<!--            <li class="nav-item">-->
-<!--                <a class="nav-link" href="#">link</a>-->
-<!--            </li>-->
         </ul>
     </nav>
 
