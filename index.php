@@ -34,7 +34,7 @@
 					Veiling 3
 				</div>
 				<div class="blue col mx-2">
-					Veiling 4
+					Veiling 5
 				</div>
 			</div>
 		</div>
