@@ -27,10 +27,10 @@ body {
 }
 
 .auction-article-large img {
-    width: 300px;
-    height: 300px;
+    width: 90%;
+    height: 16em ;
 }
 .auction-article-small img {
-    width: 150px;
-    height: 150px;
+    width: 80%;
+    height: 10em;
 }
