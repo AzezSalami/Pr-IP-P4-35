@@ -23,6 +23,14 @@
     <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
+    <!-- Chrome, Firefox OS and Opera colored tabs-->
+    <meta name="theme-color" content="#FFAD4F">
+
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#FFAD4F">
+
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
 </head>
 <body class="bg-gray">
 <?php
