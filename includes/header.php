@@ -138,6 +138,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="col">
+                                        <label class="invisible" for="emailadres">emailadres</label>
+                                        <input class="form-control" placeholder="emailadres" type="email"
+                                               name="emailadres" id="emailadres" required><br><br>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
                                         <label class="invisible" for="address">Address</label>
                                         <input class="form-control" placeholder="adres" type="text"
                                                name="adres"
@@ -157,13 +164,6 @@
                                         <label class="invisible" for="telefoonnummer">telefoonnummer</label>
                                         <input class="form-control" placeholder="telefoonnummer" type="tel"
                                                name="telefoonnummer" id="telefoonnummer" maxlength="10"><br>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <label class="invisible" for="emailadres">emailadres</label>
-                                        <input class="form-control" placeholder="emailadres" type="email"
-                                               name="emailadres" id="emailadres" required><br><br>
                                     </div>
                                 </div>
                                 <div class="row">
