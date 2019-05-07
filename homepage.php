@@ -84,7 +84,7 @@ require "includes/header.php";
                         </div>
                     </div>
                     <div class="row my-2">
-                        <div class="auction-article-small white col mx-2">
+                        <div class="auction-article-small white col mx-2 mb-1">
                             <div class="row mt-3">
                                 <div class="col">
                                     <dt class="col"> [Titel]</dt>
@@ -107,11 +107,11 @@ require "includes/header.php";
                                     </dd>
                                 </div>
                                 <div class="col text-right">
-                                    <button class="btn btn-details">Details</button>
+                                    <button class="btn btn-details my-1">Details</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="auction-article-small white col mx-2">
+                        <div class="auction-article-small white col mx-2 mb-1">
                             <div class="row mt-3">
                                 <div class="col">
                                     <dt class="col"> [Titel]</dt>
@@ -134,11 +134,11 @@ require "includes/header.php";
                                     </dd>
                                 </div>
                                 <div class="col text-right">
-                                    <button class="btn btn-details">Details</button>
+                                    <button class="btn btn-details my-1">Details</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="auction-article-small white col mx-2">
+                        <div class="auction-article-small white col mx-2 mb-1">
                             <div class="row mt-3">
                                 <div class="col">
                                     <dt class="col"> [Titel]</dt>
@@ -161,11 +161,11 @@ require "includes/header.php";
                                     </dd>
                                 </div>
                                 <div class="col text-right">
-                                    <button class="btn btn-details">Details</button>
+                                    <button class="btn btn-details my-1">Details</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="auction-article-small white col mx-2">
+                        <div class="auction-article-small white col mx-2 mb-1">
                             <div class="row mt-3">
                                 <div class="col">
                                     <dt class="col"> [Titel]</dt>
@@ -188,7 +188,7 @@ require "includes/header.php";
                                     </dd>
                                 </div>
                                 <div class="col text-right">
-                                    <button class="btn btn-details">Details</button>
+                                    <button class="btn btn-details my-1">Details</button>
                                 </div>
                             </div>
                         </div>

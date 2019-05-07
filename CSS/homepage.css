@@ -23,6 +23,9 @@
     background: #EEEEEE;
 }
 
+.bg-black {
+    background: #000000;
+}
 .btn{
     width:200px;
     border-color: #1484B3;
@@ -32,8 +35,8 @@
     width: 200px;
 }
 
+
 .nav-link{
-    width: 100px;
     text-align: center;
     color: black;
 }
@@ -49,30 +52,6 @@ body {
     background-color: #FFFFFF;
     color: black;
     border: 1px solid #FFAD4F;
-}
-
-.iced-mango {
-    background-color: #FFAD4F;
-}
-
-.light-blue {
-    background-color: #4FCBFF;
-}
-
-.dark-blue {
-    background-color: #1484B3;
-}
-
-.yellow {
-    background-color: #FFD042;
-}
-
-.grey {
-    background-color: #EEEEEE;
-}
-
-.black {
-    background-color: #000000;
 }
 
 .btn-details {

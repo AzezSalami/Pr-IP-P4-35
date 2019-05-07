@@ -18,20 +18,26 @@
         </div>
     </div>
     <nav class="bg-yellow pt-3 ">
-        <ul class="nav nav-tabs justify-content-center">
-            <?php
-                $pages = ["home" => "homepage.php", "1" => "1.php", "2" => "2.php", "3" => "3.php", "4" => "4.php", "5" => "5.php", "6" => "6.php", "7" => "7.php"];
-                $html = "";
-                foreach ($pages as $page => $link) {
-                    $html .= "<li class='nav-item'><a class='nav-link";
-                    if (basename(htmlspecialchars($_SERVER["PHP_SELF"])) == basename($link)) {
-                        $html .= " currentpage";
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8 mx-2">
+                <ul class="nav nav-tabs nav-fill">
+                    <?php
+                    $pages = ["home" => "homepage.php", "1" => "1.php", "2" => "2.php", "3" => "3.php", "4" => "4.php", "5" => "5.php", "6" => "6.php", "7" => "7.php"];
+                    $html = "";
+                    foreach ($pages as $page => $link) {
+                        $html .= "<li class='nav-item'><a class='nav-link";
+                        if (basename(htmlspecialchars($_SERVER["PHP_SELF"])) == basename($link)) {
+                            $html .= " currentpage";
+                        }
+                        $html .= "' href='$link'>$page</a></li>";
                     }
-                    $html .= "' href='$link'>$page</a></li>";
-                }
-                echo $html;
-            ?>
-        </ul>
+                    echo $html;
+                    ?>
+                </ul>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
     </nav>
 
 
