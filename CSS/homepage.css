@@ -1,3 +1,9 @@
+
+nav > div.row, main > div.row {
+    margin-right: 0 !important;
+}
+
+
 .logo {
     height: 60px;
     width: auto;
