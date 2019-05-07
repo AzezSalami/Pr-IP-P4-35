@@ -50,7 +50,7 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title text-dark">inloggen</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button id="loginCloseButton" type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
                 <!-- Modal body -->
@@ -84,7 +84,7 @@
                                     </div>
 
                                     <div class="col text-right">
-                                        <button type="button" class="btn bg-lightblue" data-toggle="modal"
+                                        <button onclick="document.getElementById('loginCloseButton').click()" type="button" class="btn bg-lightblue" data-toggle="modal"
                                                 data-target="#registerMenu">
                                             Nieuw account
                                         </button>
