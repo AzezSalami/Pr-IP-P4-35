@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <nav class="bg-yellow pt-3">
+    <nav class="bg-yellow pt-3 ">
         <ul class="nav nav-tabs justify-content-center">
             <?php
                 $pages = ["home" => "homepage.php", "1" => "1.php", "2" => "2.php", "3" => "3.php", "4" => "4.php", "5" => "5.php", "6" => "6.php", "7" => "7.php"];
