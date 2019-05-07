@@ -21,7 +21,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
     <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#ff6200">
     <meta name="msapplication-TileColor" content="#ff6200">
-    <meta name="theme-color" content="#ff6200">
     <!-- Chrome, Firefox OS and Opera colored tabs-->
     <meta name="theme-color" content="#ff6200">
 
