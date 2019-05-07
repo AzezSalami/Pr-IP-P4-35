@@ -8,7 +8,7 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
 
-    <link rel="stylesheet" href="CSS/homepage.css" type="text/css">
+
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
           integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
@@ -31,6 +31,7 @@
 
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
+	<link rel="stylesheet" href="CSS/homepage.css" type="text/css">
 </head>
 <body class="bg-gray">
 <?php
