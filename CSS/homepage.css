@@ -81,6 +81,10 @@ body {
     min-width:250px;
 }
 
-.auction-article-desc {
+.form-row form{
+    width:100%;
+}
 
+.modal-footer .row {
+    width:100%;
 }
