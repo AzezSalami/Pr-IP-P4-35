@@ -27,12 +27,10 @@
     background: #000000;
 }
 .btn{
-    //width:200px;
     border-color: #1484B3;
 }
 .btn:hover{
     background:#1484B3;
-    width: 200px;
 }
 
 
