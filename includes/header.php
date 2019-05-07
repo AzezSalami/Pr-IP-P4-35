@@ -175,8 +175,8 @@
                                                maxlength="50" required><br>
                                     </div>
                                     <div class="col">
-                                        <label class="invisible" for="bevestig_wachtwoord">bevestig_wachtwoord</label>
-                                        <input class="form-control" placeholder="bevestig_wachtwoord" type="password"
+                                        <label class="invisible" for="bevestig_wachtwoord">bevestig wachtwoord</label>
+                                        <input class="form-control" placeholder="bevestig wachtwoord" type="password"
                                                name="bevestig_wachtwoord"
                                                id="bevestig_wachtwoord"
                                                maxlength="50" required><br>
