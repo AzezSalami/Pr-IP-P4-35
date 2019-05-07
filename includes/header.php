@@ -42,7 +42,6 @@
         </div>
     </nav>
 
-
     <!-- The Modal -->
     <div class="modal fade" id="loginMenu">
         <div class="modal-dialog">
@@ -56,39 +55,42 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <form method="POST" action="" name="registreren">
-                                    <label class="invisible" for="gebruikersnaam">gebruikersnaam<span
-                                                class="error">*</span></label>
-                                    <input class="form-control" placeholder="gebruikersnaam" type="text"
-                                           name="gebruikersnaam"
-                                           id="gebruikersnaam"
-                                           maxlength="20" required><br>
-                                    <label class="invisible" for="wachtwoord">wachtwoord<span
-                                                class="error">*</span></label>
-                                    <input class="form-control" placeholder="wachtwoord"
-                                           type="password" name="wachtwoord"
-                                           id="wachtwoord"
-                                           maxlength="50" required><br>
-                                    <div class="modal-footer">
-                                        <div class="row">
-                                            <div class="col">
-                                                <button type="button" class="btn bg-lightblue" data-toggle="modal"
-                                                        data-target="#registerMenu">
-                                                    Nieuw account
-                                                </button>
-
-                                            </div>
-                                            <div class="col">
-                                                <input class="btn bg-lightblue" type="submit" name="next"
-                                                       value="inloggen">
-                                            </div>
-                                        </div>
+                    <div class="container">
+                        <div class="form-row">
+                            <form method="POST" action="" name="inloggen">
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="invisible" for="gebruikersnaam">gebruikersnaam</label>
+                                        <input class="form-control" placeholder="gebruikersnaam" type="text"
+                                               name="gebruikersnaam"
+                                               id="gebruikersnaam"
+                                               maxlength="20" required>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="invisible" for="wachtwoord">wachtwoord</label>
+                                        <input class="form-control" placeholder="wachtwoord"
+                                               type="password" name="wachtwoord"
+                                               id="wachtwoord"
+                                               maxlength="50" required><br>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <input class="btn bg-lightblue" type="submit" name="next"
+                                               value="inloggen">
+                                    </div>
+
+                                    <div class="col text-right">
+                                        <button type="button" class="btn bg-lightblue" data-toggle="modal"
+                                                data-target="#registerMenu">
+                                            Nieuw account
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -117,14 +119,14 @@
                                         <label class="invisible" for="voornaam">voornaam:</label>
                                         <input class="form-control" placeholder="voornaam" type="text"
                                                name="voornaam"
-                                               id="voornaam" maxlength="20" required><br>
+                                               id="voornaam" maxlength="20" required>
                                     </div>
                                     <div class="col">
                                         <label class="invisible" for="achternaam">achternaam</label>
                                         <input class="form-control" placeholder="achternaam" type="text"
                                                name="achternaam"
                                                id="achternaam"
-                                               maxlength="20" required><br>
+                                               maxlength="20" required>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -133,37 +135,37 @@
                                         <input class="form-control" placeholder="gebruikersnaam" type="text"
                                                name="reggebruikersnaam"
                                                id="reggebruikersnaam"
-                                               maxlength="20" required><br>
+                                               maxlength="20" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
                                         <label class="invisible" for="emailadres">emailadres</label>
                                         <input class="form-control" placeholder="emailadres" type="email"
-                                               name="emailadres" id="emailadres" required><br><br>
+                                               name="emailadres" id="emailadres" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <label class="invisible" for="address">Address</label>
+                                        <label class="invisible" for="adres">Address</label>
                                         <input class="form-control" placeholder="adres" type="text"
                                                name="adres"
                                                id="adres"
-                                               maxlength="20" required><br>
+                                               maxlength="20" required>
                                     </div>
                                     <div class="col">
                                         <label class="invisible" for="postcode">Postcode</label>
                                         <input class="form-control" placeholder="postcode" type="text"
                                                name="postcode"
                                                id="postcode"
-                                               maxlength="20" required><br>
+                                               maxlength="20" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
                                         <label class="invisible" for="telefoonnummer">telefoonnummer</label>
                                         <input class="form-control" placeholder="telefoonnummer" type="tel"
-                                               name="telefoonnummer" id="telefoonnummer" maxlength="10"><br>
+                                               name="telefoonnummer" id="telefoonnummer" maxlength="10">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -172,7 +174,7 @@
                                         <input class="form-control" placeholder="wachtwoord" type="password"
                                                name="regwachtwoord"
                                                id="regwachtwoord"
-                                               maxlength="50" required><br>
+                                               maxlength="50" required>
                                     </div>
                                     <div class="col">
                                         <label class="invisible" for="bevestig_wachtwoord">bevestig wachtwoord</label>
@@ -182,12 +184,11 @@
                                                maxlength="50" required><br>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <div class="row">
-                                        <div class="col">
-                                            <input class="btn bg-lightblue" type="submit" name="Maak_account_aan"
-                                                   value="Maak account aan">
-                                        </div>
+
+                                <div class="row">
+                                    <div class="col text-left">
+                                        <input class="btn bg-lightblue" type="submit" name="Maak_account_aan"
+                                               value="Maak account aan">
                                     </div>
                                 </div>
                             </form>
@@ -197,5 +198,4 @@
             </div>
         </div>
     </div>
-
 </header>
