@@ -40,7 +40,7 @@ require "includes/header.php";
                             <div class="row text-center">
                                 <img class="mx-auto my-2" src="https://picsum.photos/id/340/1000/600" alt="EA">
                             </div>
-                            <div class="row mb-3">
+                            <div class="row mb-3 auction-article-desc">
                                 <div class="col">
                                     <dt class="col text-left"> Beschrijving:</dt>
                                 </div>
