@@ -19,17 +19,17 @@
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-    <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#ff6200">
-    <meta name="msapplication-TileColor" content="#ff6200">
-    <meta name="theme-color" content="#ff6200">
+    <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#FFAD4F">
+    <meta name="msapplication-TileColor" content="#FFAD4F">
+    <meta name="theme-color" content="#FFAD4F">
     <!-- Chrome, Firefox OS and Opera colored tabs-->
-    <meta name="theme-color" content="#ff6200">
+    <meta name="theme-color" content="#FFAD4F">
 
     <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content="#ff6200">
+    <meta name="msapplication-navbutton-color" content="#FFAD4F">
 
     <!-- iOS Safari -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="#ff6200">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
 	<link rel="stylesheet" href="CSS/homepage.css" type="text/css">
 </head>
