@@ -134,7 +134,7 @@
                                                name="reggebruikersnaam"
                                                id="reggebruikersnaam"
                                                maxlength="20" required>
-                                        <label for="gebruikersnaam">gebruikersnaam</label>
+                                        <label for="reggebruikersnaam">gebruikersnaam</label>
                                     </div>
                                 </div>
                             </div>
