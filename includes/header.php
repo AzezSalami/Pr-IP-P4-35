@@ -184,7 +184,6 @@
                                                id="regwachtwoord"
                                                maxlength="50" required>
                                         <label for="regwachtwoord">wachtwoord</label>
-<!--                                        -->
                                     </div>
                                 </div>
                                 <div class="col">
