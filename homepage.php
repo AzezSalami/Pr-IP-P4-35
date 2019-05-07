@@ -32,10 +32,10 @@ require "includes/header.php";
                         <div class="auction-article-large white col-lg mx-2">
                             <div class="row mt-3">
                                 <div class="col">
-                                    <dt class="col"> [Titel]</dt>
+                                    <div class="col"> <strong>[Titel]</strong></div>
                                 </div>
                                 <div class="col text-right">
-                                    <dt class="col"> [Prijs]</dt>
+                                    <div class="col"> <strong>[Prijs]</strong></div>
                                 </div>
                             </div>
                             <div class="row text-center">
@@ -43,14 +43,14 @@ require "includes/header.php";
                             </div>
                             <div class="row mb-3 auction-article-desc">
                                 <div class="col">
-                                    <dt class="col text-left"> Beschrijving:</dt>
+                                    <div class="col text-left"> <strong>Beschrijving:</strong></div>
+                            </div>
+                            <div class="row mx-3">
+                                <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc molestie massa
+                                    enim,
+                                    eget pretium lorem accumsan id. Sed imperdiet, eros.
                                 </div>
-                                <div class="row mx-3">
-                                    <dd class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc molestie massa
-                                        enim,
-                                        eget pretium lorem accumsan id. Sed imperdiet, eros.
-                                    </dd>
-                                </div>
+                            </div>
                                 <div class="col text-right">
                                     <button class="btn btn-details">Details</button>
                                 </div>
@@ -59,10 +59,10 @@ require "includes/header.php";
                         <div class="auction-article-large white col-lg mx-2">
                             <div class="row mt-3">
                                 <div class="col">
-                                    <dt class="col"> [Titel]</dt>
+                                    <div class="col"> <strong>[Titel]</strong></div>
                                 </div>
                                 <div class="col text-right">
-                                    <dt class="col"> [Prijs]</dt>
+                                    <div class="col"> <strong>[Prijs]</strong></div>
                                 </div>
                             </div>
                             <div class="row text-center">
@@ -70,14 +70,13 @@ require "includes/header.php";
                             </div>
                             <div class="row mb-3">
                                 <div class="col">
-                                    <dt class="col text-left"> Beschrijving:</dt>
+                                    <div class="col text-left"> <strong>Beschrijving:</strong></div>
                                 </div>
                                 <div class="row mx-3">
-                                    <dd class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc molestie massa
+                                    <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc molestie massa
                                         enim,
                                         eget pretium lorem accumsan id. Sed imperdiet, eros.
-                                    </dd>
-                                </div>
+                                    </div>
                                 <div class="col text-right">
                                     <button class="btn btn-details">Details</button>
                                 </div>
@@ -90,10 +89,10 @@ require "includes/header.php";
                                 <div class="auction-article-small white col-md mx-2">
                                     <div class="row mt-3">
                                         <div class="col">
-                                            <dt class="col"> [Titel]</dt>
+                                            <div class="col"> <strong>[Titel]</strong></div>
                                         </div>
                                         <div class="col text-right">
-                                            <dt class="col"> [Prijs]</dt>
+                                            <div class="col"> <strong>[Prijs]</strong></div>
                                         </div>
                                     </div>
                                     <div class="row text-center">
@@ -101,15 +100,13 @@ require "includes/header.php";
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col">
-                                            <dt class="col"> Beschrijving:</dt>
+                                            <div class="col text-left"> <strong>Beschrijving:</strong></div>
                                         </div>
                                         <div class="row mx-3">
-                                            <dd class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc molestie
-                                                massa
+                                            <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc molestie massa
                                                 enim,
                                                 eget pretium lorem accumsan id. Sed imperdiet, eros.
-                                            </dd>
-                                        </div>
+                                            </div>
                                         <div class="col text-right">
                                             <button class="btn btn-details">Details</button>
                                         </div>
@@ -118,10 +115,10 @@ require "includes/header.php";
                                 <div class="auction-article-small white col-md mx-2">
                                     <div class="row mt-3">
                                         <div class="col">
-                                            <dt class="col"> [Titel]</dt>
+                                            <div class="col"> <strong>[Titel]</strong></div>
                                         </div>
                                         <div class="col text-right">
-                                            <dt class="col"> [Prijs]</dt>
+                                            <div class="col"> <strong>[Prijs]</strong></div>
                                         </div>
                                     </div>
                                     <div class="row text-center">
@@ -129,15 +126,13 @@ require "includes/header.php";
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col">
-                                            <dt class="col"> Beschrijving:</dt>
+                                            <div class="col text-left"> <strong>Beschrijving:</strong></div>
                                         </div>
                                         <div class="row mx-3">
-                                            <dd class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc molestie
-                                                massa
+                                            <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc molestie massa
                                                 enim,
                                                 eget pretium lorem accumsan id. Sed imperdiet, eros.
-                                            </dd>
-                                        </div>
+                                            </div>
                                         <div class="col text-right">
                                             <button class="btn btn-details">Details</button>
                                         </div>
@@ -150,10 +145,10 @@ require "includes/header.php";
                                 <div class="auction-article-small white col-md mx-2">
                                     <div class="row mt-3">
                                         <div class="col">
-                                            <dt class="col"> [Titel]</dt>
+                                            <div class="col"> <strong>[Titel]</strong></div>
                                         </div>
                                         <div class="col text-right">
-                                            <dt class="col"> [Prijs]</dt>
+                                            <div class="col"> <strong>[Prijs]</strong></div>
                                         </div>
                                     </div>
                                     <div class="row text-center">
@@ -161,15 +156,13 @@ require "includes/header.php";
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col">
-                                            <dt class="col"> Beschrijving:</dt>
+                                            <div class="col text-left"> <strong>Beschrijving:</strong></div>
                                         </div>
                                         <div class="row mx-3">
-                                            <dd class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc molestie
-                                                massa
+                                            <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc molestie massa
                                                 enim,
                                                 eget pretium lorem accumsan id. Sed imperdiet, eros.
-                                            </dd>
-                                        </div>
+                                            </div>
                                         <div class="col text-right">
                                             <button class="btn btn-details">Details</button>
                                         </div>
@@ -178,10 +171,10 @@ require "includes/header.php";
                                 <div class="auction-article-small white col-md mx-2">
                                     <div class="row mt-3">
                                         <div class="col">
-                                            <dt class="col"> [Titel]</dt>
+                                            <div class="col"> <strong>[Titel]</strong></div>
                                         </div>
                                         <div class="col text-right">
-                                            <dt class="col"> [Prijs]</dt>
+                                            <div class="col"> <strong>[Prijs]</strong></div>
                                         </div>
                                     </div>
                                     <div class="row text-center">
@@ -189,15 +182,13 @@ require "includes/header.php";
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col">
-                                            <dt class="col"> Beschrijving:</dt>
+                                            <div class="col text-left"> <strong>Beschrijving:</strong></div>
                                         </div>
                                         <div class="row mx-3">
-                                            <dd class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc molestie
-                                                massa
+                                            <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc molestie massa
                                                 enim,
                                                 eget pretium lorem accumsan id. Sed imperdiet, eros.
-                                            </dd>
-                                        </div>
+                                            </div>
                                         <div class="col text-right">
                                             <button class="btn btn-details">Details</button>
                                         </div>
