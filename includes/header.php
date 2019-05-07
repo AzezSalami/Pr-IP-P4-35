@@ -50,7 +50,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">inloggen</h4>
+                    <h4 class="modal-title text-dark">inloggen</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
@@ -102,7 +102,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Create an account</h4>
+                    <h4 class="modal-title text-dark">registreren</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
