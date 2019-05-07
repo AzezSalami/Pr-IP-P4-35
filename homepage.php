@@ -48,10 +48,10 @@ require "includes/header.php";
                     <div class="auction-article-large white col-lg m-2">
                         <div class="row mt-3">
                             <div class="col">
-                                <dt class="col"> [Titel]</dt>
+                                <div class="col"><strong>[Titel]</strong></div>
                             </div>
                             <div class="col text-right">
-                                <dt class="col"> [Prijs]</dt>
+                                <div class="col"><strong>[Prijs]</strong></div>
                             </div>
                         </div>
                         <div class="imageContainer row text-center">
@@ -62,14 +62,15 @@ require "includes/header.php";
                         </div>
                         <div class="row mb-3 auction-article-desc">
                             <div class="col">
-                                <dt class="col text-left"> Beschrijving:</dt>
+                                <div class="col"> Beschrijving:</div>
                             </div>
                             <div class="row mx-3">
-                                <dd class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Nunc molestie massa
+                                <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing
+                                    elit. Nunc molestie
+                                    massa
                                     enim,
                                     eget pretium lorem accumsan id. Sed imperdiet, eros.
-                                </dd>
+                                </div>
                             </div>
                             <div class="col text-right">
                                 <button class="btn btn-details">Details</button>
@@ -79,10 +80,10 @@ require "includes/header.php";
                     <div class="auction-article-large white col-lg m-2">
                         <div class="row mt-3">
                             <div class="col">
-                                <dt class="col"> [Titel]</dt>
+                                <div class="col"><strong>[Titel]</strong></div>
                             </div>
                             <div class="col text-right">
-                                <dt class="col"> [Prijs]</dt>
+                                <div class="col"><strong>[Prijs]</strong></div>
                             </div>
                         </div>
                         <div class="imageContainer row text-center">
@@ -92,14 +93,15 @@ require "includes/header.php";
                         </div>
                         <div class="row mb-3">
                             <div class="col">
-                                <dt class="col text-left"> Beschrijving:</dt>
+                                <div class="col"> Beschrijving:</div>
                             </div>
                             <div class="row mx-3">
-                                <dd class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                                    molestie massa
+                                <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing
+                                    elit. Nunc molestie
+                                    massa
                                     enim,
                                     eget pretium lorem accumsan id. Sed imperdiet, eros.
-                                </dd>
+                                </div>
                             </div>
                             <div class="col text-right">
                                 <button class="btn btn-details">Details</button>
@@ -113,29 +115,29 @@ require "includes/header.php";
                             <div class="auction-article-small white col-md m-2">
                                 <div class="row mt-3">
                                     <div class="col">
-                                        <dt class="col"> [Titel]</dt>
+                                        <div class="col"><strong>[Titel]</strong></div>
                                     </div>
                                     <div class="col text-right">
-                                        <dt class="col"> [Prijs]</dt>
+                                        <div class="col"><strong>[Prijs]</strong></div>
                                     </div>
                                 </div>
                                 <div class="imageContainer row text-center">
                                     <div>
-                                        <img class="mx-auto my-2" src="https://picsum.photos/id/390/600/600"
+                                        <img class="mx-auto my-2" src="https://picsum.photos/id/360/600/600"
                                              alt="EA">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <dt class="col"> Beschrijving:</dt>
+                                        <div class="col"> Beschrijving:</div>
                                     </div>
                                     <div class="row mx-3">
-                                        <dd class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing
+                                        <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing
                                             elit. Nunc molestie
                                             massa
                                             enim,
                                             eget pretium lorem accumsan id. Sed imperdiet, eros.
-                                        </dd>
+                                        </div>
                                     </div>
                                     <div class="col text-right">
                                         <button class="btn btn-details">Details</button>
@@ -145,29 +147,29 @@ require "includes/header.php";
                             <div class="auction-article-small white col-md m-2">
                                 <div class="row mt-3">
                                     <div class="col">
-                                        <dt class="col"> [Titel]</dt>
+                                        <div class="col"><strong>[Titel]</strong></div>
                                     </div>
                                     <div class="col text-right">
-                                        <dt class="col"> [Prijs]</dt>
+                                        <div class="col"><strong>[Prijs]</strong></div>
                                     </div>
                                 </div>
                                 <div class="imageContainer row text-center">
                                     <div>
-                                        <img class="mx-auto my-2" src="https://picsum.photos/id/390/600/600"
+                                        <img class="mx-auto my-2" src="https://picsum.photos/id/370/600/600"
                                              alt="EA">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <dt class="col"> Beschrijving:</dt>
+                                        <div class="col"> Beschrijving:</div>
                                     </div>
                                     <div class="row mx-3">
-                                        <dd class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing
+                                        <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing
                                             elit. Nunc molestie
                                             massa
                                             enim,
                                             eget pretium lorem accumsan id. Sed imperdiet, eros.
-                                        </dd>
+                                        </div>
                                     </div>
                                     <div class="col text-right">
                                         <button class="btn btn-details">Details</button>
@@ -181,29 +183,29 @@ require "includes/header.php";
                             <div class="auction-article-small white col-md m-2">
                                 <div class="row mt-3">
                                     <div class="col">
-                                        <dt class="col"> [Titel]</dt>
+                                        <div class="col"><strong>[Titel]</strong></div>
                                     </div>
                                     <div class="col text-right">
-                                        <dt class="col"> [Prijs]</dt>
+                                        <div class="col"><strong>[Prijs]</strong></div>
                                     </div>
                                 </div>
                                 <div class="imageContainer row text-center">
                                     <div>
-                                        <img class="mx-auto my-2" src="https://picsum.photos/id/390/600/600"
+                                        <img class="mx-auto my-2" src="https://picsum.photos/id/380/600/600"
                                              alt="EA">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <dt class="col"> Beschrijving:</dt>
+                                        <div class="col"> Beschrijving:</div>
                                     </div>
                                     <div class="row mx-3">
-                                        <dd class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing
+                                        <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing
                                             elit. Nunc molestie
                                             massa
                                             enim,
                                             eget pretium lorem accumsan id. Sed imperdiet, eros.
-                                        </dd>
+                                        </div>
                                     </div>
                                     <div class="col text-right">
                                         <button class="btn btn-details">Details</button>
@@ -213,10 +215,10 @@ require "includes/header.php";
                             <div class="auction-article-small white col-md m-2">
                                 <div class="row mt-3">
                                     <div class="col">
-                                        <dt class="col"> [Titel]</dt>
+                                        <div class="col"><strong>[Titel]</strong></div>
                                     </div>
                                     <div class="col text-right">
-                                        <dt class="col"> [Prijs]</dt>
+                                        <div class="col"><strong>[Prijs]</strong></div>
                                     </div>
                                 </div>
                                 <div class="imageContainer row text-center">
@@ -227,15 +229,15 @@ require "includes/header.php";
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <dt class="col"> Beschrijving:</dt>
+                                        <div class="col"> Beschrijving:</div>
                                     </div>
                                     <div class="row mx-3">
-                                        <dd class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing
+                                        <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing
                                             elit. Nunc molestie
                                             massa
                                             enim,
                                             eget pretium lorem accumsan id. Sed imperdiet, eros.
-                                        </dd>
+                                        </div>
                                     </div>
                                     <div class="col text-right">
                                         <button class="btn btn-details">Details</button>
