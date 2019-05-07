@@ -208,7 +208,7 @@ require "includes/header.php";
                 </div>
             </div>
             <div class="col-lg-2">
-
+<!---->
             </div>
         </div>
 
