@@ -2,7 +2,7 @@
     <div class="container-fluid bg-orange py-2">
         <div class="row">
             <div class="col-lg-2">
-                <img src="images/ea.png" class="logo my-1 mx-auto d-block" alt="logo">
+                <img src="images/logo.png" class="logo my-1 mx-auto d-block" alt="logo">
             </div>
             <div class="col-lg-8 d-flex align-items-center mb-1">
                 <div class="input-group">
