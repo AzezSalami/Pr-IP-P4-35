@@ -183,7 +183,7 @@
                                                name="regwachtwoord"
                                                id="regwachtwoord"
                                                maxlength="50" required>
-                                        <label for="wachtwoord">wachtwoord</label>
+                                        <label for="regwachtwoord">wachtwoord</label>
                                     </div>
                                 </div>
                                 <div class="col">
