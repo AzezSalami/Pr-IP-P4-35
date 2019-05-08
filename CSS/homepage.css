@@ -10,7 +10,7 @@ nav > div.row, main > div.row {
 
 
 .logo {
-    height: 60px;
+    height: 5em;
     width: auto;
 }
 
@@ -43,7 +43,6 @@ nav > div.row, main > div.row {
 .btn:hover{
     background:#1484B3;
 }
-
 
 .nav-link{
     text-align: center;
@@ -189,3 +188,61 @@ body {
     font-size: 10px;
     color: #777;
 }
+
+
+/* SIDENAVBAR */
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    border-top: solid;
+    border-bottom: solid;
+    border-color: #FFAD4F;
+
+}
+
+.sidenav a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+     color: white;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 2.5rem;
+    margin-left: 50px;
+}
+
+.sidenav .hoofdrubriek {
+    padding: 0;
+    font-size: 1rem;
+    margin: 2% 1% 1% 4%;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 1%;}
+    .sidenav a {font-size: 2%;}
+}
+
+.sidenavhamburger {
+    margin-top: 2%;
+    margin-left: 2%;
+    font-size:3rem;
+    cursor:pointer;
+    position: sticky; /* werkt niet :( */
+    color: #FFAD4F;
+}
+
