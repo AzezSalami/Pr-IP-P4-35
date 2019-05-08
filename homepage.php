@@ -43,14 +43,8 @@ require "includes/header.php";
 <main>
     <div class="row">
         <div class="col-lg-2">
-            <span class="sidenavhamburger" onclick="openNav()">&#9776;</span>
-            <div id="mySidenav" class="sidenav bg-yellow">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                <a class="hoofdrubriek" href="#">Hoofdrubriek1</a>
-                <a class="hoofdrubriek" href="#">Hoofdrubriek2</a>
-                <a class="hoofdrubriek" href="#">Hoofdrubriek3</a>
-                <a class="hoofdrubriek" href="#">Hoofdrubriek4</a>
-            </div>
+
+
         </div>
         <div class="col-lg-8">
             <div class="container">

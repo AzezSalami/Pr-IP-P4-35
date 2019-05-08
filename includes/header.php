@@ -1,4 +1,5 @@
 <header>
+	<span class="sidenavhamburger" onclick="openNav()">&#9776;</span>
     <div class="container-fluid bg-orange py-2">
         <div class="row">
             <div class="col-lg-2">
@@ -218,3 +219,11 @@
         </div>
     </div>
 </header>
+
+<div id="mySidenav" class="sidenav bg-yellow">
+	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	<a class="hoofdrubriek" href="#">Hoofdrubriek1</a>
+	<a class="hoofdrubriek" href="#">Hoofdrubriek2</a>
+	<a class="hoofdrubriek" href="#">Hoofdrubriek3</a>
+	<a class="hoofdrubriek" href="#">Hoofdrubriek4</a>
+</div>
