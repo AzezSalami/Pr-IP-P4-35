@@ -1,4 +1,9 @@
 
+
+.container {
+    max-width: unset;
+}
+
 nav > div.row, main > div.row {
     margin-right: 0 !important;
 }
@@ -73,7 +78,7 @@ body {
     width:auto;
     max-width: 90%;
     height: auto;
-    max-height:300px;
+    max-height:400px;
 
 }
 
@@ -81,7 +86,7 @@ body {
     width:auto;
     max-width: 80%;
     height: auto;
-    max-height:200px;
+    max-height:300px;
 }
 
 .auction-article-small {
@@ -89,7 +94,7 @@ body {
 }
 
 .auction-article-large .imageContainer {
-    height:300px;
+    height:400px;
     width:100%;
     display: flex;
     justify-content: center;
@@ -97,7 +102,7 @@ body {
 }
 
 .auction-article-small .imageContainer {
-    height:200px;
+    height:300px;
     width:100%;
     display: flex;
     justify-content: center;
