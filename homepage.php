@@ -9,7 +9,6 @@
           crossorigin="anonymous">
 
 
-
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
           integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
           crossorigin="anonymous">
@@ -32,26 +31,25 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-	<link rel="stylesheet" href="CSS/homepage.css" type="text/css">
+    <link rel="stylesheet" href="CSS/homepage.css" type="text/css">
 </head>
 <body class="bg-gray">
 <?php
 require "includes/header.php";
 ?>
 
-<div id="mySidenav" class="sidenav bg-yellow">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a class="hoofdrubriek" href="#">Hoofdrubriek1</a>
-    <a class="hoofdrubriek" href="#">Hoofdrubriek2</a>
-    <a class="hoofdrubriek" href="#">Hoofdrubriek3</a>
-    <a class="hoofdrubriek" href="#">Hoofdrubriek4</a>
-</div>
-
 
 <main>
     <div class="row">
         <div class="col-lg-2">
-                <span class="sidenavhamburger" onclick="openNav()">&#9776;</span>
+            <span class="sidenavhamburger" onclick="openNav()">&#9776;</span>
+            <div id="mySidenav" class="sidenav bg-yellow">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a class="hoofdrubriek" href="#">Hoofdrubriek1</a>
+                <a class="hoofdrubriek" href="#">Hoofdrubriek2</a>
+                <a class="hoofdrubriek" href="#">Hoofdrubriek3</a>
+                <a class="hoofdrubriek" href="#">Hoofdrubriek4</a>
+            </div>
         </div>
         <div class="col-lg-8">
             <div class="container">
@@ -265,6 +263,6 @@ require "includes/header.php";
         </div>
     </div>
 
-    </main>
+</main>
 </body>
 </html>
