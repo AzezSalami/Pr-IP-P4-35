@@ -2,17 +2,20 @@
     <div class="container-fluid bg-orange py-2">
         <div class="row">
             <div class="col-lg-2">
-	            <a href="homepage.php">
-                <img src="images/logo.png" class="logo my-1 mx-auto d-block" alt="logo">
-	            </a>
+                <a href="homepage.php">
+                    <img src="images/logo.png" class="logo my-1 mx-auto d-block" alt="logo">
+                </a>
             </div>
             <div class="col-lg-8 d-flex align-items-center mb-1">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="zoeken">
-                    <div class="input-group-append ">
-                        <button class="btn btn-outline-secondary bg-white" type="button" id="zoekknop">zoeken</button>
+                <form method="get" class="col-lg-12">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="zoeken" name="search">
+                        <div class="input-group-append ">
+                            <button class="btn btn-outline-secondary bg-white" type="button" id="searchbutton">zoeken
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="col-lg-2 my-auto text-center">
                 <button type="button" class="bg-lightblue btn mb-1" data-toggle="modal" data-target="#loginMenu"><i
