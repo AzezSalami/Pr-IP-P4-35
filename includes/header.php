@@ -11,7 +11,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="zoeken" name="search">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary bg-white" type="button" id="searchbutton"><i class="fas fa-search"></i>
+                            <button class="btn btn-outline-secondary bg-white" type="button" id="searchbutton"><i
+                                        class="fas fa-search"></i>
                             </button>
                         </div>
                     </div>
@@ -24,10 +25,12 @@
             </div>
         </div>
     </div>
-    <nav class="bg-yellow pt-3 ">
+    <nav class="bg-yellow">
         <div class="row">
-            <div class="col-lg-2"></div>
-            <div class="col-lg-8 mx-2">
+            <div class="col-lg-2">
+                <span class="sidenavhamburger" onclick="openNav()">&#9776;</span>
+            </div>
+            <div class="col-lg-8 mx-2 mt-auto">
                 <ul class="nav nav-tabs nav-fill">
                     <?php
                     $pages = ["home" => "homepage.php", "1" => "1.php", "2" => "2.php", "3" => "3.php", "4" => "4.php", "5" => "5.php", "6" => "6.php", "7" => "7.php"];

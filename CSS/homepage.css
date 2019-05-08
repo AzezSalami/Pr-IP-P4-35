@@ -1,5 +1,4 @@
 
-
 .container {
     max-width: unset;
 }
@@ -14,43 +13,47 @@ nav > div.row, main > div.row {
     width: auto;
 }
 
-.bg-orange{
+.bg-orange {
     background: #FFAD4F;
 }
 
-.bg-yellow{
+.bg-yellow {
     background: #FFD042;
 }
 
-.bg-darkblue{
+.bg-darkblue {
     background: #1484B3;
 }
 
-.bg-lightblue{
+.bg-lightblue {
     background: #4FCBFF;
 }
 
-.bg-gray{
+.bg-gray {
     background: #EEEEEE;
 }
 
 .bg-black {
     background: #000000;
 }
-.btn{
+
+.btn {
     border-color: #1484B3;
 }
-.btn:hover{
-    background:#1484B3;
+
+.btn:hover {
+    background: #1484B3;
 }
 
-.nav-link{
+.nav-link {
     text-align: center;
     color: black;
 }
+
 .nav-link:hover, .currentpage {
     background: #EEEEEE;
 }
+
 body {
     background-color: #EEEEEE;
     color: #FFFFFF;
@@ -74,53 +77,56 @@ body {
 }
 
 .auction-article-large img {
-    width:auto;
+    width: auto;
     max-width: 90%;
     height: auto;
-    max-height:400px;
+    max-height: 400px;
 
 }
 
 .auction-article-small img {
-    width:auto;
+    width: auto;
     max-width: 80%;
     height: auto;
-    max-height:300px;
+    max-height: 300px;
 }
 
 .auction-article-small {
-    min-width:250px;
+    min-width: 250px;
 }
 
 .auction-article-large .imageContainer {
-    height:400px;
-    width:100%;
+    height: 400px;
+    width: 100%;
     display: flex;
     justify-content: center;
-    margin-left:0;
+    margin-left: 0;
 }
 
 .auction-article-small .imageContainer {
-    height:300px;
-    width:100%;
+    height: 300px;
+    width: 100%;
     display: flex;
     justify-content: center;
-    margin-left:0;
+    margin-left: 0;
 }
 
 .imageContainer > div {
-    margin:auto;
+    margin: auto;
 }
-.form-row form{
-    width:100%;
+
+.form-row form {
+    width: 100%;
 }
 
 .modal-footer .row {
-    width:100%;
+    width: 100%;
 }
+
 .form-control {
     height: calc(2.1em + .75rem + 2px);
 }
+
 :root {
     --input-padding-x: .5rem;
     --input-padding-y: .5rem;
@@ -194,17 +200,16 @@ body {
 
 .sidenav {
     height: 100%;
+    top: 0px;
     width: 0;
     position: absolute;
     z-index: 1;
-    left: 0;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
     border-top: solid;
     border-bottom: solid;
     border-color: #FFAD4F;
-
 }
 
 .sidenav a {
@@ -215,7 +220,7 @@ body {
 }
 
 .sidenav a:hover {
-     color: white;
+    color: white;
 }
 
 .sidenav .closebtn {
@@ -227,22 +232,33 @@ body {
 }
 
 .sidenav .hoofdrubriek {
-    padding: 0;
+    padding: 10px;
     font-size: 1rem;
     margin: 2% 1% 1% 4%;
 }
 
 @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 1%;}
-    .sidenav a {font-size: 2%;}
+    .sidenav {
+        padding-top: 1%;
+    }
+
+    .sidenav a {
+        font-size: 2%;
+    }
+}
+
+@media screen and (min-height: 450px) {
+    .sidenav {
+        width: 100%;
+    }
 }
 
 .sidenavhamburger {
+
     margin-top: 2%;
     margin-left: 2%;
-    font-size:3rem;
-    cursor:pointer;
-    position: sticky; /* werkt niet :( */
-    color: #FFAD4F;
+    font-size: 3rem;
+    cursor: pointer;
+    color: black;
 }
 
