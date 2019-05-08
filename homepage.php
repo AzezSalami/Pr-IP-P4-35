@@ -89,7 +89,7 @@ require "includes/header.php";
                         </div>
                         <div class="imageContainer row text-center">
                             <div>
-                                <img class="mx-auto my-2" src="https://picsum.photos/id/350/600/600" alt="EA">
+                                <img class="mx-auto my-2" src="https://picsum.photos/id/350/800/600" alt="EA">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -124,7 +124,7 @@ require "includes/header.php";
                                 </div>
                                 <div class="imageContainer row text-center">
                                     <div>
-                                        <img class="mx-auto my-2" src="https://picsum.photos/id/360/600/600"
+                                        <img class="mx-auto my-2" src="https://picsum.photos/id/360/1200/600"
                                              alt="EA">
                                     </div>
                                 </div>
@@ -156,7 +156,7 @@ require "includes/header.php";
                                 </div>
                                 <div class="imageContainer row text-center">
                                     <div>
-                                        <img class="mx-auto my-2" src="https://picsum.photos/id/370/600/600"
+                                        <img class="mx-auto my-2" src="https://picsum.photos/id/370/600/400"
                                              alt="EA">
                                     </div>
                                 </div>
@@ -192,7 +192,7 @@ require "includes/header.php";
                                 </div>
                                 <div class="imageContainer row text-center">
                                     <div>
-                                        <img class="mx-auto my-2" src="https://picsum.photos/id/380/600/600"
+                                        <img class="mx-auto my-2" src="https://picsum.photos/id/380/800/600"
                                              alt="EA">
                                     </div>
                                 </div>
@@ -224,7 +224,7 @@ require "includes/header.php";
                                 </div>
                                 <div class="imageContainer row text-center">
                                     <div>
-                                        <img class="mx-auto my-2" src="https://picsum.photos/id/390/600/600"
+                                        <img class="mx-auto my-2" src="https://picsum.photos/id/390/1000/600"
                                              alt="EA">
                                     </div>
                                 </div>
