@@ -59,20 +59,6 @@ require "includes/header.php";
     <div class="row">
                     <div class="col-lg-2">
                         <span class="sidenavhamburger" onclick="openNav()">&#9776;</span>
-        <!--                <div class="mainrubriekenboom">-->
-        <!--                    <form name="mainrubriekenform" action="" method="GET">-->
-        <!--                        <div class="custom-control custom-checkbox mb-3">-->
-        <!--                            <input type="checkbox" class="custom-control-input" id="rubriek1" name="rubriek1">-->
-        <!--                            <label class="custom-control-label" for="rubriek1">Rubriek1</label><br>-->
-        <!--                            <input type="checkbox" class="custom-control-input" id="rubriek2" name="rubriek2">-->
-        <!--                            <label class="custom-control-label" for="rubriek1">Rubriek2</label><br>-->
-        <!--                            <input type="checkbox" class="custom-control-input" id="rubriek3" name="rubriek3">-->
-        <!--                            <label class="custom-control-label" for="rubriek3">Rubriek3</label><br>-->
-        <!--                            <input type="checkbox" class="custom-control-input" id="rubriek4" name="rubriek4">-->
-        <!--                            <label class="custom-control-label" for="rubriek1">Rubriek4</label><br>-->
-        <!--                        </div>-->
-        <!--                    </form>-->
-        <!--                </div>-->
                     </div>
 
         <div class="col-lg-8">
