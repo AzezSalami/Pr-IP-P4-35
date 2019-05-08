@@ -16,6 +16,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="JS/sidenavscript.js"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
@@ -38,10 +39,27 @@
 require "includes/header.php";
 ?>
 
+<div id="mySidenav" class="sidenav bg-yellow">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a class="hoofdrubriek" href="#">Hoofdrubriek1</a>
+    &nbsp;<a class="subrubriek" href="#">Subrubriek1</a>
+    &nbsp;<a class="subrubriek" href="#">Subrubriek2</a>
+    <a class="hoofdrubriek" href="#">Hoofdrubriek2</a>
+    &nbsp;<a class="subrubriek" href="#">Subrubriek1</a>
+    &nbsp;<a class="subrubriek" href="#">Subrubriek2</a>
+    <a class="hoofdrubriek" href="#">Hoofdrubriek3</a>
+    &nbsp;<a class="subrubriek" href="#">Subrubriek1</a>
+    &nbsp;<a class="subrubriek" href="#">Subrubriek2</a>
+    <a class="hoofdrubriek" href="#">Hoofdrubriek4</a>
+    &nbsp;<a class="subrubriek" href="#">Subrubriek1</a>
+    &nbsp;<a class="subrubriek" href="#">Subrubriek2</a>
+</div>
+
+
 <main>
     <div class="row">
         <div class="col-lg-2">
-
+                <span class="sidenavhamburger" onclick="openNav()">&#9776;</span>
         </div>
         <div class="col-lg-8">
             <div class="container">
@@ -255,6 +273,6 @@ require "includes/header.php";
         </div>
     </div>
 
-</main>
+    </main>
 </body>
 </html>
