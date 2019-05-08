@@ -42,17 +42,9 @@ require "includes/header.php";
 <div id="mySidenav" class="sidenav bg-yellow">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <a class="hoofdrubriek" href="#">Hoofdrubriek1</a>
-    &nbsp;<a class="subrubriek" href="#">Subrubriek1</a>
-    &nbsp;<a class="subrubriek" href="#">Subrubriek2</a>
     <a class="hoofdrubriek" href="#">Hoofdrubriek2</a>
-    &nbsp;<a class="subrubriek" href="#">Subrubriek1</a>
-    &nbsp;<a class="subrubriek" href="#">Subrubriek2</a>
     <a class="hoofdrubriek" href="#">Hoofdrubriek3</a>
-    &nbsp;<a class="subrubriek" href="#">Subrubriek1</a>
-    &nbsp;<a class="subrubriek" href="#">Subrubriek2</a>
     <a class="hoofdrubriek" href="#">Hoofdrubriek4</a>
-    &nbsp;<a class="subrubriek" href="#">Subrubriek1</a>
-    &nbsp;<a class="subrubriek" href="#">Subrubriek2</a>
 </div>
 
 

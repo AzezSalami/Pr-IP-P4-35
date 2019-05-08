@@ -195,13 +195,16 @@ body {
 .sidenav {
     height: 100%;
     width: 0;
-    position: fixed;
+    position: absolute;
     z-index: 1;
-    top: 0;
     left: 0;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+    border-top: solid;
+    border-bottom: solid;
+    border-color: #FFAD4F;
+
 }
 
 .sidenav a {
@@ -226,13 +229,7 @@ body {
 .sidenav .hoofdrubriek {
     padding: 0;
     font-size: 1rem;
-    margin: 2% 1% 1% 2%;
-}
-
-.sidenav .subrubriek {
-    padding: 0;
-    font-size: 0.75rem;
-    margin: 1%;
+    margin: 2% 1% 1% 4%;
 }
 
 @media screen and (max-height: 450px) {
