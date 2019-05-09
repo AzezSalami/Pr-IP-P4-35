@@ -200,7 +200,7 @@ body {
     height: 100%;
     top: 0;
     width: 0;
-    position: absolute;
+    position: fixed;
     z-index: 3;
     overflow-x: hidden;
     transition: 0.5s;
@@ -230,9 +230,9 @@ body {
 }
 
 .sidenav .hoofdrubriek {
+    text-align: center;
     padding: 10px;
-    font-size: 1rem;
-    margin: 2% 1% 1% 4%;
+    font-size: 3rem;
 }
 
 @media screen and (max-height: 450px) {

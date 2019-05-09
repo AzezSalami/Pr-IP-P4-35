@@ -219,9 +219,9 @@
 </header>
 
 <div id="mySidenav" class="sidenav bg-yellow">
-	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-	<a class="hoofdrubriek" href="#">Hoofdrubriek1</a>
-	<a class="hoofdrubriek" href="#">Hoofdrubriek2</a>
-	<a class="hoofdrubriek" href="#">Hoofdrubriek3</a>
-	<a class="hoofdrubriek" href="#">Hoofdrubriek4</a>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a class="hoofdrubriek" href="#">Home</a>
+    <a class="hoofdrubriek" href="#">Account</a>
+    <a class="hoofdrubriek" href="#">Verkoop</a>
+    <a class="hoofdrubriek" href="#">Contact</a>
 </div>
