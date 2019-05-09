@@ -9,7 +9,7 @@ nav > div.row, main > div.row {
 
 
 .logo {
-    height: 5em;
+    height: 4em;
     width: auto;
 }
 
@@ -66,14 +66,12 @@ body {
 }
 
 .btn-details {
-    width: 100px;
     background-color: #4FCBFF;
     border-color: #1484B3;
 }
 
 .btn-details:hover {
     background: #1484B3;
-    width: 100px;
 }
 
 .auction-article-large img {
@@ -273,5 +271,8 @@ body {
 @media only screen and (max-device-width: 575px) {
     html{
         font-size: 2.5em;
+    }
+    #aanmeldTekst {
+        display: none;
     }
 }
