@@ -41,6 +41,7 @@
     <script src="JS/pricerange.js"></script>
 </head>
 <body class="bg-gray">
+
 <?php
 require "includes/header.php";
 ?>
