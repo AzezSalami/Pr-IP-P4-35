@@ -1,5 +1,5 @@
 <header>
-	<span class="sidenavhamburger" onclick="openNav()">&#9776;</span>
+	<span class="sidenavhamburger mr-2" onclick="openNav()">&#9776;</span>
 	<div class="container-fluid bg-orange py-2">
 		<div class="row">
 			<div class="col-lg-2">
@@ -7,8 +7,7 @@
 					<img src="images/logo.png" class="logo my-1 mx-auto d-block" alt="logo">
 				</a>
 			</div>
-				<div class="col-10 col-lg-8 d-flex align-items-center mb-1">
-					<form method="get" class="col-lg-12">
+					<form method="get" class="col-10 col-lg-8 d-flex align-items-center mb-1 px-2">
 						<div class="input-group">
 							<input type="text" class="form-control" placeholder="zoeken" name="search">
 							<div class="input-group-append">
@@ -18,7 +17,6 @@
 							</div>
 						</div>
 					</form>
-				</div>
 				<div class="col-2 my-auto text-center">
 					<button type="button" class="bg-lightblue btn mb-1" data-toggle="modal" data-target="#loginMenu"><i
 								class="fas fa-user"></i><span id="aanmeldTekst"> &nbsp; aanmelden</span>
