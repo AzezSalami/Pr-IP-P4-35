@@ -50,7 +50,8 @@ require "includes/header.php";
     <div class="row">
         <div class="col-lg-2">
             <div class="container">
-                <input class="bg-gray text-center my-2" type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                <input class="bg-gray text-center my-2" type="text" id="amount" readonly
+                       style="border:0; color:#f6931f; font-weight:bold;">
                 <div class="my-1" id="slider-range"></div>
             </div>
         </div>
@@ -269,7 +270,8 @@ require "includes/header.php";
         <div class="row">
             <div class="col-lg-2">
                 <div class="container text-center my-2">
-                    <input class="bg-gray text-center" type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                    <input class="bg-gray text-center" type="text" id="amount" readonly
+                           style="border:0; color:#f6931f; font-weight:bold;">
                     <div class="my-2" id="slider-range"></div>
                 </div>
             </div>
