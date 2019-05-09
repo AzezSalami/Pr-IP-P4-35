@@ -32,16 +32,16 @@
 			<div class="col-lg-8 mx-2 mt-auto">
 				<ul class="nav nav-tabs nav-fill">
                     <?php
-                        $pages = ["home" => "homepage.php", "1" => "1.php", "2" => "2.php", "3" => "3.php", "4" => "4.php", "5" => "5.php", "6" => "6.php", "7" => "7.php"];
-                        $html = "";
-                        foreach ($pages as $page => $link) {
-                            $html .= "<li class='nav-item'><a class='nav-link";
-                            if (basename(htmlspecialchars($_SERVER["PHP_SELF"])) == basename($link)) {
-                                $html .= " currentpage";
-                            }
-                            $html .= "' href='$link'>$page</a></li>";
+                    $pages = ["home" => "homepage.php", "Account" => "account.php", "Verkoop" => "verkoop.php", "Contact" => "contact.php"];
+                    $html = "";
+                    foreach ($pages as $page => $link) {
+                        $html .= "<li class='nav-item'><a class='nav-link";
+                        if (basename(htmlspecialchars($_SERVER["PHP_SELF"])) == basename($link)) {
+                            $html .= " currentpage";
                         }
-                        echo $html;
+                        $html .= "' href='$link'>$page</a></li>";
+                    }
+                    echo $html;
                     ?>
 				</ul>
 			</div>
