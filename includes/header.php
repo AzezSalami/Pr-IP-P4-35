@@ -62,7 +62,7 @@
 
 				<!-- Modal body -->
 				<div class="modal-body">
-					<div class="container">
+					<div class="container-fluid">
 						<form class="form-signin" method="POST" action="" name="inloggen">
 							<div class="form-label-group">
 								<input class="form-control" placeholder="gebruikersnaam" type="text"
@@ -113,7 +113,7 @@
 
 				<!-- Modal body -->
 				<div class="modal-body">
-					<div class="container">
+					<div class="container-fluid">
 						<form class="form-signin" method="POST" action="" name="registreren">
 							<div class="row">
 								<div class="col">
@@ -146,7 +146,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col">
+								<div  class="col">
 									<div class="form-label-group">
 										<input class="form-control" placeholder="emailadres" type="email"
 										       name="emailadres" id="emailadres" required>
@@ -155,7 +155,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col">
+								<div  class="col">
 									<div class="form-label-group">
 										<input class="form-control" placeholder="adres" type="text"
 										       name="adres"
@@ -164,7 +164,7 @@
 										<label for="adres">Address</label>
 									</div>
 								</div>
-								<div class="col">
+								<div  class="col">
 									<div class="form-label-group">
 										<input class="form-control" placeholder="postcode" type="text"
 										       name="postcode"
@@ -175,7 +175,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col">
+								<div  class="col">
 									<div class="form-label-group">
 										<input class="form-control" placeholder="telefoonnummer" type="tel"
 										       name="telefoonnummer" id="telefoonnummer" maxlength="10">
@@ -184,7 +184,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col">
+								<div  class="col-lg">
 									<div class="form-label-group">
 										<input class="form-control" placeholder="wachtwoord" type="password"
 										       name="regwachtwoord"
@@ -193,7 +193,7 @@
 										<label for="regwachtwoord">wachtwoord</label>
 									</div>
 								</div>
-								<div class="col">
+								<div class="col-lg">
 									<div class="form-label-group">
 										<label class="invisible" for="bevestig_wachtwoord">bevestig wachtwoord</label>
 										<input class="form-control" placeholder="bevestig wachtwoord" type="password"
