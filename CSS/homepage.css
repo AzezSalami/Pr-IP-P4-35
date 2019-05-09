@@ -197,7 +197,7 @@ body {
 /* SIDENAVBAR */
 
 .sidenav {
-    height: calc(100% + 150px);
+    height: 100vh;
     top: 0;
     width: 0;
     position: fixed;
