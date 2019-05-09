@@ -275,5 +275,13 @@ body {
     #aanmeldTekst {
         display: none;
     }
+    .form-signin{
+        max-width: unset;
+    }
+
+    .modal-dialog {
+         max-width: unset;
+        margin: 1.75rem 10px;
+    }
 }
 
