@@ -289,3 +289,6 @@ body {
     background-color: #FFAD4F;
     color: white;
 }
+.modal-title {
+    padding-left: 37px;
+}
