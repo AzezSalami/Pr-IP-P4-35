@@ -63,7 +63,7 @@
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="container-fluid">
-						<form class="form-signin" method="POST" action="" name="inloggen">
+						<form class="form-signin" method="POST" name="inloggen">
 							<div class="form-label-group">
 								<input class="form-control" placeholder="gebruikersnaam" type="text"
 								       name="gebruikersnaam"
@@ -114,7 +114,7 @@
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="container-fluid">
-						<form class="form-signin" method="POST" action="" name="registreren">
+						<form class="form-signin" method="POST" name="registreren">
 							<div class="row">
 								<div class="col">
 									<div class="form-label-group">
@@ -220,7 +220,7 @@
 
 <div id="mySidenav" class="sidenav bg-yellow">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a class="hoofdrubriek" href="homepage.php">Home</a>
+    <a class="hoofdrubriek" href="index.php">Home</a>
     <a class="hoofdrubriek" href="veilingen.php">Veilingen</a>
     <a class="hoofdrubriek" href="overons.php">Over ons</a>
     <a class="hoofdrubriek" href="contact.php">Contact</a>
