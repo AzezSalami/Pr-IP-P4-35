@@ -33,11 +33,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
     <link rel="stylesheet" href="CSS/homepage.css" type="text/css">
 
-
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 <body class="bg-gray">
 
@@ -48,17 +50,73 @@ require "includes/header.php";
 <main>
     <div class="row">
         <div class="col-lg-2">
-            <!--            <div class="container text-center my-2">-->
-            <!--                <input class="bg-gray text-center" type="text" id="amount" readonly-->
-            <!--                       style="border:0; color:#f6931f; font-weight:bold;">-->
-            <!--                <div class="my-2" id="slider-range"></div>-->
-            <!--            </div>-->
         </div>
-        <div class="col-lg-2">
-            <!---->
+        <div class="col-lg-8">
+            <div class="container">
+                <div class="aboutus-section">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg">
+                                <div class="aboutus">
+                                    <h2 class="aboutus-title">Over ons</h2>
+                                    <p class="aboutus-text">Aenean vulputate eleifend tellus. Aenean leo ligula,
+                                        porttitor eu,
+                                        consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in.</p>
+                                    <p class="aboutus-text">Lorem Ipsum. Proin gravida nibh vel
+                                        velit
+                                        auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit
+                                        consequat
+                                        ipsum,
+                                        nec sagittis sem</p>
+                                    <a class="btn btn-details" href="contact.php">Stuur ons een bericht</a>
+                                </div>
+                            </div>
+                            <div class="col-line">
+                                <div class="line"></div>
+                            </div>
+                            <div class="col-lg">
+                                <div class="feature">
+                                    <div class="feature-box">
+                                        <div class="clearfix">
+                                            <div class="feature-content">
+                                                <h4>Betrouwbaar</h4>
+                                                <p>Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
+                                                    consequat
+                                                    vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="feature-box">
+                                        <div class="clearfix">
+                                            <div class="feature-content">
+                                                <h4>Snel</h4>
+                                                <p>Donec vitae sapien ut libero venenatis faucibu. Nullam quis ante.
+                                                    Etiam sit
+                                                    amet
+                                                    orci eget eros faucibus tincidunt</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="feature-box">
+                                        <div class="clearfix">
+                                            <div class="feature-content">
+                                                <h4>Makkelijk</h4>
+                                                <p>Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
+                                                    consequat
+                                                    vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
+    <div class="col-lg-2">
+    </div>
 </main>
 <?php
 include_once "includes/footer.php";
