@@ -32,7 +32,7 @@
 			<div class="col-lg-8 mx-2 mt-auto">
 				<ul class="nav nav-tabs nav-fill">
                     <?php
-                    $pages = ["Home" => "homepage.php", "Account" => "account.php", "Verkoop" => "verkoop.php", "Contact" => "contact.php"];
+                    $pages = ["Home" => "homepage.php", "Verkoop" => "verkoop.php", "Over ons" => "overons.php", "Contact" => "contact.php"];
                     $html = "";
                     foreach ($pages as $page => $link) {
                         $html .= "<li class='nav-item'><a class='nav-link";
