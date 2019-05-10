@@ -273,18 +273,20 @@ body {
 }
 
 @media only screen and (max-device-width: 575px) {
-    html{
+    html {
         font-size: 2.5em;
     }
+
     #aanmeldTekst {
         display: none;
     }
-    .form-signin{
+
+    .form-signin {
         max-width: unset;
     }
 
     .modal-dialog {
-         max-width: unset;
+        max-width: unset;
         margin: 1.75rem 10px;
     }
 }
@@ -293,8 +295,214 @@ body {
     background-color: #FFAD4F;
     color: white;
 }
+
 .modal-title {
     padding-left: 37px;
+}
+
+.contact-form{
+    background: #EEEEEE;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 100%;
+    min-height: 67.9vh;
+}
+
+.contact-form .form-control {
+    border-radius: 1rem;
+}
+
+.contact-image {
+    text-align: center;
+}
+
+.contact-image img {
+    border-radius: 6rem;
+    width: 11%;
+    margin-top: -3%;
+    transform: rotate(29deg);
+}
+
+.contact-form form {
+    padding: 14%;
+}
+
+.contact-form form .row {
+    margin-bottom: -7%;
+}
+
+.contact-form h3 {
+    margin-bottom: 8%;
+    margin-top: -18%;
+    text-align: center;
+    color: #0062cc;
+}
+
+.contact-text {
+    width: 100%;
+    min-height: 176px;
+    max-height: 265px
+}
+
+.contact-form .btnContact {
+    width: 50%;
+    border: none;
+    border-radius: 1rem;
+    padding: 1.5%;
+    background: #FFAD4F;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btnContactSubmit {
+    width: 50%;
+    border-radius: 1rem;
+    padding: 1.5%;
+    color: #fff;
+    background-color: #0062cc;
+    border: none;
+    cursor: pointer;
+}
+
+/*About us*/
+
+.aboutus-section {
+    padding: 90px 0px;
+    min-height: 81vh;
+}
+
+.aboutus-title {
+    font-size: 2em;
+    letter-spacing: 0;
+    line-height: 32px;
+    margin: 0 0 39px;
+    padding: 10px 0 11px;
+    position: relative;
+    text-transform: uppercase;
+    color: #000;
+}
+
+.aboutus-title::after {
+    background: #fdb801 none repeat scroll 0 0;
+    bottom: 0;
+    content: "";
+    height: 2px;
+    left: 0;
+    position: absolute;
+    width: 54px;
+}
+
+.aboutus-text {
+    color: #606060;
+    font-size: 1em;
+    margin: 0 0 35px;
+}
+
+a:hover, a:active {
+    color: #ffb901;
+    text-decoration: none;
+    outline: 0;
+}
+
+.aboutus-more {
+    border: 1px solid #fdb801;
+    border-radius: 25px;
+    color: #fdb801;
+    display: inline-block;
+    font-size: 1em;
+    font-weight: 700;
+    letter-spacing: 0;
+    padding: 7px 7px;
+    text-transform: uppercase;
+}
+
+.feature .feature-box .feature-content {
+    width: 100%;
+}
+
+.feature .feature-box .feature-content h4 {
+    color: #0f0f0f;
+    font-size: 1.5em;
+    letter-spacing: 0;
+    margin: 0 0 5px;
+    padding-top: 10px;
+}
+
+.feature .feature-box .feature-content p {
+    color: #606060;
+    font-size: 1em;
+}
+
+/*Vertical line*/
+
+.line {
+    border-left: 1px solid black;
+    height: 100%;
+    color: #0f0f0f;
+}
+
+.col-line {
+    width: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* RUBRIEKENMOBILE */
+
+.rubriekenmobilecontent > a {
+    display: block;
+    color: white;
+    text-decoration: none;
+}
+
+.rubriekenmobilecontent > a:hover {
+    color: #FFAD4F;
+}
+
+.col-lg-2 {
+    padding: 0;
+}
+
+
+@media only screen and (min-device-width: 991px) {
+    .rubriekenmobile {
+        display: none;
+    }
+}
+
+/* RUBRIEKEN DESKTOP */
+
+.desktoprubrieken {
+    width: 100%;
+    height: 100%;
+    margin: 5% 0 5% 0;
+    border-radius: 0 20px 20px 0;
+    display: block;
+    overflow: auto;
+}
+
+
+.desktoprubrieken label:hover {
+    color: white;
+}
+
+.desktoprubrieken label {
+    color: black;
+}
+
+.desktoprubrieken > * {
+    margin-left: 10%;
+}
+
+.desktoprubriekenform > button {
+    width: 100%;
+}
+
+@media only screen and (max-device-width: 991px) {
+    .desktoprubriekenmedia {
+        display: none;
+    }
 }
 
 .input-details{
