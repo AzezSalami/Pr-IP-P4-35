@@ -302,7 +302,7 @@ body {
     margin-top: 5%;
     margin-bottom: 5%;
     width: 100%;
-    min-height: 68vh;
+    min-height: 67.9vh;
 }
 
 .contact-form .form-control {
@@ -333,6 +333,12 @@ body {
     margin-top: -18%;
     text-align: center;
     color: #0062cc;
+}
+
+.contact-text {
+    width: 100%;
+    min-height: 176px;
+    max-height: 265px
 }
 
 .contact-form .btnContact {

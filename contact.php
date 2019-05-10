@@ -75,8 +75,7 @@ require "includes/header.php";
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <textarea name="txtMsg" class="form-control" placeholder="Uw bericht *"
-                                              style="width: 100%; height: 176px;"></textarea>
+                                    <textarea name="txtMsg" class="form-control contact-text" placeholder="Uw bericht *"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" name="btnSubmit" class="btn btn-details float-right"
