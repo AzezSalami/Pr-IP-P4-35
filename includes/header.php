@@ -3,7 +3,7 @@
 	<div class="container-fluid bg-orange py-2">
 		<div class="row">
 			<div class="col-lg-2">
-				<a href="homepage.php">
+				<a href="index.php">
 					<img src="images/logo.png" class="logo my-1 mx-auto d-block" alt="logo">
 				</a>
 			</div>
@@ -32,7 +32,7 @@
 			<div class="col-lg-8 mx-2 mt-auto">
 				<ul class="nav nav-tabs nav-fill">
                     <?php
-                    $pages = ["Home" => "homepage.php", "Veilingen" => "veilingen.php", "Over ons" => "overons.php", "Contact" => "contact.php"];
+                    $pages = ["Home" => "index.php", "Veilingen" => "veilingen.php", "Over ons" => "overons.php", "Contact" => "contact.php"];
                     $html = "";
                     foreach ($pages as $page => $link) {
                         $html .= "<li class='nav-item'><a class='nav-link";
