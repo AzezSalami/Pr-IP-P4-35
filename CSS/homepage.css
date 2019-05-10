@@ -343,3 +343,60 @@ body {
     border: none;
     cursor: pointer;
 }
+
+/* RUBRIEKENMOBILE */
+
+.rubriekenmobilecontent > a {
+    display: block;
+    color: white;
+    text-decoration: none;
+}
+
+.rubriekenmobilecontent > a:hover {
+    color: #FFAD4F;
+}
+
+.col-lg-2 {
+    padding: 0;
+}
+
+
+@media only screen and (min-device-width: 991px) {
+    .rubriekenmobile {
+        display: none;
+    }
+}
+
+/* RUBRIEKEN DESKTOP */
+
+.desktoprubrieken {
+    width: 100%;
+    height: 100%;
+    margin: 5% 0 5% 0;
+    border-radius: 0 20px 20px 0;
+    display: block;
+    overflow: auto;
+}
+
+
+.desktoprubrieken label:hover {
+    color: white;
+}
+
+.desktoprubrieken label {
+    color: black;
+}
+
+.desktoprubrieken > * {
+    margin-left: 10%;
+}
+
+.desktoprubriekenform > button {
+    width: 100%;
+}
+
+@media only screen and (max-device-width: 991px) {
+    .desktoprubriekenmedia {
+        display: none;
+    }
+}
