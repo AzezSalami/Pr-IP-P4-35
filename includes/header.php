@@ -25,7 +25,7 @@
 		</div>
 	</div>
 	<nav class="bg-yellow">
-		<div class="row">
+		<div class="row pt-2">
 			<div class="col-lg-2">
 				<span class="sidenavhamburger" onclick="openNav()">&#9776;</span>
 			</div>

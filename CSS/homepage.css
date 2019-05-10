@@ -37,6 +37,10 @@ nav > div.row, main > div.row {
     background: #000000;
 }
 
+.text-orange{
+    color: #FFAD4F;
+}
+
 .btn {
     border-color: #1484B3;
 }
@@ -291,4 +295,9 @@ body {
 }
 .modal-title {
     padding-left: 37px;
+}
+
+.input-details{
+    border:1px solid;
+    color:#FFAD4F;
 }
