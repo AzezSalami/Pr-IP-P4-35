@@ -47,36 +47,49 @@ require "includes/header.php";
 ?>
 
 <main>
-    <div class="container contact-form">
-        <div class="contact-image">
-            <img src="images/logo-rond.png" alt="rocket_contact"/>
+    <div class="row">
+        <div class="col-lg-2">
         </div>
-        <form method="post">
-            <h3>Stuur ons een bericht</h3>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <input type="text" name="txtName" class="form-control" placeholder="Uw naam *" value="" />
+        <div class="col-lg-8">
+            <div class="container">
+                <div class="container contact-form">
+                    <div class="contact-image">
+                        <img src="images/logo-rond.png" alt="rocket_contact"/>
                     </div>
-                    <div class="form-group">
-                        <input type="text" name="txtEmail" class="form-control" placeholder="Uw email *" value="" />
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="txtPhone" class="form-control" placeholder="Uw telefoonnummer *" value="" />
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" name="btnSubmit" class="btnContact" value="Verzend bericht" />
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <textarea name="txtMsg" class="form-control" placeholder="Uw bericht *" style="width: 100%; height: 176px;"></textarea>
-                    </div>
+                    <form method="post">
+                        <h3>Stuur ons een bericht</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="txtName" class="form-control" placeholder="Uw naam *"
+                                           value=""/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="txtEmail" class="form-control" placeholder="Uw email *"
+                                           value=""/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="txtPhone" class="form-control"
+                                           placeholder="Uw telefoonnummer *" value=""/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <textarea name="txtMsg" class="form-control contact-text" placeholder="Uw bericht *"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" name="btnSubmit" class="btn btn-details float-right"
+                                           value="Verzend bericht"/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
-
+    <div class="col-lg-2">
+    </div>
 </main>
 <?php
 include_once "includes/footer.php";
