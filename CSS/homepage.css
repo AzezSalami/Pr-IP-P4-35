@@ -302,7 +302,7 @@ body {
     margin-top: 5%;
     margin-bottom: 5%;
     width: 100%;
-    min-height: 67.9vh;
+    min-height: 20vh;
 }
 
 .contact-form .form-control {
@@ -338,7 +338,11 @@ body {
 .contact-text {
     width: 100%;
     min-height: 176px;
-    max-height: 265px
+    max-height: 260px
+}
+
+.col-md-6-contact {
+    width: 100vw;
 }
 
 .contact-form .btnContact {
@@ -433,14 +437,9 @@ a:hover, a:active {
 
 /*Vertical line*/
 
-.line {
-    border-left: 1px solid black;
-    height: 100%;
-    color: #0f0f0f;
-}
-
 .col-line {
     width: 1px;
-    padding-left: 10px;
-    padding-right: 10px;
+    /*padding-left: 10px;*/
+    /*padding-right: 10px;*/
+    background-color: #FFAD4F;
 }

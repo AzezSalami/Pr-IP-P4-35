@@ -59,7 +59,7 @@ require "includes/header.php";
                     <form method="post">
                         <h3>Stuur ons een bericht</h3>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6-contact">
                                 <div class="form-group">
                                     <input type="text" name="txtName" class="form-control" placeholder="Uw naam *"
                                            value=""/>
@@ -72,15 +72,17 @@ require "includes/header.php";
                                     <input type="text" name="txtPhone" class="form-control"
                                            placeholder="Uw telefoonnummer *" value=""/>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <textarea name="txtMsg" class="form-control contact-text" placeholder="Uw bericht *"></textarea>
+                                    <textarea name="txtMsg" class="form-control contact-text"
+                                              placeholder="Uw bericht *"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" name="btnSubmit" class="btn btn-details float-right"
+                                    <input type="submit" name="btnSubmit" class="btn btn-details"
                                            value="Verzend bericht"/>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+
                             </div>
                         </div>
                     </form>

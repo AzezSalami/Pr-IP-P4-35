@@ -220,8 +220,8 @@
 
 <div id="mySidenav" class="sidenav bg-yellow">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a class="hoofdrubriek" href="#">Home</a>
-    <a class="hoofdrubriek" href="#">Account</a>
-    <a class="hoofdrubriek" href="#">Verkoop</a>
-    <a class="hoofdrubriek" href="#">Contact</a>
+    <a class="hoofdrubriek" href="homepage.php">Home</a>
+    <a class="hoofdrubriek" href="veilingen.php">Veilingen</a>
+    <a class="hoofdrubriek" href="overons.php">Over ons</a>
+    <a class="hoofdrubriek" href="contact.php">Contact</a>
 </div>
