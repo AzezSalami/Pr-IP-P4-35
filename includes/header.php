@@ -1,17 +1,19 @@
 <header>
+
 	<span class="sidenavhamburger mr-2" onclick="openNav()">&#9776;</span>
 	<div class="container-fluid bg-orange py-2">
+        <?php require_once 'includes/functions.php';?>
 		<div class="row">
 			<div class="col-lg-2">
 				<a href="homepage.php">
 					<img src="images/logo.png" class="logo my-1 mx-auto d-block" alt="logo">
 				</a>
 			</div>
-					<form method="get" class="col-10 col-lg-8 d-flex align-items-center mb-1 px-2">
+					<form action="zoeken.php" method="get" class="col-10 col-lg-8 d-flex align-items-center mb-1 px-2">
 						<div class="input-group">
 							<input type="text" class="form-control" placeholder="zoeken" name="search">
 							<div class="input-group-append">
-								<button class="btn btn-outline-secondary bg-white" type="button" id="searchbutton"><i
+								<button class="btn btn-outline-secondary bg-white" type="submit" id="searchbutton"><i
 											class="fas fa-search"></i>
 								</button>
 							</div>
