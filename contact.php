@@ -33,11 +33,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
     <link rel="stylesheet" href="CSS/homepage.css" type="text/css">
 
-
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body class="bg-gray">
 
@@ -46,17 +47,34 @@ require "includes/header.php";
 ?>
 
 <main>
-    <div class="row">
-        <div class="col-lg-2">
-            <!--            <div class="container text-center my-2">-->
-            <!--                <input class="bg-gray text-center" type="text" id="amount" readonly-->
-            <!--                       style="border:0; color:#f6931f; font-weight:bold;">-->
-            <!--                <div class="my-2" id="slider-range"></div>-->
-            <!--            </div>-->
+    <div class="container contact-form">
+        <div class="contact-image">
+            <img src="images/logo-rond.png" alt="rocket_contact"/>
         </div>
-        <div class="col-lg-2">
-            <!---->
-        </div>
+        <form method="post">
+            <h3>Stuur ons een bericht</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" name="txtName" class="form-control" placeholder="Uw naam *" value="" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="txtEmail" class="form-control" placeholder="Uw email *" value="" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="txtPhone" class="form-control" placeholder="Uw telefoonnummer *" value="" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="btnSubmit" class="btnContact" value="Verzend bericht" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <textarea name="txtMsg" class="form-control" placeholder="Uw bericht *" style="width: 100%; height: 176px;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 
 </main>
