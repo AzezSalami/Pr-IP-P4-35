@@ -37,6 +37,10 @@ nav > div.row, main > div.row {
     background: #000000;
 }
 
+.text-orange{
+    color: #FFAD4F;
+}
+
 .btn {
     border-color: #1484B3;
 }
@@ -337,7 +341,11 @@ body {
 .contact-text {
     width: 100%;
     min-height: 176px;
-    max-height: 265px
+    max-height: 260px
+}
+
+.col-md-6-contact {
+    width: 100vw;
 }
 
 .contact-form .btnContact {
@@ -365,7 +373,7 @@ body {
 
 .aboutus-section {
     padding: 90px 0px;
-    min-height: 81vh;
+    min-height: 80.2vh;
 }
 
 .aboutus-title {
@@ -432,16 +440,9 @@ a:hover, a:active {
 
 /*Vertical line*/
 
-.line {
-    border-left: 1px solid black;
-    height: 100%;
-    color: #0f0f0f;
-}
-
 .col-line {
     width: 1px;
-    padding-left: 10px;
-    padding-right: 10px;
+    background-color: #FFAD4F;
 }
 
 /* RUBRIEKENMOBILE */
@@ -510,4 +511,9 @@ a:hover, a:active {
     .desktoprubriekenmedia {
         display: none;
     }
+}
+
+.input-details{
+    border:1px solid;
+    color:#FFAD4F;
 }

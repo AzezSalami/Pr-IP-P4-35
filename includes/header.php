@@ -3,7 +3,7 @@
 	<div class="container-fluid bg-orange py-2">
 		<div class="row">
 			<div class="col-lg-2">
-				<a href="homepage.php">
+				<a href="index.php">
 					<img src="images/logo.png" class="logo my-1 mx-auto d-block" alt="logo">
 				</a>
 			</div>
@@ -25,14 +25,14 @@
 		</div>
 	</div>
 	<nav class="bg-yellow">
-		<div class="row">
+		<div class="row pt-2">
 			<div class="col-lg-2">
 				<span class="sidenavhamburger" onclick="openNav()">&#9776;</span>
 			</div>
 			<div class="col-lg-8 mx-2 mt-auto">
 				<ul class="nav nav-tabs nav-fill">
                     <?php
-                    $pages = ["Home" => "homepage.php", "Veilingen" => "veilingen.php", "Over ons" => "overons.php", "Contact" => "contact.php"];
+                    $pages = ["Home" => "index.php", "Veilingen" => "veilingen.php", "Over ons" => "overons.php", "Contact" => "contact.php"];
                     $html = "";
                     foreach ($pages as $page => $link) {
                         $html .= "<li class='nav-item'><a class='nav-link";
@@ -63,7 +63,7 @@
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="container-fluid">
-						<form class="form-signin" method="POST" action="" name="inloggen">
+						<form class="form-signin" method="POST" name="inloggen">
 							<div class="form-label-group">
 								<input class="form-control" placeholder="gebruikersnaam" type="text"
 								       name="gebruikersnaam"
@@ -114,7 +114,7 @@
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="container-fluid">
-						<form class="form-signin" method="POST" action="" name="registreren">
+						<form class="form-signin" method="POST" name="registreren">
 							<div class="row">
 								<div class="col">
 									<div class="form-label-group">
@@ -220,8 +220,8 @@
 
 <div id="mySidenav" class="sidenav bg-yellow">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a class="hoofdrubriek" href="#">Home</a>
-    <a class="hoofdrubriek" href="#">Account</a>
-    <a class="hoofdrubriek" href="#">Verkoop</a>
-    <a class="hoofdrubriek" href="#">Contact</a>
+    <a class="hoofdrubriek" href="index.php">Home</a>
+    <a class="hoofdrubriek" href="veilingen.php">Veilingen</a>
+    <a class="hoofdrubriek" href="overons.php">Over ons</a>
+    <a class="hoofdrubriek" href="contact.php">Contact</a>
 </div>

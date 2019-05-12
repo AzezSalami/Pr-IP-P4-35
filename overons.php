@@ -72,7 +72,6 @@ require "includes/header.php";
                                 </div>
                             </div>
                             <div class="col-line">
-                                <div class="line"></div>
                             </div>
                             <div class="col-lg">
                                 <div class="feature">
