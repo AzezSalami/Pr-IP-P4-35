@@ -14,13 +14,12 @@ function cleanUpUserInput($input)
     return $input;
 }
 
-function connectToDatabase()
-{
-    $hostnaam = "51.38.112.111";
-    $databasenaam = "groep35";
-    $gebruikersnaam = "iproject35";
-    $wachtwoord = "iProject35";
-    global $pdo;
+    function connectToDatabase() {
+        $hostnaam = "51.38.112.111";
+        $databasenaam = "groep35";
+        $gebruikersnaam = "iproject35";
+        $wachtwoord = "iProject35";
+        global $pdo;
 
         try {
             $pdo = new PDO ("sqlsrv:Server=$hostnaam;Database=$databasenaam;ConnectionPooling=0", "$gebruikersnaam", "$wachtwoord");
@@ -112,7 +111,6 @@ function login()
             $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
             if ($login_query->fetch()['user'] == $username) {
                 $_SESSION["username"] = $username;
-                echo "You have been logged in<br><br>";
             } else {
                 $loginMessage = "Please check your inputs!<br><br>";
             }
