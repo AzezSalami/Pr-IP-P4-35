@@ -43,7 +43,7 @@ require "functions.php";
 			<div class="col-lg-8 mx-2 mt-auto">
 				<ul class="nav nav-tabs nav-fill">
                     <?php
-                    $pages = ["Home" => "index.php", "Veilingen" => "veilingen.php", "Over ons" => "overons.php", "Contact" => "contact.php"];
+                    $pages = ["Home" => "index.php", "Veilingen" => "veilingen.php", "Over ons" => "overons.php", "Contact" => "contact.php", "Hulp" => "hulp.php"];
                     $html = "";
                     foreach ($pages as $page => $link) {
                         $html .= "<li class='nav-item'><a class='nav-link";
