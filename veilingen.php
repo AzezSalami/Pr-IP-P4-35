@@ -55,7 +55,7 @@
 				</div>
 				<div class="col-lg-8">
 					<div class="container">
-                        <?php search(2,true);?>
+                        <?php search();?>
 					</div>
 				</div>
 				<div class="col-lg-2">

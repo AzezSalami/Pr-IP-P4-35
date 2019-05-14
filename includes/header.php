@@ -14,7 +14,7 @@ require "functions.php";
 			</div>
 					<form action="veilingen.php" method="get" class="col-10 col-lg-8 d-flex align-items-center mb-1 px-2">
 						<div class="input-group">
-							<input type="text" class="form-control" placeholder="Zoeken" name="search">
+							<input type="text" class="form-control" placeholder="Zoeken" name="search" <?php echo (isset($_GET['search']) ? "value='" . $_GET['search'] . "'" : "")?>>
 							<div class="input-group-append">
 								<button class="btn btn-outline-secondary bg-white" type="submit" id="searchbutton"><i
 											class="fas fa-search"></i>
