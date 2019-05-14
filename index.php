@@ -68,7 +68,7 @@
                             <a href="#">Hoofdrubriek3</a>
                             <a href="#">Hoofdrubriek4</a>
                             <a href="#">Hoofdrubriek5</a>
-                            <a href="#">Hoofdrubriek6</a>
+                            <a href="#">Hoofdrubriek6</a><!---->
                         </div>
                     </div>
                 </div>
