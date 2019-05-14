@@ -223,8 +223,9 @@ require "functions.php";
 
 <div id="mySidenav" class="sidenav bg-yellow">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a class="hoofdrubriek" href="index.php">Home</a>
-    <a class="hoofdrubriek" href="veilingen.php">Veilingen</a>
-    <a class="hoofdrubriek" href="overons.php">Over ons</a>
-    <a class="hoofdrubriek" href="contact.php">Contact</a>
+    <a class="navigatiemobiel" href="index.php">Home</a>
+    <a class="navigatiemobiel" href="veilingen.php">Veilingen</a>
+    <a class="navigatiemobiel" href="overons.php">Over ons</a>
+    <a class="navigatiemobiel" href="contact.php">Contact</a>
+    <a class="navigatiemobiel" href="hulp.php">Hulp</a>
 </div>

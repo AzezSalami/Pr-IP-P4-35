@@ -239,6 +239,12 @@ body {
     font-size: 3rem;
 }
 
+.sidenav .navigatiemobiel {
+    text-align: center;
+    padding: 10px;
+    font-size: 3rem;
+}
+
 @media screen and (max-height: 450px) {
     .sidenav {
         padding-top: 1%;
@@ -545,6 +551,7 @@ a:hover, a:active {
     box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
 
 }
+
 .faq-nav .nav-link {
     position: relative;
     display: block;
@@ -557,19 +564,23 @@ a:hover, a:active {
     color: #616161;
     transition: background-color 0.2s ease;
 }
+
 .faq-nav .nav-link:hover {
     background-color: #f6f6f6;
 }
+
 .faq-nav .nav-link.active {
     background-color: #f6f6f6;
     font-weight: 700;
     color: rgba(0, 0, 0, 0.87);
 }
+
 .faq-nav .nav-link:last-of-type {
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     border-bottom: 0;
 }
+
 .faq-nav .nav-link i.mdi {
     margin-right: 5px;
     font-size: 18px;
@@ -579,17 +590,21 @@ a:hover, a:active {
 .tab-content {
     box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
 }
+
 .tab-content .card {
     border-radius: 0;
 }
+
 .tab-content .card-header {
     padding: 15px 16px;
     border-radius: 0;
     background-color: #f6f6f6;
 }
+
 .tab-content .card-header h5 {
     margin: 0;
 }
+
 .tab-content .card-header h5 button {
     display: block;
     width: 100%;
@@ -600,12 +615,15 @@ a:hover, a:active {
     text-align: left;
     white-space: normal;
 }
+
 .tab-content .card-header h5 button:hover, .tab-content .card-header h5 button:focus, .tab-content .card-header h5 button:active, .tab-content .card-header h5 button:hover:active {
     text-decoration: none;
 }
+
 .tab-content .card-body p {
     color: #616161;
 }
+
 .tab-content .card-body p:last-of-type {
     margin: 0;
 }
