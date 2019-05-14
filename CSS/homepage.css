@@ -378,7 +378,7 @@ body {
 /*About us*/
 
 .aboutus-section {
-    padding: 90px 0px;
+    padding: 90px 0;
     min-height: 80.2vh;
 }
 
@@ -492,25 +492,9 @@ a:hover, a:active {
     overflow: auto;
 }
 
-
-.desktoprubrieken label:hover {
-    color: white;
-}
-
-.desktoprubrieken label {
-    color: black;
-}
-
 .desktoprubrieken > * {
     margin-left: 10%;
-}
-
-.desktoprubriekenform > button {
-    width: 100%;
-}
-
-.desktoprubriekenform > label {
-    display: block;
+    margin-right: 10%;
 }
 
 @media only screen and (max-device-width: 991px) {
@@ -528,11 +512,27 @@ a:hover, a:active {
     width: 90%;
 }
 
-.dropdown-menu a:hover {
+.dropright button {
+    border-style: none;
+    background-color: #FFD042;
+    color: black;
+}
 
-    background-color: #4FCBFF;
+.dropright button:hover {
+    background-color: #FFD042;
     color: white;
 }
+
+.dropdown-menu a {
+    color: black;
+}
+
+.dropdown-menu a:hover {
+    color: #FFD042;
+}
+
+
+/* ?? */
 
 .btn-account {
     width: 70%;
