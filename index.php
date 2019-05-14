@@ -68,7 +68,7 @@
                             <a href="#">Hoofdrubriek3</a>
                             <a href="#">Hoofdrubriek4</a>
                             <a href="#">Hoofdrubriek5</a>
-                            <a href="#">Hoofdrubriek6</a>
+                            <a href="#">Hoofdrubriek6</a><!---->
                         </div>
                     </div>
                 </div>
@@ -77,59 +77,51 @@
                 <div class="desktoprubrieken bg-yellow">
                     <h2>Filters</h2><br>
                     <div class="btn-group dropright">
-                        <button type="button" class="btn bg-yellow">
-                            hoofdrubriek 1
-                        </button>
-                        <button type="button" class=" btn bg-yellow dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">hoofdrubriek 1</span>
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Hoofdrubriek2
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">subrubriek 1</a>
-                            <a class="dropdown-item" href="#">subrubriek 2</a>
-                            <a class="dropdown-item" href="#">subrubriek 3</a>
-                            <a class="dropdown-item" href="#">subrubriek 4</a>
+                            <a href="#">Subrubriek1</a>
+                            <a href="#">Subrubriek2</a>
+                            <a href="#">Subrubriek3</a>
+                            <a href="#">Subrubriek4</a>
+                            <a href="#">Subrubriek5</a>
                         </div>
                     </div>
                     <div class="btn-group dropright">
-                        <button type="button" class="btn bg-yellow">
-                            hoofdrubriek 2
-                        </button>
-                        <button type="button" class=" btn bg-yellow dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">hoofdrubriek 2</span>
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Hoofdrubriek3
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">subrubriek 1</a>
-                            <a class="dropdown-item" href="#">subrubriek 2</a>
-                            <a class="dropdown-item" href="#">subrubriek 3</a>
-                            <a class="dropdown-item" href="#">subrubriek 4</a>
+                            <a href="#">Subrubriek1</a>
+                            <a href="#">Subrubriek2</a>
+                            <a href="#">Subrubriek3</a>
+                            <a href="#">Subrubriek4</a>
+                            <a href="#">Subrubriek5</a>
                         </div>
                     </div>
                     <div class="btn-group dropright">
-                        <button type="button" class="btn bg-yellow">
-                            hoofdrubriek 3
-                        </button>
-                        <button type="button" class=" btn bg-yellow dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">hoofdrubriek 3</span>
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Hoofdrubriek4
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">subrubriek 1</a>
-                            <a class="dropdown-item" href="#">subrubriek 2</a>
-                            <a class="dropdown-item" href="#">subrubriek 3</a>
-                            <a class="dropdown-item" href="#">subrubriek 4</a>
+                            <a href="#">Subrubriek1</a>
+                            <a href="#">Subrubriek2</a>
+                            <a href="#">Subrubriek3</a>
+                            <a href="#">Subrubriek4</a>
+                            <a href="#">Subrubriek5</a>
                         </div>
                     </div>
                     <div class="btn-group dropright">
-                        <button type="button" class="btn bg-yellow">
-                            hoofdrubriek 4
-                        </button>
-                        <button type="button" class=" btn bg-yellow dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">hoofdrubriek 4</span>
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Hoofdrubriek5
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">subrubriek 1</a>
-                            <a class="dropdown-item" href="#">subrubriek 2</a>
-                            <a class="dropdown-item" href="#">subrubriek 3</a>
-                            <a class="dropdown-item" href="#">subrubriek 4</a>
+                            <a href="#">Subrubriek1</a>
+                            <a href="#">Subrubriek2</a>
+                            <a href="#">Subrubriek3</a>
+                            <a href="#">Subrubriek4</a>
+                            <a href="#">Subrubriek5</a>
                         </div>
                     </div>
                         <div class="range-filter container text-left my-2 pl-0">
@@ -150,207 +142,13 @@
                             </form>
                         </div><br>
                         <input type="submit" class="bg-lightblue btn mb-1" value="Pas filters toe">
-
                 </div>
             </div>
         </div>
             <div class="col-lg-8">
 	            <div class="container">
-		            <div class="row my-2">
-			            <div class="auction-article-large white col-lg m-2">
-				            <div class="row mt-3">
-					            <div class="col">
-						            <div class="col"><strong>[Titel]</strong></div>
-					            </div>
-					            <div class="col text-right">
-						            <div class="col"><strong>[Prijs]</strong></div>
-					            </div>
-				            </div>
-				            <div class="imageContainer row text-center">
-					            <div>
-						            <img class="mx-auto my-2" src="https://picsum.photos/id/340/1000/600"
-						                 alt="EA">
-					            </div>
-				            </div>
-				            <div class="row mb-3 auction-article-desc">
-					            <div class="col">
-						            <div class="col"> Beschrijving:</div>
-					            </div>
-					            <div class="row mx-3">
-						            <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing
-							            elit. Nunc molestie
-							            massa
-							            enim,
-							            eget pretium lorem accumsan id. Sed imperdiet, eros.
-						            </div>
-					            </div>
-					            <div class="col text-right">
-						            <button class="btn btn-details">Details</button>
-					            </div>
-				            </div>
-			            </div>
-			            <div class="auction-article-large white col-lg m-2">
-				            <div class="row mt-3">
-					            <div class="col">
-						            <div class="col"><strong>[Titel]</strong></div>
-					            </div>
-					            <div class="col text-right">
-						            <div class="col"><strong>[Prijs]</strong></div>
-					            </div>
-				            </div>
-				            <div class="imageContainer row text-center">
-					            <div>
-						            <img class="mx-auto my-2" src="https://picsum.photos/id/350/800/600" alt="EA">
-					            </div>
-				            </div>
-				            <div class="row mb-3">
-					            <div class="col">
-						            <div class="col"> Beschrijving:</div>
-					            </div>
-					            <div class="row mx-3">
-						            <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing
-							            elit. Nunc molestie
-							            massa
-							            enim,
-							            eget pretium lorem accumsan id. Sed imperdiet, eros.
-						            </div>
-					            </div>
-					            <div class="col text-right">
-						            <button class="btn btn-details">Details</button>
-					            </div>
-				            </div>
-			            </div>
-		            </div>
-		            <div class="row my-2">
-			            <div class="auction-article-small white row col-lg m-2">
-				            <div class="row mt-3">
-					            <div class="col">
-						            <div class="col"><strong>[Titel]</strong></div>
-					            </div>
-					            <div class="col text-right">
-						            <div class="col"><strong>[Prijs]</strong></div>
-					            </div>
-				            </div>
-				            <div class="imageContainer row text-center">
-					            <div>
-						            <img class="mx-auto my-2" src="https://picsum.photos/id/360/1200/600"
-						                 alt="EA">
-					            </div>
-				            </div>
-				            <div class="row mb-3">
-					            <div class="col">
-						            <div class="col"> Beschrijving:</div>
-					            </div>
-					            <div class="row mx-3">
-						            <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing
-							            elit. Nunc molestie
-							            massa
-							            enim,
-							            eget pretium lorem accumsan id. Sed imperdiet, eros.
-						            </div>
-					            </div>
-					            <div class="col text-right">
-						            <button class="btn btn-details">Details</button>
-					            </div>
-				            </div>
-			            </div>
-			            <div class="auction-article-small white row col-lg m-2">
-				            <div class="row mt-3">
-					            <div class="col">
-						            <div class="col"><strong>[Titel]</strong></div>
-					            </div>
-					            <div class="col text-right">
-						            <div class="col"><strong>[Prijs]</strong></div>
-					            </div>
-				            </div>
-				            <div class="imageContainer row text-center">
-					            <div>
-						            <img class="mx-auto my-2" src="https://picsum.photos/id/370/600/400"
-						                 alt="EA">
-					            </div>
-				            </div>
-				            <div class="row mb-3">
-					            <div class="col">
-						            <div class="col"> Beschrijving:</div>
-					            </div>
-					            <div class="row mx-3">
-						            <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing
-							            elit. Nunc molestie
-							            massa
-							            enim,
-							            eget pretium lorem accumsan id. Sed imperdiet, eros.
-						            </div>
-					            </div>
-					            <div class="col text-right">
-						            <button class="btn btn-details">Details</button>
-					            </div>
-				            </div>
-			            </div>
-			            <div class="auction-article-small white row col-lg m-2">
-				            <div class="row mt-3">
-					            <div class="col">
-						            <div class="col"><strong>[Titel]</strong></div>
-					            </div>
-					            <div class="col text-right">
-						            <div class="col"><strong>[Prijs]</strong></div>
-					            </div>
-				            </div>
-				            <div class="imageContainer row text-center">
-					            <div>
-						            <img class="mx-auto my-2" src="https://picsum.photos/id/380/800/600"
-						                 alt="EA">
-					            </div>
-				            </div>
-				            <div class="row mb-3">
-					            <div class="col">
-						            <div class="col"> Beschrijving:</div>
-					            </div>
-					            <div class="row mx-3">
-						            <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing
-							            elit. Nunc molestie
-							            massa
-							            enim,
-							            eget pretium lorem accumsan id. Sed imperdiet, eros.
-						            </div>
-					            </div>
-					            <div class="col text-right">
-						            <button class="btn btn-details">Details</button>
-					            </div>
-				            </div>
-			            </div>
-			            <div class="auction-article-small white row col-lg m-2">
-				            <div class="row mt-3">
-					            <div class="col">
-						            <div class="col"><strong>[Titel]</strong></div>
-					            </div>
-					            <div class="col text-right">
-						            <div class="col"><strong>[Prijs]</strong></div>
-					            </div>
-				            </div>
-				            <div class="imageContainer row text-center">
-					            <div>
-						            <img class="mx-auto my-2" src="https://picsum.photos/id/390/1000/600"
-						                 alt="EA">
-					            </div>
-				            </div>
-				            <div class="row mb-3">
-					            <div class="col">
-						            <div class="col"> Beschrijving:</div>
-					            </div>
-					            <div class="row mx-3">
-						            <div class="col"> Lorem ipsum dolor sit amet, consectetur adipiscing
-							            elit. Nunc molestie
-							            massa
-							            enim,
-							            eget pretium lorem accumsan id. Sed imperdiet, eros.
-						            </div>
-					            </div>
-					            <div class="col text-right">
-						            <button class="btn btn-details">Details</button>
-					            </div>
-				            </div>
-			            </div>
-		            </div>
+                    <?php search(2, true);?>
+                    <?php search(4);?>
 	            </div>
             </div>
             <div class="col-lg-2">
