@@ -517,3 +517,17 @@ a:hover, a:active {
     border:1px solid;
     color:#FFAD4F;
 }
+
+.range-filter{
+    width: 90%;
+}
+
+.dropdown-menu a:hover{
+
+    background-color: #4FCBFF;
+    color: white;
+}
+
+.btn-account{
+    width: 70%;
+}

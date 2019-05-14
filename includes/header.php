@@ -20,9 +20,15 @@
 						</div>
 					</form>
 				<div class="col-2 my-auto text-center">
-					<button type="button" class="bg-lightblue btn mb-1" data-toggle="modal" data-target="#loginMenu"><i
-								class="fas fa-user"></i><span id="aanmeldTekst"> &nbsp; Aanmelden</span>
-					</button>
+                    <div class="dropdown">
+                        <button class="btn btn-account bg-lightblue dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user"></i> &nbsp; account
+                        </button>
+                        <div class="dropdown-menu bg-lightblue">
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#loginMenu">inloggen</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#registerMenu">registreren</a>
+                        </div>
+                    </div>
 				</div>
 		</div>
 	</div>
