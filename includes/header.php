@@ -9,7 +9,7 @@
 					<img src="images/logo.png" class="logo my-1 mx-auto d-block" alt="logo">
 				</a>
 			</div>
-					<form action="zoeken.php" method="get" class="col-10 col-lg-8 d-flex align-items-center mb-1 px-2">
+					<form action="veilingen.php" method="get" class="col-10 col-lg-8 d-flex align-items-center mb-1 px-2">
 						<div class="input-group">
 							<input type="text" class="form-control" placeholder="Zoeken" name="search">
 							<div class="input-group-append">
