@@ -3,6 +3,7 @@ require "functions.php";
 ?>
 
 <header>
+
 	<span class="sidenavhamburger mr-2" onclick="openNav()">&#9776;</span>
 	<div class="container-fluid bg-orange py-2">
 		<div class="row">
@@ -11,11 +12,11 @@ require "functions.php";
 					<img src="images/logo.png" class="logo my-1 mx-auto d-block" alt="logo">
 				</a>
 			</div>
-					<form method="get" class="col-10 col-lg-8 d-flex align-items-center mb-1 px-2">
+					<form action="veilingen.php" method="get" class="col-10 col-lg-8 d-flex align-items-center mb-1 px-2">
 						<div class="input-group">
 							<input type="text" class="form-control" placeholder="Zoeken" name="search">
 							<div class="input-group-append">
-								<button class="btn btn-outline-secondary bg-white" type="button" id="searchbutton"><i
+								<button class="btn btn-outline-secondary bg-white" type="submit" id="searchbutton"><i
 											class="fas fa-search"></i>
 								</button>
 							</div>
@@ -67,7 +68,7 @@ require "functions.php";
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="container-fluid">
-						<form class="form-signin" method="POST">
+						<form class="form-signin" method="POST" name="inloggen">
 							<div class="form-label-group">
 
 								<input class="form-control" placeholder="gebruikersnaam" type="text"
@@ -119,7 +120,7 @@ require "functions.php";
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="container-fluid">
-						<form class="form-signin" method="POST" action="" name="registreren">
+						<form class="form-signin" method="POST" name="registreren">
 							<div class="row">
 								<div class="col">
 									<div class="form-label-group">
@@ -216,7 +217,7 @@ require "functions.php";
 
 <div id="mySidenav" class="sidenav bg-yellow">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a class="hoofdrubriek" href="homepage.php">Home</a>
+    <a class="hoofdrubriek" href="index.php">Home</a>
     <a class="hoofdrubriek" href="veilingen.php">Veilingen</a>
     <a class="hoofdrubriek" href="overons.php">Over ons</a>
     <a class="hoofdrubriek" href="contact.php">Contact</a>
