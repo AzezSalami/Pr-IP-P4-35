@@ -76,23 +76,63 @@
             <div class="desktoprubriekenmedia">
                 <div class="desktoprubrieken bg-yellow">
                     <h2>Filters</h2><br>
-                    <form class="desktoprubriekenform" method="get" action="#">
-                        <label for="hoofdrubriek1">
-                            <input type="checkbox" value="hoofdrubriek1" id="hoofdrubriek1" name="hoofdrubriek1">
-                            Hoofdrubriek1</label>
-                        <label for="hoofdrubriek2">
-                            <input type="checkbox" value="hoofdrubriek2" id="hoofdrubriek2" name="hoofdrubriek2">
-                            Hoofdrubriek2</label>
-                        <label for="hoofdrubriek3">
-                            <input type="checkbox" value="hoofdrubriek3" id="hoofdrubriek3" name="hoofdrubriek3">
-                            Hoofdrubriek3</label>
-                        <label for="hoofdrubriek4">
-                            <input type="checkbox" value="hoofdrubriek4" id="hoofdrubriek4" name="hoofdrubriek4">
-                            Hoofdrubriek4</label>
-                        <label for="hoofdrubriek5">
-                            <input type="checkbox" value="hoofdrubriek5" id="hoofdrubriek5" name="hoofdrubriek5">
-                            Hoofdrubriek5</label><br>
-                        <div class="container text-left my-2 pl-0">
+                    <div class="btn-group dropright">
+                        <button type="button" class="btn bg-yellow">
+                            hoofdrubriek 1
+                        </button>
+                        <button type="button" class=" btn bg-yellow dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">hoofdrubriek 1</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">subrubriek 1</a>
+                            <a class="dropdown-item" href="#">subrubriek 2</a>
+                            <a class="dropdown-item" href="#">subrubriek 3</a>
+                            <a class="dropdown-item" href="#">subrubriek 4</a>
+                        </div>
+                    </div>
+                    <div class="btn-group dropright">
+                        <button type="button" class="btn bg-yellow">
+                            hoofdrubriek 2
+                        </button>
+                        <button type="button" class=" btn bg-yellow dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">hoofdrubriek 2</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">subrubriek 1</a>
+                            <a class="dropdown-item" href="#">subrubriek 2</a>
+                            <a class="dropdown-item" href="#">subrubriek 3</a>
+                            <a class="dropdown-item" href="#">subrubriek 4</a>
+                        </div>
+                    </div>
+                    <div class="btn-group dropright">
+                        <button type="button" class="btn bg-yellow">
+                            hoofdrubriek 3
+                        </button>
+                        <button type="button" class=" btn bg-yellow dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">hoofdrubriek 3</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">subrubriek 1</a>
+                            <a class="dropdown-item" href="#">subrubriek 2</a>
+                            <a class="dropdown-item" href="#">subrubriek 3</a>
+                            <a class="dropdown-item" href="#">subrubriek 4</a>
+                        </div>
+                    </div>
+                    <div class="btn-group dropright">
+                        <button type="button" class="btn bg-yellow">
+                            hoofdrubriek 4
+                        </button>
+                        <button type="button" class=" btn bg-yellow dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">hoofdrubriek 4</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">subrubriek 1</a>
+                            <a class="dropdown-item" href="#">subrubriek 2</a>
+                            <a class="dropdown-item" href="#">subrubriek 3</a>
+                            <a class="dropdown-item" href="#">subrubriek 4</a>
+                        </div>
+                    </div>
+                        <div class="range-filter container text-left my-2 pl-0">
                             <form method="post" action="...">
                                 <p class="font-weight-bold">prijs:</p>
                                 <div class="row">
@@ -110,7 +150,7 @@
                             </form>
                         </div><br>
                         <input type="submit" class="bg-lightblue btn mb-1" value="Pas filters toe">
-                    </form>
+
                 </div>
             </div>
         </div>

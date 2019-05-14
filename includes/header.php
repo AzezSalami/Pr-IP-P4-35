@@ -1,8 +1,11 @@
+<?php
+require "functions.php";
+?>
+
 <header>
 
 	<span class="sidenavhamburger mr-2" onclick="openNav()">&#9776;</span>
 	<div class="container-fluid bg-orange py-2">
-        <?php require_once 'includes/functions.php';?>
 		<div class="row">
 			<div class="col-lg-2">
 				<a href="index.php">
@@ -20,9 +23,15 @@
 						</div>
 					</form>
 				<div class="col-2 my-auto text-center">
-					<button type="button" class="bg-lightblue btn mb-1" data-toggle="modal" data-target="#loginMenu"><i
-								class="fas fa-user"></i><span id="aanmeldTekst"> &nbsp; Aanmelden</span>
-					</button>
+                    <div class="dropdown">
+                        <button class="btn btn-account bg-lightblue dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user"></i> &nbsp; account
+                        </button>
+                        <div class="dropdown-menu bg-lightblue">
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#loginMenu">inloggen</a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#registerMenu">registreren</a>
+                        </div>
+                    </div>
 				</div>
 		</div>
 	</div>
@@ -34,7 +43,7 @@
 			<div class="col-lg-8 mx-2 mt-auto">
 				<ul class="nav nav-tabs nav-fill">
                     <?php
-                    $pages = ["Home" => "index.php", "Veilingen" => "veilingen.php", "Over ons" => "overons.php", "Contact" => "contact.php"];
+                    $pages = ["Home" => "index.php", "Veilingen" => "veilingen.php", "Over ons" => "overons.php", "Contact" => "contact.php", "Hulp" => "hulp.php"];
                     $html = "";
                     foreach ($pages as $page => $link) {
                         $html .= "<li class='nav-item'><a class='nav-link";
@@ -61,34 +70,35 @@
 					<h4 class="modal-title text-dark">Inloggen</h4>
 					<button id="loginCloseButton" type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
-
+                <div class="col text-danger" ><?php login();confirm(); ?></div>
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="container-fluid">
 						<form class="form-signin" method="POST" name="inloggen">
 							<div class="form-label-group">
+
 								<input class="form-control" placeholder="gebruikersnaam" type="text"
-								       name="gebruikersnaam"
-								       id="gebruikersnaam"
+								       name="username"
+								       id="username"
 								       maxlength="20" required>
-								<label for="gebruikersnaam">Gebruikersnaam</label>
+								<label for="username">Gebruikersnaam</label>
 							</div>
 							<div class="form-label-group">
 								<input class="form-control" placeholder="wachtwoord"
-								       type="password" name="wachtwoord"
-								       id="wachtwoord"
+								       type="password" name="password"
+								       id="password"
 								       maxlength="50" required><br>
-								<label for="wachtwoord">Wachtwoord</label>
+								<label for="password">Wachtwoord</label>
 							</div>
 
 							<div class="row">
 								<div class="col">
-									<input class="btn bg-lightblue" type="submit" name="next"
+									<input class="btn bg-lightblue" type="submit" name="login"
 									       value="Inloggen">
 								</div>
 
 								<div class="col text-right">
-									<button onclick="document.getElementById('loginCloseButton').click()" type="button"
+									<button id="openRegister" onclick="document.getElementById('loginCloseButton').click()" type="button"
 									        class="btn bg-lightblue" data-toggle="modal"
 									        data-target="#registerMenu">
 										Nieuw account
@@ -112,7 +122,7 @@
 					<h4 class="modal-title text-dark">Registreren</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
-
+                <div class="col text-danger" ><?php register(); ?></div>
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="container-fluid">
@@ -120,59 +130,50 @@
 							<div class="row">
 								<div class="col">
 									<div class="form-label-group">
-										<input class="form-control" placeholder="voornaam" type="text"
-										       name="voornaam"
-										       id="voornaam" maxlength="20" required>
-										<label for="voornaam">Voornaam</label>
+										<input class="form-control" placeholder="Voornaam" type="text"
+										       name="firstname"
+										       id="firstname" maxlength="20" required>
+										<label for="firstname">Voornaam</label>
 									</div>
 								</div>
 								<div class="col">
 									<div class="form-label-group">
-										<input class="form-control" placeholder="achternaam" type="text"
-										       name="achternaam"
-										       id="achternaam"
+										<input class="form-control" placeholder="Achternaam" type="text"
+										       name="lastname"
+										       id="lastname"
 										       maxlength="20" required>
-										<label for="achternaam">Achternaam</label>
+										<label for="lastname">Achternaam</label>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col">
 									<div class="form-label-group">
-										<input class="form-control" placeholder="gebruikersnaam" type="text"
-										       name="reggebruikersnaam"
-										       id="reggebruikersnaam"
+										<input class="form-control" placeholder="Gebruikersnaam" type="text"
+										       name="reg_username"
+										       id="reg_username"
 										       maxlength="20" required>
-										<label for="reggebruikersnaam">Gebruikersnaam</label>
+										<label for="reg_username">Gebruikersnaam</label>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div  class="col">
 									<div class="form-label-group">
-										<input class="form-control" placeholder="emailadres" type="email"
-										       name="emailadres" id="emailadres" required>
-										<label for="emailadres">Emailadres</label>
+										<input class="form-control" placeholder="Emailadres" type="email"
+										       name="email" id="email" required>
+										<label for="email">Emailadres</label>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div  class="col">
 									<div class="form-label-group">
-										<input class="form-control" placeholder="adres" type="text"
-										       name="adres"
-										       id="adres"
+										<input class="form-control" placeholder="Adres" type="text"
+										       name="address"
+										       id="address"
 										       maxlength="20" required>
-										<label for="adres">Adres</label>
-									</div>
-								</div>
-								<div  class="col">
-									<div class="form-label-group">
-										<input class="form-control" placeholder="postcode" type="text"
-										       name="postcode"
-										       id="postcode"
-										       maxlength="20" required>
-										<label for="postcode">Postcode</label>
+										<label for="address">Adres</label>
 									</div>
 								</div>
 							</div>
@@ -180,8 +181,8 @@
 								<div  class="col">
 									<div class="form-label-group">
 										<input class="form-control" placeholder="telefoonnummer" type="tel"
-										       name="telefoonnummer" id="telefoonnummer" maxlength="10">
-										<label for="telefoonnummer">Telefoonnummer</label>
+										       name="telephone_number" id="telephone_number" maxlength="10">
+										<label for="telephone_number">Telefoonnummer</label>
 									</div>
 								</div>
 							</div>
@@ -189,26 +190,26 @@
 								<div  class="col-lg">
 									<div class="form-label-group">
 										<input class="form-control" placeholder="wachtwoord" type="password"
-										       name="regwachtwoord"
-										       id="regwachtwoord"
+										       name="reg_password"
+										       id="reg_password"
 										       maxlength="50" required>
-										<label for="regwachtwoord">Wachtwoord</label>
+										<label for="reg_password">Wachtwoord</label>
 									</div>
 								</div>
 								<div class="col-lg">
 									<div class="form-label-group">
 										<label class="invisible" for="bevestig_wachtwoord">bevestig wachtwoord</label>
 										<input class="form-control" placeholder="bevestig wachtwoord" type="password"
-										       name="bevestig_wachtwoord"
-										       id="bevestig_wachtwoord"
+										       name="confirm_password"
+										       id="confirm_password"
 										       maxlength="50" required><br>
-										<label for="bevestig_wachtwoord">Bevestig wachtwoord</label>
+										<label for="confirm_password">Bevestig wachtwoord</label>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col text-left">
-									<input class="btn bg-lightblue" type="submit" name="Maak_account_aan"
+									<input class="btn bg-lightblue" type="submit" name="make_account"
 									       value="Maak account aan">
 								</div>
 							</div>
@@ -222,8 +223,9 @@
 
 <div id="mySidenav" class="sidenav bg-yellow">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a class="hoofdrubriek" href="index.php">Home</a>
-    <a class="hoofdrubriek" href="veilingen.php">Veilingen</a>
-    <a class="hoofdrubriek" href="overons.php">Over ons</a>
-    <a class="hoofdrubriek" href="contact.php">Contact</a>
+    <a class="navigatiemobiel" href="index.php">Home</a>
+    <a class="navigatiemobiel" href="veilingen.php">Veilingen</a>
+    <a class="navigatiemobiel" href="overons.php">Over ons</a>
+    <a class="navigatiemobiel" href="contact.php">Contact</a>
+    <a class="navigatiemobiel" href="hulp.php">Hulp</a>
 </div>
