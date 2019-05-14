@@ -486,10 +486,8 @@ a:hover, a:active {
 .desktoprubrieken {
     width: 100%;
     height: 100%;
-    margin: 5% 0 5% 0;
+    margin: 5% 0;
     border-radius: 0 5px 5px 0;
-    display: block;
-    overflow: auto;
 }
 
 .desktoprubrieken > * {
@@ -505,17 +503,23 @@ a:hover, a:active {
 
 .input-details {
     border: 1px solid;
-    color: #FFAD4F;
+    border-color: #FFAD4F;
+    color: black;
 }
 
 .range-filter {
     width: 90%;
 }
 
+.dropright{
+    width: 90%;
+    text-align: left;
+}
 .dropright button {
     border-style: none;
     background-color: #FFD042;
     color: black;
+
 }
 
 .dropright button:hover {
@@ -528,9 +532,14 @@ a:hover, a:active {
 }
 
 .dropdown-menu a:hover {
-    color: #FFD042;
+    background-color: #4FCBFF;
+    color: white;
 }
 
+.dropright .dropdown-menu a:hover{
+    background: #EEEEEE;
+    color: darkgray;
+}
 
 /* ?? */
 
@@ -635,3 +644,4 @@ a:hover, a:active {
 .collapse.show .card-body {
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
+

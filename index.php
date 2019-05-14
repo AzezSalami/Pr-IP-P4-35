@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title>EenmaalAndermaal</title>
+<head>
+    <meta charset="UTF-8">
+    <title>EenmaalAndermaal</title>
 
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-		      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-		      crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
 
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-		      integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
-		      crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+          crossorigin="anonymous">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -26,26 +26,26 @@
     <!-- Chrome, Firefox OS and Opera colored tabs-->
     <meta name="theme-color" content="#FFAD4F">
 
-		<!-- Windows Phone -->
-		<meta name="msapplication-navbutton-color" content="#FFAD4F">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#FFAD4F">
 
-		<!-- iOS Safari -->
-		<meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-		<meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-		<link rel="stylesheet" href="CSS/homepage.css" type="text/css">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
+    <link rel="stylesheet" href="CSS/homepage.css" type="text/css">
 
 
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-		<link rel="stylesheet" href="/resources/demos/style.css">
-		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		<script src="JS/pricerange.js"></script>
-	</head>
-	<body class="bg-gray">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="JS/pricerange.js"></script>
+</head>
+<body class="bg-gray">
 
-        <?php
-            require "includes/header.php";
-        ?>
+<?php
+require "includes/header.php";
+?>
 
 <main>
     <div class="row">
@@ -76,9 +76,30 @@
             <div class="desktoprubriekenmedia">
                 <div class="desktoprubrieken bg-yellow">
                     <h2>Filters</h2><br>
+                    <p class="font-weight-bold mb-0">rubrieken:</p>
                     <div class="btn-group dropright">
-                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Hoofdrubriek2
+                        <button type="button" class="btn">
+                            hoofdrubriek 1
+                        </button>
+                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">hoofdrubriek 1</span>
+                        </button>
+                        <div class="dropdown-menu bg-gray px-2">
+                            <a href="#">Subrubriek1</a>
+                            <a href="#">Subrubriek2</a>
+                            <a href="#">Subrubriek3</a>
+                            <a href="#">Subrubriek4</a>
+                            <a href="#">Subrubriek5</a>
+                        </div>
+                    </div>
+                    <div class="btn-group dropright">
+                        <button type="button" class="btn">
+                            hoofdrubriek 2
+                        </button>
+                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">hoofdrubriek 2</span>
                         </button>
                         <div class="dropdown-menu">
                             <a href="#">Subrubriek1</a>
@@ -89,8 +110,12 @@
                         </div>
                     </div>
                     <div class="btn-group dropright">
-                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Hoofdrubriek3
+                        <button type="button" class="btn">
+                            hoofdrubriek 3
+                        </button>
+                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">hoofdrubriek 3</span>
                         </button>
                         <div class="dropdown-menu">
                             <a href="#">Subrubriek1</a>
@@ -101,8 +126,12 @@
                         </div>
                     </div>
                     <div class="btn-group dropright">
-                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Hoofdrubriek4
+                        <button type="button" class="btn">
+                            hoofdrubriek 4
+                        </button>
+                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">hoofdrubriek 4</span>
                         </button>
                         <div class="dropdown-menu">
                             <a href="#">Subrubriek1</a>
@@ -112,49 +141,42 @@
                             <a href="#">Subrubriek5</a>
                         </div>
                     </div>
-                    <div class="btn-group dropright">
-                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Hoofdrubriek5
-                        </button>
-                        <div class="dropdown-menu">
-                            <a href="#">Subrubriek1</a>
-                            <a href="#">Subrubriek2</a>
-                            <a href="#">Subrubriek3</a>
-                            <a href="#">Subrubriek4</a>
-                            <a href="#">Subrubriek5</a>
-                        </div>
-                    </div>
-                        <div class="range-filter container text-left my-2 pl-0">
-                            <form method="post" action="...">
-                                <p class="font-weight-bold">prijs:</p>
-                                <div class="row">
+                    <div class="dropdown-divider"></div>
+                    <div class="range-filter container my-2 pl-0">
+                        <form method="post" action="...">
+                            <p class="font-weight-bold">prijs:</p>
+                            <div class="row">
                                 <div class="col-lg-5 text-left">
-                                    <input class="bg-gray text-center input-details" type="text" id="amount-min" placeholder="min">
+                                    <input class="bg-gray text-center input-details" type="text" id="amount-min"
+                                           placeholder="min">
                                 </div>
                                 <div class="col-lg-2 text-center">
                                     <label class=" text-white font-weight-bold">-</label>
                                 </div>
                                 <div class="col-lg-5 text-right">
-                                    <input class="bg-gray text-center input-details" type="text" id="amount-max" placeholder="max">
+                                    <input class="bg-gray text-center input-details" type="text" id="amount-max"
+                                           placeholder="max">
                                 </div>
-                                </div>
-                                <div class="my-2" id="slider-range"></div>
-                            </form>
-                        </div><br>
-                        <input type="submit" class="bg-lightblue btn mb-1" value="Pas filters toe">
+                            </div>
+                            <div class="my-2" id="slider-range"></div>
+                        </form>
+                    </div>
+                    <br>
+                    <input type="submit" class="bg-lightblue btn mb-1" value="Pas filters toe">
+
                 </div>
             </div>
         </div>
-            <div class="col-lg-8">
-	            <div class="container">
-                    <?php search(2, true);?>
-                    <?php search(4);?>
-	            </div>
-            </div>
-            <div class="col-lg-2">
-                <!---->
+        <div class="col-lg-8">
+            <div class="container">
+                <?php search(2, true); ?>
+                <?php search(4); ?>
             </div>
         </div>
+        <div class="col-lg-2">
+            <!---->
+        </div>
+    </div>
 
 </main>
 <?php
