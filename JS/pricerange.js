@@ -13,10 +13,10 @@ $(document).ready(function(){
 
         $("#amount-min").change(function() {
             $("#slider-range").slider('values',0,$(this).val());
-        }).css({width: "35%"});
+        }).css({width: "100%"});
         $("#amount-max").change(function() {
             $("#slider-range").slider('values',1,$(this).val());
-        }).css({width: "35%"});
+        }).css({width: "100%"});
     } );
 });
 

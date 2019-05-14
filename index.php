@@ -50,15 +50,6 @@
 <main>
     <div class="row">
         <div class="col-lg-2">
-            <div class="container text-center my-2">
-                <form method="post" action="...">
-                    <label class="text-orange font-weight-bold">prijs:</label>
-                    <input class="bg-gray text-center input-details" type="text" id="amount-min" placeholder="min">
-                    <label class="text-orange font-weight-bold">-</label>
-                    <input class="bg-gray text-center input-details" type="text" id="amount-max" placeholder="max">
-                    <div class="my-2" id="slider-range"></div>
-                </form>
-            </div>
             <div class="rubriekenmobile">
                 <div class="pos-f-t">
                     <nav class="navbar navbar-dark bg-orange">
@@ -83,7 +74,7 @@
                 </div>
             </div>
             <div class="desktoprubriekenmedia">
-                <div class="desktoprubrieken bg-orange">
+                <div class="desktoprubrieken bg-yellow">
                     <h2>Filters</h2><br>
                     <form class="desktoprubriekenform" method="get" action="#">
                         <label for="hoofdrubriek1">
@@ -101,6 +92,23 @@
                         <label for="hoofdrubriek5">
                             <input type="checkbox" value="hoofdrubriek5" id="hoofdrubriek5" name="hoofdrubriek5">
                             Hoofdrubriek5</label><br>
+                        <div class="container text-left my-2 pl-0">
+                            <form method="post" action="...">
+                                <p class="font-weight-bold">prijs:</p>
+                                <div class="row">
+                                <div class="col-lg-5 text-left">
+                                    <input class="bg-gray text-center input-details" type="text" id="amount-min" placeholder="min">
+                                </div>
+                                <div class="col-lg-2 text-center">
+                                    <label class=" text-white font-weight-bold">-</label>
+                                </div>
+                                <div class="col-lg-5 text-right">
+                                    <input class="bg-gray text-center input-details" type="text" id="amount-max" placeholder="max">
+                                </div>
+                                </div>
+                                <div class="my-2" id="slider-range"></div>
+                            </form>
+                        </div><br>
                         <input type="submit" class="bg-lightblue btn mb-1" value="Pas filters toe">
                     </form>
                 </div>
