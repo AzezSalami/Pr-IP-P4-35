@@ -1,3 +1,7 @@
+<?php
+require "functions.php";
+?>
+
 <header>
 	<span class="sidenavhamburger mr-2" onclick="openNav()">&#9776;</span>
 	<div class="container-fluid bg-orange py-2">
@@ -59,7 +63,7 @@
 					<h4 class="modal-title text-dark">Inloggen</h4>
 					<button id="loginCloseButton" type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
-                <div class="col text-danger" ><?php login(); ?></div>
+                <div class="col text-danger" ><?php login();confirm(); ?></div>
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="container-fluid">

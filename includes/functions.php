@@ -49,9 +49,8 @@ function login()
             $sql = "SELECT [user],password, is_verified  FROM TBL_User WHERE [user]=:user and password = :password";
             $login_query = $pdo->prepare($sql);
             $login_query->execute(array(':user' => $username, ':password' => $password));
-            //$results = ;
-            //print_r($login_query->fetch());
             if ($login_query->fetch()['user'] == $username) {
+                $_SESSION["username"] = $username;
                 echo "You have been logged in<br><br>";
             } else {
                 echo "Please check your inputs!<br><br>";
@@ -59,6 +58,14 @@ function login()
             }
         }
     }
+}
+
+function logout()
+{
+    if (isset($_SESSION['name'])) {
+        unset($_SESSION['name']);
+    }
+    session_destroy();
 }
 
 function register()
@@ -101,7 +108,7 @@ function register()
                     echo 'Make sure the passwords match.';
                     echo "<script>document.getElementById('openRegister').click();</script>";
                 }
-                $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$/()*';
+                $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
                 $token = str_shuffle($token);
                 $token = substr($token, 0, 10);
 
@@ -118,12 +125,12 @@ function register()
                 try {
 //                    $mail->SMTPDebug = 2;                                      // Enable verbose debug output
                     $mail->isSMTP();                                            // Set mailer to use SMTP
-                    $mail->Host       = 'smtp.gmail.com	';                      // Specify main and backup SMTP servers
-                    $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                    $mail->Username   = 'eenmaalandermaal35@gmail.com';          // SMTP username
-                    $mail->Password   = 'andermaaleenmaal35';                    // SMTP password
+                    $mail->Host = 'smtp.gmail.com	';                      // Specify main and backup SMTP servers
+                    $mail->SMTPAuth = true;                                   // Enable SMTP authentication
+                    $mail->Username = 'eenmaalandermaal35@gmail.com';          // SMTP username
+                    $mail->Password = 'andermaaleenmaal35';                    // SMTP password
                     $mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
-                    $mail->Port       = 587;                                    // TCP port to connect to
+                    $mail->Port = 587;                                    // TCP port to connect to
 
                     $mail->setFrom('eenmaalandermaal35@gmail.com');
                     $mail->addAddress($email, $reg_username);
@@ -132,7 +139,7 @@ function register()
                     $mail->Body = "
                     Please click on the link below:<br><br>
                     
-                    <a href='includes/confirm.php?email=$email&token=$token'>Click Here</a>
+                    <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Click Here</a>
                 ";
                     $mail->send();
 
@@ -150,19 +157,23 @@ function confirm()
 {
     global $pdo;
     if (!isset($_GET['email']) || !isset($_GET['token'])) {
-        echo "<script>document.getElementById('openRegister').click();</script>";
+        /*echo "<script>document.getElementById('openRegister').click();</script>";*/
     } else {
 
-        $email = $pdo->cleanUpUserInput($_GET['email']);
-        $token = $pdo->cleanUpUserInput($_GET['token']);
+        $email = cleanUpUserInput($_GET['email']);
+        $token = cleanUpUserInput($_GET['token']);
 
-        $sql = $pdo->query("SELECT email,verification_code FROM TBL_User WHERE email='$email' AND verification_code='$token' AND is_verified=0");
+        $sql = $pdo->prepare("SELECT email,verification_code FROM TBL_User WHERE email='$email' AND verification_code='$token' AND is_verified=0");
+        $sql->execute(array($email,$token));
 
         if ($sql->fetch()['email'] == $email) {
-            $pdo->query("UPDATE TBL_User SET is_verified = 1, token='' WHERE email='$email'");
+            $sql = $pdo->prepare("UPDATE TBL_User SET is_verified = 1, verification_code ='' WHERE email=?");
+            $sql->execute(array($email));
             echo 'Your email has been verified! You can log in now!';
         } else
-            echo "<script>document.getElementById('openRegister').click();</script>";
+            echo "verification code incorrect, please try again";
+        echo "<script>document.getElementById('openLoginButton').click();</script>";
     }
 }
+
 ?>
