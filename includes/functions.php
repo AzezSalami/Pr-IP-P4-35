@@ -25,17 +25,17 @@
         }
     }
 
-    function search() {
+    function search($amount = 0, $promoted_only = false) {
         global $pdo;
 
         try {
-            $query = "SELECT A.auction, name, description, price_start, amount, [file] FROM TBL_Auction A
+            $query = "SELECT ". ($amount>0 ? "TOP($amount) " : "") ."A.auction, name, description, price_start, amount, [file] FROM TBL_Auction A
     INNER JOIN TBL_Item I
         on A.item = I.item
     LEFT JOIN (SELECT auction, max(amount) AS amount FROM TBL_Bid group by auction) as B
     ON A.auction = B.auction
     LEFT JOIN (SELECT item, [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item)) as R on I.item = R.item
-WHERE ";
+WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
             $filters = array();
             $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));
 
@@ -46,11 +46,12 @@ WHERE ";
                 }
                 $filters[] = "%$word%";
             }
+            $query .= " ORDER BY moment_end DESC";
             $searchStatement = $pdo->prepare($query);
             $searchStatement->execute($filters);
             $html = "<div class='row my-2'>";
             while ($recept = $searchStatement->fetch()) {
-                $html .= "<div class='auction-article-small white col-lg m-2'>
+                $html .= "<div class='auction-article-" . ($promoted_only ? "large" : "small") ." white col-lg m-2'>
 <div class='row mt-3'>
 									<div class='col'>
 										<div class='col'><strong>" . $recept['name'] . "</strong></div>
