@@ -105,12 +105,12 @@ function login()
         $password = cleanUpUserInput($_POST['password']);
 
         if ($username == "" || $password == "") {
-            echo "Please check your inputs!<br><br>";
+            echo "You have not entered the username or password!<br><br>";
             echo "<script>document.getElementById('openLoginButton').click();</script>";
         } else {
             $sql = "SELECT [user],password, is_verified  FROM TBL_User WHERE [user]=:user and password = :password";
             $login_query = $pdo->prepare($sql);
-            $login_query->execute(array(':user' => $username, ':password' => $password));
+            $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
             if ($login_query->fetch()['user'] == $username) {
                 $_SESSION["username"] = $username;
                 echo "You have been logged in<br><br>";
