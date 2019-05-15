@@ -167,7 +167,7 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
 
             if ($canRegister) {
                 if ($confirm_password != $regPassword) {
-                    echo 'Make sure the passwords match.';
+                    echo 'Zorg dat beide wachtwoorden hetzelfde zijn';
                 } else {
                     $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
                     $token = str_shuffle($token);
