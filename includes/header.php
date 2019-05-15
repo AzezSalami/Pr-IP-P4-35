@@ -28,9 +28,11 @@ login();
                 if (array_key_exists("username", $_SESSION)) {
                     if (!empty($_SESSION["username"])) {
                         echo '<div class="dropdown">
+                        
                         <button class="btn btn-account bg-lightblue dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user"></i> &nbsp; account
+                            <i class="fas fa-user"></i> <span id="aanmeldTekst"> &nbsp; account</span>
                         </button>
+                        
                         <div class="dropdown-menu bg-lightblue">
                             <a class="dropdown-item" href="#">mijn gegevens</a>
                             <a class="dropdown-item" href="#">mijn veilingen</a>
