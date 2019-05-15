@@ -39,7 +39,8 @@
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="JS/pricerange.js"></script>
+    <script src="JS/sidenav.js"></script>
+
 </head>
 <body class="bg-gray">
 
@@ -68,7 +69,7 @@ require "includes/header.php";
                             <a href="#">Hoofdrubriek3</a>
                             <a href="#">Hoofdrubriek4</a>
                             <a href="#">Hoofdrubriek5</a>
-                            <a href="#">Hoofdrubriek6</a><!---->
+                            <a href="#">Hoofdrubriek6</a>
                         </div>
                     </div>
                 </div>
@@ -79,70 +80,476 @@ require "includes/header.php";
                     <p class="font-weight-bold mb-0">rubrieken:</p>
                     <div class="btn-group dropright">
                         <button type="button" class="btn">
-                            hoofdrubriek 1
+                            hoofdrubriek
+                        </button>
+                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">hoofdrubriek 1</span>
+                        </button>
+                        <div class="dropdown-menu r-content bg-gray px-2">
+                            <div class="container">
+                                <div class="row mr-1 mb-2">
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                </div>
+                                <div class="row mr-1 mb-2">
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-group dropright">
+                        <button type="button" class="btn">
+                            hoofdrubriek
                         </button>
                         <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                             <span class="sr-only">hoofdrubriek 1</span>
                         </button>
                         <div class="dropdown-menu bg-gray px-2">
-                            <a href="#">Subrubriek1</a>
-                            <a href="#">Subrubriek2</a>
-                            <a href="#">Subrubriek3</a>
-                            <a href="#">Subrubriek4</a>
-                            <a href="#">Subrubriek5</a>
+                            <div class="container">
+                                <div class="row mr-1 mb-2">
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                </div>
+                                <div class="row mr-1 mb-2">
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="btn-group dropright">
                         <button type="button" class="btn">
-                            hoofdrubriek 2
+                            hoofdrubriek
                         </button>
                         <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">hoofdrubriek 2</span>
+                            <span class="sr-only">hoofdrubriek 1</span>
                         </button>
-                        <div class="dropdown-menu">
-                            <a href="#">Subrubriek1</a>
-                            <a href="#">Subrubriek2</a>
-                            <a href="#">Subrubriek3</a>
-                            <a href="#">Subrubriek4</a>
-                            <a href="#">Subrubriek5</a>
+                        <div class="dropdown-menu bg-gray px-2">
+                            <div class="container">
+                                <div class="row mr-1 mb-2">
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                </div>
+                                <div class="row mr-1 mb-2">
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="btn-group dropright">
                         <button type="button" class="btn">
-                            hoofdrubriek 3
+                            hoofdrubriek
                         </button>
                         <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">hoofdrubriek 3</span>
+                            <span class="sr-only">hoofdrubriek 1</span>
                         </button>
-                        <div class="dropdown-menu">
-                            <a href="#">Subrubriek1</a>
-                            <a href="#">Subrubriek2</a>
-                            <a href="#">Subrubriek3</a>
-                            <a href="#">Subrubriek4</a>
-                            <a href="#">Subrubriek5</a>
+                        <div class="dropdown-menu bg-gray px-2">
+                            <div class="container">
+                                <div class="row mr-1 mb-2">
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                </div>
+                                <div class="row mr-1 mb-2">
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                </div>
+                                <div class="row mr-1 mb-2">
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="btn-group dropright">
                         <button type="button" class="btn">
-                            hoofdrubriek 4
+                            hoofdrubriek
                         </button>
                         <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">hoofdrubriek 4</span>
+                            <span class="sr-only">hoofdrubriek 1</span>
                         </button>
-                        <div class="dropdown-menu">
-                            <a href="#">Subrubriek1</a>
-                            <a href="#">Subrubriek2</a>
-                            <a href="#">Subrubriek3</a>
-                            <a href="#">Subrubriek4</a>
-                            <a href="#">Subrubriek5</a>
+                        <div class="dropdown-menu bg-gray px-2">
+                            <div class="container">
+                                <div class="row mr-1 mb-2">
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                </div>
+                                <div class="row mr-1 mb-2">
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                    <div class="col mx-1">
+                                        <a href="#">Subrubriek</a>
+                                        <div class="dropdown-divider yellow"></div>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                        <p>qwerty</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="dropdown-divider"></div>
-                    <div class="range-filter container my-2 pl-0">
+                    <div class="range-filter container text-left my-2 pl-0">
                         <form method="post" action="...">
                             <p class="font-weight-bold">prijs:</p>
                             <div class="row">
@@ -163,10 +570,10 @@ require "includes/header.php";
                     </div>
                     <br>
                     <input type="submit" class="bg-lightblue btn mb-1" value="Pas filters toe">
-
                 </div>
             </div>
         </div>
+
         <div class="col-lg-8">
             <div class="container">
                 <?php search(2, true); ?>
