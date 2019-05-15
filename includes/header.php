@@ -2,7 +2,7 @@
 require_once "functions.php";
 login();
 ?>
-
+<script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
 <header>
     <span class="sidenavhamburger mr-2" onclick="openNav()">&#9776;</span>
     <div class="container-fluid bg-orange py-2">
@@ -151,6 +151,7 @@ login();
                                        id="password"
                                        maxlength="50" required><br>
                                 <label for="password">Wachtwoord</label>
+                                <a href="wachtwoordvergeten.php">Wachtwoord vergeten?</a>
                             </div>
 
                             <div class="row">
@@ -245,12 +246,18 @@ login();
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col">
-                                    <div class="form-label-group">
+                                <div class="col-lg ">
+                                    <div class="form-label-group mb-0">
                                         <input class="form-control" placeholder="telefoonnummer" type="tel"
                                                name="telephone_number" id="telephone_number" maxlength="10">
                                         <label for="telephone_number">Telefoonnummer</label>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg mx-4 mt-0 mb-2">
+                                    <input type="checkbox" class="form-check-input " name="is_mobile">
+                                    <label class="form-check-label text-dark" for="is_mobile">mobielnummer?</label>
                                 </div>
                             </div>
                             <div class="row">
