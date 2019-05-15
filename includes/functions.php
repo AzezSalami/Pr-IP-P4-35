@@ -287,4 +287,8 @@ function updateAccountData()
     }
 
 }
+    function resetPasswordEmail() {
+
+    }
+
 ?>

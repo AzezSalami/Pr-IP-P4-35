@@ -97,12 +97,21 @@
                         while ($data2 = $query2->fetch()) {
                             $html .= "<div class=\"col mx-1\">
                                         <a href=\"#\">" . $data2['name'] . "</a>
-                                        <div class=\"dropdown-divider yellow\"></div>
-                                        <p>qwerty</p>
-                                        <p>qwerty</p>
-                                        <p>qwerty</p>
-                                        <p>qwerty</p>
-                                    </div>";
+                                        <div class=\"dropdown-divider yellow\"></div>";
+
+                            $query3 = $pdo->prepare("select * from TBL_Rubric where super = " . $data2['rubric']);
+                            $query3->execute();
+
+                            $i = 0;
+
+                            while($data3 = $query3->fetch()) {
+                                if($i < 4) {
+                                    $html .= "<p>". $data3['name'] ."</p>";
+                                    $i++;
+                                }
+                            }
+
+                            $html .= "</div>";
                         }
                         $html .= "</div></div></div></div>";
                     }
