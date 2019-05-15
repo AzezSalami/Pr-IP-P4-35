@@ -252,4 +252,39 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
         }
     }
 
+    function placeholderAccountData($input)
+{
+    echo $msg = '';
+    global $pdo;
+    if (array_key_exists("username", $_SESSION)) {
+        if (!empty($_SESSION["username"])) {
+            $username = $_SESSION["username"];
+            $sql = $pdo->prepare("SELECT * FROM TBL_User WHERE [user]='$username'");
+            $sql->execute(array());
+            $msg = $sql->fetch()[$input];
+        }
+    }
+    echo $msg;
+}
+
+function updateAccountData()
+{
+    if (isset($_POST['reset'])) {
+        global $pdo;
+        $email = cleanUpUserInput($_POST['email']);
+        $resPassword = cleanUpUserInput($_POST['password']);
+        $confirm_password = cleanUpUserInput($_POST['confirm_password']);
+        $firstname = cleanUpUserInput($_POST['firstname']);
+        $lastname = cleanUpUserInput($_POST['lastname']);
+        $address = cleanUpUserInput($_POST['address']);
+        $telephone_number = cleanUpUserInput($_POST['telephone_number']);
+
+
+        $sql = "INSERT INTO TBL_User (firstname,lastname,address_line_1) values (?,?,?) WHERE [user] = ?";
+        $query = $pdo->prepare($sql);
+        $query->execute(array($firstname, $lastname, $address));
+
+    }
+
+}
 ?>

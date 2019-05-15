@@ -50,20 +50,20 @@ require "includes/header.php";
 <main>
     <div class="container">
         <div class="text-dark text-center">Gegevens</div>
-        <form class="" method="POST" name="">
+        <form class="" method="POST" name="reset">
             <div class="row">
                 <div class="col">
                     <div class="row">
                         <div class="col">
                             <label for="firstname">Voornaam</label>
-                            <input class="form-control" placeholder="<?php information("firstname"); ?>" type="text"
+                            <input class="form-control" placeholder="<?php placeholderAccountData("firstname"); ?>" type="text"
                                    name="firstname"
                                    id="firstname" maxlength="20" required>
 
                         </div>
                         <div class="col">
                             <label for="lastname">Achternaam</label>
-                            <input class="form-control" placeholder="<?php information("lastname"); ?>" type="text"
+                            <input class="form-control" placeholder="<?php placeholderAccountData("lastname"); ?>" type="text"
                                    name="lastname"
                                    id="lastname"
                                    maxlength="20" required>
@@ -73,7 +73,7 @@ require "includes/header.php";
                         <div class="col">
                             <label for="reg_username">Gebruikersnaam</label>
 
-                            <input class="form-control" placeholder="<?php information("user"); ?>" type="text"
+                            <input class="form-control" placeholder="<?php placeholderAccountData("user"); ?>" type="text"
                                    name="reg_username"
                                    id="reg_username"
                                    maxlength="20" readonly>
@@ -83,7 +83,7 @@ require "includes/header.php";
                         <div class="col">
                             <label for="email">Emailadres</label>
 
-                            <input class="form-control" placeholder="<?php information("email"); ?>" type="email"
+                            <input class="form-control" placeholder="<?php placeholderAccountData("email"); ?>" type="email"
                                    name="email" id="email" readonly>
                         </div>
                     </div>
