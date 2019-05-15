@@ -151,7 +151,9 @@ login();
                                        id="password"
                                        maxlength="50" required><br>
                                 <label for="password">Wachtwoord</label>
-                                <a href="wachtwoordvergeten.php">Wachtwoord vergeten?</a>
+                                <a href="" data-target="#resetMenu" data-toggle="modal"
+                                   onclick="document.getElementById('loginCloseButton').click()">Wachtwoord
+                                    vergeten?</a>
                             </div>
 
                             <div class="row">
@@ -293,6 +295,52 @@ login();
             </div>
         </div>
     </div>
+
+    <!-- The Modal -->
+    <div class="modal fade" id="resetMenu">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title text-dark">reset password</h4>
+                    <button id="loginCloseButton" type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="container-fluid">
+
+                        <form class="form-signin" method="POST" name="reset">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="text-dark">Weet je het wachtwoord niet meer?
+                                        Vul hieronder je e-mailadres in.
+                                        We sturen dan binnen enkele minuten een e-mail waarmee een nieuw wachtwoord kan
+                                        worden
+                                        aangemaakt.</p></div>
+                            </div>
+                            <div class="form-label-group">
+                                <input class="form-control" placeholder="emailadres" type="text"
+                                       name="emailadres"
+                                       id="emailadres"
+                                       maxlength="20" required>
+                                <label for="emailadres">emailadres</label>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <input class="btn bg-lightblue" type="submit" name="reset"
+                                           value="send">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </header>
 
 <div id="mySidenav" class="sidenav bg-yellow">
