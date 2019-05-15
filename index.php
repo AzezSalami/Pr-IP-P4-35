@@ -40,7 +40,8 @@
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="JS/pricerange.js"></script>
+    <script src="JS/sidenav.js"></script>
+
 </head>
 <body class="bg-gray">
 
@@ -51,123 +52,9 @@ require "includes/header.php";
 <main>
     <div class="row">
         <div class="col-lg-2">
-            <div class="rubriekenmobile">
-                <div class="pos-f-t">
-                    <nav class="navbar navbar-dark bg-orange">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <p>Filters</p>
-                    </nav>
-                    <div class="collapse" id="navbarToggleExternalContent">
-                        <div class="rubriekenmobilecontent bg-yellow p-4">
-                            <h4 class="text-white">Rubrieken</h4>
-                            <a href="#">Hoofdrubriek1</a>
-                            <a href="#">Hoofdrubriek2</a>
-                            <a href="#">Hoofdrubriek3</a>
-                            <a href="#">Hoofdrubriek4</a>
-                            <a href="#">Hoofdrubriek5</a>
-                            <a href="#">Hoofdrubriek6</a><!---->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="desktoprubriekenmedia">
-                <div class="desktoprubrieken bg-yellow">
-                    <h2>Filters</h2><br>
-                    <p class="font-weight-bold mb-0">rubrieken:</p>
-                    <div class="btn-group dropright">
-                        <button type="button" class="btn">
-                            hoofdrubriek 1
-                        </button>
-                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">hoofdrubriek 1</span>
-                        </button>
-                        <div class="dropdown-menu bg-gray px-2">
-                            <a href="#">Subrubriek1</a>
-                            <a href="#">Subrubriek2</a>
-                            <a href="#">Subrubriek3</a>
-                            <a href="#">Subrubriek4</a>
-                            <a href="#">Subrubriek5</a>
-                        </div>
-                    </div>
-                    <div class="btn-group dropright">
-                        <button type="button" class="btn">
-                            hoofdrubriek 2
-                        </button>
-                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">hoofdrubriek 2</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a href="#">Subrubriek1</a>
-                            <a href="#">Subrubriek2</a>
-                            <a href="#">Subrubriek3</a>
-                            <a href="#">Subrubriek4</a>
-                            <a href="#">Subrubriek5</a>
-                        </div>
-                    </div>
-                    <div class="btn-group dropright">
-                        <button type="button" class="btn">
-                            hoofdrubriek 3
-                        </button>
-                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">hoofdrubriek 3</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a href="#">Subrubriek1</a>
-                            <a href="#">Subrubriek2</a>
-                            <a href="#">Subrubriek3</a>
-                            <a href="#">Subrubriek4</a>
-                            <a href="#">Subrubriek5</a>
-                        </div>
-                    </div>
-                    <div class="btn-group dropright">
-                        <button type="button" class="btn">
-                            hoofdrubriek 4
-                        </button>
-                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">hoofdrubriek 4</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a href="#">Subrubriek1</a>
-                            <a href="#">Subrubriek2</a>
-                            <a href="#">Subrubriek3</a>
-                            <a href="#">Subrubriek4</a>
-                            <a href="#">Subrubriek5</a>
-                        </div>
-                    </div>
-                    <div class="dropdown-divider"></div>
-                    <div class="range-filter container my-2 pl-0">
-                        <form method="post" action="...">
-                            <p class="font-weight-bold">prijs:</p>
-                            <div class="row">
-                                <div class="col-lg-5 text-left">
-                                    <input class="bg-gray text-center input-details" type="text" id="amount-min"
-                                           placeholder="min">
-                                </div>
-                                <div class="col-lg-2 text-center">
-                                    <label class=" text-white font-weight-bold">-</label>
-                                </div>
-                                <div class="col-lg-5 text-right">
-                                    <input class="bg-gray text-center input-details" type="text" id="amount-max"
-                                           placeholder="max">
-                                </div>
-                            </div>
-                            <div class="my-2" id="slider-range"></div>
-                        </form>
-                    </div>
-                    <br>
-                    <input type="submit" class="bg-lightblue btn mb-1" value="Pas filters toe">
 
-                </div>
-            </div>
         </div>
+
         <div class="col-lg-8">
             <div class="container">
                 <?php search(2, true); ?>
