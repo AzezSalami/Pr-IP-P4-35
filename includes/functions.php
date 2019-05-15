@@ -136,34 +136,39 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
             $address = cleanUpUserInput($_POST['address']);
             $telephone_number = cleanUpUserInput($_POST['telephone_number']);
 
+        $is_mobile = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
 
-            if (empty($email) || empty($regPassword) || empty($firstname) || empty($lastname) || empty($regUsername)) {
-                echo "Velden met een * zijn verplicht";
-            }
+        if (empty($email) || empty($regPassword) || empty($firstname) || empty($lastname) || empty($regUsername)) {
+            echo "Velden met een * zijn verplicht";
+        }
 
 
-            $regQuery = $pdo->prepare("Select * from TBL_User where email = ? OR [user] = ?");
-            $regQuery->execute(array($email, $regUsername));
-            $canRegister = true;
-            while ($row = $regQuery->fetch()) {
-                if ($row['email'] == $email) {
-                    echo 'Dit e-mail adres is al in gebruik<br>';
-                    echo "<script>document.getElementById('openRegister').click();</script>";
-                    $canRegister = false;
-                }
-                if ($row['user'] == $regUsername) {
-                    echo 'De gebruikersnaam: ' . $regUsername . ' is al in gebruik, probeer een andere<br>';
-                    echo "<script>document.getElementById('openRegister').click();</script>";
-                    $canRegister = false;
-                }
-            }
-
-            if (strlen($regPassword) < 8 || !preg_match("#[0-9]+#", $regPassword) || !preg_match("#[a-zA-Z]+#", $regPassword)) {
-                echo "Een wachtwoord moet uit minimaal 8 karakters bestaan<br>
-                      en moet minimaal 1 letter en 1 cijfer bevatten<br>";
+        $regQuery = $pdo->prepare("Select * from TBL_User where email = ? OR [user] = ?");
+        $regQuery->execute(array($email, $regUsername));
+        $canRegister = true;
+        while ($row = $regQuery->fetch()) {
+            if ($row['email'] == $email) {
+                echo 'Dit e-mail adres is al in gebruik<br>';
+                echo "<script>document.getElementById('openRegister').click();</script>";
                 $canRegister = false;
             }
+            if ($row['user'] == $regUsername) {
+                echo 'De gebruikersnaam: ' . $regUsername . ' is al in gebruik, probeer een andere<br>';
+                echo "<script>document.getElementById('openRegister').click();</script>";
+                $canRegister = false;
+            }
+        }
 
+        if (strlen($regPassword) < 8 || !preg_match("#[0-9]+#", $regPassword) || !preg_match("#[a-zA-Z]+#", $regPassword)) {
+            echo "Een wachtwoord moet uit minimaal 8 karakters bestaan<br>
+                      en moet minimaal 1 letter en 1 cijfer bevatten<br>";
+            $canRegister = false;
+        }
+
+        if (strlen($telephone_number) < 10 || !preg_match("#[0-9]+#", $telephone_number)) {
+            echo "Een telefonnummer moet uit minimaal 10 cijfers bestaan<br>";
+            $canRegister = false;
+        }
 
             if ($canRegister) {
                 if ($confirm_password != $regPassword) {
@@ -173,9 +178,12 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
                     $token = str_shuffle($token);
                     $token = substr($token, 0, 10);
 
-                    $sql = "INSERT INTO TBL_User ([user],firstname,lastname,address_line_1,email,password ,verification_code) values (?,?,?,?,?,?,?); INSERT INTO TBL_Phone ([user],phone_number) values (?,?);";
-                    $query = $pdo->prepare($sql);
-                    $query->execute(array($regUsername, $firstname, $lastname, $address, $email, hash('sha1', $regPassword), $token, $regUsername, $telephone_number));
+                $sql = "INSERT INTO TBL_User ([user],firstname,lastname,address_line_1,email,password ,verification_code) values (?,?,?,?,?,?,?)";
+                $query = $pdo->prepare($sql);
+                $query->execute(array($regUsername, $firstname, $lastname, $address, $email, hash('sha1', $regPassword), $token));
+                $phoneQuery = $pdo->prepare(" INSERT INTO TBL_Phone ([user],phone_number,is_mobile) values (?,?,?)");
+
+                $phoneQuery->execute(array($regUsername, $telephone_number, $is_mobile));
 
                     require "PHPMailer/PHPMailer.php";
                     require "PHPMailer/Exception.php";
@@ -197,13 +205,19 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
                         $mail->Subject = "Please verify email!";
                         $mail->isHTML(true);
                         $mail->Body = "
+                    Geachte heer of mevrouw $lastname,<br><br>
+                    
                     Klik op de link hieronder om uw registratie te voltooien.<br>
                     <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om uw registratie te voltooien</a><br><br>
                     
                     Of plak onderstaande link in uw browser:<br>
                     http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token<br><br>
                     
-                    Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.
+                    Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.<br><br>
+                    
+                    Met vriendelijke groet,<br><br>
+                    
+                    Het team van Eenmaal Andermaal
                 ";
                         $mail->send();
 
