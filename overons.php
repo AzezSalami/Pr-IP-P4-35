@@ -79,8 +79,8 @@ require "includes/header.php";
                                             <div class="feature-content">
                                                 <h4>Betrouwbaar</h4>
                                                 <p>Kopers en verkopers kunnen elkaar na een koop of verkoop
-                                                beoordelen. Dit zorgt er voor dat een nieuwe koper of verkoper
-                                                snel kan zien of de andere gebruiker betrouwbaar is of niet</p>
+                                                    beoordelen. Dit zorgt er voor dat een nieuwe koper of verkoper
+                                                    snel kan zien of de andere gebruiker betrouwbaar is of niet</p>
                                             </div>
                                         </div>
                                     </div>
@@ -89,9 +89,9 @@ require "includes/header.php";
                                             <div class="feature-content">
                                                 <h4>Snel</h4>
                                                 <p>Door Eenmaal Andermaal te gebruiker kan een gebruiker snel een
-                                                product verkopen. De gebruiker geeft zelf een periode aan waarin
-                                                andere gebruikers kunnen bieden. Na deze periode is de veiling
-                                                dan afgelopen.</p>
+                                                    product verkopen. De gebruiker geeft zelf een periode aan waarin
+                                                    andere gebruikers kunnen bieden. Na deze periode is de veiling
+                                                    dan afgelopen.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -100,8 +100,8 @@ require "includes/header.php";
                                             <div class="feature-content">
                                                 <h4>Makkelijk</h4>
                                                 <p>Eenmaal Andermaal is makkelijk in gebruik. De interface van de
-                                                website is simpel en de gebruiker kan bij problemen op de hulp
-                                                pagina terecht.</p>
+                                                    website is simpel en de gebruiker kan bij problemen op de hulp
+                                                    pagina terecht.</p>
                                             </div>
                                         </div>
                                     </div>

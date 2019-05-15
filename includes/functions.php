@@ -197,13 +197,19 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
                         $mail->Subject = "Please verify email!";
                         $mail->isHTML(true);
                         $mail->Body = "
+                    Geachte heer of mevrouw $lastname,<br><br>
+                    
                     Klik op de link hieronder om uw registratie te voltooien.<br>
                     <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om uw registratie te voltooien</a><br><br>
                     
                     Of plak onderstaande link in uw browser:<br>
                     http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token<br><br>
                     
-                    Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.
+                    Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.<br><br>
+                    
+                    Met vriendelijke groet,<br><br>
+                    
+                    Het team van Eenmaal Andermaal
                 ";
                         $mail->send();
 
