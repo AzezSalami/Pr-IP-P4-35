@@ -35,7 +35,7 @@ login();
                             </button>
                             
                             <div class="dropdown-menu bg-lightblue">
-                                <a class="dropdown-item" href="#">mijn gegevens</a>
+                                <a class="dropdown-item" href="gegevens.php">mijn gegevens</a>
                                 <a class="dropdown-item" href="#">mijn veilingen</a>
                                 <a class="dropdown-item" href="#">mijn biedingen</a>
                                 <div class="dropdown-divider"></div>
@@ -50,7 +50,7 @@ login();
                             </button>
                             
                             <div class="dropdown-menu bg-lightblue">
-                                <a class="dropdown-item" href="#">mijn gegevens</a>
+                                <a class="dropdown-item" href="gegevens.php">mijn gegevens</a>
                                 <a class="dropdown-item" href="#">mijn veilingen</a>
                                 <a class="dropdown-item" href="#">mijn biedingen</a>
                                 <div class="dropdown-divider"></div>
