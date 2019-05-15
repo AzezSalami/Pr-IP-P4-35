@@ -135,7 +135,7 @@ require "includes/header.php";
                                             <div class="card-body">
                                                 <p>In de rechterbovenhoek van deze site kunt u een blauwe knop zien met
                                                     de aanduiding account. Om
-                                                    uzelf te registreren moet u dan de optie inloggen kiezen. Hier voert
+                                                    uzelf in te loggen moet u dan de optie inloggen kiezen. Hier voert
                                                     u het tijdens het registreren
                                                     gekozen e-mail adres of gebruikersnaam en wachtwoord.</p>
                                             </div>
