@@ -147,12 +147,12 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
             $canRegister = true;
             while ($row = $regQuery->fetch()) {
                 if ($row['email'] == $email) {
-                    echo 'Dit e-mail adres is al in gebruik';
+                    echo 'Dit e-mail adres is al in gebruik<br>';
                     echo "<script>document.getElementById('openRegister').click();</script>";
                     $canRegister = false;
                 }
                 if ($row['user'] == $regUsername) {
-                    echo 'De gebruikersnaam: ' . $regUsername . ' is al in gebruik, probeer een andere';
+                    echo 'De gebruikersnaam: ' . $regUsername . ' is al in gebruik, probeer een andere<br>';
                     echo "<script>document.getElementById('openRegister').click();</script>";
                     $canRegister = false;
                 }
@@ -167,7 +167,7 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
 
             if ($canRegister) {
                 if ($confirm_password != $regPassword) {
-                    echo 'Make sure the passwords match.';
+                    echo 'Zorg dat beide wachtwoorden hetzelfde zijn';
                 } else {
                     $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
                     $token = str_shuffle($token);
