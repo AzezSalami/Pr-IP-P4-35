@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EenmaalAndermaal</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+          crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="JS/sidenavscript.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#FFAD4F">
+    <meta name="msapplication-TileColor" content="#FFAD4F">
+    <meta name="theme-color" content="#FFAD4F">
+
+    <!-- Chrome, Firefox OS and Opera colored tabs-->
+    <meta name="theme-color" content="#FFAD4F">
+
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#FFAD4F">
+
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
+    <link rel="stylesheet" href="CSS/homepage.css" type="text/css">
+
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="JS/pricerange.js"></script>
+</head>
+<body class="bg-gray">
+
+<?php
+require "includes/header.php";
+?>
+<main>
+    <div class="container">
+        <div class="text-dark text-center">Gegevens</div>
+        <form class="" method="POST" name="">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <label for="firstname">Voornaam</label>
+                            <input class="form-control" placeholder="<?php information("firstname"); ?>" type="text"
+                                   name="firstname"
+                                   id="firstname" maxlength="20" required>
+
+                        </div>
+                        <div class="col">
+                            <label for="lastname">Achternaam</label>
+                            <input class="form-control" placeholder="<?php information("lastname"); ?>" type="text"
+                                   name="lastname"
+                                   id="lastname"
+                                   maxlength="20" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="reg_username">Gebruikersnaam</label>
+
+                            <input class="form-control" placeholder="<?php information("user"); ?>" type="text"
+                                   name="reg_username"
+                                   id="reg_username"
+                                   maxlength="20" readonly>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="email">Emailadres</label>
+
+                            <input class="form-control" placeholder="<?php information("email"); ?>" type="email"
+                                   name="email" id="email" readonly>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="address" class="">Adres</label>
+                            <input class="form-control mb-3" type="text" id="address1" placeholder="Adres"
+                                   name="address"
+                                   required>
+
+                            <script>
+                                var placesAutocomplete = places({
+                                    appId: 'plK904BLG7JJ',
+                                    apiKey: '551154e9c4e6dfefd99359b532faaa99',
+                                    container: document.querySelector('#address1')
+                                });
+                            </script>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col">
+                        <label for="telephone_number">Telefoonnummer</label>
+                        <input class="form-control" placeholder="" type="tel"
+                               name="telephone_number" id="telephone_number" maxlength="10">
+                    </div>
+                    <div class="col">
+                        <label for="reg_password">Wachtwoord</label>
+                        <input class="form-control" placeholder="" type="password"
+                               name="reg_password"
+                               id="reg_password"
+                               maxlength="50" required>
+                    </div>
+                    <div class="col">
+                        <label for="confirm_password">Bevestig wachtwoord</label>
+                        <label class="" for="bevestig_wachtwoord">bevestig wachtwoord</label>
+                        <input class="form-control" placeholder="" type="password"
+                               name="confirm_password"
+                               id="confirm_password"
+                               maxlength="50" required><br>
+                    </div>
+                    <div class="row">
+                        <input class="btn bg-lightblue" type="submit" name="make_account"
+                               value="opslaan">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+<?php
+include_once "includes/footer.php";
+?>
+</body>
+</html>
+
+

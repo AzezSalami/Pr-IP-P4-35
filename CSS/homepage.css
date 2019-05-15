@@ -150,6 +150,9 @@ body {
     margin-bottom: 1rem;
 }
 
+.algolia-places > button {
+    margin-top: -0.8rem;
+}
 
 .form-label-group > input,
 .form-label-group > label {
