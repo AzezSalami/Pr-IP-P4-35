@@ -288,10 +288,6 @@ body {
         font-size: 2.5em;
     }
 
-    #aanmeldTekst {
-        display: none;
-    }
-
     .form-signin {
         max-width: unset;
     }
@@ -555,7 +551,7 @@ a:hover, a:active {
 /* ?? */
 
 .btn-account {
-    width: 70%;
+    width: 100%;
 }
 
 /*FAQ*/
@@ -656,3 +652,18 @@ a:hover, a:active {
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
+@media only screen and (min-device-width: 991px) {
+    .accountdropdownmobile {
+        display: none;
+    }
+}
+
+@media only screen and (max-device-width: 991px) {
+    .accountdropdowndesktop {
+        display: none;
+    }
+}
+
+.accountdropdowndesktop .dropdown .dropdown-menu{
+    width: 100%;
+}

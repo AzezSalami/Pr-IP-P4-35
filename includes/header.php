@@ -27,31 +27,67 @@ login();
                 <?php
                 if (array_key_exists("username", $_SESSION)) {
                     if (!empty($_SESSION["username"])) {
-                        echo '<div class="dropdown">
-                        
-                        <button class="btn btn-account bg-lightblue dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user"></i> <span id="aanmeldTekst"> &nbsp; account</span>
-                        </button>
-                        
-                        <div class="dropdown-menu bg-lightblue">
-                            <a class="dropdown-item" href="#">mijn gegevens</a>
-                            <a class="dropdown-item" href="#">mijn veilingen</a>
-                            <a class="dropdown-item" href="#">mijn biedingen</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="?logout=true">uitloggen</a>
+                        echo '
+                    <div class="accountdropdownmobile">
+                        <div class="dropdown dropleft">
+                            <button class="btn btn-account bg-lightblue dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                            </button>
+                            
+                            <div class="dropdown-menu bg-lightblue">
+                                <a class="dropdown-item" href="#">mijn gegevens</a>
+                                <a class="dropdown-item" href="#">mijn veilingen</a>
+                                <a class="dropdown-item" href="#">mijn biedingen</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="?logout=true">uitloggen</a>
+                            </div>
                         </div>
-                    </div>';
+                    </div>
+                    <div class="accountdropdowndesktop">
+                        <div class="dropdown">
+                            <button class="btn btn-account bg-lightblue dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user"></i> &nbsp; account
+                            </button>
+                            
+                            <div class="dropdown-menu bg-lightblue">
+                                <a class="dropdown-item" href="#">mijn gegevens</a>
+                                <a class="dropdown-item" href="#">mijn veilingen</a>
+                                <a class="dropdown-item" href="#">mijn biedingen</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="?logout=true">uitloggen</a>
+                            </div>
+                        </div>
+                    </div> 
+                    ';
                     }
                 } else {
-                    echo '<div class="dropdown">
-                        <button class="btn btn-account bg-lightblue dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user"></i> <span id="aanmeldTekst"> &nbsp; account</span>
-                        </button>
-                        <div class="dropdown-menu bg-lightblue">
-                            <a id="openLogin" class="dropdown-item" href="#" data-toggle="modal" data-target="#loginMenu">inloggen</a>
-                            <a id="openRegister" class="dropdown-item" href="#" data-toggle="modal" data-target="#registerMenu">registreren</a>
+                    echo '
+                    <div class="accountdropdownmobile">
+                       <div class="dropdown dropleft ">
+                            <button class="btn btn-account bg-lightblue dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                            </button>
+                            
+                            <div class="dropdown-menu bg-lightblue">
+                                <a id="openLogin" class="dropdown-item" href="#" data-toggle="modal" data-target="#loginMenu">inloggen</a>
+                                <a id="openRegister" class="dropdown-item" href="#" data-toggle="modal" data-target="#registerMenu">registreren</a>
+                            </div>
                         </div>
-                    </div>';
+                    </div>
+                    <div class="accountdropdowndesktop">
+                        <div class="dropdown">
+                            <button class="btn btn-account bg-lightblue dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user"></i> &nbsp; account
+                            </button>
+                            
+                            <div class="dropdown-menu bg-lightblue">
+                                <a id="openLogin" class="dropdown-item" href="#" data-toggle="modal" data-target="#loginMenu">inloggen</a>
+                                <a id="openRegister" class="dropdown-item" href="#" data-toggle="modal" data-target="#registerMenu">registreren</a>
+                            </div>
+                        </div>
+                    </div> 
+                        
+                    ';
                 } ?>
             </div>
         </div>
@@ -195,17 +231,18 @@ login();
                             </div>
                             <div class="row">
                                 <div class="col">
-                                        <input class="form-control mb-3" type="text" id="address" placeholder="Adres" name="address"
-                                               required>
-                                        <label for="address" class="sr-only">Adres</label>
-                                        <script>
-                                            var placesAutocomplete = places({
-                                                appId: 'plK904BLG7JJ',
-                                                apiKey: '551154e9c4e6dfefd99359b532faaa99',
-                                                container: document.querySelector('#address')
-                                            });
-                                        </script>
-                                    </div>
+                                    <input class="form-control mb-3" type="text" id="address" placeholder="Adres"
+                                           name="address"
+                                           required>
+                                    <label for="address" class="sr-only">Adres</label>
+                                    <script>
+                                        var placesAutocomplete = places({
+                                            appId: 'plK904BLG7JJ',
+                                            apiKey: '551154e9c4e6dfefd99359b532faaa99',
+                                            container: document.querySelector('#address')
+                                        });
+                                    </script>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col">
