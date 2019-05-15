@@ -77,7 +77,7 @@ login();
                     <div class="accountdropdowndesktop">
                         <div class="dropdown">
                             <button class="btn btn-account bg-lightblue dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-user"></i> &nbsp; account
+                                <i class="fas fa-user"></i> &nbsp; aanmelden
                             </button>
                             
                             <div class="dropdown-menu bg-lightblue">
