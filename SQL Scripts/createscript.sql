@@ -1,4 +1,4 @@
-create database groep35test2 collate SQL_Latin1_General_CP1_CI_AS
+create database groep35 collate SQL_Latin1_General_CP1_CI_AS
 go
 
 create table TBL_Feedback_Type
