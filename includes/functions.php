@@ -1,64 +1,61 @@
 <?php
-//error_reporting(0);
-session_start();
-connectToDatabase();
+    //error_reporting(0);
+    session_start();
+    connectToDatabase();
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
 
-global $loginMessage;
-function cleanUpUserInput($input)
-{
-    $input = trim($input);
-    $input = stripslashes($input);
-    $input = htmlspecialchars($input);
-    return $input;
-}
-
-function connectToDatabase()
-{
-    $hostnaam = "51.38.112.111";
-    $databasenaam = "groep35";
-    $gebruikersnaam = "iproject35";
-    $wachtwoord = "iProject35";
-    global $pdo;
-
-    try {
-        $pdo = new PDO ("sqlsrv:Server=$hostnaam;Database=$databasenaam;ConnectionPooling=0", "$gebruikersnaam", "$wachtwoord");
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        echo $e;
+    global $loginMessage;
+    function cleanUpUserInput($input) {
+        $input = trim($input);
+        $input = stripslashes($input);
+        $input = htmlspecialchars($input);
+        return $input;
     }
-}
 
-function search($amount = 0, $promoted_only = false)
-{
-    global $pdo;
+    function connectToDatabase() {
+        $hostnaam = "51.38.112.111";
+        $databasenaam = "groep35";
+        $gebruikersnaam = "iproject35";
+        $wachtwoord = "iProject35";
+        global $pdo;
 
-    try {
-        $query = "SELECT " . ($amount > 0 ? "TOP($amount) " : "") . "A.auction, name, description, price_start, amount, [file] FROM TBL_Auction A
+        try {
+            $pdo = new PDO ("sqlsrv:Server=$hostnaam;Database=$databasenaam;ConnectionPooling=0", "$gebruikersnaam", "$wachtwoord");
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function search($amount = 0, $promoted_only = false) {
+        global $pdo;
+
+        try {
+            $query = "SELECT " . ($amount > 0 ? "TOP($amount) " : "") . "A.auction, name, description, price_start, amount, [file] FROM TBL_Auction A
     INNER JOIN TBL_Item I
         on A.item = I.item
     LEFT JOIN (SELECT auction, max(amount) AS amount FROM TBL_Bid group by auction) as B
     ON A.auction = B.auction
     LEFT JOIN (SELECT item, [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item)) as R on I.item = R.item
 WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
-        $filters = array();
-        $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));
+            $filters = array();
+            $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));
 
-        foreach ($searchArray as $key => $word) {
-            $query .= "name LIKE ?";
-            if ($key < count($searchArray) - 1) {
-                $query .= " AND ";
+            foreach ($searchArray as $key => $word) {
+                $query .= "name LIKE ?";
+                if ($key < count($searchArray) - 1) {
+                    $query .= " AND ";
+                }
+                $filters[] = "%$word%";
             }
-            $filters[] = "%$word%";
-        }
-        $query .= " ORDER BY moment_end DESC";
-        $searchStatement = $pdo->prepare($query);
-        $searchStatement->execute($filters);
-        $html = "<div class='row my-2'>";
-        while ($auction = $searchStatement->fetch()) {
-            $html .= "<div class='auction-article-" . ($promoted_only ? "large" : "small") . " white col-lg m-2'>
+            $query .= " ORDER BY moment_end DESC";
+            $searchStatement = $pdo->prepare($query);
+            $searchStatement->execute($filters);
+            $html = "<div class='row my-2'>";
+            while ($auction = $searchStatement->fetch()) {
+                $html .= "<div class='auction-article-" . ($promoted_only ? "large" : "small") . " white col-lg m-2'>
 <div class='row mt-3'>
 									<div class='col'>
 										<div class='col'><strong>" . $auction['name'] . "</strong></div>
@@ -70,7 +67,7 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
 								<div class='imageContainer row text-center'>
 									<div>" . "<img class='mx-auto my-2' src='data:image/bmp;base64," . $auction['file'] . "'
 										     alt='Afbeelding van veiling'>" .
-                "</div>
+                    "</div>
 								</div>
 								<div class='row mb-3'>
 									<div class='col'>
@@ -86,64 +83,58 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
 									</div>
 								</div>
 							</div>";
-        }
 
-        $html .= "</div>";
-        echo $html;
 
-    } catch (PDOException $e) {
-        echo $e;
-    }
-}
-
-function login()
-{
-    global $loginMessage;
-    if (isset($_POST['login'])) {
-        global $pdo;
-        $username = cleanUpUserInput(strtolower($_POST['username']));
-        $password = cleanUpUserInput($_POST['password']);
-
-        if ($username == "" || $password == "") {
-            $loginMessage = "Vul een gebruikersnaam en een wachtwoord in<br><br>";
-        } else {
-            $sql = "SELECT [user],password, is_verified  FROM TBL_User WHERE [user]=:user and password = :password";
-            $login_query = $pdo->prepare($sql);
-            $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
-            $row = $login_query->fetch();
-            if ($row['user'] == $username) {
-                if ($row['is_verified'] == 1) {
-                    $_SESSION["username"] = $username;
-                } else {
-                    $loginMessage = "Verifier eerst uw account<br><br>";
-                }
-            } else {
-                $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
             }
 
+            $html .= "</div>";
+            echo $html;
+
+        } catch (PDOException $e) {
+            echo $e;
         }
     }
-}
 
-if (isset($_GET["logout"]) && isset($_SESSION)) {
-    $_SESSION = array();
-    session_destroy();
-    unset($_GET);
-    header("location: " . htmlspecialchars($_SERVER['PHP_SELF']));
-}
+    function login() {
+        global $loginMessage;
+        if (isset($_POST['login'])) {
+            global $pdo;
+            $username = cleanUpUserInput(strtolower($_POST['username']));
+            $password = cleanUpUserInput($_POST['password']);
 
-function register()
-{
-    if (isset($_POST['make_account'])) {
-        global $pdo;
-        $email = cleanUpUserInput($_POST['email']);
-        $regPassword = cleanUpUserInput($_POST['reg_password']);
-        $confirm_password = cleanUpUserInput($_POST['confirm_password']);
-        $firstname = cleanUpUserInput($_POST['firstname']);
-        $lastname = cleanUpUserInput($_POST['lastname']);
-        $regUsername = cleanUpUserInput(strtolower($_POST['reg_username']));
-        $address = cleanUpUserInput($_POST['address']);
-        $telephone_number = cleanUpUserInput($_POST['telephone_number']);
+            if ($username == "" || $password == "") {
+                $loginMessage = "Vul een gebruikersnaam en een wachtwoord in<br><br>";
+            } else {
+                $sql = "SELECT [user],password, is_verified  FROM TBL_User WHERE [user]=:user and password = :password";
+                $login_query = $pdo->prepare($sql);
+                $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
+                if ($login_query->fetch()['user'] == $username) {
+                    $_SESSION["username"] = $username;
+                } else {
+                    $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
+                }
+            }
+        }
+    }
+
+    if (isset($_GET["logout"]) && isset($_SESSION)) {
+        $_SESSION = array();
+        session_destroy();
+        unset($_GET);
+        header("location: " . htmlspecialchars($_SERVER['PHP_SELF']));
+    }
+
+    function register() {
+        if (isset($_POST['make_account'])) {
+            global $pdo;
+            $email = cleanUpUserInput($_POST['email']);
+            $regPassword = cleanUpUserInput($_POST['reg_password']);
+            $confirm_password = cleanUpUserInput($_POST['confirm_password']);
+            $firstname = cleanUpUserInput($_POST['firstname']);
+            $lastname = cleanUpUserInput($_POST['lastname']);
+            $regUsername = cleanUpUserInput(strtolower($_POST['reg_username']));
+            $address = cleanUpUserInput($_POST['address']);
+            $telephone_number = cleanUpUserInput($_POST['telephone_number']);
 
         $is_mobile = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
 
@@ -179,13 +170,13 @@ function register()
             $canRegister = false;
         }
 
-        if ($canRegister) {
-            if ($confirm_password != $regPassword) {
-                echo 'Zorg dat beide wachtwoorden hetzelfde zijn';
-            } else {
-                $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
-                $token = str_shuffle($token);
-                $token = substr($token, 0, 10);
+            if ($canRegister) {
+                if ($confirm_password != $regPassword) {
+                    echo 'Zorg dat beide wachtwoorden hetzelfde zijn';
+                } else {
+                    $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
+                    $token = str_shuffle($token);
+                    $token = substr($token, 0, 10);
 
                 $sql = "INSERT INTO TBL_User ([user],firstname,lastname,address_line_1,email,password ,verification_code) values (?,?,?,?,?,?,?)";
                 $query = $pdo->prepare($sql);
@@ -194,66 +185,71 @@ function register()
 
                 $phoneQuery->execute(array($regUsername, $telephone_number, $is_mobile));
 
-                require "PHPMailer/PHPMailer.php";
-                require "PHPMailer/Exception.php";
-                require "PHPMailer/SMTP.php";
+                    require "PHPMailer/PHPMailer.php";
+                    require "PHPMailer/Exception.php";
+                    require "PHPMailer/SMTP.php";
 
-                $mail = new PHPMailer();
-                try {
+                    $mail = new PHPMailer();
+                    try {
 //                    $mail->SMTPDebug = 2;                                      // Enable verbose debug output
-                    $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com	';
-                    $mail->SMTPAuth = true;
-                    $mail->Username = 'eenmaalandermaal35@gmail.com';
-                    $mail->Password = 'andermaaleenmaal35';
-                    $mail->SMTPSecure = 'tls';
-                    $mail->Port = 587;
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.gmail.com	';
+                        $mail->SMTPAuth = true;
+                        $mail->Username = 'eenmaalandermaal35@gmail.com';
+                        $mail->Password = 'andermaaleenmaal35';
+                        $mail->SMTPSecure = 'tls';
+                        $mail->Port = 587;
 
-                    $mail->setFrom('eenmaalandermaal35@gmail.com');
-                    $mail->addAddress($email, $regUsername);
-                    $mail->Subject = "Please verify email!";
-                    $mail->isHTML(true);
-                    $mail->Body = "
+                        $mail->setFrom('eenmaalandermaal35@gmail.com');
+                        $mail->addAddress($email, $regUsername);
+                        $mail->Subject = "Please verify email!";
+                        $mail->isHTML(true);
+                        $mail->Body = "
+                    Geachte heer of mevrouw $lastname,<br><br>
+                    
                     Klik op de link hieronder om uw registratie te voltooien.<br>
                     <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om uw registratie te voltooien</a><br><br>
                     
                     Of plak onderstaande link in uw browser:<br>
                     http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token<br><br>
                     
-                    Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.
+                    Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.<br><br>
+                    
+                    Met vriendelijke groet,<br><br>
+                    
+                    Het team van Eenmaal Andermaal
                 ";
-                    $mail->send();
+                        $mail->send();
 
-                    echo 'Er is een email verstuurd naar het opgegeven e-mail-adres';
-                } catch (Exception $e) {
-                    echo "Er is iets misgegaan, probeer het opnieuw<br>
+                        echo 'Er is een email verstuurd naar het opgegeven e-mail-adres';
+                    } catch (Exception $e) {
+                        echo "Er is iets misgegaan, probeer het opnieuw<br>
                               Error: {$mail->ErrorInfo}";
+                    }
                 }
             }
+            echo "<script>document.getElementById('openRegister').click();</script>";
         }
-        echo "<script>document.getElementById('openRegister').click();</script>";
     }
-}
 
 
-function confirm()
-{
-    global $pdo;
-    if (isset($_GET['email']) && isset($_GET['token'])) {
-        $email = cleanUpUserInput($_GET['email']);
-        $token = cleanUpUserInput($_GET['token']);
+    function confirm() {
+        global $pdo;
+        if (isset($_GET['email']) && isset($_GET['token'])) {
+            $email = cleanUpUserInput($_GET['email']);
+            $token = cleanUpUserInput($_GET['token']);
 
-        $sql = $pdo->prepare("SELECT email,verification_code FROM TBL_User WHERE email='$email' AND verification_code='$token' AND is_verified=0");
-        $sql->execute(array($email, $token));
+            $sql = $pdo->prepare("SELECT email,verification_code FROM TBL_User WHERE email='$email' AND verification_code='$token' AND is_verified=0");
+            $sql->execute(array($email, $token));
 
-        if ($sql->fetch()['email'] == $email) {
-            $sql = $pdo->prepare("UPDATE TBL_User SET is_verified = 1, verification_code ='' WHERE email=?");
-            $sql->execute(array($email));
-            echo 'Uw account is geverifieerd, u kunt nu inloggen.';
-        } else
-            echo "Er is iets misgegaan, probeer het opnieuw";
-        echo "<script>document.getElementById('openLogin').click();</script>";
+            if ($sql->fetch()['email'] == $email) {
+                $sql = $pdo->prepare("UPDATE TBL_User SET is_verified = 1, verification_code ='' WHERE email=?");
+                $sql->execute(array($email));
+                echo 'Uw account is geverifieerd, u kunt nu inloggen.';
+            } else
+                echo "Er is iets misgegaan, probeer het opnieuw";
+            echo "<script>document.getElementById('openLogin').click();</script>";
+        }
     }
-}
 
 ?>
