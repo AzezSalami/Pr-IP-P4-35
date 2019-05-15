@@ -59,15 +59,14 @@ require "includes/header.php";
                             <div class="col-lg">
                                 <div class="aboutus">
                                     <h2 class="aboutus-title">Over ons</h2>
-                                    <p class="aboutus-text">Aenean vulputate eleifend tellus. Aenean leo ligula,
-                                        porttitor eu,
-                                        consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in.</p>
-                                    <p class="aboutus-text">Lorem Ipsum. Proin gravida nibh vel
-                                        velit
-                                        auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit
-                                        consequat
-                                        ipsum,
-                                        nec sagittis sem</p>
+                                    <p class="aboutus-text">Eenmaal Andermaal is een veilingsite waar de gebruikers
+                                        gebruikte
+                                        producten kunnen veilen. De verkoper kan met de spullen die ze niet meer
+                                        gebruiken een
+                                        ander blij maken en zelf er iets aan verdienen.</p>
+                                    <p class="aboutus-text">Ook kunnen de gebruikers bij Eenmaal Andermaal betrouwbaar,
+                                        snel
+                                        en makkelijk op producten bieden.</p>
                                     <a class="btn btn-details" href="contact.php">Stuur ons een bericht</a>
                                 </div>
                             </div>
@@ -79,9 +78,9 @@ require "includes/header.php";
                                         <div class="clearfix">
                                             <div class="feature-content">
                                                 <h4>Betrouwbaar</h4>
-                                                <p>Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
-                                                    consequat
-                                                    vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in.</p>
+                                                <p>Kopers en verkopers kunnen elkaar na een koop of verkoop
+                                                beoordelen. Dit zorgt er voor dat een nieuwe koper of verkoper
+                                                snel kan zien of de andere gebruiker betrouwbaar is of niet</p>
                                             </div>
                                         </div>
                                     </div>
@@ -89,10 +88,10 @@ require "includes/header.php";
                                         <div class="clearfix">
                                             <div class="feature-content">
                                                 <h4>Snel</h4>
-                                                <p>Donec vitae sapien ut libero venenatis faucibu. Nullam quis ante.
-                                                    Etiam sit
-                                                    amet
-                                                    orci eget eros faucibus tincidunt</p>
+                                                <p>Door Eenmaal Andermaal te gebruiker kan een gebruiker snel een
+                                                product verkopen. De gebruiker geeft zelf een periode aan waarin
+                                                andere gebruikers kunnen bieden. Na deze periode is de veiling
+                                                dan afgelopen.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -100,9 +99,9 @@ require "includes/header.php";
                                         <div class="clearfix">
                                             <div class="feature-content">
                                                 <h4>Makkelijk</h4>
-                                                <p>Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
-                                                    consequat
-                                                    vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in.</p>
+                                                <p>Eenmaal Andermaal is makkelijk in gebruik. De interface van de
+                                                website is simpel en de gebruiker kan bij problemen op de hulp
+                                                pagina terecht.</p>
                                             </div>
                                         </div>
                                     </div>
