@@ -52,19 +52,32 @@ require "includes/header.php";
         <div class="col-lg-2">
         </div>
         <div class="col-lg-8">
-            <div class="container">
-                <?php search(2, true); ?>
-                <?php search(4); ?>
+            <div class="text-dark">
+                <h1>Wachtwoord resetten</h1>
+                <p>Vul hieronder het nieuwe wachtwoord in en klik op Verzenden.</p>
             </div>
+            <form>
+                <div class="form-label-group">
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Wachtwoord">
+                    <label for="exampleInputPassword1">Wachtwoord</label>
+                </div>
+                <div class="form-label-group">
+                    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Bevestig wachtwoord">
+                    <label for="exampleInputPassword2">Bevestig wachtwoord</label>
+                </div>
+                <button type="submit" class="btn bg-lightblue">Verzenden</button>
+            </form>
         </div>
         <div class="col-lg-2">
-            <!---->
+
         </div>
     </div>
 
 </main>
-<?php
-include_once "includes/footer.php";
-?>
+<div class="fixed-bottom">
+    <?php
+    include_once "includes/footer.php";
+    ?>
+</div>
 </body>
 </html>

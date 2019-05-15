@@ -13,10 +13,11 @@ nav > div.row, main > div.row {
     width: auto;
 }
 
-.yellow{
+.yellow {
     color: #FFD042;
     border-color: #FFD042;
 }
+
 .bg-orange {
     background: #FFAD4F;
 }
@@ -150,6 +151,9 @@ body {
     margin-bottom: 1rem;
 }
 
+.algolia-places > button {
+    margin-top: -0.8rem;
+}
 
 .form-label-group > input,
 .form-label-group > label {
@@ -286,10 +290,6 @@ body {
 @media only screen and (max-device-width: 575px) {
     html {
         font-size: 2.5em;
-    }
-
-    #aanmeldTekst {
-        display: none;
     }
 
     .form-signin {
@@ -516,10 +516,11 @@ a:hover, a:active {
     width: 90%;
 }
 
-.dropright{
+.dropright {
     width: 90%;
     text-align: left;
 }
+
 .dropright button {
     border-style: none;
     background-color: #FFD042;
@@ -542,11 +543,12 @@ a:hover, a:active {
     background-color: #4FCBFF;
     color: white;
 }
-.dropright .dropdown-menu{
+
+.dropright .dropdown-menu {
     width: 400%;
 }
 
-.dropright .dropdown-menu a:hover{
+.dropright .dropdown-menu a:hover {
     background: #EEEEEE;
     color: #FFD042;
 }
@@ -555,7 +557,7 @@ a:hover, a:active {
 /* ?? */
 
 .btn-account {
-    width: 70%;
+    width: 100%;
 }
 
 /*FAQ*/
@@ -656,3 +658,18 @@ a:hover, a:active {
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
+@media only screen and (min-device-width: 991px) {
+    .accountdropdownmobile {
+        display: none;
+    }
+}
+
+@media only screen and (max-device-width: 991px) {
+    .accountdropdowndesktop {
+        display: none;
+    }
+}
+
+.accountdropdowndesktop .dropdown .dropdown-menu {
+    width: 100%;
+}
