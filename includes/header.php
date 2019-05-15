@@ -151,6 +151,7 @@ login();
                                        id="password"
                                        maxlength="50" required><br>
                                 <label for="password">Wachtwoord</label>
+                                <a href="wachtwoordvergeten.php">Wachtwoord vergeten?</a>
                             </div>
 
                             <div class="row">
