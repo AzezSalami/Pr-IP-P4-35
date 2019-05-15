@@ -230,7 +230,8 @@ function confirm()
             echo 'Your email has been verified! You can log in now!';
         } else
             echo "verification code incorrect, please try again";
-        echo "<script>document.getElementById('openLoginButton').click();</script>";
+
+        echo "<script>document.getElementById('openLogin').click();</script>";
     }
 }
 ?>

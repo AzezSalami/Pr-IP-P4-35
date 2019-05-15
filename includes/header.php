@@ -4,26 +4,26 @@ login();
 ?>
 
 <header>
-
-	<span class="sidenavhamburger mr-2" onclick="openNav()">&#9776;</span>
-	<div class="container-fluid bg-orange py-2">
-		<div class="row">
-			<div class="col-lg-2">
-				<a href="index.php">
-					<img src="images/logo.png" class="logo my-1 mx-auto d-block" alt="logo">
-				</a>
-			</div>
-					<form action="veilingen.php" method="get" class="col-10 col-lg-8 d-flex align-items-center mb-1 px-2">
-						<div class="input-group">
-							<input type="text" class="form-control" placeholder="Zoeken" name="search" <?php echo (isset($_GET['search']) ? "value='" . $_GET['search'] . "'" : "")?>>
-							<div class="input-group-append">
-								<button class="btn btn-outline-secondary bg-white" type="submit" id="searchbutton"><i
-											class="fas fa-search"></i>
-								</button>
-							</div>
-						</div>
-					</form>
-				<div class="col-2 my-auto text-center">
+    <span class="sidenavhamburger mr-2" onclick="openNav()">&#9776;</span>
+    <div class="container-fluid bg-orange py-2">
+        <div class="row">
+            <div class="col-lg-2">
+                <a href="index.php">
+                    <img src="images/logo.png" class="logo my-1 mx-auto d-block" alt="logo">
+                </a>
+            </div>
+            <form action="veilingen.php" method="get" class="col-10 col-lg-8 d-flex align-items-center mb-1 px-2">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Zoeken"
+                           name="search" <?php echo(isset($_GET['search']) ? "value='" . $_GET['search'] . "'" : "") ?>>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary bg-white" type="submit" id="searchbutton"><i
+                                    class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="col-2 my-auto text-center">
                 <?php
                 if (array_key_exists("username", $_SESSION)) {
                     if (!empty($_SESSION["username"])) {
@@ -50,11 +50,7 @@ login();
                             <a id="openRegister" class="dropdown-item" href="#" data-toggle="modal" data-target="#registerMenu">registreren</a>
                         </div>
                     </div>';
-                    global $loginMessage;
-                    //if (isset($loginMessage)) {
-                        echo "";
-                    //}
-                } ?><script>document.getElementById('openLogin').click();</script>
+                } ?>
             </div>
         </div>
     </div>
@@ -197,14 +193,17 @@ login();
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <div class="form-label-group">
-                                        <input class="form-control" placeholder="Adres" type="text"
-                                               name="address"
-                                               id="address"
-                                               maxlength="20" required>
-                                        <label for="address">Adres</label>
+                                        <input class="form-control mb-3" type="text" id="address" placeholder="Adres" name="address"
+                                               required>
+                                        <label for="address" class="sr-only">Adres</label>
+                                        <script>
+                                            var placesAutocomplete = places({
+                                                appId: 'plK904BLG7JJ',
+                                                apiKey: '551154e9c4e6dfefd99359b532faaa99',
+                                                container: document.querySelector('#address')
+                                            });
+                                        </script>
                                     </div>
-                                </div>
                             </div>
                             <div class="row">
                                 <div class="col">
