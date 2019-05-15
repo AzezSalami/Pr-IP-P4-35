@@ -110,7 +110,8 @@ require "includes/header.php";
                                             <div class="card-body">
                                                 <p>- U kunt proberen opnieuw een mail te laten sturen, klik dan op
                                                     “stuur opnieuw”<br>
-                                                    - Check of u het goede e-mail adres heeft ingevoerd.</p>
+                                                    - Check of u het goede e-mail adres heeft ingevoerd.<br>
+                                                    - Check uw spam. De e-mail kan daar beland zijn.</p>
                                                 <p><strong>Let op: </strong>Soms duur het even voordat de mail binnen
                                                     is, wacht een paar minuten.</p>
                                             </div>
