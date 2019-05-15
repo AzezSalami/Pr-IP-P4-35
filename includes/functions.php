@@ -234,7 +234,7 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
                 echo 'Uw account is geverifieerd, u kunt nu inloggen.';
             } else
                 echo "Er is iets misgegaan, probeer het opnieuw";
-            echo "<script>document.getElementById('openLoginButton').click();</script>";
+            echo "<script>document.getElementById('openLogin').click();</script>";
         }
     }
 
