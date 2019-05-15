@@ -47,95 +47,127 @@
 <?php
 require "includes/header.php";
 ?>
-<main>
-    <div class="container">
-        <div class="text-dark text-center">Gegevens</div>
-        <form class="" method="POST" name="reset">
-            <div class="row">
-                <div class="col">
-                    <div class="row">
-                        <div class="col">
-                            <label for="firstname">Voornaam</label>
-                            <input class="form-control" placeholder="<?php placeholderAccountData("firstname"); ?>" type="text"
-                                   name="firstname"
-                                   id="firstname" maxlength="20" required>
 
-                        </div>
-                        <div class="col">
+<main>
+    <div class="row">
+        <div class="col-lg-2">
+        </div>
+        <div class="col-lg-8">
+            <h1 class="text-dark">Mijn gegevens</h1>
+            <form class="text-dark" method="POST" name="reset">
+                <div class="row">
+                    <div class="col">
+                        <label for="firstname">Voornaam</label>
+                        <input class="form-control" placeholder="
+                        <?php placeholderAccountData("firstname"); ?>" type="text"
+                               name="firstname"
+                               id="firstname" maxlength="20" required>
+                    </div>
+                    <div class="col">
+                        <div class="row">
                             <label for="lastname">Achternaam</label>
-                            <input class="form-control" placeholder="<?php placeholderAccountData("lastname"); ?>" type="text"
+                            <input class="form-control" placeholder="
+                           <?php placeholderAccountData("lastname"); ?>" type="text"
                                    name="lastname"
                                    id="lastname"
                                    maxlength="20" required>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="reg_username">Gebruikersnaam</label>
+                </div>
+                <br>
+                <div class="dropdown-divider yellow"></div>
+                <div class="row">
+                    <div class="col">
+                        <label for="reg_username">Gebruikersnaam</label>
 
-                            <input class="form-control" placeholder="<?php placeholderAccountData("user"); ?>" type="text"
-                                   name="reg_username"
-                                   id="reg_username"
-                                   maxlength="20" readonly>
-                        </div>
+                        <input class="form-control" placeholder="<?php placeholderAccountData("user"); ?>" type="text"
+                               name="reg_username"
+                               id="reg_username"
+                               maxlength="20" readonly>
+
+                        <label for="address" class="">Adres</label>
+                        <input class="form-control mb-3" type="text" id="address1" placeholder="Adres"
+                               name="address"
+                               required>
+                        <script>
+                            var placesAutocomplete = places({
+                                appId: 'plK904BLG7JJ',
+                                apiKey: '551154e9c4e6dfefd99359b532faaa99',
+                                container: document.querySelector('#address1')
+                            });
+                        </script>
+
+
                     </div>
-                    <div class="row">
-                        <div class="col">
+                    <div class="col">
+                        <div class="row">
                             <label for="email">Emailadres</label>
 
-                            <input class="form-control" placeholder="<?php placeholderAccountData("email"); ?>" type="email"
+                            <input class="form-control" placeholder="<?php placeholderAccountData("email"); ?>"
+                                   type="email"
                                    name="email" id="email" readonly>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="address" class="">Adres</label>
-                            <input class="form-control mb-3" type="text" id="address1" placeholder="Adres"
-                                   name="address"
-                                   required>
 
-                            <script>
-                                var placesAutocomplete = places({
-                                    appId: 'plK904BLG7JJ',
-                                    apiKey: '551154e9c4e6dfefd99359b532faaa99',
-                                    container: document.querySelector('#address1')
-                                });
-                            </script>
 
+                            <label for="telephone_number">Telefoonnummer</label>
+                            <input class="form-control" placeholder="" type="tel"
+                                   name="telephone_number" id="telephone_number" maxlength="10">
 
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <br>
+                <div class="dropdown-divider yellow"></div>
+                <div class="row">
                     <div class="col">
-                        <label for="telephone_number">Telefoonnummer</label>
-                        <input class="form-control" placeholder="" type="tel"
-                               name="telephone_number" id="telephone_number" maxlength="10">
-                    </div>
-                    <div class="col">
-                        <label for="reg_password">Wachtwoord</label>
+                        <label for="cur_password">Huidige wachtwoord</label>
                         <input class="form-control" placeholder="" type="password"
-                               name="reg_password"
-                               id="reg_password"
+                               name="cur_password"
+                               id="cur_password"
                                maxlength="50" required>
+
                     </div>
                     <div class="col">
-                        <label for="confirm_password">Bevestig wachtwoord</label>
-                        <label class="" for="bevestig_wachtwoord">bevestig wachtwoord</label>
-                        <input class="form-control" placeholder="" type="password"
-                               name="confirm_password"
-                               id="confirm_password"
-                               maxlength="50" required><br>
+                        <div class="row">
+                            <label for="reg_password">Wachtwoord</label>
+                            <input class="form-control" placeholder="" type="password"
+                                   name="reg_password"
+                                   id="reg_password"
+                                   maxlength="50" required>
+                        </div>
+
+                        <div class="row">
+                            <label for="confirm_password">Bevestig wachtwoord</label>
+                            <input class="form-control" placeholder="" type="password"
+                                   name="confirm_password"
+                                   id="confirm_password"
+                                   maxlength="50" required>
+                        </div>
                     </div>
-                    <div class="row">
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col">
                         <input class="btn bg-lightblue" type="submit" name="make_account"
                                value="opslaan">
                     </div>
+                    <div class="col">
+                        <div class="row">
+                            <input class="btn bg-lightblue" type="submit" name="delete_account"
+                                   value="verwijder">
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </form>
+                <br>
+            </form>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
     </div>
+
 </main>
+
 <?php
 include_once "includes/footer.php";
 ?>
