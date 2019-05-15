@@ -238,4 +238,8 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
         }
     }
 
+    function resetPasswordEmail() {
+
+    }
+
 ?>
