@@ -13,6 +13,10 @@ nav > div.row, main > div.row {
     width: auto;
 }
 
+.yellow{
+    color: #FFD042;
+    border-color: #FFD042;
+}
 .bg-orange {
     background: #FFAD4F;
 }
@@ -528,19 +532,25 @@ a:hover, a:active {
     color: white;
 }
 
+
 .dropdown-menu a {
     color: black;
+    font-weight: bold;
 }
 
 .dropdown-menu a:hover {
     background-color: #4FCBFF;
     color: white;
 }
+.dropright .dropdown-menu{
+    width: 400%;
+}
 
 .dropright .dropdown-menu a:hover{
     background: #EEEEEE;
-    color: darkgray;
+    color: #FFD042;
 }
+
 
 /* ?? */
 
