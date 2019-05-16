@@ -303,7 +303,7 @@ login();
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title text-dark">reset password</h4>
+                    <h4 class="modal-title text-dark">Wachtwoord vergeten?</h4>
                     <button id="loginCloseButton" type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
@@ -324,13 +324,13 @@ login();
                                        name="emailadres"
                                        id="emailadres"
                                        maxlength="20" required>
-                                <label for="emailadres">emailadres</label>
+                                <label for="emailadres">e-mail</label>
                             </div>
 
                             <div class="row">
                                 <div class="col">
                                     <input class="btn bg-lightblue" type="submit" name="reset"
-                                           value="send">
+                                           value="Verstuur">
                                 </div>
                             </div>
                         </form>
