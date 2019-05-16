@@ -57,17 +57,15 @@ require "includes/header.php";
             <form class="text-dark" method="POST" name="reset">
                 <div class="row">
                     <div class="col">
-                        <label for="firstname">Voornaam</label>
-                        <input class="form-control" placeholder="
-                        <?php placeholderAccountData("firstname"); ?>" type="text"
+                        <label class="font-italic" for="firstname">Voornaam</label>
+                        <input class="form-control" placeholder="<?php placeholderAccountData("firstname"); ?>" type="text"
                                name="firstname"
                                id="firstname" maxlength="20" required>
                     </div>
                     <div class="col">
                         <div class="row">
-                            <label for="lastname">Achternaam</label>
-                            <input class="form-control" placeholder="
-                           <?php placeholderAccountData("lastname"); ?>" type="text"
+                            <label class="font-italic" for="lastname">Achternaam</label>
+                            <input class="form-control" placeholder="<?php placeholderAccountData("lastname"); ?>" type="text"
                                    name="lastname"
                                    id="lastname"
                                    maxlength="20" required>
@@ -78,15 +76,15 @@ require "includes/header.php";
                 <div class="dropdown-divider yellow"></div>
                 <div class="row">
                     <div class="col">
-                        <label for="reg_username">Gebruikersnaam</label>
+                        <label class="font-italic" for="reg_username">Gebruikersnaam</label>
 
-                        <input class="form-control" placeholder="<?php placeholderAccountData("user"); ?>" type="text"
+                        <input class="form-control mb-4" placeholder="<?php placeholderAccountData("user"); ?>" type="text"
                                name="reg_username"
                                id="reg_username"
                                maxlength="20" readonly>
 
-                        <label for="address" class="">Adres</label>
-                        <input class="form-control mb-3" type="text" id="address1" placeholder="Adres"
+                        <label class="font-italic" for="address">Adres</label>
+                        <input class="form-control" type="text" id="address1" placeholder="Adres"
                                name="address"
                                required>
                         <script>
@@ -101,15 +99,15 @@ require "includes/header.php";
                     </div>
                     <div class="col">
                         <div class="row">
-                            <label for="email">Emailadres</label>
-
-                            <input class="form-control" placeholder="<?php placeholderAccountData("email"); ?>"
+                            <label class="font-italic" for="email">Emailadres</label>
+                            <input class="form-control mb-4" placeholder="<?php placeholderAccountData("email"); ?>"
                                    type="email"
                                    name="email" id="email" readonly>
 
 
-                            <label for="telephone_number">Telefoonnummer</label>
-                            <input class="form-control" placeholder="<?php placeholderAccountData("phone_number"); ?>" type="tel"
+                            <label class="font-italic" for="telephone_number">Telefoonnummer</label>
+                            <input class="form-control" placeholder="<?php placeholderAccountData("phone_number"); ?>"
+                                   type="tel"
                                    name="telephone_number" id="telephone_number" maxlength="10">
 
                         </div>
@@ -117,18 +115,18 @@ require "includes/header.php";
                 </div>
                 <br>
                 <div class="dropdown-divider yellow"></div>
+                <h3>Wachtwoord wijzigen</h3>
                 <div class="row">
                     <div class="col">
-                        <label for="cur_password">Huidige wachtwoord</label>
+                        <label class="font-italic" for="cur_password">Huidige wachtwoord</label>
                         <input class="form-control" placeholder="" type="password"
                                name="cur_password"
                                id="cur_password"
                                maxlength="50" required>
-
                     </div>
                     <div class="col">
                         <div class="row">
-                            <label for="reg_password">Wachtwoord</label>
+                            <label class="font-italic" for="reg_password">Nieuw wachtwoord</label>
                             <input class="form-control" placeholder="" type="password"
                                    name="reg_password"
                                    id="reg_password"
@@ -136,7 +134,7 @@ require "includes/header.php";
                         </div>
 
                         <div class="row">
-                            <label for="confirm_password">Bevestig wachtwoord</label>
+                            <label class="font-italic" for="confirm_password">Bevestig wachtwoord</label>
                             <input class="form-control" placeholder="" type="password"
                                    name="confirm_password"
                                    id="confirm_password"
@@ -148,13 +146,12 @@ require "includes/header.php";
 
                 <div class="row">
                     <div class="col">
-                        <input class="btn bg-lightblue" type="submit" name="make_account"
-                               value="Opslaan">
+                        <a class="text-lg" href="#">Account verwijderen?</a>
                     </div>
                     <div class="col">
                         <div class="row">
-                            <input class="btn bg-lightblue" type="submit" name="delete_account"
-                                   value="Verwijder account">
+                            <input class="btn bg-lightblue" type="submit" name="make_account"
+                                   value="Opslaan">
                         </div>
                     </div>
                 </div>
