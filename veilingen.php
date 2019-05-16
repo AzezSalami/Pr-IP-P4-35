@@ -89,10 +89,12 @@
                         </button>
                         <div class=\"dropdown-menu r-content bg-gray px-2\">
                             <div class=\"container\">
-                            <div class=\"row mr-1 mb-2\">";
+                        <div class=\"row mr-1 mb-2\">";
 
                         $query2 = $pdo->prepare("select * from TBL_Rubric where super = " . $data['rubric']);
                         $query2->execute();
+
+                        $i = 0;
 
                         while ($data2 = $query2->fetch()) {
                             $html .= "<div class=\"col mx-1\">
@@ -102,16 +104,19 @@
                             $query3 = $pdo->prepare("select * from TBL_Rubric where super = " . $data2['rubric']);
                             $query3->execute();
 
-                            $i = 0;
+                            while ($data3 = $query3->fetch()) {
 
-                            while($data3 = $query3->fetch()) {
-                                if($i < 4) {
-                                    $html .= "<p>". $data3['name'] ."</p>";
-                                    $i++;
-                                }
+                                $html .= "<p>" . $data3['name'] . "</p>";
+
                             }
 
                             $html .= "</div>";
+                            if($i == 4) {
+                                $html .= "</div><div class=\"row mr-1 mb-2\">";
+                                $i = 0;
+                            } else {
+                                $i++;
+                            }
                         }
                         $html .= "</div></div></div></div>";
                     }

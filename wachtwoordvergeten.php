@@ -54,18 +54,24 @@ require "includes/header.php";
         <div class="col-lg-8">
             <div class="text-dark">
                 <h1>Wachtwoord vergeten</h1>
-                <p>Weet je het wachtwoord niet meer?
-                    Vul hieronder je e-mailadres in.
-                    We sturen dan binnen enkele minuten een e-mail waarmee een nieuw wachtwoord kan worden
-                    aangemaakt.</p>
+                <p>Wachtwoord vergeten? Vul dan hieronder uw emailadres in waarmee u heeft geregistreerd.
+                    Binnen enkele minuten kunt u een e-mail in uw inbox verwachten waarmee u het wachtwoord opnieuw
+                    kunt instellen.</p>
+                <?php
+                if (isset($_GET['submit'])) {
+                    $ja = $_GET['email'];
+                    var_dump($ja);
+                }
+
+                ?>
             </div>
-            <form>
+            <form method="get" action="">
                 <div class="form-group">
                     <label class="text-dark font-weight-bold" for="exampleInputEmail1">E-mail adres:</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                           placeholder="vul uw e-mail in">
+                    <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp"
+                           placeholder="Vul uw e-mail in">
                 </div>
-                <button type="submit" class="btn bg-lightblue">Versturen</button>
+                <button type="submit" name="submit" class="btn bg-lightblue">Versturen</button>
             </form>
         </div>
         <div class="col-lg-2">
