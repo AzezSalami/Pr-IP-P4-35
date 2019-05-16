@@ -188,7 +188,7 @@ function register()
                 $query->execute(array($regUsername, $firstname, $lastname, $address, $email, hash('sha1', $regPassword), $token));
                 $phoneQuery = $pdo->prepare(" INSERT INTO TBL_Phone ([user],phone_number,is_mobile) values (?,?,?)");
 
-                $phoneQuery->execute(array($regUsername, $telephone_number, $is_mobile));
+                $phoneQuery->execute(array($regUsername, $telephone_number, ($is_mobile ? 1 : 0)));
 
                 require "PHPMailer/PHPMailer.php";
                 require "PHPMailer/Exception.php";
