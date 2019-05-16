@@ -149,12 +149,12 @@ require "includes/header.php";
                 <div class="row">
                     <div class="col">
                         <input class="btn bg-lightblue" type="submit" name="make_account"
-                               value="opslaan">
+                               value="Opslaan">
                     </div>
                     <div class="col">
                         <div class="row">
                             <input class="btn bg-lightblue" type="submit" name="delete_account"
-                                   value="verwijder">
+                                   value="Verwijder account">
                         </div>
                     </div>
                 </div>
