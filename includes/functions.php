@@ -301,8 +301,7 @@ function updateAccountData()
 
 }
 
-function resetPasswordEmail()
-{
+function resetPasswordEmail() {
 
 }
 

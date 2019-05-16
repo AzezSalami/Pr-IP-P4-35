@@ -307,7 +307,7 @@ login();
                     <button id="loginCloseButton" type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
-                <div class="modal-body">
+                <div class="modal-body" id="wwvergetenform">
                     <div class="container-fluid">
 
                         <form class="form-signin" method="POST" name="reset">
@@ -320,28 +320,46 @@ login();
                                         aangemaakt.</p></div>
                             </div>
                             <div class="form-label-group">
-                                <input class="form-control" placeholder="emailadres" type="text"
-                                       name="emailadres"
-                                       id="emailadres"
-                                       maxlength="20" required>
-                                <label for="emailadres">e-mail</label>
+                                <form method="post" action="">
+                                    <input class="form-control" placeholder="emailadres" type="text"
+                                           name="wwvergetenemail"
+                                           id="emailadres"
+                                           maxlength="40" required>
+                                    <label for="emailadres">Voer hier uw email in</label>
                             </div>
-
                             <div class="row">
                                 <div class="col">
-                                    <input class="btn bg-lightblue" type="submit" name="reset"
+                                    <input class="btn bg-lightblue" type="submit" name="wwvergetensubmit"
                                            value="Verstuur">
-                                </div>
-                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
+    </div>
 
 
 </header>
+
+<?php
+if (isset($_POST['wwvergetensubmit'])) {
+
+    $email = $_POST['wwvergetenemail'];
+    global $pdo;
+    $query = $pdo->prepare("select count(user) from TBL_User where email = '" . $email . "' and is_verified = 1");
+    $query->execute();
+    $data = $query->fetch();
+
+    if($data[0][0] == 0) {
+        //emailadres bestaat niet
+    } else {
+        //functie aanroepen
+    }
+
+}
+?>
 
 <div id="mySidenav" class="sidenav bg-yellow">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
