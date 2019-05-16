@@ -260,9 +260,8 @@ function confirm()
 
 function placeholderAccountData($input)
 {
-    echo $msg = "";
+    echo $msg = '';
     global $pdo;
-    $table = "TBL_User";
     if (array_key_exists("username", $_SESSION)) {
 
         if ($input == "phone_number") {
@@ -285,6 +284,7 @@ function updateAccountData()
     if (isset($_POST['reset'])) {
         global $pdo;
         $email = cleanUpUserInput($_POST['email']);
+        $cur_password= cleanUpUserInput($_POST['cur_password']);
         $resPassword = cleanUpUserInput($_POST['password']);
         $confirm_password = cleanUpUserInput($_POST['confirm_password']);
         $firstname = cleanUpUserInput($_POST['firstname']);
@@ -293,7 +293,7 @@ function updateAccountData()
         $telephone_number = cleanUpUserInput($_POST['telephone_number']);
 
 
-        $sql = "INSERT INTO TBL_User (firstname,lastname,address_line_1) values (?,?,?) WHERE [user] = ?";
+        $sql = "UPDATE TBL_User SET(firstname,lastname,address_line_1,password) values (?,?,?,?) WHERE [user] = ?";
         $query = $pdo->prepare($sql);
         $query->execute(array($firstname, $lastname, $address));
 
