@@ -50,7 +50,7 @@ require "includes/header.php";
     <div class="row">
         <div class="col-lg-2">
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-8 contact-page">
             <div class="container">
                 <div class="container contact-form">
                     <div class="contact-image">

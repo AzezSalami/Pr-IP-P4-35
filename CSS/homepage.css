@@ -314,6 +314,12 @@ body {
     padding-left: 37px;
 }
 
+/*Contact page*/
+
+.contact-page {
+    min-height: 80.2vh;
+}
+
 .contact-form {
     background: #EEEEEE;
     margin-top: 5%;
@@ -339,6 +345,8 @@ body {
 
 .contact-form form {
     padding: 14%;
+    padding-bottom: 0px;
+    padding-top: 13%;
 }
 
 .contact-form form .row {
