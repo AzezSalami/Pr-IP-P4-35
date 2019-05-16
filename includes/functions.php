@@ -303,7 +303,7 @@ function updateAccountData()
 
 function resetPasswordEmail() {
     if (isset($_POST['wwvergetensubmit'])) {
-        $email = $_POST['wwvergetenemail'];
+        $email = $_POST['wwvergetensubmit'];
         global $pdo;
         $query = $pdo->prepare("select count(user) from TBL_User where email = '" . $email . "' and is_verified = 1");
         $query->execute();
