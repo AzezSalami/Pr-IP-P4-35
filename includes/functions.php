@@ -302,7 +302,20 @@ function updateAccountData()
 }
 
 function resetPasswordEmail() {
+    if (isset($_POST['wwvergetensubmit'])) {
+        $email = $_POST['wwvergetenemail'];
+        global $pdo;
+        $query = $pdo->prepare("select count(user) from TBL_User where email = '" . $email . "' and is_verified = 1");
+        $query->execute();
+        $data = $query->fetch();
 
+        if($data[0][0] == 0) {
+           echo "emailadres bestaat niet";
+        } else {
+            echo "functie aanroepen";
+        }
+        echo "<script>document.getElementById('openforgetpassword').click();</script>";
+    }
 }
 
 ?>
