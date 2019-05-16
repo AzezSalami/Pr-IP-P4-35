@@ -17,14 +17,14 @@ function cleanUpUserInput($input)
 
 function connectToDatabase()
 {
-    $hostnaam = "51.38.112.111";
-    $databasenaam = "groep35";
-    $gebruikersnaam = "iproject35";
-    $wachtwoord = "iProject35";
+    $hostname = "51.38.112.111";
+    $databasename = "groep35";
+    $username = "iproject35";
+    $password = "iProject35";
     global $pdo;
 
     try {
-        $pdo = new PDO ("sqlsrv:Server=$hostnaam;Database=$databasenaam;ConnectionPooling=0", "$gebruikersnaam", "$wachtwoord");
+        $pdo = new PDO ("sqlsrv:Server=$hostname;Database=$databasename;ConnectionPooling=0", "$username", "$password");
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         echo $e;
