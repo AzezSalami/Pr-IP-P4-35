@@ -242,8 +242,10 @@ require "includes/header.php";
     <div class="col-lg-2">
     </div>
 </main>
-<?php
-include_once "includes/footer.php";
-?>
+<div class="fixed-bottom">
+    <?php
+    include_once "includes/footer.php";
+    ?>
+</div>
 </body>
 </html>
