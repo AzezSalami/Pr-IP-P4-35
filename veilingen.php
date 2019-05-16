@@ -142,7 +142,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-8 auction-page">
             <div class="container">
                 <?php search(); ?>
             </div>
@@ -151,5 +151,8 @@
         </div>
     </div>
 </main>
+<?php
+include_once "includes/footer.php";
+?>
 </body>
 </html>

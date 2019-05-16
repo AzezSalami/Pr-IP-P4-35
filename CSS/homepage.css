@@ -206,6 +206,9 @@ body {
     color: #777;
 }
 
+.auction-page {
+    min-height: 80.2vh;
+}
 
 /* SIDENAVBAR */
 
