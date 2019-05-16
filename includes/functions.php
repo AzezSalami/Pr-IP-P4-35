@@ -17,14 +17,14 @@ function cleanUpUserInput($input)
 
 function connectToDatabase()
 {
-    $hostnaam = "51.38.112.111";
-    $databasenaam = "groep35";
-    $gebruikersnaam = "iproject35";
-    $wachtwoord = "iProject35";
+    $hostname = "51.38.112.111";
+    $databasename = "groep35";
+    $username = "iproject35";
+    $password = "iProject35";
     global $pdo;
 
     try {
-        $pdo = new PDO ("sqlsrv:Server=$hostnaam;Database=$databasenaam;ConnectionPooling=0", "$gebruikersnaam", "$wachtwoord");
+        $pdo = new PDO ("sqlsrv:Server=$hostname;Database=$databasename;ConnectionPooling=0", "$username", "$password");
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         echo $e;
@@ -301,9 +301,21 @@ function updateAccountData()
 
 }
 
-function resetPasswordEmail()
-{
+function resetPasswordEmail() {
+    if (isset($_POST['wwvergetensubmit'])) {
+        $email = $_POST['wwvergetensubmit'];
+        global $pdo;
+        $query = $pdo->prepare("select count(user) from TBL_User where email = '" . $email . "' and is_verified = 1");
+        $query->execute();
+        $data = $query->fetch();
 
+        if($data[0][0] == 0) {
+            echo "emailadres bestaat niet";
+        } else {
+            echo "functie aanroepen";
+        }
+        echo "<script>document.getElementById('openforgetpassword').click();</script>";
+    }
 }
 
 ?>

@@ -151,9 +151,8 @@ login();
                                        id="password"
                                        maxlength="50" required><br>
                                 <label for="password">Wachtwoord</label>
-                                <a href="" data-target="#resetMenu" data-toggle="modal"
-                                   onclick="document.getElementById('loginCloseButton').click()">Wachtwoord
-                                    vergeten?</a>
+                                <a href="" data-target="#resetMenu" data-toggle="modal" id="openforgetpassword"
+                                   onclick="document.getElementById('loginCloseButton').click()">Wachtwoord vergeten?</a>
                             </div>
 
                             <div class="row">
@@ -319,17 +318,18 @@ login();
                                         worden
                                         aangemaakt.</p></div>
                             </div>
+                            <div class="col text-danger"><?php resetPasswordEmail(); ?></div>
                             <div class="form-label-group">
                                 <input class="form-control" placeholder="emailadres" type="text"
                                        name="emailadres"
                                        id="emailadres"
-                                       maxlength="20" required>
+                                        required>
                                 <label for="emailadres">emailadres</label>
                             </div>
 
                             <div class="row">
                                 <div class="col">
-                                    <input class="btn bg-lightblue" type="submit" name="reset"
+                                    <input class="btn bg-lightblue" type="submit" name="wwvergetensubmit"
                                            value="send">
                                 </div>
                             </div>
