@@ -35,26 +35,26 @@ login();
                             </button>
                             
                             <div class="dropdown-menu bg-lightblue">
-                                <a class="dropdown-item" href="gegevens.php">mijn gegevens</a>
-                                <a class="dropdown-item" href="#">mijn veilingen</a>
-                                <a class="dropdown-item" href="#">mijn biedingen</a>
+                                <a class="dropdown-item" href="gegevens.php">Mijn gegevens</a>
+                                <!--<a class="dropdown-item" href="#">Mijn veilingen</a>-->
+                                <!--<a class="dropdown-item" href="#">Mijn biedingen</a>-->
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="?logout=true">uitloggen</a>
+                                <a class="dropdown-item" href="?logout=true">Uitloggen</a>
                             </div>
                         </div>
                     </div>
                     <div class="accountdropdowndesktop">
                         <div class="dropdown">
                             <button class="btn btn-account bg-lightblue dropdown overflow-hidden" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-user "></i> &nbsp;'. (isset($_SESSION["username"]) ? $_SESSION["username"] :"account").'
+                                <i class="fas fa-user "></i> &nbsp;' . (isset($_SESSION["username"]) ? $_SESSION["username"] : "account") . '
                             </button>
                             
                             <div class="dropdown-menu bg-lightblue">
-                                <a class="dropdown-item" href="gegevens.php">mijn gegevens</a>
-                                <a class="dropdown-item" href="#">mijn veilingen</a>
-                                <a class="dropdown-item" href="#">mijn biedingen</a>
+                                <a class="dropdown-item" href="gegevens.php">Mijn gegevens</a>
+                                <!--<a class="dropdown-item" href="#">Mijn veilingen</a>-->
+                                <!--<a class="dropdown-item" href="#">Mijn biedingen</a>-->
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="?logout=true">uitloggen</a>
+                                <a class="dropdown-item" href="?logout=true">Uitloggen</a>
                             </div>
                         </div>
                     </div> 
@@ -69,20 +69,20 @@ login();
                             </button>
                             
                             <div class="dropdown-menu bg-lightblue">
-                                <a id="openLogin" class="dropdown-item" href="#" data-toggle="modal" data-target="#loginMenu">inloggen</a>
-                                <a id="openRegister" class="dropdown-item" href="#" data-toggle="modal" data-target="#registerMenu">registreren</a>
+                                <a id="openLogin" class="dropdown-item" href="#" data-toggle="modal" data-target="#loginMenu">Inloggen</a>
+                                <a id="openRegister" class="dropdown-item" href="#" data-toggle="modal" data-target="#registerMenu">Registreren</a>
                             </div>
                         </div>
                     </div>
                     <div class="accountdropdowndesktop">
                         <div class="dropdown">
                             <button class="btn btn-account bg-lightblue dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-user"></i> &nbsp; aanmelden
+                                <i class="fas fa-user"></i> &nbsp; Aanmelden
                             </button>
                             
                             <div class="dropdown-menu bg-lightblue">
-                                <a id="openLogin" class="dropdown-item" href="#" data-toggle="modal" data-target="#loginMenu">inloggen</a>
-                                <a id="openRegister" class="dropdown-item" href="#" data-toggle="modal" data-target="#registerMenu">registreren</a>
+                                <a id="openLogin" class="dropdown-item" href="#" data-toggle="modal" data-target="#loginMenu">Inloggen</a>
+                                <a id="openRegister" class="dropdown-item" href="#" data-toggle="modal" data-target="#registerMenu">Registreren</a>
                             </div>
                         </div>
                     </div> 

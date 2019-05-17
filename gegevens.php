@@ -102,7 +102,7 @@ require "includes/header.php";
 
                             <input class="form-control mb-4" placeholder="<?php placeholderAccountData("email"); ?>"
                                    type="email"
-                                   name="email" id="email" readonly>
+                                   name="email" id="email">
 
 
                             <label for="telephone_number">Telefoonnummer</label>

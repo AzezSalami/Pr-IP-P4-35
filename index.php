@@ -47,8 +47,8 @@ require "includes/header.php";
         </div>
         <div class="col-lg-8">
             <div class="container">
-                <?php search(1, true); ?>
-                <?php search(3); ?>
+                <?php search(2, true); ?>
+                <?php search(4); ?>
             </div>
         </div>
         <div class="col-lg-2">
