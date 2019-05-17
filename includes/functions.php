@@ -254,7 +254,7 @@ function confirm()
         $token = cleanUpUserInput($_GET['token']);
 
         $sql = $pdo->prepare("SELECT email,verification_code FROM TBL_User WHERE email=:email AND verification_code=:token AND is_verified=0");
-        $sql->execute(array(':email' => $email,':token' => $token));
+        $sql->execute(array(':email' => $email, ':token' => $token));
 
         if ($sql->fetch()['email'] == $email) {
             $sql = $pdo->prepare("UPDATE TBL_User SET is_verified = 1, verification_code ='' WHERE email=?");
@@ -268,20 +268,17 @@ function confirm()
 
 function placeholderAccountData($input)
 {
-    echo $msg = "";
+    $msg = "";
     global $pdo;
     $table = "TBL_User";
     if (array_key_exists("username", $_SESSION)) {
-
         if ($input == "phone_number") {
             $table = "TBL_Phone";
-        } else {
-            $table = "TBL_User";
         }
         if (!empty($_SESSION["username"])) {
             $username = $_SESSION["username"];
-            $sql = $pdo->prepare("SELECT * FROM ? WHERE [user]=?");
-            $sql->execute(array($table ,$username));
+            $sql = $pdo->prepare("SELECT * FROM $table WHERE [user]=?");
+            $sql->execute(array($username));
             $msg = $sql->fetch()[$input];
         }
     }
@@ -329,7 +326,7 @@ function updateAccountData()
                 } else {
                     $sql = "SELECT [user],password FROM TBL_User WHERE [user]=:username and password = :password";
                     $reset_query = $pdo->prepare($sql);
-                    $reset_query->execute(array(':username'=>$username,':password' => hash('sha1', $cur_password)));
+                    $reset_query->execute(array(':username' => $username, ':password' => hash('sha1', $cur_password)));
                     $result = $reset_query->fetch();
                     if ($result['password'] == hash('sha1', $cur_password)) {
                         if (!empty($firstname) || !empty($lastname) || !empty($address)) {
@@ -337,8 +334,7 @@ function updateAccountData()
                         }
                         $values .= "password = '" . hash('sha1', $resPassword) . "'";
                         $password_check = true;
-                    }
-                    else{
+                    } else {
                         echo 'Huidige wachtwoord is incorrect';
                     }
                 }
@@ -348,7 +344,7 @@ function updateAccountData()
             echo '<p class="text-success">jouw gegevens zijn geüpdatet </p>';
             $sql = "update TBL_Phone SET phone_number = :telephone_number WHERE [user] = :username";
             $query = $pdo->prepare($sql);
-            $query->execute(array(':telephone_number'=>$telephone_number,':username'=>$username));
+            $query->execute(array(':telephone_number' => $telephone_number, ':username' => $username));
         }
         if (!empty($firstname) || !empty($lastname) || !empty($address) || $password_check) {
             echo '<p class="text-success">jouw gegevens zijn geüpdatet</p>';
@@ -366,7 +362,7 @@ function resetPasswordEmail()
         $email = $_POST['pwdforgottenemail'];
         global $pdo;
         $query = $pdo->prepare("select count(user) from TBL_User where email = :email and is_verified = 1");
-        $query->execute(array(':email'=>$email));
+        $query->execute(array(':email' => $email));
         $data = $query->fetch();
 
         if ($data[0][0] == 0) {
@@ -389,7 +385,7 @@ function sendResetPasswordEmail($email)
 
     global $pdo;
     $query = $pdo->prepare("select * from TBL_User where email = :email");
-    $query->execute(array(':email'=>$email));
+    $query->execute(array(':email' => $email));
     $data = $query->fetch();
     $regUsername = $data['user'];
     $lastname = $data['lastname'];
@@ -398,7 +394,7 @@ function sendResetPasswordEmail($email)
     $token = str_shuffle($token);
     $token = substr($token, 0, 10);
     $query = $pdo->prepare("update TBL_User set verification_code = =:token where email = :email");
-    $query->execute(array(':token' =>$token,':email'=>$email ));
+    $query->execute(array(':token' => $token, ':email' => $email));
 
     try {
 //                    $mail->SMTPDebug = 2;                                      // Enable verbose debug output

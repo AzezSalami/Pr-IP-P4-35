@@ -181,7 +181,9 @@ require "includes/header.php";
                         <form class="form-signin" method="POST" name="remove">
                             <div class="row">
                                 <div class="col">
-                                    <p class="text-dark">Weet u zeker dat u uw account wilt verwijderen? Bij het verwijderen worden al uw persoongegevens verwijderd en veilingen inactief gemaakt.</p>
+                                    <p class="text-dark">Weet u zeker dat u uw account wilt verwijderen? Bij het
+                                        verwijderen worden al uw persoongegevens verwijderd en veilingen inactief
+                                        gemaakt.</p>
                                     <p class="text-dark">Voer uw wachtwoord in om uw account te kunnen verwijderen.</p>
                                 </div>
                             </div>
@@ -212,6 +214,8 @@ require "includes/header.php";
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 </main>
 
 <?php
