@@ -48,6 +48,31 @@ require "includes/header.php";
         </div>
         <div class="col-lg-8">
             <h1 class="text-dark">Mijn gegevens</h1>
+            <?php
+            if (isset($_POST['deleteaccountsubmit'])) {
+                if ($_POST['removiePassword'] == $_POST['remconfirm_password']) {
+                    $password = hash('sha1',$_POST['remconfirm_password']);
+
+                    $username = $_SESSION['username'];
+                    global $pdo;
+
+                    $query = $pdo->prepare("select count(*) from TBL_User where [user] = '$username' and password = '$password'");
+                    $query->execute();
+                    $data = $query->fetch();
+
+                    if ($data[0] == 1) {
+                        $query = $pdo->prepare("delete from TBL_User where [user] = '$username' and password = '$password'");
+                        $query->execute();
+                        session_destroy();
+                        echo "<script>window.location.replace('index.php');</script>";
+                    } else {
+                        echo '<p style="color: red">Uw gebruikersnaam of wachtwoord zijn niet correct, probeer het alstublieft nog eens.</p>';
+                    }
+                } else {
+                    echo "fout jo";
+                }
+            }
+            ?>
             <div class="row my-4">
                 <div class="col text-danger"><?php updateAccountData(); ?></div>
             </div>
@@ -55,17 +80,19 @@ require "includes/header.php";
                 <div class="row">
                     <div class="col">
                         <label for="firstname">Voornaam</label>
-                        <input class="form-control" placeholder="<?php placeholderAccountData("firstname"); ?>" type="text"
+                        <input class="form-control" placeholder="<?php placeholderAccountData("firstname"); ?>"
+                               type="text"
                                name="firstname"
-                               id="firstname" maxlength="20" >
+                               id="firstname" maxlength="20">
                     </div>
                     <div class="col">
                         <div class="row">
                             <label for="lastname">Achternaam</label>
-                            <input class="form-control" placeholder="<?php placeholderAccountData("lastname"); ?>" type="text"
+                            <input class="form-control" placeholder="<?php placeholderAccountData("lastname"); ?>"
+                                   type="text"
                                    name="lastname"
                                    id="lastname"
-                                   maxlength="20" >
+                                   maxlength="20">
                         </div>
                     </div>
                 </div>
@@ -104,7 +131,8 @@ require "includes/header.php";
 
 
                             <label for="telephone_number">Telefoonnummer</label>
-                            <input class="form-control" placeholder="<?php placeholderAccountData("phone_number"); ?>" type="tel"
+                            <input class="form-control" placeholder="<?php placeholderAccountData("phone_number"); ?>"
+                                   type="tel"
                                    name="telephone_number" id="telephone_number" maxlength="10">
 
                         </div>
@@ -133,7 +161,7 @@ require "includes/header.php";
                         <div class="row">
                             <label for="resconfirm_password">Bevestig wachtwoord</label>
                             <input class="form-control" placeholder="" type="password"
-                                   name="resconfirm_password"
+                                   name="verconfirm_password"
                                    id="resconfirm_password"
                                    maxlength="50">
                         </div>
@@ -178,32 +206,34 @@ require "includes/header.php";
                         <form class="form-signin" method="POST" name="remove">
                             <div class="row">
                                 <div class="col">
-                                    <p class="text-dark">Weet je dat zeker?</p></div>
+                                    <p class="text-dark">Vul hier uw wachtwoord nogmaals in om uw account permanent te
+                                        verwijderen.</p></div>
                             </div>
                             <div class="form-label-group">
                                 <form method="post" action="">
-                                    <input class="form-control" placeholder="Wachtwoord" type="text"
+                                    <input class="form-control" placeholder="Wachtwoord" type="password"
                                            name="removiePassword"
                                            id="removiePassword"
                                            maxlength="50" required>
-                                    <label for="removiePassword">wachtwoord</label>
+                                    <label for="removiePassword">Wachtwoord</label>
                             </div>
 
                             <div class="form-label-group">
                                 <label class="invisible" for="bevestig_wachtwoord">bevestig wachtwoord</label>
                                 <input class="form-control" placeholder="bevestig wachtwoord" type="password"
-                                       name="confirm_password"
-                                       id="confirm_password"
+                                       name="remconfirm_password"
+                                       id="remconfirm_password"
                                        maxlength="50" required><br>
-                                <label for="confirm_password">Bevestig wachtwoord</label>
+                                <label for="remconfirm_password">Bevestig wachtwoord</label>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <input class="btn bg-lightblue" type="submit" name="wwvergetensubmit"
-                                           value="Verstuur">
+                                    <input class="btn bg-lightblue" type="submit" name="deleteaccountsubmit"
+                                           value="Verwijder account">
                                 </div>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
