@@ -148,11 +148,11 @@ require "includes/header.php";
 
                 <div class="row">
                     <div class="col">
-                        <a href="#">Account verwijderen?</a>
+                        <a href="#" >Account verwijderen?</a>
                     </div>
                     <div class="col">
                         <div class="row">
-                            <input class="btn" type="submit" name="make_account"
+                            <input class="btn" type="submit" name="reset"
                                    value="opslaan">
                         </div>
                     </div>
