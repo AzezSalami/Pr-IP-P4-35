@@ -195,15 +195,6 @@ require "includes/header.php";
                                            maxlength="50" required>
                                     <label for="deleteAccount">wachtwoord</label>
                             </div>
-
-                            <div class="form-label-group">
-                                <label class="invisible" for="bevestig_wachtwoord">bevestig wachtwoord</label>
-                                <input class="form-control" placeholder="bevestig wachtwoord" type="password"
-                                       name="confirm_password"
-                                       id="confirm_password"
-                                       maxlength="50" required><br>
-                                <label for="confirm_password">Bevestig wachtwoord</label>
-                            </div>
                             <div class="row">
                                 <div class="col">
                                     <input class="btn bg-lightblue" type="submit" name="pwdforgottensubmit"
