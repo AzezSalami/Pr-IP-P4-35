@@ -88,7 +88,8 @@ login();
                     </div> 
                         
                     ';
-                } ?>
+                }
+                ?>
             </div>
         </div>
     </div>
@@ -142,7 +143,7 @@ login();
                                 <input class="form-control" placeholder="gebruikersnaam" type="text"
                                        name="username"
                                        id="username"
-                                       maxlength="20" required>
+                                       maxlength="30" required>
                                 <label for="username">Gebruikersnaam</label>
                             </div>
                             <div class="form-label-group">
@@ -151,7 +152,7 @@ login();
                                        id="password"
                                        maxlength="50" required><br>
                                 <label for="password">Wachtwoord</label>
-                                <a href="" data-target="#resetMenu" data-toggle="modal"
+                                <a href="" data-target="#resetMenu" data-toggle="modal" id="openforgetpassword"
                                    onclick="document.getElementById('loginCloseButton').click()">Wachtwoord
                                     vergeten?</a>
                             </div>
@@ -319,6 +320,7 @@ login();
                                         worden
                                         aangemaakt.</p></div>
                             </div>
+                            <div class="col text-danger"><?php resetPasswordEmail(); ?></div>
                             <div class="form-label-group">
                                 <form method="post" action="">
                                     <input class="form-control" placeholder="emailadres" type="text"
@@ -342,24 +344,6 @@ login();
 
 
 </header>
-
-<?php
-if (isset($_POST['wwvergetensubmit'])) {
-
-    $email = $_POST['wwvergetenemail'];
-    global $pdo;
-    $query = $pdo->prepare("select count(user) from TBL_User where email = '" . $email . "' and is_verified = 1");
-    $query->execute();
-    $data = $query->fetch();
-
-    if($data[0][0] == 0) {
-        //emailadres bestaat niet
-    } else {
-        //functie aanroepen
-    }
-
-}
-?>
 
 <div id="mySidenav" class="sidenav bg-yellow">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
