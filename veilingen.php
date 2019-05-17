@@ -48,7 +48,7 @@
 <main>
     <div class="row">
         <div class="col-lg-2">
-            <div class="rubriekenmobile">
+            <div class="rubricsmobile">
                 <div class="pos-f-t">
                     <nav class="navbar navbar-dark bg-orange">
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -59,7 +59,7 @@
                         <p>Filters</p>
                     </nav>
                     <div class="collapse" id="navbarToggleExternalContent">
-                        <div class="rubriekenmobilecontent bg-yellow p-4">
+                        <div class="rubricsmobilecontent bg-yellow p-4">
                             <h4 class="text-white">Rubrieken</h4>
                             <a href="#">Hoofdrubriek1</a>
                             <a href="#">Hoofdrubriek2</a>
@@ -71,8 +71,8 @@
                     </div>
                 </div>
             </div>
-            <div class="desktoprubriekenmedia">
-                <div class="desktoprubrieken bg-yellow">
+            <div class="desktoprubricsmedia">
+                <div class="desktoprubrics bg-yellow">
                     <?php
                     $html = "<h2>Filters</h2><br>
                             <p class=\"font-weight-bold mb-0\">Rubrieken:</p>";
@@ -112,7 +112,7 @@
                             }
 
                             $html .= "</div>";
-                            if($i == 4) {
+                            if ($i == 4) {
                                 $html .= "</div><div class=\"row mr-1 mb-2\">";
                                 $i = 0;
                             } else {
