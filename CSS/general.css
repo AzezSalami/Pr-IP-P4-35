@@ -363,3 +363,7 @@ body {
 .collapse.show .card-body {
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
+
+.data-form{
+    min-height: 80.2vh;
+}

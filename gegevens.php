@@ -46,7 +46,7 @@ require "includes/header.php";
     <div class="row">
         <div class="col-lg-2">
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-8 data-form">
             <h1 class="text-dark">Mijn gegevens</h1>
             <div class="row my-4">
                 <div class="col text-danger"><?php updateAccountData(); ?></div>
@@ -151,7 +151,7 @@ require "includes/header.php";
                     <div class="col">
                         <div class="row">
                             <input class="btn" type="submit" name="reset"
-                                   value="opslaan">
+                                   value="Opslaan">
                         </div>
                     </div>
                 </div>
