@@ -171,7 +171,7 @@ require "includes/header.php";
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title text-dark">Account verwijderen</h4>
+                    <h4 class="modal-title text-dark">Account verwijderen?</h4>
                     <button id="loginCloseButton" type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
@@ -181,15 +181,17 @@ require "includes/header.php";
                         <form class="form-signin" method="POST" name="remove">
                             <div class="row">
                                 <div class="col">
-                                    <p class="text-dark">Weet je dat zeker?</p></div>
+                                    <p class="text-dark">Weet u zeker dat u uw account wilt verwijderen? Bij het verwijderen worden al uw persoongegevens verwijderd en veilingen inactief gemaakt.</p>
+                                    <p class="text-dark">Voer uw wachtwoord in om uw account te kunnen verwijderen.</p>
+                                </div>
                             </div>
                             <div class="form-label-group">
                                 <form method="post" action="">
-                                    <input class="form-control" placeholder="Wachtwoord" type="text"
-                                           name="removiePassword"
-                                           id="removiePassword"
+                                    <input class="form-control" placeholder="Wachtwoord" type="password"
+                                           name="deleteAccount"
+                                           id="deleteAccount"
                                            maxlength="50" required>
-                                    <label for="removiePassword">wachtwoord</label>
+                                    <label for="deleteAccount">wachtwoord</label>
                             </div>
 
                             <div class="form-label-group">
@@ -202,8 +204,8 @@ require "includes/header.php";
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <input class="btn bg-lightblue" type="submit" name="wwvergetensubmit"
-                                           value="Verstuur">
+                                    <input class="btn bg-lightblue" type="submit" name="pwdforgottensubmit"
+                                           value="Verwijder mijn account">
                                 </div>
                             </div>
                         </form>
