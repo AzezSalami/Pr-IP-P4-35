@@ -51,7 +51,17 @@ require "includes/header.php";
                 <p>Vul hieronder het nieuwe wachtwoord in en klik op Verzenden.</p>
                 <?php
                 if (isset($_POST['submit'])) {
-                    if ($_POST['wachtwoord1'] == $_POST['wachtwoord2']) {
+
+                    $email = $_GET['email'];
+                    $verificationweb = $_GET['verification'];
+
+                    global $pdo;
+                    $query = $pdo->prepare("select verification_code from TBL_User where email = '$email'");
+                    $query->execute();
+                    $data = $query->fetch();
+                    $verificationdb = $data[0];
+
+                    if ($_POST['wachtwoord1'] == $_POST['wachtwoord2'] && $verificationweb == $verificationdb) {
 
                         $wachtwoord = $_POST['wachtwoord1'];
 
@@ -61,7 +71,6 @@ require "includes/header.php";
                             $wachtwoord = hash('sha1', $_POST['wachtwoord1']);
 
 
-                            $email = $_GET['email'];
                             global $pdo;
                             $query = $pdo->prepare("update TBL_User set password = '$wachtwoord'
                         where email = '$email'");

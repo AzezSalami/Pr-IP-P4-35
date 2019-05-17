@@ -394,6 +394,12 @@ function stuurResetPasswordEmail($email)
     $regUsername = $data['user'];
     $lastname = $data['lastname'];
 
+    $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
+    $token = str_shuffle($token);
+    $token = substr($token, 0, 10);
+    $query = $pdo->prepare("update TBL_User set verification_code = '$token' where email = '$email'");
+    $query->execute();
+
     try {
 //                    $mail->SMTPDebug = 2;                                      // Enable verbose debug output
         $mail->isSMTP();
@@ -412,10 +418,10 @@ function stuurResetPasswordEmail($email)
                     Geachte heer of mevrouw $lastname,<br><br>
 
                     Klik op de link hieronder om uw wachtwoord opnieuw in te stellen.<br>
-                    <a href='http://localhost/iproject/wachtwoordresetten.php?email=$email'>Klik hier om uw wachtwoord opnieuw in te stellen</a><br><br>
+                    <a href='http://localhost/iproject/wachtwoordresetten.php?email=$email&verification=$token'>Klik hier om uw wachtwoord opnieuw in te stellen</a><br><br>
 
                     Of plak onderstaande link in uw browser:
-                    http://localhost/iproject/wachtwoordresetten.php?email=$email<br>
+                    http://localhost/iproject/wachtwoordresetten.php?email=$email&verification=$token<br>
                     <br><br>
 
                     Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.<br><br>
