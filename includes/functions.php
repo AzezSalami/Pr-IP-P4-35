@@ -215,7 +215,7 @@ function register()
 
                     $mail->setFrom('eenmaalandermaal35@gmail.com');
                     $mail->addAddress($email, $regUsername);
-                    $mail->Subject = "Please verify email!";
+                    $mail->Subject = "Verifieer uw e-mail!";
                     $mail->isHTML(true);
                     $mail->Body = "
                     Geachte heer of mevrouw $lastname,<br><br>
