@@ -54,23 +54,22 @@ require "includes/header.php";
         </div>
         <div class="col-lg-8">
             <h1 class="text-dark">Mijn gegevens</h1>
+            <div class="col text-danger"><?php updateAccountData(); ?></div>
             <form class="text-dark" method="POST" name="reset">
                 <div class="row">
                     <div class="col">
                         <label for="firstname">Voornaam</label>
-                        <input class="form-control" placeholder="
-                        <?php placeholderAccountData("firstname"); ?>" type="text"
+                        <input class="form-control" placeholder="<?php placeholderAccountData("firstname"); ?>" type="text"
                                name="firstname"
-                               id="firstname" maxlength="20" required>
+                               id="firstname" maxlength="20" >
                     </div>
                     <div class="col">
                         <div class="row">
                             <label for="lastname">Achternaam</label>
-                            <input class="form-control" placeholder="
-                           <?php placeholderAccountData("lastname"); ?>" type="text"
+                            <input class="form-control" placeholder="<?php placeholderAccountData("lastname"); ?>" type="text"
                                    name="lastname"
                                    id="lastname"
-                                   maxlength="20" required>
+                                   maxlength="20" >
                         </div>
                     </div>
                 </div>
@@ -87,8 +86,7 @@ require "includes/header.php";
 
                         <label for="address" class="">Adres</label>
                         <input class="form-control mb-3" type="text" id="address1" placeholder="Adres"
-                               name="address"
-                               required>
+                               name="address">
                         <script>
                             var placesAutocomplete = places({
                                 appId: 'plK904BLG7JJ',
@@ -123,24 +121,24 @@ require "includes/header.php";
                         <input class="form-control" placeholder="" type="password"
                                name="cur_password"
                                id="cur_password"
-                               maxlength="50" required>
+                               maxlength="50">
 
                     </div>
                     <div class="col">
                         <div class="row">
-                            <label for="reg_password">Wachtwoord</label>
+                            <label for="reset_password">Wachtwoord</label>
                             <input class="form-control" placeholder="" type="password"
-                                   name="reg_password"
-                                   id="reg_password"
-                                   maxlength="50" required>
+                                   name="reset_password"
+                                   id="reset_password"
+                                   maxlength="50">
                         </div>
 
                         <div class="row">
-                            <label for="confirm_password">Bevestig wachtwoord</label>
+                            <label for="resconfirm_password">Bevestig wachtwoord</label>
                             <input class="form-control" placeholder="" type="password"
-                                   name="confirm_password"
-                                   id="confirm_password"
-                                   maxlength="50" required>
+                                   name="resconfirm_password"
+                                   id="resconfirm_password"
+                                   maxlength="50">
                         </div>
                     </div>
                 </div>
@@ -148,7 +146,7 @@ require "includes/header.php";
 
                 <div class="row">
                     <div class="col">
-                        <input class="btn bg-lightblue" type="submit" name="make_account"
+                        <input class="btn bg-lightblue" type="submit" name="reset"
                                value="opslaan">
                     </div>
                     <div class="col">
