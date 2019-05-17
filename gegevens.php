@@ -54,22 +54,26 @@ require "includes/header.php";
         </div>
         <div class="col-lg-8">
             <h1 class="text-dark">Mijn gegevens</h1>
-            <div class="row my-4"><div class="col text-danger"><?php updateAccountData(); ?></div></div>
+            <div class="row my-4">
+                <div class="col text-danger"><?php updateAccountData(); ?></div>
+            </div>
             <form class="text-dark" method="POST" name="reset">
                 <div class="row">
                     <div class="col">
                         <label for="firstname">Voornaam</label>
-                        <input class="form-control" placeholder="<?php placeholderAccountData("firstname"); ?>" type="text"
+                        <input class="form-control" placeholder="<?php placeholderAccountData("firstname"); ?>"
+                               type="text"
                                name="firstname"
-                               id="firstname" maxlength="20" >
+                               id="firstname" maxlength="20">
                     </div>
                     <div class="col">
                         <div class="row">
                             <label for="lastname">Achternaam</label>
-                            <input class="form-control" placeholder="<?php placeholderAccountData("lastname"); ?>" type="text"
+                            <input class="form-control" placeholder="<?php placeholderAccountData("lastname"); ?>"
+                                   type="text"
                                    name="lastname"
                                    id="lastname"
-                                   maxlength="20" >
+                                   maxlength="20">
                         </div>
                     </div>
                 </div>
@@ -107,7 +111,8 @@ require "includes/header.php";
 
 
                             <label for="telephone_number">Telefoonnummer</label>
-                            <input class="form-control" placeholder="<?php placeholderAccountData("phone_number"); ?>" type="tel"
+                            <input class="form-control" placeholder="<?php placeholderAccountData("phone_number"); ?>"
+                                   type="tel"
                                    name="telephone_number" id="telephone_number" maxlength="10">
 
                         </div>
@@ -163,6 +168,55 @@ require "includes/header.php";
 
         </div>
     </div>
+
+
+    <!-- The Modal -->
+    <div class="modal fade" id="removeMenu">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title text-dark">Account verwijderen</h4>
+                    <button id="loginCloseButton" type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="container-fluid">
+
+                        <form class="form-signin" method="POST" name="remove">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="text-dark">Weet je dat zeker?</p></div>
+                            </div>
+                            <div class="form-label-group">
+                                <form method="post" action="">
+                                    <input class="form-control" placeholder="Wachtwoord" type="text"
+                                           name="removiePassword"
+                                           id="removiePassword"
+                                           maxlength="40" required>
+                                    <label for="removiePassword">Voer hier uw email in</label>
+                            </div>
+
+                            <div class="form-label-group">
+                                <label class="invisible" for="bevestig_wachtwoord">bevestig wachtwoord</label>
+                                <input class="form-control" placeholder="bevestig wachtwoord" type="password"
+                                       name="confirm_password"
+                                       id="confirm_password"
+                                       maxlength="50" required><br>
+                                <label for="confirm_password">Bevestig wachtwoord</label>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input class="btn bg-lightblue" type="submit" name="wwvergetensubmit"
+                                           value="Verstuur">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
 
 </main>
 
