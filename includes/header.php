@@ -319,7 +319,7 @@ login();
                                         worden
                                         aangemaakt.</p></div>
                             </div>
-                            <div class="col text-danger"><?php resetPasswordEmail(); ?></div>
+                            <div class=" mb-2 text-danger"><?php resetPasswordEmail(); ?></div>
                             <div class="form-label-group">
                                 <form method="post" action="">
                                     <input class="form-control" placeholder="emailadres" type="text"

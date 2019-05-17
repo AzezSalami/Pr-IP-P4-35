@@ -54,7 +54,7 @@ require "includes/header.php";
         </div>
         <div class="col-lg-8">
             <h1 class="text-dark">Mijn gegevens</h1>
-            <div class="col text-danger"><?php updateAccountData(); ?></div>
+            <div class="row my-4"><div class="col text-danger"><?php updateAccountData(); ?></div></div>
             <form class="text-dark" method="POST" name="reset">
                 <div class="row">
                     <div class="col">
