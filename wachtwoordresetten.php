@@ -84,7 +84,7 @@ require "includes/header.php";
                 }
                 ?>
             </div>
-            <form method="post" action="">
+            <form class="w-25" method="post" action="">
                 <div class="form-label-group">
                     <input type="password" class="form-control" name="wachtwoord1" id="exampleInputPassword1"
                            placeholder="Wachtwoord">
