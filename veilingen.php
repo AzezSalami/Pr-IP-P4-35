@@ -48,7 +48,7 @@
 <main>
     <div class="row">
         <div class="col-lg-2">
-            <div class="rubriekenmobile">
+            <div class="rubricsmobile">
                 <div class="pos-f-t">
                     <nav class="navbar navbar-dark bg-orange">
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -59,7 +59,7 @@
                         <p>Filters</p>
                     </nav>
                     <div class="collapse" id="navbarToggleExternalContent">
-                        <div class="rubriekenmobilecontent bg-yellow p-4">
+                        <div class="rubricsmobilecontent bg-yellow p-4">
                             <div class="container">
                                 <div class="row">
                                     <p class="text-white font-weight-bold">Prijs:</p>
@@ -91,13 +91,11 @@
                             <a href="#">Hoofdrubriek5</a>
                             <a href="#">Hoofdrubriek6</a>
                         </div>
-
-
                     </div>
                 </div>
             </div>
-            <div class="desktoprubriekenmedia">
-                <div class="desktoprubrieken bg-yellow">
+            <div class="desktoprubricsmedia">
+                <div class="desktoprubrics bg-yellow">
                     <?php
                     $html = "<h2>Filters</h2><br>
                             <p class=\"font-weight-bold mb-0\">Rubrieken:</p>";

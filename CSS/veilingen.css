@@ -49,13 +49,13 @@
 
 /* RUBRIEKENMOBILE */
 
-.rubriekenmobilecontent > a {
+.rubricsmobilecontent > a {
     display: block;
     color: white;
     text-decoration: none;
 }
 
-.rubriekenmobilecontent > a:hover {
+.rubricsmobilecontent > a:hover {
     color: #FFAD4F;
 }
 
@@ -64,7 +64,7 @@
 }
 
 @media only screen and (max-device-width: 575px) {
-    .rubriekenmobilecontent {
+    .rubricsmobilecontent {
         font-size: 1rem;
         text-align: center;
     }
@@ -73,27 +73,27 @@
 
 
 @media only screen and (min-device-width: 991px) {
-    .rubriekenmobile {
+    .rubricsmobile {
         display: none;
     }
 }
 
 /* RUBRIEKEN DESKTOP */
 
-.desktoprubrieken {
+.desktoprubrics {
     width: 100%;
     height: 100%;
     margin: 5% 0;
     border-radius: 0 5px 5px 0;
 }
 
-.desktoprubrieken > * {
+.desktoprubrics > * {
     margin-left: 10%;
     margin-right: 10%;
 }
 
 @media only screen and (max-device-width: 991px) {
-    .desktoprubriekenmedia {
+    .desktoprubricsmedia {
         display: none;
     }
 }

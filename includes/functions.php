@@ -253,8 +253,8 @@ function confirm()
         $email = cleanUpUserInput($_GET['email']);
         $token = cleanUpUserInput($_GET['token']);
 
-        $sql = $pdo->prepare("SELECT email,verification_code FROM TBL_User WHERE email='$email' AND verification_code='$token' AND is_verified=0");
-        $sql->execute(array($email, $token));
+        $sql = $pdo->prepare("SELECT email,verification_code FROM TBL_User WHERE email=:email AND verification_code=:token AND is_verified=0");
+        $sql->execute(array(':email' => $email,':token' => $token));
 
         if ($sql->fetch()['email'] == $email) {
             $sql = $pdo->prepare("UPDATE TBL_User SET is_verified = 1, verification_code ='' WHERE email=?");
@@ -280,8 +280,8 @@ function placeholderAccountData($input)
         }
         if (!empty($_SESSION["username"])) {
             $username = $_SESSION["username"];
-            $sql = $pdo->prepare("SELECT * FROM $table WHERE [user]='$username'");
-            $sql->execute(array());
+            $sql = $pdo->prepare("SELECT * FROM ? WHERE [user]=?");
+            $sql->execute(array($table ,$username));
             $msg = $sql->fetch()[$input];
         }
     }
@@ -327,9 +327,9 @@ function updateAccountData()
                     echo 'Zorg dat beide wachtwoorden hetzelfde zijn';
 
                 } else {
-                    $sql = "SELECT [user],password FROM TBL_User WHERE [user]='$username' and password = :password";
+                    $sql = "SELECT [user],password FROM TBL_User WHERE [user]=:username and password = :password";
                     $reset_query = $pdo->prepare($sql);
-                    $reset_query->execute(array(':password' => hash('sha1', $cur_password)));
+                    $reset_query->execute(array(':username'=>$username,':password' => hash('sha1', $cur_password)));
                     $result = $reset_query->fetch();
                     if ($result['password'] == hash('sha1', $cur_password)) {
                         if (!empty($firstname) || !empty($lastname) || !empty($address)) {
@@ -346,15 +346,15 @@ function updateAccountData()
         }
         if (!empty($telephone_number)) {
             echo '<p class="text-success">jouw gegevens zijn geüpdatet </p>';
-            $sql = "update TBL_Phone SET phone_number = '$telephone_number' WHERE [user] = '$username'";
+            $sql = "update TBL_Phone SET phone_number = :telephone_number WHERE [user] = :username";
             $query = $pdo->prepare($sql);
-            $query->execute();
+            $query->execute(array(':telephone_number'=>$telephone_number,':username'=>$username));
         }
         if (!empty($firstname) || !empty($lastname) || !empty($address) || $password_check) {
             echo '<p class="text-success">jouw gegevens zijn geüpdatet</p>';
             $sql = "update TBL_User SET " . $values . " WHERE [user] = '$username'";
             $query = $pdo->prepare($sql);
-            $query->execute();
+            $query->execute(array());
         }
     }
 
@@ -362,24 +362,24 @@ function updateAccountData()
 
 function resetPasswordEmail()
 {
-    if (isset($_POST['wwvergetensubmit'])) {
-        $email = $_POST['wwvergetenemail'];
+    if (isset($_POST['pwdforgottensubmit'])) {
+        $email = $_POST['pwdforgottenemail'];
         global $pdo;
-        $query = $pdo->prepare("select count(user) from TBL_User where email = '" . $email . "' and is_verified = 1");
-        $query->execute();
+        $query = $pdo->prepare("select count(user) from TBL_User where email = :email and is_verified = 1");
+        $query->execute(array(':email'=>$email));
         $data = $query->fetch();
 
         if ($data[0][0] == 0) {
             echo "Emailadres bestaat niet";
         } else {
-            stuurResetPasswordEmail($email);
+            sendResetPasswordEmail($email);
             echo '<p style="color: green;">Er is een email naar uw opgegeven adres gestuurd!</p>';
         }
         echo "<script>document.getElementById('openforgetpassword').click();</script>";
     }
 }
 
-function stuurResetPasswordEmail($email)
+function sendResetPasswordEmail($email)
 {
     require "PHPMailer/PHPMailer.php";
     require "PHPMailer/Exception.php";
@@ -388,8 +388,8 @@ function stuurResetPasswordEmail($email)
     $mail = new PHPMailer();
 
     global $pdo;
-    $query = $pdo->prepare("select * from TBL_User where email = '$email'");
-    $query->execute();
+    $query = $pdo->prepare("select * from TBL_User where email = :email");
+    $query->execute(array(':email'=>$email));
     $data = $query->fetch();
     $regUsername = $data['user'];
     $lastname = $data['lastname'];
@@ -397,8 +397,8 @@ function stuurResetPasswordEmail($email)
     $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
     $token = str_shuffle($token);
     $token = substr($token, 0, 10);
-    $query = $pdo->prepare("update TBL_User set verification_code = '$token' where email = '$email'");
-    $query->execute();
+    $query = $pdo->prepare("update TBL_User set verification_code = =:token where email = :email");
+    $query->execute(array(':token' =>$token,':email'=>$email ));
 
     try {
 //                    $mail->SMTPDebug = 2;                                      // Enable verbose debug output

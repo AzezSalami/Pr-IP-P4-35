@@ -55,17 +55,19 @@ require "includes/header.php";
                 <div class="row">
                     <div class="col">
                         <label for="firstname">Voornaam</label>
-                        <input class="form-control" placeholder="<?php placeholderAccountData("firstname"); ?>" type="text"
+                        <input class="form-control" placeholder="<?php placeholderAccountData("firstname"); ?>"
+                               type="text"
                                name="firstname"
-                               id="firstname" maxlength="20" >
+                               id="firstname" maxlength="20">
                     </div>
                     <div class="col">
                         <div class="row">
                             <label for="lastname">Achternaam</label>
-                            <input class="form-control" placeholder="<?php placeholderAccountData("lastname"); ?>" type="text"
+                            <input class="form-control" placeholder="<?php placeholderAccountData("lastname"); ?>"
+                                   type="text"
                                    name="lastname"
                                    id="lastname"
-                                   maxlength="20" >
+                                   maxlength="20">
                         </div>
                     </div>
                 </div>
@@ -100,11 +102,12 @@ require "includes/header.php";
 
                             <input class="form-control mb-4" placeholder="<?php placeholderAccountData("email"); ?>"
                                    type="email"
-                                   name="email" id="email" readonly>
+                                   name="email" id="email">
 
 
                             <label for="telephone_number">Telefoonnummer</label>
-                            <input class="form-control" placeholder="<?php placeholderAccountData("phone_number"); ?>" type="tel"
+                            <input class="form-control" placeholder="<?php placeholderAccountData("phone_number"); ?>"
+                                   type="tel"
                                    name="telephone_number" id="telephone_number" maxlength="10">
 
                         </div>
@@ -178,7 +181,9 @@ require "includes/header.php";
                         <form class="form-signin" method="POST" name="remove">
                             <div class="row">
                                 <div class="col">
-                                    <p class="text-dark">Weet u zeker dat u uw account wilt verwijderen? Bij het verwijderen worden al uw persoongegevens verwijderd en veilingen inactief gemaakt.</p>
+                                    <p class="text-dark">Weet u zeker dat u uw account wilt verwijderen? Bij het
+                                        verwijderen worden al uw persoongegevens verwijderd en veilingen inactief
+                                        gemaakt.</p>
                                     <p class="text-dark">Voer uw wachtwoord in om uw account te kunnen verwijderen.</p>
                                 </div>
                             </div>
@@ -191,9 +196,17 @@ require "includes/header.php";
                                     <label for="deleteAccount">wachtwoord</label>
                             </div>
 
+                            <div class="form-label-group">
+                                <label class="invisible" for="bevestig_wachtwoord">bevestig wachtwoord</label>
+                                <input class="form-control" placeholder="bevestig wachtwoord" type="password"
+                                       name="confirm_password"
+                                       id="confirm_password"
+                                       maxlength="50" required><br>
+                                <label for="confirm_password">Bevestig wachtwoord</label>
+                            </div>
                             <div class="row">
                                 <div class="col">
-                                    <input class="btn bg-lightblue" type="submit" name="wwvergetensubmit"
+                                    <input class="btn bg-lightblue" type="submit" name="pwdforgottensubmit"
                                            value="Verwijder mijn account">
                                 </div>
                             </div>
@@ -201,8 +214,6 @@ require "includes/header.php";
                     </div>
                 </div>
             </div>
-
-
 </main>
 
 <?php
