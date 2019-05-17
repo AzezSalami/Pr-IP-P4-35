@@ -45,8 +45,8 @@ login();
                     </div>
                     <div class="accountdropdowndesktop">
                         <div class="dropdown">
-                            <button class="btn btn-account bg-lightblue dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-user"></i> &nbsp; account
+                            <button class="btn btn-account bg-lightblue dropdown overflow-hidden" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user "></i> &nbsp;'. (isset($_SESSION["username"]) ? $_SESSION["username"] :"account").'
                             </button>
                             
                             <div class="dropdown-menu bg-lightblue">
