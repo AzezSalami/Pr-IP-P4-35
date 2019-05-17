@@ -47,25 +47,31 @@
 require "includes/header.php";
 ?>
 
-<main>
+<main style="height: 100%">
     <div class="row">
         <div class="col-lg-2">
         </div>
         <div class="col-lg-8">
             <div class="text-dark">
-                <h1>Wachtwoord resetten</h1>
-                <p>Vul hieronder het nieuwe wachtwoord in en klik op Verzenden.</p>
+                <h1>Wachtwoord vergeten</h1>
+                <p>Wachtwoord vergeten? Vul dan hieronder uw emailadres in waarmee u heeft geregistreerd.
+                    Binnen enkele minuten kunt u een e-mail in uw inbox verwachten waarmee u het wachtwoord opnieuw
+                    kunt instellen.</p>
+                <?php
+                if (isset($_GET['submit'])) {
+                    $ja = $_GET['email'];
+                    var_dump($ja);
+                }
+
+                ?>
             </div>
-            <form>
-                <div class="form-label-group">
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Wachtwoord">
-                    <label for="exampleInputPassword1">Wachtwoord</label>
+            <form method="get" action="">
+                <div class="form-group">
+                    <label class="text-dark font-weight-bold" for="exampleInputEmail1">E-mail adres:</label>
+                    <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp"
+                           placeholder="Vul uw e-mail in">
                 </div>
-                <div class="form-label-group">
-                    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Bevestig wachtwoord">
-                    <label for="exampleInputPassword2">Bevestig wachtwoord</label>
-                </div>
-                <button type="submit" class="btn bg-lightblue">Verzenden</button>
+                <button type="submit" name="submit" class="btn bg-lightblue">Versturen</button>
             </form>
         </div>
         <div class="col-lg-2">

@@ -152,7 +152,7 @@ require "includes/header.php";
                     <div class="col">
                         <div class="row">
                             <input class="btn bg-lightblue" type="submit" name="delete_account"
-                                   value="verwijder">
+                                   value="Verwijder account">
                         </div>
                     </div>
                 </div>

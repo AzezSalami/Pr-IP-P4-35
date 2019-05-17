@@ -274,7 +274,7 @@ function placeholderAccountData($input)
     if (array_key_exists("username", $_SESSION)) {
 
         if ($input == "phone_number") {
-            $table = "TBL_Phone";
+            $table ="TBL_Phone";
         } else {
             $table = "TBL_User";
         }
@@ -356,23 +356,132 @@ function updateAccountData()
             $query->execute();
         }
     }
+
 }
 
-function resetPasswordEmail()
-{
+function resetPasswordEmail() {
     if (isset($_POST['wwvergetensubmit'])) {
-        $email = $_POST['wwvergetensubmit'];
+        $email = $_POST['wwvergetenemail'];
         global $pdo;
         $query = $pdo->prepare("select count(user) from TBL_User where email = '" . $email . "' and is_verified = 1");
         $query->execute();
         $data = $query->fetch();
 
-        if ($data[0][0] == 0) {
-            echo "emailadres bestaat niet";
+        if($data[0][0] == 0) {
+           echo "Emailadres bestaat niet";
         } else {
-            echo "functie aanroepen";
+            stuurResetPasswordEmail();
         }
         echo "<script>document.getElementById('openforgetpassword').click();</script>";
+    }
+}
+
+function stuurResetPasswordEmail()
+{
+    if (isset($_POST['make_account'])) {
+        global $pdo;
+        $email = cleanUpUserInput($_POST['email']);
+        $regPassword = cleanUpUserInput($_POST['reg_password']);
+        $confirm_password = cleanUpUserInput($_POST['confirm_password']);
+        $firstname = cleanUpUserInput($_POST['firstname']);
+        $lastname = cleanUpUserInput($_POST['lastname']);
+        $regUsername = cleanUpUserInput(strtolower($_POST['reg_username']));
+        $address = cleanUpUserInput($_POST['address']);
+        $telephone_number = cleanUpUserInput($_POST['telephone_number']);
+
+        $is_mobile = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
+
+        if (empty($email) || empty($regPassword) || empty($firstname) || empty($lastname) || empty($regUsername)) {
+            echo "Velden met een * zijn verplicht";
+        }
+
+
+        $regQuery = $pdo->prepare("Select * from TBL_User where email = ? OR [user] = ?");
+        $regQuery->execute(array($email, $regUsername));
+        $canRegister = true;
+        while ($row = $regQuery->fetch()) {
+            if ($row['email'] == $email) {
+                echo 'Dit e-mail adres is al in gebruik<br>';
+                echo "<script>document.getElementById('openRegister').click();</script>";
+                $canRegister = false;
+            }
+            if ($row['user'] == $regUsername) {
+                echo 'De gebruikersnaam: ' . $regUsername . ' is al in gebruik, probeer een andere<br>';
+                echo "<script>document.getElementById('openRegister').click();</script>";
+                $canRegister = false;
+            }
+        }
+
+        if (strlen($regPassword) < 8 || !preg_match("#[0-9]+#", $regPassword) || !preg_match("#[a-zA-Z]+#", $regPassword)) {
+            echo "Een wachtwoord moet uit minimaal 8 karakters bestaan<br>
+                      en moet minimaal 1 letter en 1 cijfer bevatten<br>";
+            $canRegister = false;
+        }
+
+        if (strlen($telephone_number) < 10 || !preg_match("#[0-9]+#", $telephone_number)) {
+            echo "Een telefonnummer moet uit minimaal 10 cijfers bestaan<br>";
+            $canRegister = false;
+        }
+
+        if ($canRegister) {
+            if ($confirm_password != $regPassword) {
+                echo 'Zorg dat beide wachtwoorden hetzelfde zijn';
+            } else {
+                $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
+                $token = str_shuffle($token);
+                $token = substr($token, 0, 10);
+
+                $sql = "INSERT INTO TBL_User ([user],firstname,lastname,address_line_1,email,password ,verification_code) values (?,?,?,?,?,?,?)";
+                $query = $pdo->prepare($sql);
+                $query->execute(array($regUsername, $firstname, $lastname, $address, $email, hash('sha1', $regPassword), $token));
+                $phoneQuery = $pdo->prepare(" INSERT INTO TBL_Phone ([user],phone_number,is_mobile) values (?,?,?)");
+
+                $phoneQuery->execute(array($regUsername, $telephone_number, $is_mobile));
+
+                require "PHPMailer/PHPMailer.php";
+                require "PHPMailer/Exception.php";
+                require "PHPMailer/SMTP.php";
+
+                $mail = new PHPMailer();
+                try {
+//                    $mail->SMTPDebug = 2;                                      // Enable verbose debug output
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com	';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'eenmaalandermaal35@gmail.com';
+                    $mail->Password = 'andermaaleenmaal35';
+                    $mail->SMTPSecure = 'tls';
+                    $mail->Port = 587;
+
+                    $mail->setFrom('eenmaalandermaal35@gmail.com');
+                    $mail->addAddress($email, $regUsername);
+                    $mail->Subject = "Wachtwoord opnieuw instellen";
+                    $mail->isHTML(true);
+                    $mail->Body = "
+                    Geachte heer of mevrouw $lastname,<br><br>
+                    
+                    Klik op de link hieronder om uw wachtwoord opnieuw in te stellen.<br>
+                    <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om uw wachtwoord opnieuw in te stellen</a><br><br>
+                    
+                    Of plak onderstaande link in uw browser:<br>
+                    http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token<br><br>
+                    
+                    Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.<br><br>
+                    
+                    Met vriendelijke groet,<br><br>
+                    
+                    Het team van Eenmaal Andermaal
+                ";
+                    $mail->send();
+
+                    echo 'Er is een email verstuurd naar het opgegeven e-mail-adres';
+                } catch (Exception $e) {
+                    echo "Er is iets misgegaan, probeer het opnieuw<br>
+                              Error: {$mail->ErrorInfo}";
+                }
+            }
+        }
+        echo "<script>document.getElementById('openRegister').click();</script>";
     }
 }
 

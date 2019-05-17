@@ -152,7 +152,8 @@ login();
                                        maxlength="50" required><br>
                                 <label for="password">Wachtwoord</label>
                                 <a href="" data-target="#resetMenu" data-toggle="modal" id="openforgetpassword"
-                                   onclick="document.getElementById('loginCloseButton').click()">Wachtwoord vergeten?</a>
+                                   onclick="document.getElementById('loginCloseButton').click()">Wachtwoord
+                                    vergeten?</a>
                             </div>
 
                             <div class="row">
@@ -320,24 +321,24 @@ login();
                             </div>
                             <div class="col text-danger"><?php resetPasswordEmail(); ?></div>
                             <div class="form-label-group">
-                                <input class="form-control" placeholder="emailadres" type="text"
-                                       name="emailadres"
-                                       id="emailadres"
-                                        required>
-                                <label for="emailadres">emailadres</label>
+                                <form method="post" action="">
+                                    <input class="form-control" placeholder="emailadres" type="text"
+                                           name="wwvergetenemail"
+                                           id="emailadres"
+                                           maxlength="40" required>
+                                    <label for="emailadres">Voer hier uw email in</label>
                             </div>
-
                             <div class="row">
                                 <div class="col">
                                     <input class="btn bg-lightblue" type="submit" name="wwvergetensubmit"
-                                           value="send">
-                                </div>
-                            </div>
+                                           value="Verstuur">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    </div>
     </div>
 
 
