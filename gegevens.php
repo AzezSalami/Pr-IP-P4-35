@@ -143,11 +143,11 @@ require "includes/header.php";
 
                 <div class="row">
                     <div class="col">
-                        <a href="#">Account verwijderen?</a>
+                        <a href="" data-target="#removeMenu" data-toggle="modal">Account verwijderen?</a>
                     </div>
                     <div class="col">
                         <div class="row">
-                            <input class="btn" type="submit" name="make_account"
+                            <input class="btn" type="submit" name="reset"
                                    value="opslaan">
                         </div>
                     </div>
@@ -168,7 +168,7 @@ require "includes/header.php";
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title text-dark">Account verwijderen</h4>
+                    <h4 class="modal-title text-dark">Account verwijderen?</h4>
                     <button id="loginCloseButton" type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
@@ -178,15 +178,17 @@ require "includes/header.php";
                         <form class="form-signin" method="POST" name="remove">
                             <div class="row">
                                 <div class="col">
-                                    <p class="text-dark">Weet je dat zeker?</p></div>
+                                    <p class="text-dark">Weet u zeker dat u uw account wilt verwijderen? Bij het verwijderen worden al uw persoongegevens verwijderd en veilingen inactief gemaakt.</p>
+                                    <p class="text-dark">Voer uw wachtwoord in om uw account te kunnen verwijderen.</p>
+                                </div>
                             </div>
                             <div class="form-label-group">
                                 <form method="post" action="">
-                                    <input class="form-control" placeholder="Wachtwoord" type="text"
-                                           name="removiePassword"
-                                           id="removiePassword"
-                                           maxlength="40" required>
-                                    <label for="removiePassword">Voer hier uw email in</label>
+                                    <input class="form-control" placeholder="Wachtwoord" type="password"
+                                           name="deleteAccount"
+                                           id="deleteAccount"
+                                           maxlength="50" required>
+                                    <label for="deleteAccount">wachtwoord</label>
                             </div>
 
                             <div class="form-label-group">
@@ -200,7 +202,7 @@ require "includes/header.php";
                             <div class="row">
                                 <div class="col">
                                     <input class="btn bg-lightblue" type="submit" name="pwdforgottensubmit"
-                                           value="Verstuur">
+                                           value="Verwijder mijn account">
                                 </div>
                             </div>
                         </form>
