@@ -50,7 +50,7 @@ require "includes/header.php";
             <h1 class="text-dark">Mijn gegevens</h1>
             <?php
             if (isset($_POST['deleteaccountsubmit'])) {
-                if ($_POST['removiePassword'] == $_POST['remconfirm_password']) {
+                if ($_POST['removePassword'] == $_POST['remconfirm_password']) {
                     $password = hash('sha1',$_POST['remconfirm_password']);
 
                     $username = $_SESSION['username'];
