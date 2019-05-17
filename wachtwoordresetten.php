@@ -32,7 +32,7 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-    <link rel="stylesheet" href="CSS/homepage.css" type="text/css">
+    <link rel="stylesheet" href="CSS/general.css" type="text/css">
 
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -74,9 +74,9 @@ require "includes/header.php";
                             $query->execute();
 
                             echo '<p style="color: green">Uw wachtwoord is succesvol veranderd!</p>';
-                        } else {
-                            echo '<p style="color: red">Wachtwoorden komen niet overeen, probeer het alstublieft nog een keer.</p>';
                         }
+                    } else {
+                        echo '<p style="color: red">Wachtwoorden komen niet overeen, probeer het alstublieft nog een keer.</p>';
                     }
                 }
                 ?>

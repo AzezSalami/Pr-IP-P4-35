@@ -1,0 +1,71 @@
+/* about us */
+
+.aboutus-section {
+    padding: 90px 0;
+}
+
+.aboutus-title {
+    font-size: 2em;
+    letter-spacing: 0;
+    line-height: 32px;
+    margin: 0 0 39px;
+    padding: 10px 0 11px;
+    position: relative;
+    text-transform: uppercase;
+    color: #000;
+}
+
+.aboutus-title::after {
+    background: #fdb801 none repeat scroll 0 0;
+    bottom: 0;
+    content: "";
+    height: 2px;
+    left: 0;
+    position: absolute;
+    width: 54px;
+}
+
+.aboutus-text {
+    color: #606060;
+    font-size: 1em;
+    margin: 0 0 35px;
+}
+
+.aboutus-more {
+    border: 1px solid #fdb801;
+    border-radius: 25px;
+    color: #fdb801;
+    display: inline-block;
+    font-size: 1em;
+    font-weight: 700;
+    letter-spacing: 0;
+    padding: 7px 7px;
+    text-transform: uppercase;
+}
+
+
+/* feature */
+
+.feature .feature-box .feature-content {
+    width: 100%;
+}
+
+.feature .feature-box .feature-content h4 {
+    color: #0f0f0f;
+    font-size: 1.5em;
+    letter-spacing: 0;
+    margin: 0 0 5px;
+    padding-top: 10px;
+}
+
+.feature .feature-box .feature-content p {
+    color: #606060;
+    font-size: 1em;
+}
+
+/*Vertical line*/
+
+.col-line {
+    width: 1px;
+    background-color: #FFAD4F;
+}

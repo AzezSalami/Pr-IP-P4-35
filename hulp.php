@@ -31,7 +31,8 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-    <link rel="stylesheet" href="CSS/homepage.css" type="text/css">
+    <link rel="stylesheet" href="CSS/general.css" type="text/css">
+    <link rel="stylesheet" href="CSS/hulp.css" type="text/css">
 
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -41,14 +42,14 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
-<body class="bg-gray">
+<body>
 
 <?php
 require "includes/header.php";
 ?>
 
 <main>
-    <div class="row navrow">
+    <div class="row">
         <div class="col-lg-2">
         </div>
         <div class="col-lg-8">
@@ -77,7 +78,7 @@ require "includes/header.php";
                                     <div class="card">
                                         <div class="card-header" id="accordion-tab-1-heading-1">
                                             <h5>
-                                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                <button class="btn btn-hulp" type="button" data-toggle="collapse"
                                                         data-target="#accordion-tab-1-content-1" aria-expanded="false"
                                                         aria-controls="accordion-tab-1-content-1">Hoe kan ik een account
                                                     aanmaken?
@@ -98,7 +99,7 @@ require "includes/header.php";
                                     <div class="card">
                                         <div class="card-header" id="accordion-tab-1-heading-2">
                                             <h5>
-                                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                <button class="btn btn-hulp" type="button" data-toggle="collapse"
                                                         data-target="#accordion-tab-1-content-2" aria-expanded="false"
                                                         aria-controls="accordion-tab-1-content-2">Ik krijg geen
                                                     verificatiemail, wat nu?
@@ -124,7 +125,7 @@ require "includes/header.php";
                                     <div class="card">
                                         <div class="card-header" id="accordion-tab-2-heading-1">
                                             <h5>
-                                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                <button class="btn btn-hulp" type="button" data-toggle="collapse"
                                                         data-target="#accordion-tab-2-content-1" aria-expanded="false"
                                                         aria-controls="accordion-tab-2-content-1">Hoe kan ik mijzelf
                                                     inloggen?
@@ -145,7 +146,7 @@ require "includes/header.php";
                                     <div class="card">
                                         <div class="card-header" id="accordion-tab-2-heading-2">
                                             <h5>
-                                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                <button class="btn btn-hulp" type="button" data-toggle="collapse"
                                                         data-target="#accordion-tab-2-content-2" aria-expanded="false"
                                                         aria-controls="accordion-tab-2-content-2">Het lukt mij niet in
                                                     te loggen, wat nu?
@@ -166,7 +167,7 @@ require "includes/header.php";
                                     <div class="card">
                                         <div class="card-header" id="accordion-tab-2-heading-3">
                                             <h5>
-                                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                <button class="btn btn-hulp" type="button" data-toggle="collapse"
                                                         data-target="#accordion-tab-2-content-3" aria-expanded="false"
                                                         aria-controls="accordion-tab-2-content-3">Ik ben mijn wachtwoord
                                                     vergeten, wat nu?
@@ -190,7 +191,7 @@ require "includes/header.php";
                                     <div class="card">
                                         <div class="card-header" id="accordion-tab-3-heading-1">
                                             <h5>
-                                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                <button class="btn btn-hulp" type="button" data-toggle="collapse"
                                                         data-target="#accordion-tab-3-content-1" aria-expanded="false"
                                                         aria-controls="accordion-tab-3-content-1">Hoe kan ik een bod
                                                     plaatsen op een rubriek?
@@ -210,7 +211,7 @@ require "includes/header.php";
                                     <div class="card">
                                         <div class="card-header" id="accordion-tab-3-heading-2">
                                             <h5>
-                                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                <button class="btn btn-hulp" type="button" data-toggle="collapse"
                                                         data-target="#accordion-tab-3-content-2" aria-expanded="false"
                                                         aria-controls="accordion-tab-3-content-2">Ik kan geen bod doen
                                                     op een rubriek, hoe kan dit?
@@ -242,8 +243,10 @@ require "includes/header.php";
     <div class="col-lg-2">
     </div>
 </main>
-<?php
-include_once "includes/footer.php";
-?>
+<div class="fixed-bottom">
+    <?php
+    include_once "includes/footer.php";
+    ?>
+</div>
 </body>
 </html>

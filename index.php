@@ -32,16 +32,10 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-    <link rel="stylesheet" href="CSS/homepage.css" type="text/css">
+    <link rel="stylesheet" href="CSS/general.css" type="text/css">
 
-
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="JS/pricerange.js"></script>
 </head>
-<body class="bg-gray">
+<body>
 
 <?php
 require "includes/header.php";
@@ -53,8 +47,8 @@ require "includes/header.php";
         </div>
         <div class="col-lg-8">
             <div class="container">
-                <?php search(2, true); ?>
-                <?php search(4); ?>
+                <?php search(1, true); ?>
+                <?php search(3); ?>
             </div>
         </div>
         <div class="col-lg-2">
