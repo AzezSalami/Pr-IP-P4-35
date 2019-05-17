@@ -17,14 +17,14 @@ function cleanUpUserInput($input)
 
 function connectToDatabase()
 {
-    $hostnaam = "51.38.112.111";
-    $databasenaam = "groep35";
-    $gebruikersnaam = "iproject35";
-    $wachtwoord = "iProject35";
+    $hostname = "51.38.112.111";
+    $databasename = "groep35";
+    $username = "iproject35";
+    $password = "iProject35";
     global $pdo;
 
     try {
-        $pdo = new PDO ("sqlsrv:Server=$hostnaam;Database=$databasenaam;ConnectionPooling=0", "$gebruikersnaam", "$wachtwoord");
+        $pdo = new PDO ("sqlsrv:Server=$hostname;Database=$databasename;ConnectionPooling=0", "$username", "$password");
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         echo $e;
@@ -128,6 +128,17 @@ if (isset($_GET["logout"]) && isset($_SESSION)) {
     header("location: " . htmlspecialchars($_SERVER['PHP_SELF']));
 }
 
+function isPasswordGood($password)
+{
+    $result = true;
+    if (strlen($password) < 8 || !preg_match("#[0-9]+#", $password) || !preg_match("#[a-zA-Z]+#", $password)) {
+        echo "Een wachtwoord moet uit minimaal 8 karakters bestaan<br>
+                      en moet minimaal 1 letter en 1 cijfer bevatten<br>";
+        $result = false;
+    }
+    return $result;
+}
+
 function register()
 {
     if (isset($_POST['make_account'])) {
@@ -163,10 +174,7 @@ function register()
                 $canRegister = false;
             }
         }
-
-        if (strlen($regPassword) < 8 || !preg_match("#[0-9]+#", $regPassword) || !preg_match("#[a-zA-Z]+#", $regPassword)) {
-            echo "Een wachtwoord moet uit minimaal 8 karakters bestaan<br>
-                      en moet minimaal 1 letter en 1 cijfer bevatten<br>";
+        if (!isPasswordGood($regPassword)) {
             $canRegister = false;
         }
 
@@ -188,7 +196,7 @@ function register()
                 $query->execute(array($regUsername, $firstname, $lastname, $address, $email, hash('sha1', $regPassword), $token));
                 $phoneQuery = $pdo->prepare(" INSERT INTO TBL_Phone ([user],phone_number,is_mobile) values (?,?,?)");
 
-                $phoneQuery->execute(array($regUsername, $telephone_number, $is_mobile));
+                $phoneQuery->execute(array($regUsername, $telephone_number, ($is_mobile ? 1 : 0)));
 
                 require "PHPMailer/PHPMailer.php";
                 require "PHPMailer/Exception.php";
@@ -207,7 +215,7 @@ function register()
 
                     $mail->setFrom('eenmaalandermaal35@gmail.com');
                     $mail->addAddress($email, $regUsername);
-                    $mail->Subject = "Please verify email!";
+                    $mail->Subject = "Verifieer uw e-mail!";
                     $mail->isHTML(true);
                     $mail->Body = "
                     Geachte heer of mevrouw $lastname,<br><br>
@@ -266,7 +274,7 @@ function placeholderAccountData($input)
     if (array_key_exists("username", $_SESSION)) {
 
         if ($input == "phone_number") {
-            $table ="TBL_Phone";
+            $table = "TBL_Phone";
         } else {
             $table = "TBL_User";
         }
@@ -283,26 +291,146 @@ function placeholderAccountData($input)
 function updateAccountData()
 {
     if (isset($_POST['reset'])) {
+        $username = $_SESSION["username"];
         global $pdo;
-        $email = cleanUpUserInput($_POST['email']);
-        $resPassword = cleanUpUserInput($_POST['password']);
-        $confirm_password = cleanUpUserInput($_POST['confirm_password']);
+        $cur_password = cleanUpUserInput($_POST['cur_password']);
+        $resPassword = cleanUpUserInput($_POST['reset_password']);
+        $resconfirm_password = cleanUpUserInput($_POST['resconfirm_password']);
         $firstname = cleanUpUserInput($_POST['firstname']);
         $lastname = cleanUpUserInput($_POST['lastname']);
         $address = cleanUpUserInput($_POST['address']);
         $telephone_number = cleanUpUserInput($_POST['telephone_number']);
 
+        $values = "";
+        if (!empty($firstname)) {
+            $values .= "firstname = '$firstname'";
 
-        $sql = "INSERT INTO TBL_User (firstname,lastname,address_line_1) values (?,?,?) WHERE [user] = ?";
-        $query = $pdo->prepare($sql);
-        $query->execute(array($firstname, $lastname, $address));
+        }
+        if (!empty($lastname)) {
+            if (!empty($firstname)) {
+                $values .= ", ";
+            }
+            $values .= "lastname = '$lastname'";
+        }
 
+        if (!empty($address)) {
+            if (!empty($firstname) || !empty($lastname)) {
+                $values .= ", ";
+            }
+            $values .= "address_line_1 = '$address'";
+        }
+
+        $password_check = false;
+        if (!empty($resPassword)) {
+            if (isPasswordGood($resPassword)) {
+                if ($resPassword != $resconfirm_password) {
+                    echo 'Zorg dat beide wachtwoorden hetzelfde zijn';
+
+                } else {
+                    $sql = "SELECT [user],password FROM TBL_User WHERE [user]='$username' and password = :password";
+                    $reset_query = $pdo->prepare($sql);
+                    $reset_query->execute(array(':password' => hash('sha1', $cur_password)));
+                    $result = $reset_query->fetch();
+                    if ($result['password'] == hash('sha1', $cur_password)) {
+                        if (!empty($firstname) || !empty($lastname) || !empty($address)) {
+                            $values .= ", ";
+                        }
+                        $values .= "password = '" . hash('sha1', $resPassword) . "'";
+                        $password_check = true;
+                    }
+                    else{
+                        echo 'Huidige wachtwoord is incorrect';
+                    }
+                }
+            }
+        }
+        if (!empty($telephone_number)) {
+            echo 'jouw gegevens zijn geüpdatet ';
+            $sql = "update TBL_Phone SET phone_number = '$telephone_number' WHERE [user] = '$username'";
+            $query = $pdo->prepare($sql);
+            $query->execute();
+        }
+        if (!empty($firstname) || !empty($lastname) || !empty($address) || $password_check) {
+            echo 'jouw gegevens zijn geüpdatet ';
+            $sql = "update TBL_User SET " . $values . " WHERE [user] = '$username'";
+            $query = $pdo->prepare($sql);
+            $query->execute();
+        }
     }
 
 }
 
 function resetPasswordEmail()
 {
+    if (isset($_POST['wwvergetensubmit'])) {
+        $email = $_POST['wwvergetenemail'];
+        global $pdo;
+        $query = $pdo->prepare("select count(user) from TBL_User where email = '" . $email . "' and is_verified = 1");
+        $query->execute();
+        $data = $query->fetch();
+
+        if ($data[0][0] == 0) {
+            echo "Emailadres bestaat niet";
+        } else {
+            stuurResetPasswordEmail($email);
+            echo '<p style="color: green;">Er is een email naar uw opgegeven adres gestuurd!</p>';
+        }
+        echo "<script>document.getElementById('openforgetpassword').click();</script>";
+    }
+}
+
+function stuurResetPasswordEmail($email)
+{
+    require "PHPMailer/PHPMailer.php";
+    require "PHPMailer/Exception.php";
+    require "PHPMailer/SMTP.php";
+
+    $mail = new PHPMailer();
+
+    global $pdo;
+    $query = $pdo->prepare("select * from TBL_User where email = '$email'");
+    $query->execute();
+    $data = $query->fetch();
+    $regUsername = $data['user'];
+    $lastname = $data['lastname'];
+
+    try {
+//                    $mail->SMTPDebug = 2;                                      // Enable verbose debug output
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com	';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'eenmaalandermaal35@gmail.com';
+        $mail->Password = 'andermaaleenmaal35';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+
+        $mail->setFrom('eenmaalandermaal35@gmail.com');
+        $mail->addAddress($email, $regUsername);
+        $mail->Subject = "Wachtwoord opnieuw instellen";
+        $mail->isHTML(true);
+        $mail->Body = "
+                    Geachte heer of mevrouw $lastname,<br><br>
+
+                    Klik op de link hieronder om uw wachtwoord opnieuw in te stellen.<br>
+                    <a href='http://localhost/iproject/wachtwoordresetten.php?email=$email'>Klik hier om uw wachtwoord opnieuw in te stellen</a><br><br>
+
+                    Of plak onderstaande link in uw browser:
+                    http://localhost/iproject/wachtwoordresetten.php?email=$email<br>
+                    <br><br>
+
+                    Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.<br><br>
+
+                    Met vriendelijke groet,<br><br>
+
+                    Het team van Eenmaal Andermaal
+                ";
+        $mail->send();
+
+    } catch (Exception $e) {
+        echo "Er is iets misgegaan, probeer het opnieuw<br>
+                              Error: {$mail->ErrorInfo}";
+    }
+
 
 }
 

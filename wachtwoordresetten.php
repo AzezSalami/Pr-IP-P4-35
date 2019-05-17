@@ -55,17 +55,44 @@ require "includes/header.php";
             <div class="text-dark">
                 <h1>Wachtwoord resetten</h1>
                 <p>Vul hieronder het nieuwe wachtwoord in en klik op Verzenden.</p>
+                <?php
+                if (isset($_POST['submit'])) {
+                    if ($_POST['wachtwoord1'] == $_POST['wachtwoord2']) {
+
+                        $wachtwoord = $_POST['wachtwoord1'];
+
+                        if (isPasswordGood($wachtwoord)) {
+
+
+                            $wachtwoord = hash('sha1', $_POST['wachtwoord1']);
+
+
+                            $email = $_GET['email'];
+                            global $pdo;
+                            $query = $pdo->prepare("update TBL_User set password = '$wachtwoord'
+                        where email = '$email'");
+                            $query->execute();
+
+                            echo '<p style="color: green">Uw wachtwoord is succesvol veranderd!</p>';
+                        }
+                    } else {
+                        echo '<p style="color: red">Wachtwoorden komen niet overeen, probeer het alstublieft nog een keer.</p>';
+                    }
+                }
+                ?>
             </div>
-            <form>
+            <form method="post" action="">
                 <div class="form-label-group">
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Wachtwoord">
+                    <input type="password" class="form-control" name="wachtwoord1" id="exampleInputPassword1"
+                           placeholder="Wachtwoord">
                     <label for="exampleInputPassword1">Wachtwoord</label>
                 </div>
                 <div class="form-label-group">
-                    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Bevestig wachtwoord">
+                    <input type="password" class="form-control" name="wachtwoord2" id="exampleInputPassword2"
+                           placeholder="Bevestig wachtwoord">
                     <label for="exampleInputPassword2">Bevestig wachtwoord</label>
                 </div>
-                <button type="submit" class="btn">Verzenden</button>
+                <button type="submit" name="submit" class="btn">Verzenden</button>
             </form>
         </div>
         <div class="col-lg-2">

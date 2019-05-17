@@ -25,7 +25,7 @@ login();
             </form>
             <div class="col-2 my-auto text-center">
                 <?php
-                if (array_key_exists("username", $_SESSION)) {
+                if (isset($_SESSION) && array_key_exists("username", $_SESSION)) {
                     if (!empty($_SESSION["username"])) {
                         echo '
                     <div class="accountdropdownmobile">
@@ -45,8 +45,8 @@ login();
                     </div>
                     <div class="accountdropdowndesktop">
                         <div class="dropdown">
-                            <button class="btn btn-account bg-lightblue dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-user"></i> &nbsp; account
+                            <button class="btn btn-account bg-lightblue dropdown overflow-hidden" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user "></i> &nbsp;'. (isset($_SESSION["username"]) ? $_SESSION["username"] :"account").'
                             </button>
                             
                             <div class="dropdown-menu bg-lightblue">
@@ -151,7 +151,7 @@ login();
                                        id="password"
                                        maxlength="50" required><br>
                                 <label for="password">Wachtwoord</label>
-                                <a href="" data-target="#resetMenu" data-toggle="modal"
+                                <a href="" data-target="#resetMenu" data-toggle="modal" id="openforgetpassword"
                                    onclick="document.getElementById('loginCloseButton').click()">Wachtwoord
                                     vergeten?</a>
                             </div>
@@ -319,25 +319,26 @@ login();
                                         worden
                                         aangemaakt.</p></div>
                             </div>
+                            <div class=" mb-2 text-danger"><?php resetPasswordEmail(); ?></div>
                             <div class="form-label-group">
-                                <input class="form-control" placeholder="emailadres" type="text"
-                                       name="emailadres"
-                                       id="emailadres"
-                                       maxlength="20" required>
-                                <label for="emailadres">emailadres</label>
+                                <form method="post" action="">
+                                    <input class="form-control" placeholder="emailadres" type="text"
+                                           name="wwvergetenemail"
+                                           id="emailadres"
+                                           maxlength="40" required>
+                                    <label for="emailadres">Voer hier uw email in</label>
                             </div>
-
                             <div class="row">
                                 <div class="col">
-                                    <input class="btn bg-lightblue" type="submit" name="reset"
-                                           value="send">
-                                </div>
-                            </div>
+                                    <input class="btn bg-lightblue" type="submit" name="wwvergetensubmit"
+                                           value="Verstuur">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    </div>
     </div>
 
 

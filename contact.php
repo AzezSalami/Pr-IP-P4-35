@@ -80,6 +80,43 @@ require "includes/header.php";
                                value="Verzend bericht"/>
                     </div>
                 </form>
+        <div class="col-lg-8 contact-page">
+            <div class="container">
+                <div class="container contact-form">
+                    <div class="contact-image">
+                        <img src="images/logo-rond.png" alt="rocket_contact"/>
+                    </div>
+                    <form method="post">
+                        <h3>Stuur ons een bericht</h3>
+                        <div class="row">
+                            <div class="col-md-6-contact">
+                                <div class="form-group">
+                                    <input type="text" name="txtName" class="form-control" placeholder="Uw naam *"
+                                           value=""/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="txtEmail" class="form-control" placeholder="Uw email *"
+                                           value=""/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="txtPhone" class="form-control"
+                                           placeholder="Uw telefoonnummer *" value=""/>
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="txtMsg" class="form-control contact-text"
+                                              placeholder="Uw bericht *"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" name="btnSubmit" class="btn btn-details"
+                                           value="Verzend bericht"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
         <div class="col-lg-2">
