@@ -345,6 +345,7 @@ function updateAccountData()
             }
         }
         if (!empty($telephone_number)) {
+            echo 'jouw gegevens zijn geüpdatet ';
             $sql = "update TBL_Phone SET phone_number = '$telephone_number' WHERE [user] = '$username'";
             $query = $pdo->prepare($sql);
             $query->execute();
