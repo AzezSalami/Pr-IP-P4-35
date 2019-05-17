@@ -84,7 +84,7 @@ require "includes/header.php";
                                maxlength="20" readonly>
 
                         <label class="font-italic" for="address">Adres</label>
-                        <input class="form-control" type="text" id="address1" placeholder="Adres"
+                        <input class="form-control" type="text" id="address1" placeholder="<?php placeholderAccountData("address_line_1"); ?>"
                                name="address"
                                required>
                         <script>
@@ -102,7 +102,7 @@ require "includes/header.php";
                             <label class="font-italic" for="email">Emailadres</label>
                             <input class="form-control mb-4" placeholder="<?php placeholderAccountData("email"); ?>"
                                    type="email"
-                                   name="email" id="email" readonly>
+                                   name="email" id="email">
 
 
                             <label class="font-italic" for="telephone_number">Telefoonnummer</label>
