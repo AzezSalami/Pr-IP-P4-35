@@ -33,8 +33,7 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-    <link rel="stylesheet" href="CSS/homepage.css" type="text/css">
-
+    <link rel="stylesheet" href="CSS/general.css" type="text/css">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
@@ -42,7 +41,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="JS/pricerange.js"></script>
 </head>
-<body class="bg-gray">
+<body>
 
 <?php
 require "includes/header.php";
@@ -54,7 +53,9 @@ require "includes/header.php";
         </div>
         <div class="col-lg-8">
             <h1 class="text-dark">Mijn gegevens</h1>
-            <div class="row my-4"><div class="col text-danger"><?php updateAccountData(); ?></div></div>
+            <div class="row my-4">
+                <div class="col text-danger"><?php updateAccountData(); ?></div>
+            </div>
             <form class="text-dark" method="POST" name="reset">
                 <div class="row">
                     <div class="col">
@@ -79,12 +80,13 @@ require "includes/header.php";
                     <div class="col">
                         <label for="reg_username">Gebruikersnaam</label>
 
-                        <input class="form-control" placeholder="<?php placeholderAccountData("user"); ?>" type="text"
+                        <input class="form-control mb-4" placeholder="<?php placeholderAccountData("user"); ?>"
+                               type="text"
                                name="reg_username"
                                id="reg_username"
                                maxlength="20" readonly>
 
-                        <label for="address" class="">Adres</label>
+                        <label for="address">Adres</label>
                         <input class="form-control mb-3" type="text" id="address1" placeholder="Adres"
                                name="address">
                         <script>
@@ -101,7 +103,7 @@ require "includes/header.php";
                         <div class="row">
                             <label for="email">Emailadres</label>
 
-                            <input class="form-control" placeholder="<?php placeholderAccountData("email"); ?>"
+                            <input class="form-control mb-4" placeholder="<?php placeholderAccountData("email"); ?>"
                                    type="email"
                                    name="email" id="email" readonly>
 
@@ -146,13 +148,12 @@ require "includes/header.php";
 
                 <div class="row">
                     <div class="col">
-                        <input class="btn bg-lightblue" type="submit" name="reset"
-                               value="opslaan">
+                        <a href="#">Account verwijderen?</a>
                     </div>
                     <div class="col">
                         <div class="row">
-                            <input class="btn bg-lightblue" type="submit" name="delete_account"
-                                   value="Verwijder account">
+                            <input class="btn" type="submit" name="make_account"
+                                   value="opslaan">
                         </div>
                     </div>
                 </div>
@@ -163,6 +164,55 @@ require "includes/header.php";
 
         </div>
     </div>
+
+
+    <!-- The Modal -->
+    <div class="modal fade" id="removeMenu">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title text-dark">Account verwijderen</h4>
+                    <button id="loginCloseButton" type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="container-fluid">
+
+                        <form class="form-signin" method="POST" name="remove">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="text-dark">Weet je dat zeker?</p></div>
+                            </div>
+                            <div class="form-label-group">
+                                <form method="post" action="">
+                                    <input class="form-control" placeholder="Wachtwoord" type="text"
+                                           name="removiePassword"
+                                           id="removiePassword"
+                                           maxlength="40" required>
+                                    <label for="removiePassword">Voer hier uw email in</label>
+                            </div>
+
+                            <div class="form-label-group">
+                                <label class="invisible" for="bevestig_wachtwoord">bevestig wachtwoord</label>
+                                <input class="form-control" placeholder="bevestig wachtwoord" type="password"
+                                       name="confirm_password"
+                                       id="confirm_password"
+                                       maxlength="50" required><br>
+                                <label for="confirm_password">Bevestig wachtwoord</label>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input class="btn bg-lightblue" type="submit" name="wwvergetensubmit"
+                                           value="Verstuur">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
 
 </main>
 

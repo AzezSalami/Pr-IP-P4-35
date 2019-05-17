@@ -304,7 +304,7 @@ login();
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title text-dark">reset password</h4>
-                    <button id="loginCloseButton" type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button id="" type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">

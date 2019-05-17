@@ -31,7 +31,8 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-    <link rel="stylesheet" href="CSS/homepage.css" type="text/css">
+    <link rel="stylesheet" href="CSS/general.css" type="text/css">
+    <link rel="stylesheet" href="CSS/veilingen.css" type="text/css">
 
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -40,7 +41,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="JS/sidenav.js"></script>
 </head>
-<body class="bg-gray">
+<body>
 
 <?php require_once "includes/header.php" ?>
 
@@ -82,8 +83,8 @@
                     while ($data = $query->fetch()) {
                         $html .=
                             "<div class=\"btn-group dropright\">
-                        <button type=\"button\" class=\"btn\">" . $data['name'] . "</button>
-                        <button type=\"button\" class=\"btn dropdown-toggle dropdown-toggle-split\" data-toggle=\"dropdown\"
+                        <button type=\"button\" class=\"btn btn-sidenav\">" . $data['name'] . "</button>
+                        <button type=\"button\" class=\"btn dropdown-toggle dropdown-toggle-split toggle-sidenav\" data-toggle=\"dropdown\"
                                 aria-haspopup=\"true\" aria-expanded=\"false\">
                             <span class=\"sr-only\">hoofdrubriek 1</span>
                         </button>
