@@ -176,7 +176,7 @@ require "includes/header.php";
                     <div class="col">
                         <div class="row">
                             <input class="btn" type="submit" name="reset"
-                                   value="opslaan">
+                                   value="Opslaan">
                         </div>
                     </div>
                 </div>
@@ -212,15 +212,15 @@ require "includes/header.php";
                             <div class="form-label-group">
                                 <form method="post" action="">
                                     <input class="form-control" placeholder="Wachtwoord" type="password"
-                                           name="removiePassword"
-                                           id="removiePassword"
+                                           name="removePassword"
+                                           id="removePassword"
                                            maxlength="50" required>
-                                    <label for="removiePassword">Wachtwoord</label>
+                                    <label for="removePassword">Wachtwoord</label>
                             </div>
 
                             <div class="form-label-group">
-                                <label class="invisible" for="bevestig_wachtwoord">bevestig wachtwoord</label>
-                                <input class="form-control" placeholder="bevestig wachtwoord" type="password"
+                                <label class="invisible" for="bevestig_wachtwoord">Bevestig wachtwoord</label>
+                                <input class="form-control" placeholder="Bevestig wachtwoord" type="password"
                                        name="remconfirm_password"
                                        id="remconfirm_password"
                                        maxlength="50" required><br>
