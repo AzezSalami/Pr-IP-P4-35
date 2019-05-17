@@ -55,17 +55,19 @@ require "includes/header.php";
                 <div class="row">
                     <div class="col">
                         <label for="firstname">Voornaam</label>
-                        <input class="form-control" placeholder="<?php placeholderAccountData("firstname"); ?>" type="text"
+                        <input class="form-control" placeholder="<?php placeholderAccountData("firstname"); ?>"
+                               type="text"
                                name="firstname"
-                               id="firstname" maxlength="20" >
+                               id="firstname" maxlength="20">
                     </div>
                     <div class="col">
                         <div class="row">
                             <label for="lastname">Achternaam</label>
-                            <input class="form-control" placeholder="<?php placeholderAccountData("lastname"); ?>" type="text"
+                            <input class="form-control" placeholder="<?php placeholderAccountData("lastname"); ?>"
+                                   type="text"
                                    name="lastname"
                                    id="lastname"
-                                   maxlength="20" >
+                                   maxlength="20">
                         </div>
                     </div>
                 </div>
@@ -104,7 +106,8 @@ require "includes/header.php";
 
 
                             <label for="telephone_number">Telefoonnummer</label>
-                            <input class="form-control" placeholder="<?php placeholderAccountData("phone_number"); ?>" type="tel"
+                            <input class="form-control" placeholder="<?php placeholderAccountData("phone_number"); ?>"
+                                   type="tel"
                                    name="telephone_number" id="telephone_number" maxlength="10">
 
                         </div>
@@ -207,8 +210,6 @@ require "includes/header.php";
                     </div>
                 </div>
             </div>
-
-
 </main>
 
 <?php
