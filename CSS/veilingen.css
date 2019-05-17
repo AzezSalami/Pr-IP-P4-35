@@ -1,5 +1,13 @@
 /* rubrieken */
 
+.btn-sidenav{
+    width: 80%;
+    text-align: left;
+}
+
+.toggle-sidenav{
+    width: 20%;
+}
 
 .dropright {
     width: 90%;
