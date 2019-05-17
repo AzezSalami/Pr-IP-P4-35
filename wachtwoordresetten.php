@@ -61,18 +61,18 @@ require "includes/header.php";
                     $data = $query->fetch();
                     $verificationdb = $data[0];
 
-                    if ($_POST['wachtwoord1'] == $_POST['wachtwoord2'] && $verificationweb == $verificationdb) {
+                    if ($_POST['password1'] == $_POST['password2'] && $verificationweb == $verificationdb) {
 
-                        $wachtwoord = $_POST['wachtwoord1'];
+                        $password = $_POST['password1'];
 
-                        if (isPasswordGood($wachtwoord)) {
+                        if (isPasswordGood($password)) {
 
 
-                            $wachtwoord = hash('sha1', $_POST['wachtwoord1']);
+                            $password = hash('sha1', $_POST['password1']);
 
 
                             global $pdo;
-                            $query = $pdo->prepare("update TBL_User set password = '$wachtwoord'
+                            $query = $pdo->prepare("update TBL_User set password = '$password'
                         where email = '$email'");
                             $query->execute();
 
@@ -84,14 +84,14 @@ require "includes/header.php";
                 }
                 ?>
             </div>
-            <form method="post" action="">
+            <form class="w-25" method="post" action="">
                 <div class="form-label-group">
-                    <input type="password" class="form-control" name="wachtwoord1" id="exampleInputPassword1"
+                    <input type="password" class="form-control" name="password1" id="exampleInputPassword1"
                            placeholder="Wachtwoord">
                     <label for="exampleInputPassword1">Wachtwoord</label>
                 </div>
                 <div class="form-label-group">
-                    <input type="password" class="form-control" name="wachtwoord2" id="exampleInputPassword2"
+                    <input type="password" class="form-control" name="password2" id="exampleInputPassword2"
                            placeholder="Bevestig wachtwoord">
                     <label for="exampleInputPassword2">Bevestig wachtwoord</label>
                 </div>

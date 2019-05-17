@@ -44,7 +44,7 @@ require "includes/header.php";
     <div class="row">
         <div class="col-lg-2">
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-8 contact-form">
             <div class="container my-5">
                 <div class="contact-image">
                     <img src="images/logo-rond.png" alt="rocket_contact"/>
@@ -79,8 +79,10 @@ require "includes/header.php";
         </div>
     </div>
 </main>
+
 <?php
 include_once "includes/footer.php";
 ?>
+
 </body>
 </html>

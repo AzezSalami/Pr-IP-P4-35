@@ -46,7 +46,7 @@ require "includes/header.php";
     <div class="row">
         <div class="col-lg-2">
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-8 aboutus-page">
             <div class="container">
                 <div class="aboutus-section">
                     <div class="container">
