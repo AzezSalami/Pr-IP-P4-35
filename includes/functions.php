@@ -18,9 +18,9 @@ function cleanUpUserInput($input)
 function connectToDatabase()
 {
     $hostname = "51.38.112.111";
-    $databasename = "groep35";
-    $username = "iproject35";
-    $password = "iProject35";
+    $databasename = "groep35test2";
+    $username = "sa";
+    $password = "Hoi123!!";
     global $pdo;
 
     try {
@@ -36,7 +36,7 @@ function search($amount = 0, $promoted_only = false)
     global $pdo;
 
     try {
-        $query = "SELECT " . ($amount > 0 ? "TOP($amount) " : "") . "A.auction, name, description, price_start, amount, [file] FROM TBL_Auction A
+        $query = "SELECT top(50) " . ($amount > 0 ? "TOP($amount) " : "") . "A.auction, name, description, price_start, amount, [file] FROM TBL_Auction A
     INNER JOIN TBL_Item I
         on A.item = I.item
     LEFT JOIN (SELECT auction, max(amount) AS amount FROM TBL_Bid group by auction) as B
@@ -68,7 +68,7 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
 									</div>
 								</div>
 								<div class='imageContainer row text-center'>
-									<div>" . "<img class='mx-auto my-2' src='data:image/bmp;base64," . $auction['file'] . "'
+									<div>" . "<img class='mx-auto my-2' src='data:image/png;base64," . base64_encode($auction['file']) . "'
 										     alt='Afbeelding van veiling'>" .
                 "</div>
 								</div>

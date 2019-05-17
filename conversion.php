@@ -13,7 +13,7 @@
     }
 
     try {
-        ignore_user_abort(true);
+        //ignore_user_abort(true);
         set_time_limit(0);
 
 //        $pdo->exec("CREATE DATABASE Temp35");
@@ -33,42 +33,36 @@
         $rubricIDChanges = array();
         $parents = array();
         $rubrics = $pdo->query("
-            SELECT top(20) CAST(ID AS INT) as ID,
+            SELECT CAST(ID AS INT) as ID,
             CAST(Name AS VARCHAR(32)) as Name,
             CAST(Parent AS INT) as Parent
             FROM Temp35.dbo.Categorieen
             ORDER BY ID ASC
             ");
-        //(isset($rubricIDChanges[$rubric['Parent']]) ? $rubricIDChanges[$rubric['Parent']] : "null")
-//        $currentRubricID = $pdo->query("SELECT TOP(1) rubric FROM groep35test2.dbo.TBL_Rubric ORDER BY rubric DESC")->fetch()['rubric'] + 1;
 
         while ($rubric = $rubrics->fetch()) {
             $currentRubricID = $pdo->query("SELECT TOP(1) rubric FROM groep35test2.dbo.TBL_Rubric ORDER BY rubric DESC")->fetch()['rubric'] + 1;
             if ($rubric['ID'] != -1) {
-                $statement = "
+                $pdo->exec("
                 SET IDENTITY_INSERT groep35test2.dbo.TBL_Rubric ON
                 INSERT INTO groep35test2.dbo.TBL_Rubric (rubric, name, super, sort_number) VALUES
                 (" . $currentRubricID . ",
                 '" . str_replace("'", "&apos;", $rubric['Name']) . "',
                 null,
                 0)
-                SET IDENTITY_INSERT groep35test2.dbo.TBL_Rubric OFF";
-//            echo $statement;
-                $pdo->exec($statement);
+                SET IDENTITY_INSERT groep35test2.dbo.TBL_Rubric OFF");
                 $rubricIDChanges[$rubric['ID']] = $currentRubricID;
                 $parents[$currentRubricID] = $rubric['Parent'];
-            } elseif ($pdo->query("SELECT TOP(1) rubric FROM groep35test2.dbo.TBL_Rubric WHERE rubric = -1")->fetch()['rubric'] != -1){
-                $statement = "
+            } elseif ($pdo->query("SELECT TOP(1) rubric FROM groep35test2.dbo.TBL_Rubric WHERE rubric = -1")->fetch()['rubric'] != -1) {
+                $currentRubricID = -1;
+                $pdo->exec("
                 SET IDENTITY_INSERT groep35test2.dbo.TBL_Rubric ON
                 INSERT INTO groep35test2.dbo.TBL_Rubric (rubric, name, super, sort_number) VALUES
                 (-1,
                 'Root',
                 null,
                 0)
-                SET IDENTITY_INSERT groep35test2.dbo.TBL_Rubric OFF";
-                $currentRubricID = -1;
-//            echo $statement;
-                $pdo->exec($statement);
+                SET IDENTITY_INSERT groep35test2.dbo.TBL_Rubric OFF");
                 $rubricIDChanges[-1] = -1;
             } else {
                 $rubricIDChanges[-1] = -1;
@@ -96,7 +90,7 @@
                 INSERT INTO groep35test2.dbo.TBL_Item (item, name, description, price_start, address_line_1)
                 SELECT CAST(" . $currentItemID . " AS BIGINT),
                        CAST(Titel AS VARCHAR(100)),
-                       CAST(Beschrijving AS VARCHAR(1000)),
+                       CAST('" . strip_tags(preg_replace('/<script\b[^>]*>(.*?)<\/script>/i', "", str_replace("'", "&apos;", $item['Beschrijving']))) . "' AS VARCHAR(1000)),
                        CASE
                            WHEN (Prijs is null) THEN NULL
                            WHEN (ISNUMERIC(Prijs) = 0) THEN NULL
@@ -109,7 +103,7 @@
                 WHERE ID = " . $item['ID'] . "
                 
                 SET IDENTITY_INSERT groep35test2.dbo.TBL_Item OFF
-");
+                ");
 
                 $pdo->exec("
                 INSERT INTO groep35test2.dbo.TBL_Auction (moment_start, moment_end, item, is_promoted)
@@ -127,15 +121,32 @@
                 (" . $currentItemID . ",
                 " . $rubricIDChanges[$rubric['ID']] . ")"
                 );
+                $images = $pdo->query("SELECT ItemID, IllustratieFile FROM Temp35.dbo.Illustraties where ItemID = " . $item['ID']);
+                echo "SELECT ItemID, IllustratieFile FROM Temp35.dbo.Illustraties where ItemID = " . $item['ID'];
+                //print_r($images);
+                while ($image = $images->fetch()) {
+
+                    //To download all images to your pc:
+//            file_put_contents("images/databatch3/" . $image['IllustratieFile'], fopen("http://iproject35.icasites.nl/pics/". $image['IllustratieFile'], 'r'));
+                    //After downloading, put them in a folder on the same machine you'll be running the conversion script from.
+                    //if (preg_match('/^.*\.(jpg)$/i', $image['IllustratieFile'])) {
+                    $sort_number = $pdo->query("SELECT COUNT(*) as sort_number FROM groep35test2.dbo.TBL_Resource WHERE item = " . $currentItemID . " GROUP BY item")->fetch()['sort_number'];
+                    echo $statement = "
+                  INSERT INTO groep35test2.dbo.TBL_Resource (ITEM, [FILE], MEDIA_TYPE, sort_number) VALUES (
+                    " . $currentItemID . ",
+                    (SELECT * FROM OPENROWSET(BULK N'/var/www/html/iproject/images/databatch/" . $image['IllustratieFile'] . "', SINGLE_BLOB) as BLOB),
+                    'image/jpg',
+                    " . ($sort_number ? $sort_number : 0) . "
+                )"; echo $sort_number;
+                    $pdo->exec($statement);
+                }
+                //}
                 $currentItemID++;
             }
             $currentRubricID++;
         }
 
-        foreach ($parents as $rubric => $parent){
-            echo "
-            UPDATE groep35test2.dbo.TBL_Rubric SET super = " . (isset($rubricIDChanges[$parent]) ? $rubricIDChanges[$parent] : "null") . "
-            WHERE rubric = " . $rubric;
+        foreach ($parents as $rubric => $parent) {
             $pdo->exec("
             UPDATE groep35test2.dbo.TBL_Rubric SET super = " . (isset($rubricIDChanges[$parent]) ? $rubricIDChanges[$parent] : "null") . "
             WHERE rubric = " . $rubric
@@ -143,31 +154,35 @@
 
         }
 
-        $images = $pdo->query("SELECT ItemID, IllustratieFile FROM Temp35.dbo.Illustraties order by ItemID DESC");
-
-        while ($image = $images->fetch()){
+        /*$oldIDs = array();
+        foreach ($rubricIDChanges as $old => $new) {
+            $oldIDs[] = $old;
+        }
+        $images = $pdo->query("SELECT ItemID, IllustratieFile FROM Temp35.dbo.Illustraties  where ItemID in (" . implode(", ", $oldIDs) . ")order by ItemID DESC");
+        echo "SELECT ItemID, IllustratieFile FROM Temp35.dbo.Illustraties  where ItemID in (" . implode(", ", $oldIDs) . ")order by ItemID DESC";
+        print_r($images);
+        while ($image = $images->fetch()) {
 
             //To download all images to your pc:
 //            file_put_contents("images/databatch3/" . $image['IllustratieFile'], fopen("http://iproject35.icasites.nl/pics/". $image['IllustratieFile'], 'r'));
             //After downloading, put them in a folder on the same machine you'll be running the conversion script from.
-
-            if(preg_match('/^.*\.(jpg)$/i', $image['IllustratieFile'])){
+            if (preg_match('/^.*\.(jpg)$/i', $image['IllustratieFile'])) {
                 echo "
                   INSERT INTO groep35test2.dbo.TBL_Resource (ITEM, [FILE], MEDIA_TYPE) VALUES (
-                    ". $image['ItemID'] .",
-                    (SELECT * FROM OPENROWSET(BULK N'http://iproject35.icasites.nl/pics/". $image['IllustratieFile'] . "', SINGLE_BLOB) as BLOB),
+                    " . $rubricIDChanges[$image['ItemID']] . ",
+                    (SELECT * FROM OPENROWSET(BULK N'/var/www/html/iproject/images/databatch final/" . $image['IllustratieFile'] . "', SINGLE_BLOB) as BLOB),
                     'image/jpg'
                 )";
                 $pdo->exec("
                   INSERT INTO groep35test2.dbo.TBL_Resource (ITEM, [FILE], MEDIA_TYPE) VALUES (
-                    ". $image['ItemID'] .",
-                    (SELECT * FROM OPENROWSET(BULK N'http://iproject35.icasites.nl/pics/". $image['IllustratieFile'] . "', SINGLE_BLOB) as BLOB),
+                    " . $rubricIDChanges[$image['ItemID']] . ",
+                    (SELECT * FROM OPENROWSET(BULK N'/var/www/html/iproject/images/databatch final/" . $image['IllustratieFile'] . "', SINGLE_BLOB) as BLOB),
                     'image/jpg'
                 )");
             }
-        }
+        }*/
 
-       //$pdo->exec("DROP DATABASE Temp35");
+        //$pdo->exec("DROP DATABASE Temp35");
     } catch (PDOException $e) {
         echo $e;
     }
