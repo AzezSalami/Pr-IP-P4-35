@@ -60,6 +60,29 @@
                     </nav>
                     <div class="collapse" id="navbarToggleExternalContent">
                         <div class="rubricsmobilecontent bg-yellow p-4">
+                            <div class="container">
+                                <div class="row">
+                                    <p class="text-white font-weight-bold">Prijs:</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5">
+                                        <input class="bg-gray text-center input-details-mobile" type="number"
+                                               placeholder="min">
+                                    </div>
+                                    <div class="col-2">
+                                        <p class="text-white font-weight-bold">-</p>
+                                    </div>
+                                    <div class="col-5">
+                                        <input class="bg-gray text-center input-details-mobile" type="number"
+                                               placeholder="min">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <input type="submit" class="btn mb-1" value="Pas filters toe">
+                                </div>
+
+                                <div class="dropdown-divider"></div>
+                            </div>
                             <h4 class="text-white">Rubrieken</h4>
                             <a href="#">Hoofdrubriek1</a>
                             <a href="#">Hoofdrubriek2</a>
@@ -129,14 +152,14 @@
                             <p class="font-weight-bold">prijs:</p>
                             <div class="row">
                                 <div class="col-lg-5 text-left">
-                                    <input class="bg-gray text-center input-details" type="text" id="amount-min"
+                                    <input class="bg-gray text-center input-details" type="number" id="amount-min"
                                            placeholder="min">
                                 </div>
                                 <div class="col-lg-2 text-center">
-                                    <label class=" text-white font-weight-bold">-</label>
+                                    <p class="text-white font-weight-bold">-</p>
                                 </div>
                                 <div class="col-lg-5 text-right">
-                                    <input class="bg-gray text-center input-details" type="text" id="amount-max"
+                                    <input class="bg-gray text-center input-details" type="number" id="amount-max"
                                            placeholder="max">
                                 </div>
                             </div>
@@ -144,7 +167,7 @@
                         </form>
                     </div>
                     <br>
-                    <input type="submit" class="bg-lightblue btn mb-1" value="Pas filters toe">
+                    <input type="submit" class="btn mb-1" value="Pas filters toe">
                 </div>
             </div>
         </div>
