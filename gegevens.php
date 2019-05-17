@@ -161,7 +161,7 @@ require "includes/header.php";
                         <div class="row">
                             <label for="resconfirm_password">Bevestig wachtwoord</label>
                             <input class="form-control" placeholder="" type="password"
-                                   name="verconfirm_password"
+                                   name="resconfirm_password"
                                    id="resconfirm_password"
                                    maxlength="50">
                         </div>
