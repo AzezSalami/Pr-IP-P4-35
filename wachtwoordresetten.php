@@ -74,9 +74,9 @@ require "includes/header.php";
                             $query->execute();
 
                             echo '<p style="color: green">Uw wachtwoord is succesvol veranderd!</p>';
-                        } else {
-                            echo '<p style="color: red">Wachtwoorden komen niet overeen, probeer het alstublieft nog een keer.</p>';
                         }
+                    } else {
+                        echo '<p style="color: red">Wachtwoorden komen niet overeen, probeer het alstublieft nog een keer.</p>';
                     }
                 }
                 ?>
