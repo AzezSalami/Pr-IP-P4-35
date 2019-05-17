@@ -323,14 +323,14 @@ login();
                             <div class="form-label-group">
                                 <form method="post" action="">
                                     <input class="form-control" placeholder="emailadres" type="text"
-                                           name="wwvergetenemail"
+                                           name="pwdforgottenemail"
                                            id="emailadres"
                                            maxlength="40" required>
                                     <label for="emailadres">Voer hier uw email in</label>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <input class="btn bg-lightblue" type="submit" name="wwvergetensubmit"
+                                    <input class="btn bg-lightblue" type="submit" name="pwdforgottensubmit"
                                            value="Verstuur">
                         </form>
                     </div>

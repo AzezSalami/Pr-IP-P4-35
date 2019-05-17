@@ -362,8 +362,8 @@ function updateAccountData()
 
 function resetPasswordEmail()
 {
-    if (isset($_POST['wwvergetensubmit'])) {
-        $email = $_POST['wwvergetenemail'];
+    if (isset($_POST['pwdforgottensubmit'])) {
+        $email = $_POST['pwdforgottenemail'];
         global $pdo;
         $query = $pdo->prepare("select count(user) from TBL_User where email = '" . $email . "' and is_verified = 1");
         $query->execute();
@@ -372,14 +372,14 @@ function resetPasswordEmail()
         if ($data[0][0] == 0) {
             echo "Emailadres bestaat niet";
         } else {
-            stuurResetPasswordEmail($email);
+            sendResetPasswordEmail($email);
             echo '<p style="color: green;">Er is een email naar uw opgegeven adres gestuurd!</p>';
         }
         echo "<script>document.getElementById('openforgetpassword').click();</script>";
     }
 }
 
-function stuurResetPasswordEmail($email)
+function sendResetPasswordEmail($email)
 {
     require "PHPMailer/PHPMailer.php";
     require "PHPMailer/Exception.php";

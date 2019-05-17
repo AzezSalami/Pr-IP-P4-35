@@ -199,7 +199,7 @@ require "includes/header.php";
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <input class="btn bg-lightblue" type="submit" name="wwvergetensubmit"
+                                    <input class="btn bg-lightblue" type="submit" name="pwdforgottensubmit"
                                            value="Verstuur">
                                 </div>
                             </div>
