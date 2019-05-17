@@ -143,7 +143,7 @@ require "includes/header.php";
 
                 <div class="row">
                     <div class="col">
-                        <a href="#" >Account verwijderen?</a>
+                        <a href="" data-target="#removeMenu" data-toggle="modal">Account verwijderen?</a>
                     </div>
                     <div class="col">
                         <div class="row">
@@ -185,8 +185,8 @@ require "includes/header.php";
                                     <input class="form-control" placeholder="Wachtwoord" type="text"
                                            name="removiePassword"
                                            id="removiePassword"
-                                           maxlength="40" required>
-                                    <label for="removiePassword">Voer hier uw email in</label>
+                                           maxlength="50" required>
+                                    <label for="removiePassword">wachtwoord</label>
                             </div>
 
                             <div class="form-label-group">
