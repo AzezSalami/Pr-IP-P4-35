@@ -83,8 +83,8 @@
                     while ($data = $query->fetch()) {
                         $html .=
                             "<div class=\"btn-group dropright\">
-                        <button type=\"button\" class=\"btn\">" . $data['name'] . "</button>
-                        <button type=\"button\" class=\"btn dropdown-toggle dropdown-toggle-split\" data-toggle=\"dropdown\"
+                        <button type=\"button\" class=\"btn btn-sidenav\">" . $data['name'] . "</button>
+                        <button type=\"button\" class=\"btn dropdown-toggle dropdown-toggle-split toggle-sidenav\" data-toggle=\"dropdown\"
                                 aria-haspopup=\"true\" aria-expanded=\"false\">
                             <span class=\"sr-only\">hoofdrubriek 1</span>
                         </button>
