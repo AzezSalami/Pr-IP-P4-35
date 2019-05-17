@@ -33,8 +33,7 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-    <link rel="stylesheet" href="CSS/homepage.css" type="text/css">
-
+    <link rel="stylesheet" href="CSS/general.css" type="text/css">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
@@ -42,7 +41,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="JS/pricerange.js"></script>
 </head>
-<body class="bg-gray">
+<body>
 
 <?php
 require "includes/header.php";
@@ -58,16 +57,16 @@ require "includes/header.php";
                 <div class="row">
                     <div class="col">
                         <label for="firstname">Voornaam</label>
-                        <input class="form-control" placeholder="
-                        <?php placeholderAccountData("firstname"); ?>" type="text"
+                        <input class="form-control" placeholder="<?php placeholderAccountData("firstname"); ?>"
+                               type="text"
                                name="firstname"
                                id="firstname" maxlength="20" required>
                     </div>
                     <div class="col">
                         <div class="row">
                             <label for="lastname">Achternaam</label>
-                            <input class="form-control" placeholder="
-                           <?php placeholderAccountData("lastname"); ?>" type="text"
+                            <input class="form-control" placeholder="<?php placeholderAccountData("lastname"); ?>"
+                                   type="text"
                                    name="lastname"
                                    id="lastname"
                                    maxlength="20" required>
@@ -80,12 +79,13 @@ require "includes/header.php";
                     <div class="col">
                         <label for="reg_username">Gebruikersnaam</label>
 
-                        <input class="form-control" placeholder="<?php placeholderAccountData("user"); ?>" type="text"
+                        <input class="form-control mb-4" placeholder="<?php placeholderAccountData("user"); ?>"
+                               type="text"
                                name="reg_username"
                                id="reg_username"
                                maxlength="20" readonly>
 
-                        <label for="address" class="">Adres</label>
+                        <label for="address">Adres</label>
                         <input class="form-control mb-3" type="text" id="address1" placeholder="Adres"
                                name="address"
                                required>
@@ -103,13 +103,14 @@ require "includes/header.php";
                         <div class="row">
                             <label for="email">Emailadres</label>
 
-                            <input class="form-control" placeholder="<?php placeholderAccountData("email"); ?>"
+                            <input class="form-control mb-4" placeholder="<?php placeholderAccountData("email"); ?>"
                                    type="email"
                                    name="email" id="email" readonly>
 
 
                             <label for="telephone_number">Telefoonnummer</label>
-                            <input class="form-control" placeholder="<?php placeholderAccountData("phone_number"); ?>" type="tel"
+                            <input class="form-control" placeholder="<?php placeholderAccountData("phone_number"); ?>"
+                                   type="tel"
                                    name="telephone_number" id="telephone_number" maxlength="10">
 
                         </div>
@@ -148,13 +149,12 @@ require "includes/header.php";
 
                 <div class="row">
                     <div class="col">
-                        <input class="btn bg-lightblue" type="submit" name="make_account"
-                               value="opslaan">
+                        <a href="#">Account verwijderen?</a>
                     </div>
                     <div class="col">
                         <div class="row">
-                            <input class="btn bg-lightblue" type="submit" name="delete_account"
-                                   value="verwijder">
+                            <input class="btn" type="submit" name="make_account"
+                                   value="opslaan">
                         </div>
                     </div>
                 </div>

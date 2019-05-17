@@ -32,7 +32,7 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-    <link rel="stylesheet" href="CSS/homepage.css" type="text/css">
+    <link rel="stylesheet" href="CSS/general.css" type="text/css">
 
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -41,7 +41,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="JS/pricerange.js"></script>
 </head>
-<body class="bg-gray">
+<body>
 
 <?php
 require "includes/header.php";
@@ -65,7 +65,7 @@ require "includes/header.php";
                     <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Bevestig wachtwoord">
                     <label for="exampleInputPassword2">Bevestig wachtwoord</label>
                 </div>
-                <button type="submit" class="btn bg-lightblue">Verzenden</button>
+                <button type="submit" class="btn">Verzenden</button>
             </form>
         </div>
         <div class="col-lg-2">

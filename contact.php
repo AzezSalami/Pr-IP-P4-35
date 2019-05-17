@@ -31,7 +31,8 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-    <link rel="stylesheet" href="CSS/homepage.css" type="text/css">
+    <link rel="stylesheet" href="CSS/general.css" type="text/css">
+    <link rel="stylesheet" href="CSS/contact.css" type="text/css">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
@@ -40,7 +41,7 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-<body class="bg-gray">
+<body>
 
 <?php
 require "includes/header.php";
@@ -51,46 +52,38 @@ require "includes/header.php";
         <div class="col-lg-2">
         </div>
         <div class="col-lg-8">
-            <div class="container">
-                <div class="container contact-form">
-                    <div class="contact-image">
-                        <img src="images/logo-rond.png" alt="rocket_contact"/>
-                    </div>
-                    <form method="post">
-                        <h3>Stuur ons een bericht</h3>
-                        <div class="row">
-                            <div class="col-md-6-contact">
-                                <div class="form-group">
-                                    <input type="text" name="txtName" class="form-control" placeholder="Uw naam *"
-                                           value=""/>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="txtEmail" class="form-control" placeholder="Uw email *"
-                                           value=""/>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="txtPhone" class="form-control"
-                                           placeholder="Uw telefoonnummer *" value=""/>
-                                </div>
-                                <div class="form-group">
-                                    <textarea name="txtMsg" class="form-control contact-text"
-                                              placeholder="Uw bericht *"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <input type="submit" name="btnSubmit" class="btn btn-details"
-                                           value="Verzend bericht"/>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-
-                            </div>
-                        </div>
-                    </form>
+            <div class="container my-5">
+                <div class="contact-image">
+                    <img src="images/logo-rond.png" alt="rocket_contact"/>
                 </div>
+                <form method="post">
+                    <h3 class="contact-title">Stuur ons een bericht</h3>
+
+                    <div class="form-group">
+                        <input type="text" name="txtName" class="form-control" placeholder="Uw naam *"
+                               value=""/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="txtEmail" class="form-control" placeholder="Uw email *"
+                               value=""/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="txtPhone" class="form-control"
+                               placeholder="Uw telefoonnummer *" value=""/>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="txtMsg" class="form-control contact-text"
+                                  placeholder="Uw bericht *"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="btnSubmit" class="btn"
+                               value="Verzend bericht"/>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
-    <div class="col-lg-2">
+        <div class="col-lg-2">
+        </div>
     </div>
 </main>
 <?php

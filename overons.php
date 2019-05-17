@@ -31,7 +31,8 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-    <link rel="stylesheet" href="CSS/homepage.css" type="text/css">
+    <link rel="stylesheet" href="CSS/general.css" type="text/css">
+    <link rel="stylesheet" href="CSS/overons.css" type="text/css">
 
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -41,7 +42,7 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
-<body class="bg-gray">
+<body>
 
 <?php
 require "includes/header.php";
@@ -67,7 +68,7 @@ require "includes/header.php";
                                     <p class="aboutus-text">Ook kunnen de gebruikers bij Eenmaal Andermaal betrouwbaar,
                                         snel
                                         en makkelijk op producten bieden.</p>
-                                    <a class="btn btn-details" href="contact.php">Stuur ons een bericht</a>
+                                    <a class="btn" href="contact.php">Stuur ons een bericht</a>
                                 </div>
                             </div>
                             <div class="col-line">

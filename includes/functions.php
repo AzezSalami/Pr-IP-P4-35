@@ -58,7 +58,7 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
         $searchStatement->execute($filters);
         $html = "<div class='row my-2'>";
         while ($auction = $searchStatement->fetch()) {
-            $html .= "<div class='auction-article-" . ($promoted_only ? "large" : "small") . " white col-lg m-2'>
+            $html .= "<div class='auction-article-" . ($promoted_only ? "large" : "small") . " bg-white col-lg m-2'>
 <div class='row mt-3'>
 									<div class='col'>
 										<div class='col'><strong>" . $auction['name'] . "</strong></div>
@@ -81,7 +81,7 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
 									</div>
 									<div class='col text-right'>
 									<a href='veiling.php?id=" . $auction['auction'] . "'>
-										<button class='btn btn-details'>Details</button>
+										<button class='btn'>Details</button>
 									</a>
 									</div>
 								</div>
