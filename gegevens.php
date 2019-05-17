@@ -102,7 +102,7 @@ require "includes/header.php";
 
                             <input class="form-control mb-4" placeholder="<?php placeholderAccountData("email"); ?>"
                                    type="email"
-                                   name="email" id="email" readonly>
+                                   name="email" id="email">
 
 
                             <label for="telephone_number">Telefoonnummer</label>
@@ -181,7 +181,9 @@ require "includes/header.php";
                         <form class="form-signin" method="POST" name="remove">
                             <div class="row">
                                 <div class="col">
-                                    <p class="text-dark">Weet u zeker dat u uw account wilt verwijderen? Bij het verwijderen worden al uw persoongegevens verwijderd en veilingen inactief gemaakt.</p>
+                                    <p class="text-dark">Weet u zeker dat u uw account wilt verwijderen? Bij het
+                                        verwijderen worden al uw persoongegevens verwijderd en veilingen inactief
+                                        gemaakt.</p>
                                     <p class="text-dark">Voer uw wachtwoord in om uw account te kunnen verwijderen.</p>
                                 </div>
                             </div>
