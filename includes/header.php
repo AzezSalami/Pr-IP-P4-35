@@ -25,7 +25,7 @@ login();
             </form>
             <div class="col-2 my-auto text-center">
                 <?php
-                if (array_key_exists("username", $_SESSION)) {
+                if (isset($_SESSION) && array_key_exists("username", $_SESSION)) {
                     if (!empty($_SESSION["username"])) {
                         echo '
                     <div class="accountdropdownmobile">
