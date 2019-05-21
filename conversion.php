@@ -37,7 +37,7 @@
         $rubricIDChanges = array();
         $parents = array();
         $rubrics = $pdo->query("
-            SELECT top(20) CAST(ID AS INT) as ID,
+            SELECT CAST(ID AS INT) as ID,
             CAST(Name AS VARCHAR(32)) as Name,
             CAST(Parent AS INT) as Parent
             FROM Temp35.dbo.Categorieen
