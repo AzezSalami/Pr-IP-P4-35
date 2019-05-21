@@ -66,7 +66,7 @@ require "includes/header.php";
 
                         /* mits de user veilingen heeft wordt hier de veiler op null gezet en eventuele open veilingen geclosed */
 
-                        $query = $pdo->prepare("update TBL_Auction set seller = null and is_closed = 0 where seller = '$username'");
+                        $query = $pdo->prepare("update TBL_Auction set seller = null, auction_closed = 0 where seller = '$username'");
                         $query->execute();
 
                          /* hier wordt de row uit de database die al de data van de desbetreffende gebruiker heeft verwijderd */
