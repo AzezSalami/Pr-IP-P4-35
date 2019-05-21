@@ -22,6 +22,13 @@ login();
                         </button>
                     </div>
                 </div>
+	            <input type='hidden' id="rubricFilter" name='rubriek'
+	            <?php
+                    if(isset($_GET['rubriek']) && ($rubric = cleanUpUserInput($_GET['rubriek'])) != ""){
+                    	echo " value='$rubric'";
+                    }
+                ?>
+	            >
             </form>
             <div class="col-2 my-auto text-center">
                 <?php

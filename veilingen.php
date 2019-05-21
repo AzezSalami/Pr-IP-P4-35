@@ -96,37 +96,7 @@
             </div>
             <div class="desktoprubricsmedia">
                 <div class="desktoprubrics bg-yellow">
-                    <?php
-                    $html = "<h2>Filters</h2><br>
-                            <p class=\"font-weight-bold mb-0\">Rubrieken:</p>";
-
-                    global $pdo;
-                    $query = $pdo->prepare("select * from TBL_Rubric where super = -1");
-                    $query->execute();
-                    while ($data = $query->fetch()) {
-                        $html .=
-                            "<div class=\"btn-group dropright\">
-                        <button type=\"button\" class=\"btn btn-sidenav\">" . $data['name'] . "</button>
-                        <button type=\"button\" class=\"btn dropdown-toggle dropdown-toggle-split toggle-sidenav\" data-toggle=\"dropdown\"
-                                aria-haspopup=\"true\" aria-expanded=\"false\">
-                            <span class=\"sr-only\">hoofdrubriek 1</span>
-                        </button>
-                        <div class=\"dropdown-menu r-content bg-gray px-2\">
-                            <div class=\"container\">
-                            <div class=\"mr-1 mb-2\">";
-
-                        $query2 = $pdo->prepare("select * from TBL_Rubric where super = " . $data['rubric']);
-                        $query2->execute();
-
-                        while ($data2 = $query2->fetch()) {
-                            $html .= "<div class=\"mx-1\">
-                                        <a href=\"#\">" . $data2['name'] . "</a>
-                                        <div class=\"dropdown-divider yellow\"></div></div>";
-                        }
-                        $html .= "</div></div></div></div>";
-                    }
-                    echo $html;
-                    ?>
+                    <?php loadRubrics();?>
                     <div class="dropdown-divider"></div>
                     <div class="range-filter container text-left my-2 pl-0">
                         <form method="post" action="...">
@@ -154,7 +124,7 @@
         </div>
         <div class="col-lg-8 auction-page">
             <div class="container">
-                <?php search(); ?>
+                <?php search(50); ?>
             </div>
         </div>
         <div class="col-lg-2">
