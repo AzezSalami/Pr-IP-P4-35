@@ -67,7 +67,7 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
 									</div>
 								</div>
 								<div class='imageContainer row text-center'>
-									<div>" . "<img class='mx-auto my-2' src='data:image/bmp;base64," . $auction['file'] . "'
+									<div>" . "<img class='mx-auto my-2' src='data:image/png;base64," . base64_encode($auction['file']) . "'
 										     alt='Afbeelding van veiling'>" .
                     "</div>
 								</div>
