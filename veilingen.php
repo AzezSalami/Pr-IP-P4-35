@@ -101,7 +101,7 @@
                             <p class=\"font-weight-bold mb-0\">Rubrieken:</p>";
 
                     global $pdo;
-                    $query = $pdo->prepare("select * from TBL_Rubric where super is null");
+                    $query = $pdo->prepare("select * from TBL_Rubric where super = -1");
                     $query->execute();
                     while ($data = $query->fetch()) {
                         $html .=
@@ -113,34 +113,15 @@
                         </button>
                         <div class=\"dropdown-menu r-content bg-gray px-2\">
                             <div class=\"container\">
-                        <div class=\"row mr-1 mb-2\">";
+                            <div class=\"mr-1 mb-2\">";
 
                         $query2 = $pdo->prepare("select * from TBL_Rubric where super = " . $data['rubric']);
                         $query2->execute();
 
-                        $i = 0;
-
                         while ($data2 = $query2->fetch()) {
-                            $html .= "<div class=\"col mx-1\">
+                            $html .= "<div class=\"mx-1\">
                                         <a href=\"#\">" . $data2['name'] . "</a>
-                                        <div class=\"dropdown-divider yellow\"></div>";
-
-                            $query3 = $pdo->prepare("select * from TBL_Rubric where super = " . $data2['rubric']);
-                            $query3->execute();
-
-                            while ($data3 = $query3->fetch()) {
-
-                                $html .= "<p>" . $data3['name'] . "</p>";
-
-                            }
-
-                            $html .= "</div>";
-                            if ($i == 4) {
-                                $html .= "</div><div class=\"row mr-1 mb-2\">";
-                                $i = 0;
-                            } else {
-                                $i++;
-                            }
+                                        <div class=\"dropdown-divider yellow\"></div></div>";
                         }
                         $html .= "</div></div></div></div>";
                     }

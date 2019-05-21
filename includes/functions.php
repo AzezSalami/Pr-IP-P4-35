@@ -1,19 +1,19 @@
 <?php
+    set_time_limit(0);
 //error_reporting(0);
-session_start();
-connectToDatabase();
+    session_start();
+    connectToDatabase();
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
 
-global $loginMessage;
-function cleanUpUserInput($input)
-{
-    $input = trim($input);
-    $input = stripslashes($input);
-    $input = htmlspecialchars($input);
-    return $input;
-}
+    global $loginMessage;
+    function cleanUpUserInput($input) {
+        $input = trim($input);
+        $input = stripslashes($input);
+        $input = htmlspecialchars($input);
+        return $input;
+    }
 
 function connectToDatabase()
 {
@@ -23,42 +23,41 @@ function connectToDatabase()
     $password = "iProject35";
     global $pdo;
 
-    try {
-        $pdo = new PDO ("sqlsrv:Server=$hostname;Database=$databasename;ConnectionPooling=0", "$username", "$password");
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        echo $e;
+        try {
+            $pdo = new PDO ("sqlsrv:Server=$hostname;Database=$databasename;ConnectionPooling=0", "$username", "$password");
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo $e;
+        }
     }
-}
 
-function search($amount = 0, $promoted_only = false)
-{
-    global $pdo;
+    function search($amount = 0, $promoted_only = false) {
+        global $pdo;
 
-    try {
-        $query = "SELECT " . ($amount > 0 ? "TOP($amount) " : "") . "A.auction, name, description, price_start, amount, [file] FROM TBL_Auction A
+        try {
+            $query = "SELECT " . ($amount > 0 ? "TOP($amount) " : "") . "A.auction, name, description, price_start, amount, [file] FROM TBL_Auction A
     INNER JOIN TBL_Item I
         on A.item = I.item
     LEFT JOIN (SELECT auction, max(amount) AS amount FROM TBL_Bid group by auction) as B
     ON A.auction = B.auction
     LEFT JOIN (SELECT item, [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item)) as R on I.item = R.item
 WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
-        $filters = array();
-        $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));
+            $filters = array();
+            $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));
 
-        foreach ($searchArray as $key => $word) {
-            $query .= "name LIKE ?";
-            if ($key < count($searchArray) - 1) {
-                $query .= " AND ";
+            foreach ($searchArray as $key => $word) {
+                $query .= "name LIKE ?";
+                if ($key < count($searchArray) - 1) {
+                    $query .= " AND ";
+                }
+                $filters[] = "%$word%";
             }
-            $filters[] = "%$word%";
-        }
-        $query .= " ORDER BY moment_end DESC";
-        $searchStatement = $pdo->prepare($query);
-        $searchStatement->execute($filters);
-        $html = "<div class='row my-2'>";
-        while ($auction = $searchStatement->fetch()) {
-            $html .= "<div class='auction-article-" . ($promoted_only ? "large" : "small") . " bg-white col-lg m-2'>
+            $query .= " ORDER BY moment_end DESC";
+            $searchStatement = $pdo->prepare($query);
+            $searchStatement->execute($filters);
+            echo "<div class='row my-2'>";
+            while ($auction = $searchStatement->fetch()) {
+                echo "<div class='auction-article-" . ($promoted_only ? "large" : "small") . " white col-lg m-2'>
 <div class='row mt-3'>
 									<div class='col'>
 										<div class='col'><strong>" . $auction['name'] . "</strong></div>
@@ -70,7 +69,7 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
 								<div class='imageContainer row text-center'>
 									<div>" . "<img class='mx-auto my-2' src='data:image/bmp;base64," . $auction['file'] . "'
 										     alt='Afbeelding van veiling'>" .
-                "</div>
+                    "</div>
 								</div>
 								<div class='row mb-3'>
 									<div class='col'>
@@ -88,15 +87,14 @@ WHERE " . ($promoted_only ? "is_promoted = 1 AND " : "");
 							</div>";
 
 
+            }
+
+            echo "</div>";
+
+        } catch (PDOException $e) {
+            echo $e;
         }
-
-        $html .= "</div>";
-        echo $html;
-
-    } catch (PDOException $e) {
-        echo $e;
     }
-}
 
 function login()
 {
