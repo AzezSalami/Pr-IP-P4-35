@@ -37,7 +37,7 @@
 
         global $pdo;
         //$rubric = 0;
-        $mainRubricsQuery = $pdo->prepare("select * from TBL_Rubric where super = " . (isset($_GET['rubriek']) && (($rubric = cleanUpUserInput($_GET['rubriek'])) != "") != 0 ? $rubric : "-1"));
+        $mainRubricsQuery = $pdo->prepare("select * from TBL_Rubric where super = " . (isset($_GET['rubric']) && (($rubric = cleanUpUserInput($_GET['rubric'])) != "") != 0 ? $rubric : "-1"));
         $mainRubricsQuery->execute();
         while ($mainRubric = $mainRubricsQuery->fetch()) {
             echo
@@ -56,7 +56,7 @@
 
             while ($subRubric = $subRubricsQuery->fetch()) {
                 echo "<div class=\"mx-1\">
-                                        <a href=\"#\">" . $subRubric['name'] . "</a>
+                                        <a onclick=\"document.getElementById('rubricFilter').value = " . $subRubric['rubric'] . "; document.getElementById('searchbutton').click();\" href=\"#\">" . $subRubric['name'] . "</a>
                                         <div class=\"dropdown-divider yellow\"></div></div>";
             }
             echo "</div></div></div></div>";
@@ -68,7 +68,7 @@
 
         try {
             $query="";
-            if(isset($_GET['rubriek']) && ($rubric = cleanUpUserInput($_GET['rubriek'])) != ""){
+            if(isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != ""){
                 $query .= "
                     WITH subRubrics AS
                     (
@@ -89,7 +89,7 @@
                 ON A.auction = B.auction
                 LEFT JOIN (SELECT item, [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item)) as R on I.item = R.item
                 WHERE ";
-            if(isset($_GET['rubriek']) && ($rubric = cleanUpUserInput($_GET['rubriek'])) != ""){
+            if(isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != ""){
                 $query .= "I.item in (SELECT item from TBL_Item_In_Rubric WHERE rubric in (
                     SELECT rubric
                     FROM subRubrics) OR rubric = " . $rubric .") AND ";

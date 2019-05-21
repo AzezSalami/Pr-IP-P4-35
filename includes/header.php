@@ -22,9 +22,9 @@ login();
                         </button>
                     </div>
                 </div>
-	            <input type='hidden' id="rubricFilter" name='rubriek'
+	            <input type='hidden' id="rubricFilter" name='rubric'
 	            <?php
-                    if(isset($_GET['rubriek']) && ($rubric = cleanUpUserInput($_GET['rubriek'])) != ""){
+                    if(isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != ""){
                     	echo " value='$rubric'";
                     }
                 ?>
