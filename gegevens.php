@@ -56,11 +56,21 @@ require "includes/header.php";
                     $username = $_SESSION['username'];
                     global $pdo;
 
+                    /* checken of er maar 1 user is met deze username/password combinatie */
+
                     $query = $pdo->prepare("select count(*) from TBL_User where [user] = '$username' and password = '$password'");
                     $query->execute();
                     $data = $query->fetch();
 
                     if ($data[0] == 1) {
+
+                        /* mits de user veilingen heeft wordt hier de veiler op null gezet en eventuele open veilingen geclosed */
+
+                        $query = $pdo->prepare("update TBL_Auction set seller = null and is_closed = 0 where seller = '$username'");
+                        $query->execute();
+
+                         /* hier wordt de row uit de database die al de data van de desbetreffende gebruiker heeft verwijderd */
+
                         $query = $pdo->prepare("delete from TBL_User where [user] = '$username' and password = '$password'");
                         $query->execute();
                         session_destroy();
