@@ -123,7 +123,7 @@ function search($amount = 0, $promoted_only = false)
 										<div class='col'><strong>" . $auction['name'] . "</strong></div>
 									</div>
 									<div class='col text-right'>
-										<div class='col'><strong>" . ($auction['amount'] > $auction['price_start'] ? $auction['amount'] : $auction['price_start']) . "</strong></div>
+										<div class='col'><strong>€" . ($auction['amount'] > $auction['price_start'] ? $auction['amount'] : $auction['price_start']) . "</strong></div>
 									</div>
 								</div>
 								<div class='imageContainer row text-center'>
