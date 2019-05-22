@@ -1,6 +1,6 @@
 /* rubrieken */
 
-.btn-sidenav{
+.btn-sidenav, .rubricButton{
     width: 80%;
     text-align: left;
 }
@@ -116,4 +116,15 @@
 
 .auction-page{
     min-height: 80.2vh;
+}
+
+.rubricButton {
+    background: transparent;
+    border:none;
+    border-bottom: #4FCBFF solid 1px;
+    border-radius: 0;
+}
+
+.rubricButton:hover {
+    background-color: #4FCBFF;
 }
