@@ -242,7 +242,7 @@ login();
                                 </div>
                             </div>
                             <div class="row">
-	                            <script async src="js/places.js"></script>
+	                            <script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
 
 	                            <div class="col">
                                     <input class="form-control mb-3" type="text" id="address" placeholder="Adres"
