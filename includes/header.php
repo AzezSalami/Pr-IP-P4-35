@@ -285,7 +285,7 @@ login();
                                 </div>
                                 <div class="col-lg">
                                     <div class="form-label-group">
-                                        <label class="invisible" for="bevestig_wachtwoord">bevestig wachtwoord</label>
+                                        <label class="invisible" for="confirm_password">bevestig wachtwoord</label>
                                         <input class="form-control" placeholder="bevestig wachtwoord" type="password"
                                                name="confirm_password"
                                                id="confirm_password"

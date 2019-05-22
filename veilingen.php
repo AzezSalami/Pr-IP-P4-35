@@ -86,7 +86,7 @@
         </div>
         <div class="col-lg-8 auction-page">
             <div class="container">
-                <?php search(50); ?>
+                <?php search(20); ?>
             </div>
         </div>
         <div class="col-lg-2">
