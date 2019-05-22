@@ -18,25 +18,25 @@ require "includes/header.php";
             <?php
             if (isset($_POST['deleteaccountsubmit'])) {
                 if ($_POST['removePassword'] == $_POST['remconfirm_password']) {
-                    $password = hash('sha1',$_POST['remconfirm_password']);
+                    $password = hash('sha1', $_POST['remconfirm_password']);
 
                     $username = $_SESSION['username'];
                     global $pdo;
 
-                    /* checken of er maar 1 user is met deze username/password combinatie */
+                    /*check if there is only one user with the username/password combination*/
 
                     $query = $pdo->prepare("select count(*) from TBL_User where [user] = '$username' and password = '$password'");
                     $query->execute();
-                    $data = $query->fetch();
+                    $userData = $query->fetch();
 
-                    if ($data[0] == 1) {
+                    if ($userData[0] == 1) {
 
-                        /* mits de user veilingen heeft wordt hier de veiler op null gezet en eventuele open veilingen geclosed */
+                        /*If the user has auctions the user will be set to "null", open auctions from the deleted user will be closed*/
 
                         $query = $pdo->prepare("update TBL_Auction set seller = null, auction_closed = 0 where seller = '$username'");
                         $query->execute();
 
-                         /* hier wordt de row uit de database die al de data van de desbetreffende gebruiker heeft verwijderd */
+                        /*Delete row with information of the deleted user*/
 
                         $query = $pdo->prepare("delete from TBL_User where [user] = '$username' and password = '$password'");
                         $query->execute();
@@ -46,7 +46,7 @@ require "includes/header.php";
                         echo '<p style="color: red">Uw gebruikersnaam of wachtwoord zijn niet correct, probeer het alstublieft nog eens.</p>';
                     }
                 } else {
-                    echo "fout jo";
+                    echo "Error";
                 }
             }
             ?>
