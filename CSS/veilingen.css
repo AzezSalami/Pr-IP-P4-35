@@ -105,17 +105,13 @@
 .input-details {
     border: #FFAD4F 1px solid;
     color: black;
+    width: 100%;
 }
 
 .input-details-mobile {
     border: #FFAD4F 1px solid;
     color: black;
     width: 100%;
-}
-
-
-.range-filter {
-    width: 90%;
 }
 
 .auction-page{
