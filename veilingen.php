@@ -106,7 +106,7 @@
                                     <input class="bg-gray text-center input-details" type="number" id="amount-min"
                                            placeholder="min">
                                 </div>
-                                <div class="col-lg-2 text-center">
+                                <div class="col-lg-1 text-center">
                                     <p class="text-white font-weight-bold">-</p>
                                 </div>
                                 <div class="col-lg-5 text-right">
@@ -114,7 +114,6 @@
                                            placeholder="max">
                                 </div>
                             </div>
-                            <div class="my-2" id="slider-range"></div>
                         </form>
                     </div>
                     <br>
