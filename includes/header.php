@@ -22,13 +22,13 @@ login();
                         </button>
                     </div>
                 </div>
-	            <input type='hidden' id="rubricFilter" name='rubric'
-	            <?php
-                    if(isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != ""){
-                    	echo " value='$rubric'";
+                <input type='hidden' id="rubricFilter" name='rubric'
+                    <?php
+                    if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
+                        echo " value='$rubric'";
                     }
-                ?>
-	            >
+                    ?>
+                >
             </form>
             <div class="col-2 my-auto text-center">
                 <?php
@@ -160,7 +160,10 @@ login();
                                 <label for="password">Wachtwoord</label>
                                 <a href="" data-target="#resetMenu" data-toggle="modal" id="openforgetpassword"
                                    onclick="document.getElementById('loginCloseButton').click()">Wachtwoord
-                                    vergeten?</a>
+                                    vergeten?</a><br>
+                                <a href="" data-target="#resendCodeMenu" data-toggle="modal" id="openResendCodeMenu"
+                                   onclick="document.getElementById('loginCloseButton').click()">Nieuwe
+                                    verificatiecode?</a>
                             </div>
 
                             <div class="row">
@@ -339,13 +342,57 @@ login();
                                 <div class="col">
                                     <input class="btn bg-lightblue" type="submit" name="pwdforgottensubmit"
                                            value="Verstuur">
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+
+
+    <!-- The Modal -->
+    <div class="modal fade" id="resendCodeMenu">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title text-dark">reset verificatiecode</h4>
+                    <button id="" type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form class="form-signin" method="POST" name="resendCode">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="text-dark">Weet je het wachtwoord niet meer?
+                                        Vul hieronder je e-mailadres in.
+                                        We sturen dan binnen enkele minuten een e-mail waarmee je accout kan
+                                        verifiëren?.</p></div>
+                            </div>
+                            <div class=" mb-2 text-danger"><?php verificatiecodeEmail(); ?></div>
+                            <div class="form-label-group">
+                                <form method="post" action="">
+                                    <input class="form-control" placeholder="emailadres" type="text"
+                                           name="resendCode_emailadres"
+                                           id="resendCode_emailadres"
+                                           maxlength="40" required>
+                                    <label for="resendCode_emailadres">Voer hier uw email in</label>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input class="btn bg-lightblue" type="submit" name="resendCode"
+                                           value="Verstuur">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
