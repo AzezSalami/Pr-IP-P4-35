@@ -263,26 +263,8 @@ function register()
 
                 $phoneQuery->execute(array($regUsername, $telephone_number, ($is_mobile ? 1 : 0)));
 
-                require "PHPMailer/PHPMailer.php";
-                require "PHPMailer/Exception.php";
-                require "PHPMailer/SMTP.php";
-
-                $mail = new PHPMailer();
-                try {
-//                    $mail->SMTPDebug = 2;                                      // Enable verbose debug output
-                    $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com	';
-                    $mail->SMTPAuth = true;
-                    $mail->Username = 'eenmaalandermaal35@gmail.com';
-                    $mail->Password = 'andermaaleenmaal35';
-                    $mail->SMTPSecure = 'tls';
-                    $mail->Port = 587;
-
-                    $mail->setFrom('eenmaalandermaal35@gmail.com');
-                    $mail->addAddress($email, $regUsername);
-                    $mail->Subject = "Verifieer uw e-mail!";
-                    $mail->isHTML(true);
-                    $mail->Body = "
+                $subject = "Verifieer uw e-mail!";
+                $text = "
                     Geachte heer of mevrouw $lastname,<br><br>
                     
                     Klik op de link hieronder om uw registratie te voltooien.<br>
@@ -297,13 +279,7 @@ function register()
                     
                     Het team van Eenmaal Andermaal
                 ";
-                    $mail->send();
-
-                    echo 'Er is een email verstuurd naar het opgegeven e-mail-adres';
-                } catch (Exception $e) {
-                    echo "Er is iets misgegaan, probeer het opnieuw<br>
-                              Error: {$mail->ErrorInfo}";
-                }
+                sendEmail($email, $regUsername, $subject, $text);
             }
         }
         echo "<script>document.getElementById('openRegister').click();</script>";
@@ -458,12 +434,6 @@ function resetPasswordEmail()
 
 function sendResetPasswordEmail($email)
 {
-    require "PHPMailer/PHPMailer.php";
-    require "PHPMailer/Exception.php";
-    require "PHPMailer/SMTP.php";
-
-    $mail = new PHPMailer();
-
     global $pdo;
     $query = $pdo->prepare("select * from TBL_User where email = :email");
     $query->execute(array(':email' => $email));
@@ -477,21 +447,8 @@ function sendResetPasswordEmail($email)
     $query = $pdo->prepare("update TBL_User set verification_code =:token where email = :email");
     $query->execute(array(':token' => $token, ':email' => $email));
 
-    try {
-//                    $mail->SMTPDebug = 2;                                      // Enable verbose debug output
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com	';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'eenmaalandermaal35@gmail.com';
-        $mail->Password = 'andermaaleenmaal35';
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
-
-        $mail->setFrom('eenmaalandermaal35@gmail.com');
-        $mail->addAddress($email, $regUsername);
-        $mail->Subject = "Wachtwoord opnieuw instellen";
-        $mail->isHTML(true);
-        $mail->Body = "
+    $subject = "Wachtwoord opnieuw instellen";
+    $text ="
                     Geachte heer of mevrouw $lastname,<br><br>
 
                     Klik op de link hieronder om uw wachtwoord opnieuw in te stellen.<br>
@@ -507,14 +464,7 @@ function sendResetPasswordEmail($email)
 
                     Het team van Eenmaal Andermaal
                 ";
-        $mail->send();
-
-    } catch (Exception $e) {
-        echo "Er is iets misgegaan, probeer het opnieuw<br>
-                              Error: {$mail->ErrorInfo}";
-    }
-
-
+    sendEmail($email, $regUsername, $subject, $text);
 }
 
 function verificatiecodeEmail()
@@ -539,12 +489,6 @@ function verificatiecodeEmail()
 
 function sendVerificatiecodeEmail($email)
 {
-    require "PHPMailer/PHPMailer.php";
-    require "PHPMailer/Exception.php";
-    require "PHPMailer/SMTP.php";
-
-    $mail = new PHPMailer();
-
     global $pdo;
     $query = $pdo->prepare("select * from TBL_User where email = :email");
     $query->execute(array(':email' => $email));
@@ -561,20 +505,8 @@ function sendVerificatiecodeEmail($email)
     $query = $pdo->prepare("update TBL_User set verification_code =:token ,verification_code_valid_until =:verification_code_valid_until where email = :email");
     $query->execute(array(':token' => $token, ':verification_code_valid_until' => $valid_until_date, ':email' => $email));
 
-    try {
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com	';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'eenmaalandermaal35@gmail.com';
-        $mail->Password = 'andermaaleenmaal35';
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
-
-        $mail->setFrom('eenmaalandermaal35@gmail.com');
-        $mail->addAddress($email, $regUsername);
-        $mail->Subject = "Verifieer uw e-mail!";
-        $mail->isHTML(true);
-        $mail->Body = "
+    $subject ="Verifieer uw e-mail!";
+    $text ="
                     Geachte heer of mevrouw $lastname,<br><br>
                     
                     Klik op de link hieronder om uw registratie te voltooien.<br>
@@ -589,6 +521,29 @@ function sendVerificatiecodeEmail($email)
                     
                     Het team van Eenmaal Andermaal
                 ";
+    sendEmail($email, $regUsername, $subject, $text);
+}
+
+function sendEmail($email, $username, $subject, $text)
+{
+    require "PHPMailer/PHPMailer.php";
+    require "PHPMailer/Exception.php";
+    require "PHPMailer/SMTP.php";
+    $mail = new PHPMailer();
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com	';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'eenmaalandermaal35@gmail.com';
+        $mail->Password = 'andermaaleenmaal35';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+
+        $mail->setFrom('eenmaalandermaal35@gmail.com');
+        $mail->addAddress($email, $username);
+        $mail->Subject = $subject;
+        $mail->isHTML(true);
+        $mail->Body = $text;
         $mail->send();
 
     } catch (Exception $e) {
@@ -596,6 +551,5 @@ function sendVerificatiecodeEmail($email)
                               Error: {$mail->ErrorInfo}";
     }
 }
-
 
 ?>
