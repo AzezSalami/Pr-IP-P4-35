@@ -43,9 +43,9 @@
             FROM Temp35.dbo.Categorieen
             ORDER BY ID ASC
             ");
-        //(isset($rubricIDChanges[$rubric['Parent']]) ? $rubricIDChanges[$rubric['Parent']] : "null")
-//        $currentRubricID = $pdo->query("SELECT TOP(1) rubric FROM groep35test2.dbo.TBL_Rubric ORDER BY rubric DESC")->fetch()['rubric'] + 1;
-
+        $username='ebay';
+        $pdo->exec("INSERT INTO groep35test2.dbo.TBL_User ([user],firstname,lastname,address_line_1,email,password,is_seller,is_verified)
+                              values ('$username','Pierre','Omidyar','2145 Hamilton Avenue, San José, California, Verenigde Staten van Amerika','eenmaalandermaal35@gmail.com','abc',1,1)");
         while ($rubric = $rubrics->fetch()) {
             try {
                 $currentRubricID = $pdo->query("SELECT TOP(1) rubric FROM groep35test2.dbo.TBL_Rubric ORDER BY rubric DESC")->fetch()['rubric'] + 1;
@@ -122,12 +122,13 @@
                             ");
 
                             $pdo->exec("
-                                INSERT INTO groep35test2.dbo.TBL_Auction (moment_start, moment_end, item, is_promoted)
+                                INSERT INTO groep35test2.dbo.TBL_Auction (moment_start, moment_end, item, is_promoted, seller)
                                 SELECT GETDATE(),
                                        DATEADD(hour, RAND(convert(varbinary, newid()))*24,
                                            DATEADD(DAY, RAND(convert(varbinary, newid()))*9+1, GETDATE())),
                                        " . $currentItemID . ",
-                                       CASE WHEN (RAND(convert(varbinary, newid())) > 0.9) THEN 1 ELSE 0 END
+                                       CASE WHEN (RAND(convert(varbinary, newid())) > 0.9) THEN 1 ELSE 0 END,
+                                       '$username'
                                 
                                 FROM Temp35.dbo.Items
                                 WHERE ID = " . $item['ID']
