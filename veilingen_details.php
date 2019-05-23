@@ -102,11 +102,11 @@ require "includes/header.php";
                             <h3>Bieden</h3>
                             <p class="font-weight-bold">Verhoog bod met:</p>
                             <form method="post" class="form-inline">
-                                <button type="button" class="btn">5</button>
+                                <button type="button" class="btn btn-bod">5</button>
                                 <div class="space"></div>
-                                <button type="button" class="btn">10</button>
+                                <button type="button" class="btn btn-bod">10</button>
                                 <div class="space"></div>
-                                <button type="button" class="btn">15</button>
+                                <button type="button" class="btn btn-bod">15</button>
                             </form>
                             <div class="my-3">
                                 <p class="font-weight-bold">Hoogste bod:</p>
