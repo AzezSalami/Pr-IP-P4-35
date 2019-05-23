@@ -134,7 +134,7 @@ function search($amount = 0, $promoted_only = false)
 										<div class='col'> " . $auction['description'] . "</div>
 									</div>
 									<div class='col text-right'>
-									<a href='veiling.php?id=" . $auction['auction'] . "'>
+									<a href='veilingen_details.php?auction=" . $auction['auction'] . "'>
 										<button class='btn'>Details</button>
 									</a>
 									</div>
@@ -545,6 +545,12 @@ function sendEmail($email, $username, $subject, $text)
         echo "Er is iets misgegaan, probeer het opnieuw<br>
                               Error: {$mail->ErrorInfo}";
     }
+}
+
+function placeNewBid($auctionid, $currentHighestBid, $amount, $username) {
+    global $pdo;
+    $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
+    $query->execute(array($auctionid, $currentHighestBid + $amount, $username));
 }
 
 ?>

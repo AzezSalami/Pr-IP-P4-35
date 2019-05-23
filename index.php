@@ -7,6 +7,9 @@
 
         <?php
             require "includes/header.php";
+
+            if(isset($_GET['auction']))
+
         ?>
 
 		<main>

@@ -40,9 +40,60 @@
 
 <?php
 require "includes/header.php";
-?>
 
-<main>
+global $pdo;
+$auctionquery = $pdo->prepare("SELECT * FROM TBL_Auction WHERE auction = ?");
+$auctionid = $_GET['auction'];
+$auctionquery->execute(array($auctionid));
+$auctiondata = $auctionquery->fetch();
+
+/* all sellers are null atm, hence why sellerinfo will be empty for now */
+
+if ($auctiondata['auction_closed'] == 0) {
+    $auctionstatus = "Closed";
+} else {
+    $auctionstatus = "Open";
+}
+$startdate = $auctiondata['moment_start'];
+$enddate = $auctiondata['moment_end'];
+$item = $auctiondata['item'];
+
+$itemquery = $pdo->prepare("SELECT * FROM TBL_Item WHERE item = ?");
+$itemquery->execute(array($item));
+$itemdata = $itemquery->fetch();
+
+$itemtitle = $itemdata['name'];
+$itemdescription = $itemdata['description'];
+$itempricestart = $itemdata['price_start'];
+$itemaddress = $itemdata['address_line_1'];
+$itemshippingcost = $itemdata['shipping_cost'];
+
+
+$bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order by amount DESC");
+$bidquery->execute(array($auctionid));
+$biddata = $bidquery->fetchAll();
+
+$itemprice = (int)$biddata[0]['amount'];
+
+if($itemprice < 1) {
+    $buttonvalue = 0.50;
+} else if($itemprice <= 5) {
+    $buttonvalue = 1;
+} else if($itemprice <= 10) {
+    $buttonvalue = 5;
+} else if($itemprice <= 50) {
+    $buttonvalue = 10;
+} else {
+    $buttonvalue = 50;
+}
+
+if(isset($_POST['bidbutton'])) {
+    $amount = (int)$_POST['bidbutton'];
+    $username = $_SESSION['username'];
+    placeNewBid($auctionid, $itemprice, $amount, $username);
+}
+
+echo '<main>
     <div class="row">
         <div class="col-lg-2">
             <!---->
@@ -50,41 +101,40 @@ require "includes/header.php";
         <div class="col-lg-8 text-dark">
             <div class="row my-3">
                 <div class="col">
-                    <h1 class="text-left font-weight-bold">[titel van veiling]</h1>
+                    <h1 class="text-left font-weight-bold">' . $itemtitle . '</h1>
                 </div>
                 <div class="col">
-                    <h1 class="text-right font-weight-bold">[prijs]</h1>
+                    <h1 class="text-right font-weight-bold">' . $itemprice . '</h1>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-4">
                     <div class="row foto">
-                        <img src="images/android-chrome-192x192.png" alt="veiling foto" height="280" width="280">
+                        <img src="images/android-chrome-192x192.png" alt="veiling foto">
                     </div>
                     <div class="row">
                         <div class="col details-product">
-                            <h3>details product</h3>
-                            <p>qwerty</p>
-                            <p>qwerty</p>
-                            <p>qwerty</p>
-                            <p>qwerty</p>
+                            <h3>Productdetails</h3>
+                            <p>Locatie van product: ' . $itemaddress . '</p>
+                            <p>Verzendkosten: ' . $itemshippingcost . '</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-5">
                     <div class="row">
                         <div class="col details-veiling">
-                            <h3>details veiling</h3>
-                            <p>qwerty</p>
-                            <p>qwerty</p>
-                            <p>qwerty</p>
-                            <p>qwerty</p>
+                            <h3>Veilingdetails</h3>
+                                <p>Status van veiling: ' . $auctionstatus . '</p>
+                                <p>Startdatum: ' . $startdate . '</p>
+                                <p>Sluitdatum: ' . $enddate . '</p>
+                                <p>Minimale prijs: ' . $itempricestart . '</p>
+                                
                         </div>
                     </div>
                     <div class="row">
                         <div class="col details-product">
                             <h3>Beschrijving:</h3>
-                            <p>qwerty</p>
+                            <p>' . $itemdescription . '</p>
                         </div>
                     </div>
                 </div>
@@ -99,21 +149,33 @@ require "includes/header.php";
                     </div>
                     <div class="row">
                         <div class="col">
-                            <h3>Bieden</h3>
-                            <p class="font-weight-bold">Verhoog bod met:</p>
+                            <h3>Bieden</h3>';
+
+if(isset($_SESSION['username'])) {
+    echo '<p class="font-weight-bold">Verhoog bod met:</p>
                             <form method="post" class="form-inline">
-                                <button type="button" class="btn">5</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . $buttonvalue . '">+' . $buttonvalue . '</button>
                                 <div class="space"></div>
-                                <button type="button" class="btn">10</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . $buttonvalue * 2 . '">+' . $buttonvalue * 2 . '</button>
                                 <div class="space"></div>
-                                <button type="button" class="btn">15</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . $buttonvalue * 3 . '">+' . $buttonvalue * 3 . '</button>
                             </form>
                             <div class="my-3">
-                                <p class="font-weight-bold">Hoogste bod:</p>
-                                <p class="bod">Jan Piet: $123</p>
-                                <p class="bod">Margo Hendriks: $123</p>
-                                <p class="bod">Willem Brak: $123</p>
-                            </div>
+                                <p class="font-weight-bold">Bieden:</p>';
+} else {
+    echo '<p style="color: red">Je moet ingelogd zijn om te kunnen bieden.</p>';
+}
+
+$bidquery->execute(array($auctionid));
+
+$html = "";
+
+while ($bid = $bidquery->fetch()) {
+    $html .= '<p class="bod">' . $bid['user'] . ': ' . $bid['amount'] . '</p>';
+}
+
+echo $html . '</div>' . '
+
                         </div>
                     </div>
                 </div>
@@ -124,9 +186,10 @@ require "includes/header.php";
         </div>
     </div>
 
-</main>
-<?php
+</main>';
+
 include_once "includes/footer.php";
+
+echo '</body></html>';
+
 ?>
-</body>
-</html>
