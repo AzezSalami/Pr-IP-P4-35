@@ -84,9 +84,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-8 auction-page">
+        <div class="col-lg-10 auction-page">
             <div class="container">
-                <?php search(8); ?>
+                <?php search(9); ?>
             </div>
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
@@ -103,8 +103,6 @@
                     </li>
                 </ul>
             </nav>
-        </div>
-        <div class="col-lg-2">
         </div>
     </div>
 </main>
