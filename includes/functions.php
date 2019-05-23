@@ -41,7 +41,7 @@ function loadRubrics()
     global $pdo;
     //$rubric = 0;
     $rubric = (isset($_GET['rubric']) && (($rubric = cleanUpUserInput($_GET['rubric'])) != "") != 0 ? $rubric : $rubric = -1);
-    if($rubric != -1){
+    if ($rubric != -1) {
         $mainRubricQuery = $pdo->prepare("select * from TBL_Rubric where rubric = ?");
         $mainRubricQuery->execute(array($rubric));
         $mainRubric = $mainRubricQuery->fetch()['super'];
@@ -113,33 +113,27 @@ function search($amount = 0, $promoted_only = false)
         echo "<div class='row my-2'>";
         while ($auction = $searchStatement->fetch()) {
             echo "<div class='auction-article-" . ($promoted_only ? "large" : "small") . " white col-lg m-2'>
-<div class='row mt-3'>
-									<div class='col'>
-										<div class='col'><strong>" . $auction['name'] . "</strong></div>
-									</div>
-									<div class='col text-right'>
-										<div class='col'><strong>€" . ($auction['amount'] > $auction['price_start'] ? $auction['amount'] : $auction['price_start']) . "</strong></div>
-									</div>
-								</div>
-								<div class='imageContainer row text-center'>
-									<div>" . "<img class='mx-auto my-2' src='data:image/png;base64," . base64_encode($auction['file']) . "'
-										     alt='Afbeelding van veiling'>" .
-                "</div>
-								</div>
-								<div class='row mb-3'>
-									<div class='col'>
-										<div class='col'> Beschrijving:</div>
-									</div>
-									<div class='row mx-3'>
-										<div class='col'> " . $auction['description'] . "</div>
-									</div>
-									<div class='col text-right'>
-									<a href='veiling.php?id=" . $auction['auction'] . "'>
-										<button class='btn'>Details</button>
-									</a>
-									</div>
-								</div>
-							</div>";
+                    <div class='row mx-1 mt-3'>
+                        <div class='col'>
+										<div><strong>€" . ($auction['amount'] > $auction['price_start'] ? $auction['amount'] : $auction['price_start']) . "</strong></div>
+										<div><strong>" . $auction['name'] . "</strong></div>		
+						</div>					
+                    </div>
+					<div class='imageContainer row text-center'>
+                        <div>" . "<img class='mx-auto my-2' src='data:image/png;base64," . base64_encode($auction['file']) . "'
+                                                 alt='Afbeelding van veiling'>" .
+                        "</div>
+					</div>
+					<div class='row mx-2 mb-3'>
+					    <div class='font-weight-bold mb-2'> Beschrijving:</div>
+						<div class=' article-description'>" . $auction['description'] . "</div>
+						<div class='col text-right'>
+                            <a href='veiling.php?id=" . $auction['auction'] . "'>
+                                <button class='btn mt-2'>Details</button>
+                            </a>
+						</div>
+					</div>
+				</div>";
 
 
         }
@@ -443,7 +437,7 @@ function sendResetPasswordEmail($email)
     $query->execute(array(':token' => $token, ':email' => $email));
 
     $subject = "Wachtwoord opnieuw instellen";
-    $text ="
+    $text = "
                     Geachte heer of mevrouw $lastname,<br><br>
 
                     Klik op de link hieronder om uw wachtwoord opnieuw in te stellen.<br>
@@ -500,8 +494,8 @@ function sendVerificatiecodeEmail($email)
     $query = $pdo->prepare("update TBL_User set verification_code =:token ,verification_code_valid_until =:verification_code_valid_until where email = :email");
     $query->execute(array(':token' => $token, ':verification_code_valid_until' => $valid_until_date, ':email' => $email));
 
-    $subject ="Verifieer uw e-mail!";
-    $text ="
+    $subject = "Verifieer uw e-mail!";
+    $text = "
                     Geachte heer of mevrouw $lastname,<br><br>
                     
                     Klik op de link hieronder om uw registratie te voltooien.<br>
