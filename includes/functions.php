@@ -40,29 +40,24 @@ function loadRubrics()
 
     global $pdo;
     //$rubric = 0;
-    $mainRubricsQuery = $pdo->prepare("select * from TBL_Rubric where super = " . (isset($_GET['rubric']) && (($rubric = cleanUpUserInput($_GET['rubric'])) != "") != 0 ? $rubric : "-1"));
-    $mainRubricsQuery->execute();
-    while ($mainRubric = $mainRubricsQuery->fetch()) {
-        echo
-            "<!--<div class=\"btn-group \">-->
-                        <button onclick=\"document.getElementById('rubricFilter').value = " . $mainRubric['rubric'] . "; document.getElementById('searchbutton').click();\" type=\"button\" class=\"btn  rubricButton btn-sidenav\">" . $mainRubric['name'] . "</button>
-                        <!--<button type=\"button\" class=\"btn dropdown-toggle dropdown-toggle-split toggle-sidenav\" data-toggle=\"dropdown\"
-                                aria-haspopup=\"true\" aria-expanded=\"false\">
-                            &lt;!&ndash;<span class=\"sr-only\">hoofdrubriek 1</span>&ndash;&gt;
-                        </button>
-                        <div class=\"dropdown-menu r-content bg-gray px-2\">
-                            <div class=\"container\">
-                            <div class=\"mr-1 mb-2\">-->";
+    $rubric = (isset($_GET['rubric']) && (($rubric = cleanUpUserInput($_GET['rubric'])) != "") != 0 ? $rubric : $rubric = -1);
+    if($rubric != -1){
+        $mainRubricQuery = $pdo->prepare("select * from TBL_Rubric where rubric = ?");
+        $mainRubricQuery->execute(array($rubric));
+        $mainRubric = $mainRubricQuery->fetch()['super'];
+        echo "<button
+        onclick=\"document.getElementById('rubricFilter').value = " . $mainRubric . "; document.getElementById('searchbutton').click();\"
+        type=\"button\" class=\"btn  rubricButton btn-sidenav\">Eén omhoog</button><br><br>";
 
-        $subRubricsQuery = $pdo->prepare("select * from TBL_Rubric where super = " . $mainRubric['rubric']);
-        $subRubricsQuery->execute();
+    }
 
-//        while ($subRubric = $subRubricsQuery->fetch()) {
-//            echo "<div class=\"mx-1\">
-//                                        <a onclick=\"document.getElementById('rubricFilter').value = " . $subRubric['rubric'] . "; document.getElementById('searchbutton').click();\" href=\"#\">" . $subRubric['name'] . "</a>
-//                                        <div class=\"dropdown-divider yellow\"></div></div>";
-//        }
-        //echo "</div></div></div></div>";
+    $subRubricQuery = $pdo->prepare("select * from TBL_Rubric where super = ?");
+    $subRubricQuery->execute(array($rubric));
+
+    while ($subRubric = $subRubricQuery->fetch()) {
+        echo "<button
+        onclick=\"document.getElementById('rubricFilter').value = " . $subRubric['rubric'] . "; document.getElementById('searchbutton').click();\"
+        type=\"button\" class=\"btn  rubricButton btn-sidenav\">" . $subRubric['name'] . "</button>";
     }
 }
 
