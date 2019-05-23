@@ -29,13 +29,7 @@ login();
                         }
                     ?>
 	            >
-	            <input type='hidden' id="pageNumber" name='page'
-                    <?php
-                        if ((isset($_GET['page']) && ($page = cleanUpUserInput($_GET['page'])) > 1)) {
-                            echo " value='$page'";
-                        }
-                    ?>
-	            >
+	            <input type='hidden' id="pageNumber" name='page' value='0'>
             </form>
             <div class="col-2 my-auto text-center">
                 <?php
