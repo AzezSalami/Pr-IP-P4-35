@@ -59,7 +59,13 @@ require "includes/header.php";
             <div class="row">
                 <div class="col-lg-4">
                     <div class="row foto">
-                        <img src="images/android-chrome-192x192.png" alt="veiling foto" height="280" width="280">
+                        <div class="col">
+
+                            <div class="imageContainer row text-center">
+                                <div><img class="img-fluid" src="images/android-chrome-192x192.png"
+                                          alt="veiling foto"></div>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col details-product">
