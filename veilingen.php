@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-        <?php include 'includes/head.html'; ?>
-		<link rel="stylesheet" href="CSS/veilingen.css" type="text/css">
-	</head>
+<head>
+    <?php include 'includes/head.html'; ?>
+    <link rel="stylesheet" href="CSS/veilingen.css" type="text/css">
+</head>
 <body>
 
 <?php require_once "includes/header.php" ?>
@@ -59,7 +59,7 @@
             </div>
             <div class="desktoprubricsmedia">
                 <div class="desktoprubrics bg-yellow">
-                    <?php loadRubrics();?>
+                    <?php loadRubrics(); ?>
                     <div class="dropdown-divider"></div>
                     <div class="range-filter container text-left my-2 pl-0">
                         <form method="post" action="...">
@@ -86,8 +86,23 @@
         </div>
         <div class="col-lg-8 auction-page">
             <div class="container">
-                <?php search(20); ?>
+                <?php search(8); ?>
             </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item <?php if ($_GET["page"] <= 1) echo "disabled"; ?>">
+                        <a class="page-link" href="veilingen.php?page=<?php echo($_GET["page"] - 1); ?>">Previous</a>
+                    </li>
+                    <li class="page-item <?php global $lastPage;
+                    if ($lastPage) echo "disabled"; ?>">
+                        <a href class="page-link" onclick="
+		                        document.getElementById('pageNumber').value = '<?php echo((isset($_GET['page']) && ($page = cleanUpUserInput($_GET['page'])) > 1 ? $page : 1) + 1); ?>';
+                                document.getElementById('searchbutton').click();">
+	                        Next
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
         <div class="col-lg-2">
         </div>

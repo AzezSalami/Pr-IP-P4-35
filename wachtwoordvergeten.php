@@ -22,6 +22,7 @@
     <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#FFAD4F">
     <meta name="msapplication-TileColor" content="#FFAD4F">
     <meta name="theme-color" content="#FFAD4F">
+
     <!-- Chrome, Firefox OS and Opera colored tabs-->
     <meta name="theme-color" content="#FFAD4F">
 
@@ -31,10 +32,16 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
     <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-    <link rel="stylesheet" href="CSS/general.css" type="text/css">
-    <link rel="stylesheet" href="CSS/contact.css" type="text/css">
+    <link rel="stylesheet" href="CSS/homepage.css" type="text/css">
+
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="JS/pricerange.js"></script>
 </head>
-<body>
+<body class="bg-gray">
 
 <?php
 require "includes/header.php";
@@ -44,45 +51,34 @@ require "includes/header.php";
     <div class="row">
         <div class="col-lg-2">
         </div>
-        <div class="col-lg-8 contact-form">
-            <div class="container my-5">
-                <div class="contact-image">
-                    <img src="images/logo-rond.png" alt="rocket_contact"/>
-                </div>
-                <form method="post">
-                    <h3 class="contact-title">Stuur ons een bericht</h3>
-
-                    <div class="form-group">
-                        <input type="text" name="txtName" class="form-control" placeholder="Uw naam *"
-                               value=""/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="txtEmail" class="form-control" placeholder="Uw email *"
-                               value=""/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="txtPhone" class="form-control"
-                               placeholder="Uw telefoonnummer *" value=""/>
-                    </div>
-                    <div class="form-group">
-                        <textarea name="txtMsg" class="form-control contact-text"
-                                  placeholder="Uw bericht *"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" name="btnSubmit" class="btn"
-                               value="Verzend bericht"/>
-                    </div>
-                </form>
+        <div class="col-lg-8">
+            <div class="text-dark">
+                <h1>Wachtwoord vergeten</h1>
+                <p>Weet je het wachtwoord niet meer?
+                    Vul hieronder je e-mailadres in.
+                    We sturen dan binnen enkele minuten een e-mail waarmee een nieuw wachtwoord kan worden
+                    aangemaakt.</p>
             </div>
+            <form class="text-dark">
+                <div class="form-label-group">
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                           placeholder="e-mail">
+                    <label for="exampleInputEmail1">e-mail</label>
+
+                </div>
+                <button type="submit" class="btn bg-lightblue">Versturen</button>
+            </form>
         </div>
         <div class="col-lg-2">
+
         </div>
     </div>
+
 </main>
-
-<?php
-include_once "includes/footer.php";
-?>
-
+<div class="fixed-bottom">
+    <?php
+    include_once "includes/footer.php";
+    ?>
+</div>
 </body>
 </html>

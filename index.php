@@ -5,12 +5,9 @@
 	</head>
 	<body>
 
-        <?php
-            require "includes/header.php";
-
-            if(isset($_GET['auction']))
-
-        ?>
+<?php
+require "includes/header.php";
+?>
 
 		<main>
 			<div class="row">
@@ -26,9 +23,9 @@
 				</div>
 			</div>
 
-		</main>
-        <?php
-            include_once "includes/footer.php";
-        ?>
-	</body>
+</main>
+<?php
+include_once "includes/footer.php";
+?>
+</body>
 </html>

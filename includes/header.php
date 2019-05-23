@@ -2,6 +2,7 @@
 require_once "functions.php";
 login();
 ?>
+<script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
 <header>
     <span class="sidenavhamburger mr-2" onclick="openNav()">&#9776;</span>
     <div class="container-fluid bg-orange py-2">
@@ -21,13 +22,20 @@ login();
                         </button>
                     </div>
                 </div>
-                <input type='hidden' id="rubricFilter" name='rubric'
+	            <input type='hidden' id="rubricFilter" name='rubric'
                     <?php
-                    if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
-                        echo " value='$rubric'";
-                    }
+                        if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
+                            echo " value='$rubric'";
+                        }
                     ?>
-                >
+	            >
+	            <input type='hidden' id="pageNumber" name='page'
+                    <?php
+                        if ((isset($_GET['page']) && ($page = cleanUpUserInput($_GET['page'])) > 1)) {
+                            echo " value='$page'";
+                        }
+                    ?>
+	            >
             </form>
             <div class="col-2 my-auto text-center">
                 <?php
@@ -160,9 +168,11 @@ login();
                                 <a href="" data-target="#resetMenu" data-toggle="modal" id="openforgetpassword"
                                    onclick="document.getElementById('loginCloseButton').click()">Wachtwoord
                                     vergeten?</a><br>
+
                                 <a href="" data-target="#resendCodeMenu" data-toggle="modal" id="openResendCodeMenu"
                                    onclick="document.getElementById('loginCloseButton').click()">Nieuwe
                                     verificatiecode?</a>
+
                             </div>
 
                             <div class="row">
@@ -242,9 +252,7 @@ login();
                                 </div>
                             </div>
                             <div class="row">
-	                            <script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
-
-	                            <div class="col">
+                                <div class="col">
                                     <input class="form-control mb-3" type="text" id="address" placeholder="Adres"
                                            name="address"
                                            required>

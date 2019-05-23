@@ -3,7 +3,7 @@ set_time_limit(0);
 //error_reporting(0);
 session_start();
 connectToDatabase();
-
+global $lastPage;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -41,7 +41,7 @@ function loadRubrics()
     global $pdo;
     //$rubric = 0;
     $rubric = (isset($_GET['rubric']) && (($rubric = cleanUpUserInput($_GET['rubric'])) != "") != 0 ? $rubric : $rubric = -1);
-    if($rubric != -1){
+    if ($rubric != -1) {
         $mainRubricQuery = $pdo->prepare("select * from TBL_Rubric where rubric = ?");
         $mainRubricQuery->execute(array($rubric));
         $mainRubric = $mainRubricQuery->fetch()['super'];
@@ -81,13 +81,13 @@ function search($amount = 0, $promoted_only = false)
                             S.rubric = R.super
                     )";
         }
-        $query .= "SELECT " . ($amount > 0 ? "TOP($amount) " : "") . "A.auction, name, description, price_start, amount, [file] FROM TBL_Auction A
+        $query .= "SELECT A.auction, name, description, price_start, amount, [file] FROM TBL_Auction A
                 INNER JOIN TBL_Item I
                     on A.item = I.item
                 LEFT JOIN (SELECT auction, max(amount) AS amount FROM TBL_Bid group by auction) as B
                 ON A.auction = B.auction
                 LEFT JOIN (SELECT item, [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item)) as R on I.item = R.item
-                WHERE ";
+                WHERE is_closed = 0 AND ";
         if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
             $query .= "I.item in (SELECT item from TBL_Item_In_Rubric WHERE rubric in (
                     SELECT rubric
@@ -106,44 +106,46 @@ function search($amount = 0, $promoted_only = false)
             }
             $filters[] = "%$word%";
         }
-        $query .= " ORDER BY moment_end DESC";
+        $query .= " ORDER BY moment_end DESC
+                    OFFSET " . ($amount > 0 ? $amount*((isset($_GET['page']) && ($page = cleanUpUserInput($_GET['page'])) > 1 ? $page : 1)-1) : "0") ." ROWS";
+        $query .= ($amount > 0 ? " FETCH FIRST $amount ROWS ONLY" : "");
         echo $query;
         $searchStatement = $pdo->prepare($query);
         $searchStatement->execute($filters);
         echo "<div class='row my-2'>";
-        while ($auction = $searchStatement->fetch()) {
+        $amountOfAuctions = 0;
+        $searchResults = $searchStatement->fetchAll();
+        foreach ($searchResults as $auction) {
+            $amountOfAuctions++;
             echo "<div class='auction-article-" . ($promoted_only ? "large" : "small") . " white col-lg m-2'>
-<div class='row mt-3'>
-									<div class='col'>
-										<div class='col'><strong>" . $auction['name'] . "</strong></div>
-									</div>
-									<div class='col text-right'>
-										<div class='col'><strong>€" . ($auction['amount'] > $auction['price_start'] ? $auction['amount'] : $auction['price_start']) . "</strong></div>
-									</div>
-								</div>
-								<div class='imageContainer row text-center'>
-									<div>" . "<img class='mx-auto my-2' src='data:image/png;base64," . base64_encode($auction['file']) . "'
-										     alt='Afbeelding van veiling'>" .
-                "</div>
-								</div>
-								<div class='row mb-3'>
-									<div class='col'>
-										<div class='col'> Beschrijving:</div>
-									</div>
-									<div class='row mx-3'>
-										<div class='col'> " . $auction['description'] . "</div>
-									</div>
-									<div class='col text-right'>
-									<a href='veilingen_details.php?auction=" . $auction['auction'] . "'>
-										<button class='btn'>Details</button>
-									</a>
-									</div>
-								</div>
-							</div>";
+                    <div class='row mx-1 mt-3'>
+                        <div class='col'>
+										<div><strong>€" . ($auction['amount'] > $auction['price_start'] ? $auction['amount'] : $auction['price_start']) . "</strong></div>
+										<div><strong>" . $auction['name'] . "</strong></div>		
+						</div>					
+                    </div>
+					<div class='imageContainer row text-center'>
+                        <div>" . "<img class='mx-auto my-2' src='data:image/png;base64," . base64_encode($auction['file']) . "'
+                                                 alt='Afbeelding van veiling'>" .
+                        "</div>
+					</div>
+					<div class='row mx-2 mb-3'>
+					    <div class='font-weight-bold mb-2'> Beschrijving:</div>
+						<div class=' article-description'>" . $auction['description'] . "</div>
+						<div class='col text-right'>
+                            <a href='veilingen_details.php?auction=" . $auction['auction'] . "'>
+                                <button class='btn mt-2'>Details</button>
+                            </a>
+						</div>
+					</div>
+				</div>";
 
 
         }
-
+        if($amountOfAuctions < $amount){
+            global $lastPage;
+            $lastPage = true;
+        }
         echo "</div>";
 
     } catch (PDOException $e) {
@@ -275,12 +277,12 @@ function register()
                     Het team van Eenmaal Andermaal
                 ";
                 sendEmail($email, $regUsername, $subject, $text);
+                echo "<p style=\"color: green;\">Er is een bevestigingsmail naar $email verstuurd,<br>klik op de bevestigingslink in de email om uw registratie te voltooien .</p>";
             }
         }
         echo "<script>document.getElementById('openRegister').click();</script>";
     }
 }
-
 
 function confirm()
 {
@@ -305,7 +307,7 @@ function confirm()
 
         if ($confirm['email'] == $email) {
             if ($days > 7) {
-                echo 'verificatiecode is niet geldig.';
+                echo '<p style="color: green;">verificatiecode is niet geldig.</p>';
             } else {
                 $sql = $pdo->prepare("UPDATE TBL_User SET is_verified = 1, verification_code ='' WHERE email=?");
                 $sql->execute(array($email));
@@ -443,7 +445,7 @@ function sendResetPasswordEmail($email)
     $query->execute(array(':token' => $token, ':email' => $email));
 
     $subject = "Wachtwoord opnieuw instellen";
-    $text ="
+    $text = "
                     Geachte heer of mevrouw $lastname,<br><br>
 
                     Klik op de link hieronder om uw wachtwoord opnieuw in te stellen.<br>
@@ -467,20 +469,22 @@ function verificatiecodeEmail()
     if (isset($_POST['resendCode'])) {
         $email = $_POST['resendCode_emailadres'];
         global $pdo;
-        $query = $pdo->prepare("select count(user) from TBL_User where email = :email");
+        $query = $pdo->prepare("select * from TBL_User where email = :email");
         $query->execute(array(':email' => $email));
         $data = $query->fetch();
-
-        if ($data[0][0] == 0) {
-            echo "Emailadres bestaat niet";
+        if ($data['is_verified'] == 1) {
+            echo "Emailadres is al geverifieerd";
         } else {
-            sendVerificatiecodeEmail($email);
-            echo '<p style="color: green;">Er is een email naar uw opgegeven adres gestuurd!</p>';
+            if ($data['email'] == $email) {
+                echo "Emailadres bestaat niet";
+            } else {
+                sendVerificatiecodeEmail($email);
+                echo '<p style="color: green;">Er is een email naar uw opgegeven adres gestuurd!</p>';
+            }
         }
         echo "<script>document.getElementById('openResendCodeMenu').click();</script>";
     }
 }
-
 
 function sendVerificatiecodeEmail($email)
 {
@@ -500,8 +504,8 @@ function sendVerificatiecodeEmail($email)
     $query = $pdo->prepare("update TBL_User set verification_code =:token ,verification_code_valid_until =:verification_code_valid_until where email = :email");
     $query->execute(array(':token' => $token, ':verification_code_valid_until' => $valid_until_date, ':email' => $email));
 
-    $subject ="Verifieer uw e-mail!";
-    $text ="
+    $subject = "Verifieer uw e-mail!";
+    $text = "
                     Geachte heer of mevrouw $lastname,<br><br>
                     
                     Klik op de link hieronder om uw registratie te voltooien.<br>
