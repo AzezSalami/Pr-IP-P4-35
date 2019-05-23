@@ -130,7 +130,7 @@
 					    <div class='font-weight-bold mb-2'> Beschrijving:</div>
 						<div class=' article-description'>" . $auction['description'] . "</div>
 						<div class='col text-right'>
-                            <a href='veiling.php?id=" . $auction['auction'] . "'>
+                            <a href='veilingen_details.php?auction=" . $auction['auction'] . "'>
                                 <button class='btn mt-2'>Details</button>
                             </a>
 						</div>
@@ -531,5 +531,11 @@
                               Error: {$mail->ErrorInfo}";
         }
     }
+
+function placeNewBid($auctionid, $currentHighestBid, $amount, $username) {
+    global $pdo;
+    $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
+    $query->execute(array($auctionid, $currentHighestBid + $amount, $username));
+}
 
 ?>
