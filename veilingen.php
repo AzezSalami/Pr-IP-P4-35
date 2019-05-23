@@ -84,27 +84,28 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-8 auction-page">
+        <div class="col-lg-10 auction-page">
             <div class="container">
-                <?php search(8); ?>
+                <?php search(9); ?>
             </div>
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
                     <li class="page-item <?php if ($_GET["page"] <= 1) echo "disabled"; ?>">
-                        <a class="page-link" href="veilingen.php?page=<?php echo($_GET["page"] - 1); ?>">Previous</a>
+                        <a href="#" class="page-link" onclick="
+		                        document.getElementById('pageNumber').value = '<?php echo($_GET["page"] - 1); ?>';
+		                        document.getElementById('searchbutton').click();">
+	                        Vorige</a>
                     </li>
                     <li class="page-item <?php global $lastPage;
                     if ($lastPage) echo "disabled"; ?>">
-                        <a href class="page-link" onclick="
+                        <a href="#"  class="page-link" onclick="
 		                        document.getElementById('pageNumber').value = '<?php echo((isset($_GET['page']) && ($page = cleanUpUserInput($_GET['page'])) > 1 ? $page : 1) + 1); ?>';
                                 document.getElementById('searchbutton').click();">
-	                        Next
+	                        Volgende
                         </a>
                     </li>
                 </ul>
             </nav>
-        </div>
-        <div class="col-lg-2">
         </div>
     </div>
 </main>
