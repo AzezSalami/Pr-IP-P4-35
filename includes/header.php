@@ -2,6 +2,7 @@
 require_once "functions.php";
 login();
 ?>
+<script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
 <header>
     <span class="sidenavhamburger mr-2" onclick="openNav()">&#9776;</span>
     <div class="container-fluid bg-orange py-2">
@@ -242,9 +243,7 @@ login();
                                 </div>
                             </div>
                             <div class="row">
-	                            <script async src="js/places.js"></script>
-
-	                            <div class="col">
+                                <div class="col">
                                     <input class="form-control mb-3" type="text" id="address" placeholder="Adres"
                                            name="address"
                                            required>
