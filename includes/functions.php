@@ -1,6 +1,5 @@
 <?php
-//set_time_limit(0);
-
+set_time_limit(0);
 //error_reporting(0);
 session_start();
 connectToDatabase();
@@ -115,33 +114,27 @@ function search($amount = 0, $promoted_only = false)
         $searchResults = $searchStatement->fetchAll();
         foreach ($searchResults as $auction) {
             echo "<div class='auction-article-" . ($promoted_only ? "large" : "small") . " white col-lg m-2'>
-<div class='row mt-3'>
-									<div class='col'>
-										<div class='col'><strong>" . $auction['name'] . "</strong></div>
-									</div>
-									<div class='col text-right'>
-										<div class='col'><strong>€" . ($auction['amount'] > $auction['price_start'] ? $auction['amount'] : $auction['price_start']) . "</strong></div>
-									</div>
-								</div>
-								<div class='imageContainer row text-center'>
-									<div>" . "<img class='mx-auto my-2' src='data:image/png;base64," . base64_encode($auction['file']) . "'
-										     alt='Afbeelding van veiling'>" .
-                "</div>
-								</div>
-								<div class='row mb-3'>
-									<div class='col'>
-										<div class='col'> Beschrijving:</div>
-									</div>
-									<div class='row mx-3'>
-										<div class='col'> " . $auction['description'] . "</div>
-									</div>
-									<div class='col text-right'>
-									<a href='veiling.php?id=" . $auction['auction'] . "'>
-										<button class='btn' name='auction' value='" . $auction['auction'] . "'>Details</button>
-									</a>
-									</div>
-								</div>
-							</div>";
+                    <div class='row mx-1 mt-3'>
+                        <div class='col'>
+										<div><strong>€" . ($auction['amount'] > $auction['price_start'] ? $auction['amount'] : $auction['price_start']) . "</strong></div>
+										<div><strong>" . $auction['name'] . "</strong></div>		
+						</div>					
+                    </div>
+					<div class='imageContainer row text-center'>
+                        <div>" . "<img class='mx-auto my-2' src='data:image/png;base64," . base64_encode($auction['file']) . "'
+                                                 alt='Afbeelding van veiling'>" .
+                        "</div>
+					</div>
+					<div class='row mx-2 mb-3'>
+					    <div class='font-weight-bold mb-2'> Beschrijving:</div>
+						<div class=' article-description'>" . $auction['description'] . "</div>
+						<div class='col text-right'>
+                            <a href='veiling.php?id=" . $auction['auction'] . "'>
+                                <button class='btn mt-2'>Details</button>
+                            </a>
+						</div>
+					</div>
+				</div>";
 
 
         }

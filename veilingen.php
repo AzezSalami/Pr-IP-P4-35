@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-        <?php include 'includes/head.html'; ?>
-		<link rel="stylesheet" href="CSS/veilingen.css" type="text/css">
-	</head>
+<head>
+    <?php include 'includes/head.html'; ?>
+    <link rel="stylesheet" href="CSS/veilingen.css" type="text/css">
+</head>
 <body>
 
 <?php require_once "includes/header.php" ?>
@@ -59,7 +59,7 @@
             </div>
             <div class="desktoprubricsmedia">
                 <div class="desktoprubrics bg-yellow">
-                    <?php loadRubrics();?>
+                    <?php loadRubrics(); ?>
                     <div class="dropdown-divider"></div>
                     <div class="range-filter container text-left my-2 pl-0">
                         <form method="post" action="...">
