@@ -48,7 +48,7 @@ require "includes/header.php";
             <!---->
         </div>
         <div class="col-lg-8 text-dark">
-            <div class="row">
+            <div class="row my-3">
                 <div class="col">
                     <h1 class="text-left font-weight-bold">[titel van veiling]</h1>
                 </div>
@@ -98,10 +98,23 @@ require "includes/header.php";
                         </div>
                     </div>
                     <div class="row">
-                        <h3>Biedingen:</h3>
-                        <form>
-
-                        </form>
+                        <div class="col">
+                            <h3>Bieden</h3>
+                            <p class="font-weight-bold">Verhoog bod met:</p>
+                            <form method="post" class="form-inline">
+                                <button type="button" class="btn">5</button>
+                                <div class="space"></div>
+                                <button type="button" class="btn">10</button>
+                                <div class="space"></div>
+                                <button type="button" class="btn">15</button>
+                            </form>
+                            <div class="my-3">
+                                <p class="font-weight-bold">Hoogste bod:</p>
+                                <p class="bod">Jan Piet: $123</p>
+                                <p class="bod">Margo Hendriks: $123</p>
+                                <p class="bod">Willem Brak: $123</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
