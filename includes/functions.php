@@ -1,5 +1,6 @@
 <?php
-set_time_limit(0);
+//set_time_limit(0);
+
 //error_reporting(0);
 session_start();
 connectToDatabase();
@@ -111,7 +112,8 @@ function search($amount = 0, $promoted_only = false)
         $searchStatement = $pdo->prepare($query);
         $searchStatement->execute($filters);
         echo "<div class='row my-2'>";
-        while ($auction = $searchStatement->fetch()) {
+        $searchResults = $searchStatement->fetchAll();
+        foreach ($searchResults as $auction) {
             echo "<div class='auction-article-" . ($promoted_only ? "large" : "small") . " white col-lg m-2'>
 <div class='row mt-3'>
 									<div class='col'>
@@ -135,7 +137,7 @@ function search($amount = 0, $promoted_only = false)
 									</div>
 									<div class='col text-right'>
 									<a href='veiling.php?id=" . $auction['auction'] . "'>
-										<button class='btn'>Details</button>
+										<button class='btn' name='auction' value='" . $auction['auction'] . "'>Details</button>
 									</a>
 									</div>
 								</div>
