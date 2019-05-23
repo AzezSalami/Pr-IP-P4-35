@@ -111,7 +111,8 @@ function search($amount = 0, $promoted_only = false)
         $searchStatement = $pdo->prepare($query);
         $searchStatement->execute($filters);
         echo "<div class='row my-2'>";
-        while ($auction = $searchStatement->fetch()) {
+        $searchResults = $searchStatement->fetchAll();
+        foreach ($searchResults as $auction) {
             echo "<div class='auction-article-" . ($promoted_only ? "large" : "small") . " white col-lg m-2'>
                     <div class='row mx-1 mt-3'>
                         <div class='col'>
