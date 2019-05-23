@@ -90,11 +90,13 @@
             </div>
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
-                    <li class="page-item <?php if ($_GET["page"]<=1) echo "disabled"; ?>">
-                    <a class="page-link" href="veilingen.php?page=<?php echo($_GET["page"] - 1); ?>">Previous</a>
+                    <li class="page-item <?php if ($_GET["page"] <= 1) echo "disabled"; ?>">
+                        <a class="page-link" href="veilingen.php?page=<?php echo($_GET["page"] - 1); ?>">Previous</a>
                     </li>
-                    <li class="page-item <?php global $lastPage; if ($lastPage) echo "disabled"; ?>">
-                    <a class="page-link" href="veilingen.php?page=<?php echo($_GET["page"] + 1); ?>">Next</a>
+                    <li class="page-item <?php global $lastPage;
+                    if ($lastPage) echo "disabled"; ?>">
+                        <a class="page-link"
+                           href="veilingen.php?page=<?php echo((isset($_GET['page']) && ($page = cleanUpUserInput($_GET['page'])) > 1 ? $page : 1) + 1); ?>">Next</a>
                     </li>
                 </ul>
             </nav>
