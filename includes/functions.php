@@ -106,7 +106,7 @@
             $query .= " ORDER BY moment_end DESC
                     OFFSET " . ($amount > 0 ? $amount * ((isset($_GET['page']) && ($page = cleanUpUserInput($_GET['page'])) > 1 ? $page : 1) - 1) : "0") . " ROWS";
             $query .= ($amount > 0 ? " FETCH FIRST $amount ROWS ONLY" : "");
-            echo $query;
+            //echo $query;
             $searchStatement = $pdo->prepare($query);
             $searchStatement->execute($filters);
             echo "<div class='row my-2'>";
