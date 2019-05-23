@@ -42,7 +42,7 @@ function loadRubrics()
     global $pdo;
     //$rubric = 0;
     $rubric = (isset($_GET['rubric']) && (($rubric = cleanUpUserInput($_GET['rubric'])) != "") != 0 ? $rubric : $rubric = -1);
-    if($rubric != -1){
+    if ($rubric != -1) {
         $mainRubricQuery = $pdo->prepare("select * from TBL_Rubric where rubric = ?");
         $mainRubricQuery->execute(array($rubric));
         $mainRubric = $mainRubricQuery->fetch()['super'];
@@ -277,6 +277,7 @@ function register()
                     Het team van Eenmaal Andermaal
                 ";
                 sendEmail($email, $regUsername, $subject, $text);
+                echo "<p style=\"color: green;\">Er is een bevestigingsmail naar $email verstuurd,<br>klik op de bevestigingslink in de email om uw registratie te voltooien .</p>";
             }
         }
         echo "<script>document.getElementById('openRegister').click();</script>";
@@ -306,7 +307,7 @@ function confirm()
 
         if ($confirm['email'] == $email) {
             if ($days > 7) {
-                echo 'verificatiecode is niet geldig.';
+                echo '<p style="color: green;">verificatiecode is niet geldig.</p>';
             } else {
                 $sql = $pdo->prepare("UPDATE TBL_User SET is_verified = 1, verification_code ='' WHERE email=?");
                 $sql->execute(array($email));
@@ -444,7 +445,7 @@ function sendResetPasswordEmail($email)
     $query->execute(array(':token' => $token, ':email' => $email));
 
     $subject = "Wachtwoord opnieuw instellen";
-    $text ="
+    $text = "
                     Geachte heer of mevrouw $lastname,<br><br>
 
                     Klik op de link hieronder om uw wachtwoord opnieuw in te stellen.<br>
@@ -468,15 +469,18 @@ function verificatiecodeEmail()
     if (isset($_POST['resendCode'])) {
         $email = $_POST['resendCode_emailadres'];
         global $pdo;
-        $query = $pdo->prepare("select count(user) from TBL_User where email = :email");
+        $query = $pdo->prepare("select * from TBL_User where email = :email");
         $query->execute(array(':email' => $email));
         $data = $query->fetch();
-
-        if ($data[0][0] == 0) {
-            echo "Emailadres bestaat niet";
+        if ($data['is_verified'] == 1) {
+            echo "Emailadres is al geverifieerd";
         } else {
-            sendVerificatiecodeEmail($email);
-            echo '<p style="color: green;">Er is een email naar uw opgegeven adres gestuurd!</p>';
+            if ($data['email'] == $email) {
+                echo "Emailadres bestaat niet";
+            } else {
+                sendVerificatiecodeEmail($email);
+                echo '<p style="color: green;">Er is een email naar uw opgegeven adres gestuurd!</p>';
+            }
         }
         echo "<script>document.getElementById('openResendCodeMenu').click();</script>";
     }
@@ -500,8 +504,8 @@ function sendVerificatiecodeEmail($email)
     $query = $pdo->prepare("update TBL_User set verification_code =:token ,verification_code_valid_until =:verification_code_valid_until where email = :email");
     $query->execute(array(':token' => $token, ':verification_code_valid_until' => $valid_until_date, ':email' => $email));
 
-    $subject ="Verifieer uw e-mail!";
-    $text ="
+    $subject = "Verifieer uw e-mail!";
+    $text = "
                     Geachte heer of mevrouw $lastname,<br><br>
                     
                     Klik op de link hieronder om uw registratie te voltooien.<br>

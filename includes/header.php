@@ -160,9 +160,11 @@ login();
                                 <a href="" data-target="#resetMenu" data-toggle="modal" id="openforgetpassword"
                                    onclick="document.getElementById('loginCloseButton').click()">Wachtwoord
                                     vergeten?</a><br>
+
                                 <a href="" data-target="#resendCodeMenu" data-toggle="modal" id="openResendCodeMenu"
                                    onclick="document.getElementById('loginCloseButton').click()">Nieuwe
                                     verificatiecode?</a>
+
                             </div>
 
                             <div class="row">
@@ -242,9 +244,9 @@ login();
                                 </div>
                             </div>
                             <div class="row">
-	                            <script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
+                                <script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
 
-	                            <div class="col">
+                                <div class="col">
                                     <input class="form-control mb-3" type="text" id="address" placeholder="Adres"
                                            name="address"
                                            required>
