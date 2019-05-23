@@ -22,13 +22,20 @@ login();
                         </button>
                     </div>
                 </div>
-                <input type='hidden' id="rubricFilter" name='rubric'
+	            <input type='hidden' id="rubricFilter" name='rubric'
                     <?php
-                    if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
-                        echo " value='$rubric'";
-                    }
+                        if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
+                            echo " value='$rubric'";
+                        }
                     ?>
-                >
+	            >
+	            <input type='hidden' id="pageNumber" name='page'
+                    <?php
+                        if ((isset($_GET['page']) && ($page = cleanUpUserInput($_GET['page'])) > 1)) {
+                            echo " value='$page'";
+                        }
+                    ?>
+	            >
             </form>
             <div class="col-2 my-auto text-center">
                 <?php

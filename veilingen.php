@@ -95,8 +95,11 @@
                     </li>
                     <li class="page-item <?php global $lastPage;
                     if ($lastPage) echo "disabled"; ?>">
-                        <a class="page-link"
-                           href="veilingen.php?page=<?php echo((isset($_GET['page']) && ($page = cleanUpUserInput($_GET['page'])) > 1 ? $page : 1) + 1); ?>">Next</a>
+                        <a href class="page-link" onclick="
+		                        document.getElementById('pageNumber').value = '<?php echo((isset($_GET['page']) && ($page = cleanUpUserInput($_GET['page'])) > 1 ? $page : 1) + 1); ?>';
+                                document.getElementById('searchbutton').click();">
+	                        Next
+                        </a>
                     </li>
                 </ul>
             </nav>
