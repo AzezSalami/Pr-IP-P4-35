@@ -2,6 +2,10 @@
     height: 40vh;
 }
 
+.veiling-details{
+    min-height: 80.2vh;
+}
+
 .btn-bod{
     width: 30%;
 }
