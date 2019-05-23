@@ -98,7 +98,7 @@ echo '<main>
         <div class="col-lg-2">
             <!---->
         </div>
-        <div class="col-lg-8 text-dark">
+        <div class="col-lg-8 text-dark veiling-details">
             <div class="row my-3">
                 <div class="col">
                     <h1 class="text-left font-weight-bold">' . $itemtitle . '</h1>
