@@ -286,7 +286,6 @@ function register()
     }
 }
 
-
 function confirm()
 {
     global $pdo;
@@ -485,7 +484,6 @@ function verificatiecodeEmail()
         echo "<script>document.getElementById('openResendCodeMenu').click();</script>";
     }
 }
-
 
 function sendVerificatiecodeEmail($email)
 {
