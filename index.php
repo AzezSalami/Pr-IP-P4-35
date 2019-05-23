@@ -5,9 +5,9 @@
 	</head>
 	<body>
 
-        <?php
-            require "includes/header.php";
-        ?>
+<?php
+require "includes/header.php";
+?>
 
 		<main>
 			<div class="row">
@@ -23,9 +23,9 @@
 				</div>
 			</div>
 
-		</main>
-        <?php
-            include_once "includes/footer.php";
-        ?>
-	</body>
+</main>
+<?php
+include_once "includes/footer.php";
+?>
+</body>
 </html>

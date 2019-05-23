@@ -3,7 +3,7 @@ set_time_limit(0);
 //error_reporting(0);
 session_start();
 connectToDatabase();
-
+global $lastPage;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -81,13 +81,13 @@ function search($amount = 0, $promoted_only = false)
                             S.rubric = R.super
                     )";
         }
-        $query .= "SELECT " . ($amount > 0 ? "TOP($amount) " : "") . "A.auction, name, description, price_start, amount, [file] FROM TBL_Auction A
+        $query .= "SELECT A.auction, name, description, price_start, amount, [file] FROM TBL_Auction A
                 INNER JOIN TBL_Item I
                     on A.item = I.item
                 LEFT JOIN (SELECT auction, max(amount) AS amount FROM TBL_Bid group by auction) as B
                 ON A.auction = B.auction
                 LEFT JOIN (SELECT item, [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item)) as R on I.item = R.item
-                WHERE ";
+                WHERE is_closed = 0 AND ";
         if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
             $query .= "I.item in (SELECT item from TBL_Item_In_Rubric WHERE rubric in (
                     SELECT rubric
@@ -106,13 +106,17 @@ function search($amount = 0, $promoted_only = false)
             }
             $filters[] = "%$word%";
         }
-        $query .= " ORDER BY moment_end DESC";
+        $query .= " ORDER BY moment_end DESC
+                    OFFSET " . ($amount > 0 ? $amount*((isset($_GET['page']) && ($page = cleanUpUserInput($_GET['page'])) > 1 ? $page : 1)-1) : "0") ." ROWS";
+        $query .= ($amount > 0 ? " FETCH FIRST $amount ROWS ONLY" : "");
         echo $query;
         $searchStatement = $pdo->prepare($query);
         $searchStatement->execute($filters);
         echo "<div class='row my-2'>";
+        $amountOfAuctions = 0;
         $searchResults = $searchStatement->fetchAll();
         foreach ($searchResults as $auction) {
+            $amountOfAuctions++;
             echo "<div class='auction-article-" . ($promoted_only ? "large" : "small") . " white col-lg m-2'>
                     <div class='row mx-1 mt-3'>
                         <div class='col'>
@@ -138,7 +142,10 @@ function search($amount = 0, $promoted_only = false)
 
 
         }
-
+        if($amountOfAuctions < $amount){
+            global $lastPage;
+            $lastPage = true;
+        }
         echo "</div>";
 
     } catch (PDOException $e) {
