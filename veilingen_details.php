@@ -122,7 +122,7 @@ echo '<main>
         <div class="col-lg-8 text-dark veiling-details">
             <div class="row my-3">
                 <div class="col">
-                    <h1 class="text-left font-weight-bold">' . $itemtitle . '</h1>
+                    <h2 class="text-left font-weight-bold">' . $itemtitle . '</h2>
                 </div>
                 <div class="col">
                     <h1 class="text-right font-weight-bold">€' . $itemprice . '</h1>
