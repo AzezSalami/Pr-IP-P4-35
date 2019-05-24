@@ -73,28 +73,32 @@ $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order b
 $bidquery->execute(array($auctionid));
 $biddata = $bidquery->fetchAll();
 
-$itemprice = (int)$biddata[0]['amount'];
+if (sizeof($biddata) == 0) {
+    $itemprice = 0;
+} else {
+    $itemprice = (int)$biddata[0]['amount'];
+}
 
-if($itemprice < 1) {
+if ($itemprice < 1) {
     $buttonvalue = 0.50;
-} else if($itemprice <= 5) {
+} else if ($itemprice <= 5) {
     $buttonvalue = 1;
-} else if($itemprice <= 10) {
+} else if ($itemprice <= 10) {
     $buttonvalue = 5;
-} else if($itemprice <= 50) {
+} else if ($itemprice <= 50) {
     $buttonvalue = 10;
 } else {
     $buttonvalue = 50;
 }
 
-if(isset($_POST['bidbutton'])) {
+if (isset($_POST['bidbutton'])) {
     $amount = (int)$_POST['bidbutton'];
     $username = $_SESSION['username'];
     placeNewBid($auctionid, $itemprice, $amount, $username);
 }
 
 echo '<main>
-    <div class="row">
+    <div class="row"> 
         <div class="col-lg-2">
             <!---->
         </div>
@@ -110,7 +114,9 @@ echo '<main>
             <div class="row">
                 <div class="col-lg-4">
                     <div class="row foto">
-                        <img src="images/android-chrome-192x192.png" alt="veiling foto">
+                        <div>
+                            <img class="mx-auto my-2" src="images/android-chrome-192x192.png" alt="Afbeelding van veiling">
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col details-product">
@@ -151,7 +157,7 @@ echo '<main>
                         <div class="col">
                             <h3>Bieden</h3>';
 
-if(isset($_SESSION['username'])) {
+if (isset($_SESSION['username'])) {
     echo '<p class="font-weight-bold">Verhoog bod met:</p>
                             <form method="post" class="form-inline">
                                 <button name="bidbutton" type="submit" class="btn" value="' . $buttonvalue . '">+' . $buttonvalue . '</button>
