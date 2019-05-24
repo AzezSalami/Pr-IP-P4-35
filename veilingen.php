@@ -46,13 +46,9 @@
 
                                 <div class="dropdown-divider"></div>
                             </div>
-                            <h4 class="text-white">Rubrieken</h4>
-                            <a href="#">Hoofdrubriek1</a>
-                            <a href="#">Hoofdrubriek2</a>
-                            <a href="#">Hoofdrubriek3</a>
-                            <a href="#">Hoofdrubriek4</a>
-                            <a href="#">Hoofdrubriek5</a>
-                            <a href="#">Hoofdrubriek6</a>
+                            <div>
+<!--                                dit wordt de rubriekenboom voor mobiel-->
+                            </div>
                         </div>
                     </div>
                 </div>
