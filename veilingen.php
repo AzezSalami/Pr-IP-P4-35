@@ -62,7 +62,7 @@
 	                <h2>Filters</h2><br>
 	                <div class="range-filter container text-left my-2 pl-0">
 		                <form action="#">
-			                <p class="font-weight-bold">prijs:</p>
+			                <p class="font-weight-bold">Prijs:</p>
 			                <div class="row">
 				                <div class="col-lg-5 text-left">
 					                <input class="bg-gray text-center input-details" type="number" id="amount-min"
