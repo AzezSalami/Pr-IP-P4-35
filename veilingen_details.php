@@ -52,7 +52,7 @@ require "includes/header.php";
 
     /* all sellers are null atm, hence why sellerinfo will be empty for now */
 
-    if ($auctiondata['auction_closed'] == 1) {
+    if ($auctiondata['is_closed'] == 1) {
         $auctionstatus = "Gesloten";
     } else {
         $auctionstatus = "Open";
@@ -85,6 +85,7 @@ require "includes/header.php";
     $itempricestart = $itemdata['price_start'];
     $itemaddress = $itemdata['address_line_1'];
     $itemshippingcost = $itemdata['shipping_cost'];
+    $itemshippingmethod = $itemdata['shipping_instructions'];
 
 
     $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order by amount DESC");
@@ -131,7 +132,7 @@ require "includes/header.php";
                     <h2 class=\"text-left font-weight-bold\">$itemtitle</h2>
                 </div>
                 <div class=\"col\">
-                    <h1 class=\"text-right font-weight-bold\">€$itemprice</h1>
+                    <h1 class=\"text-right font-weight-bold\">€". ($itemprice > $itempricestart ? $itemprice : $itempricestart) . "</h1>
                 </div>
             </div>
             <div class=\"row\">
@@ -144,10 +145,11 @@ require "includes/header.php";
                             <h3>Productdetails</h3>
                             <p>Locatie van product: $itemaddress</p>
                             <p>Verzendkosten: $itemshippingcost</p>
+                            <p>Verzendmethode: $itemshippingmethod</p>
                         </div>
                     </div>
                 </div>
-                <div class=\"col-lg-5\">
+                <div class=\"col-lg-4\">
                     <div class=\"row\">
                         <div class=\"col details-veiling\">
                             <h3>Veilingdetails</h3>
@@ -165,7 +167,7 @@ require "includes/header.php";
                         </div>
                     </div>
                 </div>
-                <div class=\"col-lg-3\">
+                <div class=\"col-lg-4\">
                     <div class=\"row\">
                         <div class=\"col details-gebruiker\">
                             <h3>Verkoperdetails</h3>
@@ -178,13 +180,13 @@ require "includes/header.php";
                             <h3>Bieden</h3>";
 
     if (isset($_SESSION['username'])) {
-        echo '<p class="font-weight-bold">Verhoog bod met:</p>
+        echo '<p class="font-weight-bold">Mijn bod wordt:</p>
                             <form method="post" class="form-inline">
-                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue + $itemprice) . '">+ €' . $buttonvalue . '</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
                                 <div class="space"></div>
-                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 2 + $itemprice) . '">+ €' . $buttonvalue * 2 . '</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
                                 <div class="space"></div>
-                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 3 + $itemprice) . '">+ €' . $buttonvalue * 3 . '</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
                             </form>
                             <div class="my-3">
                                 <p class="font-weight-bold">Eerdere biedingen:</p>';

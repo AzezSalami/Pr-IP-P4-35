@@ -79,7 +79,7 @@ require "includes/header.php";
                         session_destroy();
                         echo "<script>window.location.replace('index.php');</script>";
                     } else {
-                        echo '<p style="color: red">Uw gebruikersnaam of wachtwoord zijn niet correct, probeer het alstublieft nog eens.</p>';
+                        echo '<p style="color: red">Je gebruikersnaam of wachtwoord zijn niet correct, probeer het alstublieft nog eens.</p>';
                     }
                 } else {
                     echo "Error";
@@ -219,7 +219,7 @@ require "includes/header.php";
                         <form class="form-signin" method="POST" name="remove">
                             <div class="row">
                                 <div class="col">
-                                    <p class="text-dark">Vul hier uw wachtwoord nogmaals in om uw account permanent te
+                                    <p class="text-dark">Vul hier je wachtwoord nogmaals in om je account permanent te
                                         verwijderen.</p></div>
                             </div>
                             <div class="form-label-group">

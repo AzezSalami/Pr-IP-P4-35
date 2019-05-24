@@ -82,11 +82,11 @@ require "includes/header.php";
                                         <div class="collapse show" id="accordion-tab-1-content-1"
                                              aria-labelledby="accordion-tab-1-heading-1" data-parent="#accordion-tab-1">
                                             <div class="card-body">
-                                                <p>In de rechterbovenhoek van deze site kunt u een blauwe knop zien met
+                                                <p>In de rechterbovenhoek van deze site kun je een blauwe knop zien met
                                                     de aanduiding account.
-                                                    Om uzelf te registeren moet u dan op de optie registeren kiezen.
-                                                    Nadat U het registratieproces
-                                                    voltooid heeft en geverifieerd hebt, heeft u een geldig account.</p>
+                                                    Om jezelf te registeren moet je dan de optie registeren kiezen.
+                                                    Nadat je het registratieproces
+                                                    voltooid hebt en geverifieerd hebt, heb je een geldig account.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -103,11 +103,11 @@ require "includes/header.php";
                                         <div class="collapse" id="accordion-tab-1-content-2"
                                              aria-labelledby="accordion-tab-1-heading-2" data-parent="#accordion-tab-1">
                                             <div class="card-body">
-                                                <p>- U kunt proberen opnieuw een mail te laten sturen, klik dan op
-                                                    “stuur opnieuw”<br>
-                                                    - Check of u het goede e-mail adres heeft ingevoerd.<br>
-                                                    - Check uw spam. De e-mail kan daar beland zijn.</p>
-                                                <p><strong>Let op: </strong>Soms duur het even voordat de mail binnen
+                                                <p>- je kunt proberen opnieuw een mail te laten sturen, klik dan op
+                                                    “Nieuwe verificatiecode?” in het inlogvenster.<br>
+                                                    - Check of je het goede e-mail adres hebt ingevoerd.<br>
+                                                    - Check je spam. De e-mail kan daar beland zijn.</p>
+                                                <p><strong>Let op: </strong>Soms duurt het even voordat de mail binnen
                                                     is, wacht een paar minuten.</p>
                                             </div>
                                         </div>
@@ -129,11 +129,11 @@ require "includes/header.php";
                                         <div class="collapse show" id="accordion-tab-2-content-1"
                                              aria-labelledby="accordion-tab-2-heading-1" data-parent="#accordion-tab-2">
                                             <div class="card-body">
-                                                <p>In de rechterbovenhoek van deze site kunt u een blauwe knop zien met
+                                                <p>In de rechterbovenhoek van deze site kun je een blauwe knop zien met
                                                     de aanduiding account. Om
-                                                    uzelf in te loggen moet u dan de optie inloggen kiezen. Hier voert
-                                                    u het tijdens het registreren
-                                                    gekozen e-mail adres of gebruikersnaam en wachtwoord.</p>
+                                                    jezelf in te loggen moet je dan de optie inloggen kiezen. Hier voer
+                                                    je de tijdens het registreren
+                                                    gekozen gebruikersnaam en wachtwoord in.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -151,10 +151,10 @@ require "includes/header.php";
                                              aria-labelledby="accordion-tab-2-heading-2" data-parent="#accordion-tab-2">
                                             <div class="card-body">
                                                 <p>Probeer de volgende dingen:<br>
-                                                    - Controleer of uw gebruikersnaam correct is. ( dit is niet
+                                                    - Controleer of je gebruikersnaam correct is. ( dit is niet
                                                     hoofdletter gevoelig)<br>
-                                                    - Controleer of uw wachtwoord goed is.<br>
-                                                    - Controleer of uw account al geverifieerd is.</p>
+                                                    - Controleer of je wachtwoord goed is.<br>
+                                                    - Controleer of je account al geverifieerd is.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -171,9 +171,9 @@ require "includes/header.php";
                                         <div class="collapse" id="accordion-tab-2-content-3"
                                              aria-labelledby="accordion-tab-2-heading-3" data-parent="#accordion-tab-2">
                                             <div class="card-body">
-                                                <p>Als u uw wachtwoord vergeten bent, klik dan in het inlogvenster op
+                                                <p>Als je je wachtwoord vergeten bent, klik dan in het inlogvenster op
                                                     “wachtwoord resetten”.
-                                                    U zal dan een mail ontvangen met daar in een link om uw wachtwoord
+                                                    Je zal dan een mail ontvangen met daarin een link om je wachtwoord
                                                     opnieuw in te stellen.</p>
                                             </div>
                                         </div>
@@ -195,10 +195,9 @@ require "includes/header.php";
                                         <div class="collapse show" id="accordion-tab-3-content-1"
                                              aria-labelledby="accordion-tab-3-heading-1" data-parent="#accordion-tab-3">
                                             <div class="card-body">
-                                                <p>Als u een rubriek bekijkt kunt u een invoer veld selecteren, waarin
-                                                    je het bedrag dat je wilt bieden
-                                                    invult. Om het bod definitief te maken drukt u op de knop
-                                                    “bieden”.</p>
+                                                <p> Binnen de veiling staat een drietal knoppen. Wanneer je een bod wilt
+                                                    plaatsen klik je op een van de bedragen. Mits er niet een andere
+                                                    gebruiker je voor is gegaan wordt je bord geplaatst.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -217,11 +216,11 @@ require "includes/header.php";
                                             <div class="card-body">
                                                 <p>Dit kan aan de volgende oorzaken liggen:<br>
                                                     - De veiling is verlopen.<br>
-                                                    - Uw internetverbinding was slecht op moment van bieden.<br>
-                                                    - U bent niet ingelogd als verkoper of gebruiker.<br>
-                                                    o Weet u niet hoe u moet inloggen ? --> Kijk dan bij het kopje
+                                                    - Je internetverbinding was slecht op moment van bieden.<br>
+                                                    - Je bent niet ingelogd als verkoper of gebruiker.<br>
+                                                    o Weet je niet hoe je moet inloggen ? --> Kijk dan bij het kopje
                                                     inloggen.<br>
-                                                    o Weet u niet hoe u moet registreren? --> Kijk dan bij het kopje
+                                                    o Weet je niet hoe je moet registreren? --> Kijk dan bij het kopje
                                                     registreren.</p>
                                             </div>
                                         </div>
