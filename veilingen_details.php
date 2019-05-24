@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<?php
+
+if (isset($_GET['auction'])) {
+
+echo '<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -36,85 +40,84 @@
     <link rel="stylesheet" href="CSS/veilingen-details.css" type="text/css">
 
 </head>
-<body>
+<body>';
 
-<?php
 require "includes/header.php";
 
-global $pdo;
-$auctionquery = $pdo->prepare("SELECT * FROM TBL_Auction WHERE auction = ?");
-$auctionid = $_GET['auction'];
-$auctionquery->execute(array($auctionid));
-$auctiondata = $auctionquery->fetch();
+    global $pdo;
+    $auctionquery = $pdo->prepare("SELECT * FROM TBL_Auction WHERE auction = ?");
+    $auctionid = $_GET['auction'];
+    $auctionquery->execute(array($auctionid));
+    $auctiondata = $auctionquery->fetch();
 
-/* all sellers are null atm, hence why sellerinfo will be empty for now */
+    /* all sellers are null atm, hence why sellerinfo will be empty for now */
 
-if ($auctiondata['auction_closed'] == 1) {
-    $auctionstatus = "Gesloten";
-} else {
-    $auctionstatus = "Open";
-}
-$startdate = $auctiondata['moment_start'];
-$enddate = $auctiondata['moment_end'];
-$item = $auctiondata['item'];
-$seller = $auctiondata['seller'];
+    if ($auctiondata['auction_closed'] == 1) {
+        $auctionstatus = "Gesloten";
+    } else {
+        $auctionstatus = "Open";
+    }
+    $startdate = $auctiondata['moment_start'];
+    $enddate = $auctiondata['moment_end'];
+    $item = $auctiondata['item'];
+    $seller = $auctiondata['seller'];
 
-$sellerQuery = $pdo->prepare("SELECT * FROM TBL_Seller WHERE user = ?");
-$sellerQuery->execute(array($seller));
-$sellerData = $sellerQuery->fetch();
-$bankNumber = $sellerData['bank_account'];
-$verificationStatus = (int)$sellerData['verification_status'];
-if($verificationStatus == 1) {
-    $verificationStatus = "Niet geverifieerd";
-} else {
-    $verificationStatus = "Geverifieerd";
-}
+    $sellerQuery = $pdo->prepare("SELECT * FROM TBL_Seller WHERE user = ?");
+    $sellerQuery->execute(array($seller));
+    $sellerData = $sellerQuery->fetch();
+    $bankNumber = $sellerData['bank_account'];
+    $verificationStatus = (int)$sellerData['verification_status'];
+    if ($verificationStatus == 1) {
+        $verificationStatus = "Niet geverifieerd";
+    } else {
+        $verificationStatus = "Geverifieerd";
+    }
 
-$itemquery = $pdo->prepare("SELECT * FROM TBL_Item WHERE item = ?");
-$itemquery->execute(array($item));
-$itemdata = $itemquery->fetch();
+    $itemquery = $pdo->prepare("SELECT * FROM TBL_Item WHERE item = ?");
+    $itemquery->execute(array($item));
+    $itemdata = $itemquery->fetch();
 
-$itemtitle = $itemdata['name'];
-$itemdescription = $itemdata['description'];
-$itempricestart = $itemdata['price_start'];
-$itemaddress = $itemdata['address_line_1'];
-$itemshippingcost = $itemdata['shipping_cost'];
+    $itemtitle = $itemdata['name'];
+    $itemdescription = $itemdata['description'];
+    $itempricestart = $itemdata['price_start'];
+    $itemaddress = $itemdata['address_line_1'];
+    $itemshippingcost = $itemdata['shipping_cost'];
 
 
-$bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order by amount DESC");
-$bidquery->execute(array($auctionid));
-$biddata = $bidquery->fetchAll();
+    $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order by amount DESC");
+    $bidquery->execute(array($auctionid));
+    $biddata = $bidquery->fetchAll();
 
-$highestBidQuery = $pdo->prepare ("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
-$highestBidQuery->execute(array($auctionid));
-$highestBidData = $highestBidQuery->fetchAll();
+    $highestBidQuery = $pdo->prepare("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
+    $highestBidQuery->execute(array($auctionid));
+    $highestBidData = $highestBidQuery->fetchAll();
 
-if (sizeof($highestBidData) == null) {
-    $itemprice = 0;
-} else {
-    $itemprice = (int)$highestBidData[0][0];
-}
+    if (sizeof($highestBidData) == null) {
+        $itemprice = $itempricestart;
+    } else {
+        $itemprice = (int)$highestBidData[0][0];
+    }
 
-if ($itemprice < 1) {
-    $buttonvalue = 0.50;
-} else if ($itemprice <= 5) {
-    $buttonvalue = 1;
-} else if ($itemprice <= 10) {
-    $buttonvalue = 5;
-} else if ($itemprice <= 50) {
-    $buttonvalue = 10;
-} else {
-    $buttonvalue = 50;
-}
+    if ($itemprice < 1) {
+        $buttonvalue = 0.50;
+    } else if ($itemprice <= 5) {
+        $buttonvalue = 1;
+    } else if ($itemprice <= 10) {
+        $buttonvalue = 5;
+    } else if ($itemprice <= 50) {
+        $buttonvalue = 10;
+    } else {
+        $buttonvalue = 50;
+    }
 
-if (isset($_POST['bidbutton'])) {
-    $amount = (int)$_POST['bidbutton'];
-    $username = $_SESSION['username'];
-    placeNewBid($auctionid, $itemprice, $amount, $username);
-    $itemprice = $itemprice + $amount;
-}
+    if (isset($_POST['bidbutton'])) {
+        $newPrice = $_POST['bidbutton'];
+        $username = $_SESSION['username'];
+        placeNewBid($auctionid, $newPrice, $username);
+        $itemprice = $newPrice;
+    }
 
-echo '<main>
+    echo '<main>
     <div class="row"> 
         <div class="col-lg-2">
             <!---->
@@ -164,40 +167,43 @@ echo '<main>
                 <div class="col-lg-3">
                     <div class="row">
                         <div class="col details-gebruiker">
-                            <h3>details verkoper</h3>
-                            <p>Naam verkoper: '. $seller .'</p>
-                            <p>Status verkoper: '. $verificationStatus .'</p>
-                            <p>Bankrekening verkoper: '. $bankNumber .'</p>
+                            <h3>Verkoperdetails</h3>
+                            <p>Naam verkoper: ' . $seller . '</p>
+                            <p>Status verkoper: ' . $verificationStatus . '</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <h3>Bieden</h3>';
 
-if (isset($_SESSION['username'])) {
-    echo '<p class="font-weight-bold">Verhoog bod met:</p>
+    if (isset($_SESSION['username'])) {
+        echo '<p class="font-weight-bold">Verhoog bod met:</p>
                             <form method="post" class="form-inline">
-                                <button name="bidbutton" type="submit" class="btn" value="' . $buttonvalue . '">+ €' . $buttonvalue . '</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue + $itemprice) . '">+ €' . $buttonvalue . '</button>
                                 <div class="space"></div>
-                                <button name="bidbutton" type="submit" class="btn" value="' . $buttonvalue * 2 . '">+ €' . $buttonvalue * 2 . '</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 2 + $itemprice) . '">+ €' . $buttonvalue * 2 . '</button>
                                 <div class="space"></div>
-                                <button name="bidbutton" type="submit" class="btn" value="' . $buttonvalue * 3 . '">+ €' . $buttonvalue * 3 . '</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 3 + $itemprice) . '">+ €' . $buttonvalue * 3 . '</button>
                             </form>
                             <div class="my-3">
-                                <p class="font-weight-bold">Bieden:</p>';
-} else {
-    echo '<p style="color: red">Je moet ingelogd zijn om te kunnen bieden.</p>';
-}
+                                <p class="font-weight-bold">Eerdere biedingen:</p>';
+    } else {
+        echo '<p style="color: red">Je moet ingelogd zijn om te kunnen bieden.</p>';
+    }
 
-$bidquery->execute(array($auctionid));
+    $bidquery->execute(array($auctionid));
 
-$html = "";
+    $html = "";
 
-while ($bid = $bidquery->fetch()) {
-    $html .= '<p class="bod">' . $bid['user'] . ': €' . $bid['amount'] . '</p>';
-}
+    while ($bid = $bidquery->fetch()) {
+        if($bid['user'] == null) {
+            $html .= '<p class="bod">[Verwijderde gebruiker]: €' . $bid['amount'] . '</p>';
+        } else {
+            $html .= '<p class="bod">' . $bid['user'] . ': €' . $bid['amount'] . '</p>';
+        }
+    }
 
-echo $html . '</div>' . '
+    echo $html . '</div>' . '
 
                         </div>
                     </div>
@@ -211,8 +217,10 @@ echo $html . '</div>' . '
 
 </main>';
 
-include_once "includes/footer.php";
+    include_once "includes/footer.php";
 
-echo '</body></html>';
+    echo '</body></html>';
+
+}
 
 ?>
