@@ -46,7 +46,7 @@ global $lastPage;
             $mainRubric = $mainRubricQuery->fetch()['super'];
             echo "<button
         onclick=\"document.getElementById('rubricFilter').value = " . $mainRubric . "; document.getElementById('searchbutton').click();\"
-        type=\"button\" class=\"btn  rubricButton btn-sidenav\">Eén omhoog</button><br><br>";
+        type=\"button\" class=\"btn  rubricButton btn-sidenav font-weight-bold\">Eén omhoog</button><br><br>";
 
         }
 
