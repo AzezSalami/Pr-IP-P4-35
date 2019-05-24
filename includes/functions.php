@@ -1,9 +1,10 @@
 <?php
     set_time_limit(0);
 //error_reporting(0);
-    session_start();
-    connectToDatabase();
-    global $lastPage;
+session_start();
+connectToDatabase();
+deleteNotActiveAccount();
+global $lastPage;
 
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
@@ -45,7 +46,7 @@
             $mainRubric = $mainRubricQuery->fetch()['super'];
             echo "<button
         onclick=\"document.getElementById('rubricFilter').value = " . $mainRubric . "; document.getElementById('searchbutton').click();\"
-        type=\"button\" class=\"btn  rubricButton btn-sidenav\">Eén omhoog</button><br><br>";
+        type=\"button\" class=\"btn  rubricButton btn-sidenav font-weight-bold\">Eén omhoog</button><br><br>";
 
         }
 
@@ -431,8 +432,13 @@
         $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
         $token = str_shuffle($token);
         $token = substr($token, 0, 10);
-        $query = $pdo->prepare("update TBL_User set verification_code =:token where email = :email");
+        $query = $pdo->prepare("update TBL_User set verification_code =:token verification_code_valid_until = GETDATE() + DAY(7) where email = :email");
         $query->execute(array(':token' => $token, ':email' => $email));
+    $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
+    $token = str_shuffle($token);
+    $token = substr($token, 0, 10);
+    $query = $pdo->prepare("update TBL_User set verification_code =:token where email = :email");
+    $query->execute(array(':token' => $token, ':email' => $email));
 
         $subject = "Wachtwoord opnieuw instellen";
         $text = "
@@ -554,6 +560,12 @@ function placeNewBid($auctionid, $newPrice, $username) {
     } catch (PDOException $e){
         echo $e;
     }
+}
+
+function deleteNotActiveAccount(){
+    global $pdo;
+    $sql = $pdo->prepare("DELETE FROM TBL_User WHERE DATEDIFF(second, GETDATE(), verification_code_valid_until) <= 0 AND is_verified = 0");
+    $sql->execute();
 }
 
 ?>
