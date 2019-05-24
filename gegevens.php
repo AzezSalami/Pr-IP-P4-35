@@ -59,7 +59,7 @@ require "includes/header.php";
                     /* check if there is only one user with the username/password combination */
 
                     $query = $pdo->prepare("select count(*) from TBL_User where [user] = ? and password = ?");
-                    $query->execute($username, $password);
+                    $query->execute(array($username, $password));
                     $userData = $query->fetch();
 
                     if ($userData[0] == 1) {
@@ -74,7 +74,7 @@ require "includes/header.php";
                         /* Delete row with information of the deleted user */
 
                         $query = $pdo->prepare("delete from TBL_User where [user] = ? and password = ?");
-                        $query->execute($username, $password);
+                        $query->execute(array($username, $password));
                         session_destroy();
                         echo "<script>window.location.replace('index.php');</script>";
                     } else {
