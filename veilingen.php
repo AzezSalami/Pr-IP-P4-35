@@ -65,7 +65,6 @@
 			                <p class="font-weight-bold">Prijs:</p>
 			                <div class="row">
 				                <div class="col-lg-5 text-left">
-
 					                <input onchange="this.value = parseFloat(this.value).toFixed(2);" class="bg-gray text-center input-details" type="number" id="amount-min"
 					                       placeholder="min" <?php
                                         if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice) && ((float)$minPrice)>=0) {

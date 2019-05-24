@@ -540,15 +540,19 @@
 function placeNewBid($auctionid, $newPrice, $username) {
     global $pdo;
 
-    $query = $pdo->prepare("select count(*) from TBL_Bid where auction = ? and amount = ? and user is not null");
-    $query->execute(array($auctionid, $newPrice));
-    $sameBids = $query->fetch();
+    try {
+        $query = $pdo->prepare("select count(*) from TBL_Bid where auction = ? and amount = ? and user is not null");
+        $query->execute(array($auctionid, $newPrice));
+        $sameBids = $query->fetch();
 
-    if($sameBids[0][0] == 1) {
-        $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
-        $query->execute(array($auctionid, $newPrice, $username));
-    } else {
-        /* er is al een bod met dit bedrag error 404 */
+        if ($sameBids[0][0] == 0) {
+            $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
+            $query->execute(array($auctionid, $newPrice, $username));
+        } else {
+            echo "er is al een bod met dit bedrag error 404";
+        }
+    } catch (PDOException $e){
+        echo $e;
     }
 }
 

@@ -76,6 +76,9 @@ require "includes/header.php";
     $itemquery = $pdo->prepare("SELECT * FROM TBL_Item WHERE item = ?");
     $itemquery->execute(array($item));
     $itemdata = $itemquery->fetch();
+    $imageQuery = $pdo->prepare("SELECT [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item) AND item = ?");
+    $imageQuery->execute(array($itemdata['item']));
+    $imagedata = $imageQuery->fetch()['file'];
 
     $itemtitle = $itemdata['name'];
     $itemdescription = $itemdata['description'];
@@ -117,62 +120,62 @@ require "includes/header.php";
         $itemprice = $newPrice;
     }
 
-    echo '<main>
-    <div class="row"> 
-        <div class="col-lg-2">
+    echo "<main>
+    <div class=\"row\"> 
+        <div class=\"col-lg-2\">
             <!---->
         </div>
-        <div class="col-lg-8 text-dark veiling-details">
-            <div class="row my-3">
-                <div class="col">
-                    <h2 class="text-left font-weight-bold">' . $itemtitle . '</h2>
+        <div class=\"col-lg-8 text-dark veiling-details\">
+            <div class=\"row my-3\">
+                <div class=\"col\">
+                    <h2 class=\"text-left font-weight-bold\">$itemtitle</h2>
                 </div>
-                <div class="col">
-                    <h1 class="text-right font-weight-bold">€' . $itemprice . '</h1>
+                <div class=\"col\">
+                    <h1 class=\"text-right font-weight-bold\">€$itemprice</h1>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-4">
-                        <div class="imageContainer row">
-                            <img class="foto mx-auto my-2" src="images/android-chrome-192x192.png" alt="Afbeelding van veiling">
+            <div class=\"row\">
+                <div class=\"col-lg-4\">
+                        <div class=\"imageContainer row\">
+                            <img class=\"foto mx-auto my-2\" src=\"data:image/png;base64," . base64_encode($imagedata) . "\" alt=\"Afbeelding van veiling\">
                         </div>
-                    <div class="row">
-                        <div class="col details-product">
+                    <div class=\"row\">
+                        <div class=\"col details-product\">
                             <h3>Productdetails</h3>
-                            <p>Locatie van product: ' . $itemaddress . '</p>
-                            <p>Verzendkosten: ' . $itemshippingcost . '</p>
+                            <p>Locatie van product: $itemaddress</p>
+                            <p>Verzendkosten: $itemshippingcost</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5">
-                    <div class="row">
-                        <div class="col details-veiling">
+                <div class=\"col-lg-5\">
+                    <div class=\"row\">
+                        <div class=\"col details-veiling\">
                             <h3>Veilingdetails</h3>
-                                <p>Status van veiling: ' . $auctionstatus . '</p>
-                                <p>Startdatum: ' . $startdate . '</p>
-                                <p>Sluitdatum: ' . $enddate . '</p>
-                                <p>Minimale prijs: €' . $itempricestart . '</p>
+                                <p>Status van veiling: $auctionstatus</p>
+                                <p>Startdatum: $startdate</p>
+                                <p>Sluitdatum: $enddate</p>
+                                <p>Minimale prijs: €$itempricestart</p>
                                 
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col details-product">
+                    <div class=\"row\">
+                        <div class=\"col details-product\">
                             <h3>Beschrijving:</h3>
-                            <p>' . $itemdescription . '</p>
+                            <p>$itemdescription</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="row">
-                        <div class="col details-gebruiker">
+                <div class=\"col-lg-3\">
+                    <div class=\"row\">
+                        <div class=\"col details-gebruiker\">
                             <h3>Verkoperdetails</h3>
-                            <p>Naam verkoper: ' . $seller . '</p>
-                            <p>Status verkoper: ' . $verificationStatus . '</p>
+                            <p>Naam verkoper: $seller</p>
+                            <p>Status verkoper: $verificationStatus</p>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <h3>Bieden</h3>';
+                    <div class=\"row\">
+                        <div class=\"col\">
+                            <h3>Bieden</h3>";
 
     if (isset($_SESSION['username'])) {
         echo '<p class="font-weight-bold">Verhoog bod met:</p>
