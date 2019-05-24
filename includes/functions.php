@@ -33,8 +33,8 @@
 
     function loadRubrics() {
 
-        echo "<h2>Filters</h2><br>
-                            <p class=\"font-weight-bold mb-0\">Rubrieken:</p>";
+        echo "
+                            <h2>Rubrieken</h2>";
 
         global $pdo;
         //$rubric = 0;
@@ -81,7 +81,7 @@
             $query .= "SELECT A.auction, name, description, price_start, amount, [file] FROM TBL_Auction A
                 INNER JOIN TBL_Item I
                     on A.item = I.item
-                LEFT JOIN (SELECT auction, max(amount) AS amount FROM TBL_Bid group by auction) as B
+                LEFT JOIN (SELECT auction, max(amount) AS amount FROM TBL_Bid WHERE [user] is not null group by auction) as B
                 ON A.auction = B.auction
                 LEFT JOIN (SELECT item, [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item)) as R on I.item = R.item
                 WHERE is_closed = 0 AND ";
@@ -90,8 +90,13 @@
                     SELECT rubric
                     FROM subRubrics) OR rubric = " . $rubric . ") AND ";
             }
-
-            $query .= ($promoted_only ? "is_promoted = 1 AND " : "");
+            if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice)) {
+                $query .= "(amount > $minPrice OR price_start > $minPrice) AND ";
+            }
+            if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice)) {
+                $query .= "((amount < $maxPrice OR amount is null) AND price_start < $maxPrice) AND ";
+            }
+                $query .= ($promoted_only ? "is_promoted = 1 AND " : "");
 
             $filters = array();
             $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));
