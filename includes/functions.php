@@ -65,6 +65,7 @@ global $lastPage;
 
         try {
             $query = "";
+            $filters = array();
             if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
                 $query .= "
                     WITH subRubrics AS
@@ -99,7 +100,6 @@ global $lastPage;
             }
                 $query .= ($promoted_only ? "is_promoted = 1 AND " : "");
 
-            $filters = array();
             $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));
 
             foreach ($searchArray as $key => $word) {
@@ -547,7 +547,7 @@ function placeNewBid($auctionid, $newPrice, $username) {
     global $pdo;
 
     try {
-        $query = $pdo->prepare("select count(*) from TBL_Bid where auction = ? and amount = ? and user is not null");
+        $query = $pdo->prepare("select count(*) from TBL_Bid where auction = ? and amount = ? and user is not null and is_closed = 0");
         $query->execute(array($auctionid, $newPrice));
         $sameBids = $query->fetch();
 
