@@ -65,7 +65,6 @@ global $lastPage;
 
         try {
             $query = "";
-            $filters = array();
             if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
                 $query .= "
                     WITH subRubrics AS
@@ -101,6 +100,7 @@ global $lastPage;
                 $query .= ($promoted_only ? "is_promoted = 1 AND " : "");
 
             $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));
+            $filters = array();
 
             foreach ($searchArray as $key => $word) {
                 $query .= "name LIKE ?";
@@ -432,7 +432,7 @@ global $lastPage;
         $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
         $token = str_shuffle($token);
         $token = substr($token, 0, 10);
-        $query = $pdo->prepare("update TBL_User set verification_code =:token verification_code_valid_until = GETDATE() + DAY(7) where email = :email");
+        $query = $pdo->prepare("update TBL_User set verification_code =:token, verification_code_valid_until = GETDATE() + DAY(7) where email = :email");
         $query->execute(array(':token' => $token, ':email' => $email));
     $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
     $token = str_shuffle($token);
