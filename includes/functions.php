@@ -90,10 +90,10 @@
                     SELECT rubric
                     FROM subRubrics) OR rubric = " . $rubric . ") AND ";
             }
-            if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice)) {
+            if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice) && ((float)$minPrice)>=0) {
                 $query .= "(amount > $minPrice OR price_start > $minPrice) AND ";
             }
-            if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice)) {
+            if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice) && ((float)$maxPrice)>=0) {
                 $query .= "((amount < $maxPrice OR amount is null) AND price_start < $maxPrice) AND ";
             }
                 $query .= ($promoted_only ? "is_promoted = 1 AND " : "");

@@ -31,14 +31,14 @@ login();
 	            >
 	            <input type='hidden' id="minPrice" name='minPrice'
                     <?php
-                        if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice)) {
+                        if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice) && ((float)$minPrice)>=0) {
                             echo " value='$minPrice'";
                         }
                     ?>
 	            >
 	            <input type='hidden' id="maxPrice" name='maxPrice'
                     <?php
-                        if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice)) {
+                        if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice) && ((float)$maxPrice)>=0) {
                             echo " value='$maxPrice'";
                         }
                     ?>
