@@ -73,10 +73,16 @@ $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order b
 $bidquery->execute(array($auctionid));
 $biddata = $bidquery->fetchAll();
 
-if (sizeof($biddata) == 0) {
+$highestBidQuery = $pdo->prepare("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
+$highestBidQuery->execute(array($auctionid));
+$highestBidData = $highestBidQuery->fetchAll();
+
+var_dump($highestBidData);
+
+if (sizeof($highestBidData) == null) {
     $itemprice = 0;
 } else {
-    $itemprice = (int)$biddata[0]['amount'];
+    $itemprice = (int)$highestBidData[0][0];
 }
 
 if ($itemprice < 1) {
