@@ -162,10 +162,9 @@ echo '<main>
                 <div class="col-lg-3">
                     <div class="row">
                         <div class="col details-gebruiker">
-                            <h3>details verkoper</h3>
-                            <p>Naam verkoper: ' . $seller . '</p>
-                            <p>Status verkoper: ' . $verificationStatus . '</p>
-                            <p>Bankrekening verkoper: ' . $bankNumber . '</p>
+                            <h3>Details verkoper</h3>
+                            <p>Naam verkoper: '. $seller .'</p>
+                            <p>Status verkoper: '. $verificationStatus .'</p>
                         </div>
                     </div>
                     <div class="row">

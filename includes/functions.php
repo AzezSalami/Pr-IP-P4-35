@@ -431,7 +431,7 @@
         $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
         $token = str_shuffle($token);
         $token = substr($token, 0, 10);
-        $query = $pdo->prepare("update TBL_User set verification_code =:token where email = :email");
+        $query = $pdo->prepare("update TBL_User set verification_code =:token verification_code_valid_until = GETDATE() + DAY(7) where email = :email");
         $query->execute(array(':token' => $token, ':email' => $email));
 
         $subject = "Wachtwoord opnieuw instellen";
