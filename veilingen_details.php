@@ -130,11 +130,9 @@ echo '<main>
             </div>
             <div class="row">
                 <div class="col-lg-4">
-                    
                         <div class="imageContainer row">
-                            <img class=" foto mx-auto my-2" src="images/android-chrome-192x192.png" alt="Afbeelding van veiling">
+                            <img class="foto mx-auto my-2" src="images/android-chrome-192x192.png" alt="Afbeelding van veiling">
                         </div>
-                    
                     <div class="row">
                         <div class="col details-product">
                             <h3>Productdetails</h3>
