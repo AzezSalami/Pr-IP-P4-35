@@ -149,7 +149,7 @@ require "includes/header.php";
                         </div>
                     </div>
                 </div>
-                <div class=\"col-lg-5\">
+                <div class=\"col-lg-4\">
                     <div class=\"row\">
                         <div class=\"col details-veiling\">
                             <h3>Veilingdetails</h3>
@@ -167,7 +167,7 @@ require "includes/header.php";
                         </div>
                     </div>
                 </div>
-                <div class=\"col-lg-3\">
+                <div class=\"col-lg-4\">
                     <div class=\"row\">
                         <div class=\"col details-gebruiker\">
                             <h3>Verkoperdetails</h3>
