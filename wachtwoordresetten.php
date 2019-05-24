@@ -50,33 +50,37 @@ require "includes/header.php";
                 <h1>Wachtwoord resetten</h1>
                 <p>Vul hieronder het nieuwe wachtwoord in en klik op Verzenden.</p>
                 <?php
+
                 if (isset($_POST['submit'])) {
 
                     $email = $_GET['email'];
                     $verificationweb = $_GET['verification'];
 
                     global $pdo;
-                    $query = $pdo->prepare("select verification_code from TBL_User where email = '$email'");
+                    $query = $pdo->prepare("select verification_code from TBL_User where email = '$email' AND DATEDIFF(second, GETDATE(), verification_code_valid_until) > 0");
                     $query->execute();
                     $data = $query->fetch();
                     $verificationdb = $data[0];
 
-                    if ($_POST['password1'] == $_POST['password2'] && $verificationweb == $verificationdb) {
+                    if ($_POST['password1'] == $_POST['password2']) {
+                        if($verificationweb == $verificationdb) {
+                            $password = $_POST['password1'];
 
-                        $password = $_POST['password1'];
-
-                        if (isPasswordGood($password)) {
-
-
-                            $password = hash('sha1', $_POST['password1']);
+                            if (isPasswordGood($password)) {
 
 
-                            global $pdo;
-                            $query = $pdo->prepare("update TBL_User set password = '$password'
+                                $password = hash('sha1', $_POST['password1']);
+
+
+                                global $pdo;
+                                $query = $pdo->prepare("update TBL_User set password = '$password', verification_code = null, verification_code_valid_until = null
                         where email = '$email'");
-                            $query->execute();
+                                $query->execute();
 
-                            echo '<p style="color: green">Uw wachtwoord is succesvol veranderd!</p>';
+                                echo '<p style="color: green">Uw wachtwoord is succesvol veranderd!</p>';
+                            }
+                        } else {
+                            echo '<p style="color: red">Deze link is niet meer geldig</p>';
                         }
                     } else {
                         echo '<p style="color: red">Wachtwoorden komen niet overeen, probeer het alstublieft nog een keer.</p>';
