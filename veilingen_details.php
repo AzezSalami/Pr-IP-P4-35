@@ -49,8 +49,8 @@ $auctiondata = $auctionquery->fetch();
 
 /* all sellers are null atm, hence why sellerinfo will be empty for now */
 
-if ($auctiondata['auction_closed'] == 0) {
-    $auctionstatus = "Closed";
+if ($auctiondata['auction_closed'] == 1) {
+    $auctionstatus = "Gesloten";
 } else {
     $auctionstatus = "Open";
 }
