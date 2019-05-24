@@ -554,8 +554,6 @@ function placeNewBid($auctionid, $newPrice, $username) {
         if ($sameBids[0][0] == 0) {
             $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
             $query->execute(array($auctionid, $newPrice, $username));
-        } else {
-            echo "er is al een bod met dit bedrag error 404";
         }
     } catch (PDOException $e){
         echo $e;

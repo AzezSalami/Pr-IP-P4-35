@@ -52,7 +52,7 @@ require "includes/header.php";
 
     /* all sellers are null atm, hence why sellerinfo will be empty for now */
 
-    if ($auctiondata['auction_closed'] == 1) {
+    if ($auctiondata['is_closed'] == 1) {
         $auctionstatus = "Gesloten";
     } else {
         $auctionstatus = "Open";
@@ -85,6 +85,7 @@ require "includes/header.php";
     $itempricestart = $itemdata['price_start'];
     $itemaddress = $itemdata['address_line_1'];
     $itemshippingcost = $itemdata['shipping_cost'];
+    $itemshippingmethod = $itemdata['shipping_instructions'];
 
 
     $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order by amount DESC");
@@ -144,6 +145,7 @@ require "includes/header.php";
                             <h3>Productdetails</h3>
                             <p>Locatie van product: $itemaddress</p>
                             <p>Verzendkosten: $itemshippingcost</p>
+                            <p>Verzendmethode: $itemshippingmethod</p>
                         </div>
                     </div>
                 </div>
