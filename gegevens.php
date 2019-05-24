@@ -70,7 +70,8 @@ require "includes/header.php";
                         $query->execute(array($username));
                         $query = $pdo->prepare("update TBL_Auction set seller = null where seller = ?");
                         $query->execute(array($username));
-
+                        $query = $pdo->prepare("delete from TBL_Seller where [user] = ?");
+                        $query->execute(array($username, $password));
                         /* Delete row with information of the deleted user */
 
                         $query = $pdo->prepare("delete from TBL_User where [user] = ? and password = ?");
