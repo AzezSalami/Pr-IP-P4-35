@@ -171,7 +171,7 @@ global $lastPage;
                 $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
                 $result = $login_query->fetch();
                 if ($result['is_verified'] == 0 && $result['user'] == $username) {
-                    $loginMessage = "Verifieer uw account eerst<br><br>";
+                    $loginMessage = "Verifieer je account eerst<br><br>";
                 } else {
                     if ($result['user'] == $username) {
                         $_SESSION["username"] = $username;
@@ -259,24 +259,24 @@ global $lastPage;
 
                     $phoneQuery->execute(array($regUsername, $telephone_number, ($is_mobile ? 1 : 0)));
 
-                    $subject = "Verifieer uw e-mail!";
+                    $subject = "Verifieer je e-mail!";
                     $text = "
-                    Geachte heer of mevrouw $lastname,<br><br>
+                    Beste heer of mevrouw $lastname,<br><br>
                     
-                    Klik op de link hieronder om uw registratie te voltooien.<br>
-                    <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om uw registratie te voltooien</a><br><br>
+                    Klik op de link hieronder om je registratie te voltooien.<br>
+                    <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om je registratie te voltooien</a><br><br>
                     
-                    Of plak onderstaande link in uw browser:<br>
+                    Of plak onderstaande link in je browser:<br>
                     http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token<br><br>
                     
-                    Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.<br><br>
+                    Als je geen account aan heeft gemaakt op onze website, kun je deze e-mail negeren.<br><br>
                     
                     Met vriendelijke groet,<br><br>
                     
                     Het team van Eenmaal Andermaal
                 ";
                     sendEmail($email, $regUsername, $subject, $text);
-                    echo "<p style=\"color: green;\">Er is een bevestigingsmail naar $email verstuurd,<br>klik op de bevestigingslink in de email om uw registratie te voltooien .</p>";
+                    echo "<p style=\"color: green;\">Er is een bevestigingsmail naar $email verstuurd,<br>klik op de bevestigingslink in de email om je registratie te voltooien .</p>";
                 }
             }
             echo "<script>document.getElementById('openRegister').click();</script>";
@@ -303,7 +303,7 @@ global $lastPage;
                 try {
                     $sql = $pdo->prepare("UPDATE TBL_User SET is_verified = 1, verification_code = null, verification_code_valid_until = null WHERE email=?");
                     $sql->execute(array($email));
-                    echo '<p style="color: green;">Uw account is geverifieerd, u kunt nu inloggen.</p>';
+                    echo '<p style="color: green;">Je account is geverifieerd, je kunt nu inloggen.</p>';
                 } catch (PDOException $e) {
                     echo $e;
                 }
@@ -415,7 +415,7 @@ global $lastPage;
                 echo "Emailadres bestaat niet";
             } else {
                 sendResetPasswordEmail($email);
-                echo '<p style="color: green;">Er is een email naar uw opgegeven adres gestuurd!</p>';
+                echo '<p style="color: green;">Er is een email naar je opgegeven adres gestuurd!</p>';
             }
             echo "<script>document.getElementById('openforgetpassword').click();</script>";
         }
@@ -444,14 +444,14 @@ global $lastPage;
         $text = "
                     Geachte heer of mevrouw $lastname,<br><br>
 
-                    Klik op de link hieronder om uw wachtwoord opnieuw in te stellen.<br>
-                    <a href='http://localhost/iproject/wachtwoordresetten.php?email=$email&verification=$token'>Klik hier om uw wachtwoord opnieuw in te stellen</a><br><br>
+                    Klik op de link hieronder om je wachtwoord opnieuw in te stellen.<br>
+                    <a href='http://localhost/iproject/wachtwoordresetten.php?email=$email&verification=$token'>Klik hier om je wachtwoord opnieuw in te stellen</a><br><br>
 
-                    Of plak onderstaande link in uw browser:
+                    Of plak onderstaande link in je browser:
                     http://localhost/iproject/wachtwoordresetten.php?email=$email&verification=$token<br>
                     <br><br>
 
-                    Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.<br><br>
+                    Als je geen account aan hebt gemaakt op onze website, kun je deze e-mail negeren.<br><br>
 
                     Met vriendelijke groet,<br><br>
 
@@ -472,7 +472,7 @@ global $lastPage;
             } else {
                 if ($data['email'] == $email) {
                     sendVerificatiecodeEmail($email);
-                    echo '<p style="color: green;">Er is een email naar uw opgegeven adres gestuurd!</p>';
+                    echo '<p style="color: green;">Er is een email naar je opgegeven adres gestuurd!</p>';
                 } else {
                     echo "Emailadres bestaat niet";
                 }
@@ -497,14 +497,14 @@ global $lastPage;
         $query = $pdo->prepare("update TBL_User set verification_code =:token, verification_code_valid_until = GETDATE() + DAY(7) where email = :email");
         $query->execute(array(':token' => $token, ':email' => $email));
 
-        $subject = "Verifieer uw e-mail!";
+        $subject = "Verifieer je e-mail!";
         $text = "
                     Geachte heer of mevrouw $lastname,<br><br>
                     
-                    Klik op de link hieronder om uw registratie te voltooien.<br>
-                    <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om uw registratie te voltooien</a><br><br>
+                    Klik op de link hieronder om je registratie te voltooien.<br>
+                    <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om je registratie te voltooien</a><br><br>
                     
-                    Of plak onderstaande link in uw browser:<br>
+                    Of plak onderstaande link in je browser:<br>
                     http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token<br><br>
                     
                     Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.<br><br>

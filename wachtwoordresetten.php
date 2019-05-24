@@ -77,7 +77,7 @@ require "includes/header.php";
                         where email = '$email'");
                                 $query->execute();
 
-                                echo '<p style="color: green">Uw wachtwoord is succesvol veranderd!</p>';
+                                echo '<p style="color: green">Je wachtwoord is succesvol veranderd!</p>';
                             }
                         } else {
                             echo '<p style="color: red">Deze link is niet meer geldig</p>';

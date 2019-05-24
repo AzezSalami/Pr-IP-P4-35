@@ -353,7 +353,7 @@ login();
                                            name="pwdforgottenemail"
                                            id="emailadres"
                                            maxlength="40" required>
-                                    <label for="emailadres">Voer hier uw email in</label>
+                                    <label for="emailadres">Voer hier je email in</label>
                             </div>
                             <div class="row">
                                 <div class="col">
@@ -397,7 +397,7 @@ login();
                                            name="resendCode_emailadres"
                                            id="resendCode_emailadres"
                                            maxlength="40" required>
-                                    <label for="resendCode_emailadres">Voer hier uw email in</label>
+                                    <label for="resendCode_emailadres">Voer hier je email in</label>
                             </div>
                             <div class="row">
                                 <div class="col">
