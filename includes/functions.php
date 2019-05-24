@@ -537,10 +537,19 @@
         }
     }
 
-function placeNewBid($auctionid, $currentHighestBid, $amount, $username) {
+function placeNewBid($auctionid, $newPrice, $username) {
     global $pdo;
-    $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
-    $query->execute(array($auctionid, $currentHighestBid + $amount, $username));
+
+    $query = $pdo->prepare("select count(*) from TBL_Bid where auction = ? and amount = ? and user is not null");
+    $query->execute(array($auctionid, $newPrice));
+    $sameBids = $query->fetch();
+
+    if($sameBids[0][0] == 1) {
+        $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
+        $query->execute(array($auctionid, $newPrice, $username));
+    } else {
+        /* er is al een bod met dit bedrag error 404 */
+    }
 }
 
 ?>
