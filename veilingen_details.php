@@ -125,7 +125,7 @@ require "includes/header.php";
         <div class="col-lg-8 text-dark veiling-details">
             <div class="row my-3">
                 <div class="col">
-                    <h1 class="text-left font-weight-bold">' . $itemtitle . '</h1>
+                    <h2 class="text-left font-weight-bold">' . $itemtitle . '</h2>
                 </div>
                 <div class="col">
                     <h1 class="text-right font-weight-bold">€' . $itemprice . '</h1>
@@ -133,11 +133,9 @@ require "includes/header.php";
             </div>
             <div class="row">
                 <div class="col-lg-4">
-                    <div class="row foto">
-                        <div>
-                            <img class="mx-auto my-2" src="images/android-chrome-192x192.png" alt="Afbeelding van veiling">
+                        <div class="imageContainer row">
+                            <img class="foto mx-auto my-2" src="images/android-chrome-192x192.png" alt="Afbeelding van veiling">
                         </div>
-                    </div>
                     <div class="row">
                         <div class="col details-product">
                             <h3>Productdetails</h3>
