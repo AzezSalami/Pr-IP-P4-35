@@ -53,20 +53,20 @@ require "includes/header.php";
                     <h3 class="contact-title">Stuur ons een bericht</h3>
 
                     <div class="form-group">
-                        <input type="text" name="txtName" class="form-control" placeholder="Uw naam *"
+                        <input type="text" name="txtName" class="form-control" placeholder="Je naam *"
                                value=""/>
                     </div>
                     <div class="form-group">
-                        <input type="text" name="txtEmail" class="form-control" placeholder="Uw email *"
+                        <input type="text" name="txtEmail" class="form-control" placeholder="Je email *"
                                value=""/>
                     </div>
                     <div class="form-group">
                         <input type="text" name="txtPhone" class="form-control"
-                               placeholder="Uw telefoonnummer *" value=""/>
+                               placeholder="Je telefoonnummer *" value=""/>
                     </div>
                     <div class="form-group">
                         <textarea name="txtMsg" class="form-control contact-text"
-                                  placeholder="Uw bericht *"></textarea>
+                                  placeholder="Je bericht *"></textarea>
                     </div>
                     <div class="form-group">
                         <input type="submit" name="btnSubmit" class="btn"

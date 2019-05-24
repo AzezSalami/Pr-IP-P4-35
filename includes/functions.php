@@ -103,8 +103,8 @@ function search($amount = 0, $promoted_only = false)
         }
         $query .= ($promoted_only ? "is_promoted = 1 AND " : "");
 
-        $filters = array();
-        $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));
+            $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));
+            $filters = array();
 
         foreach ($searchArray as $key => $word) {
             $query .= "name LIKE ?";
@@ -168,32 +168,32 @@ function login()
         $username = cleanUpUserInput(strtolower($_POST['username']));
         $password = cleanUpUserInput($_POST['password']);
 
-        if ($username == "" || $password == "") {
-            $loginMessage = "Vul een gebruikersnaam en een wachtwoord in<br><br>";
-        } else {
-            $sql = "SELECT [user],password, is_verified  FROM TBL_User WHERE [user]=:user and password = :password";
-            $login_query = $pdo->prepare($sql);
-            $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
-            $result = $login_query->fetch();
-            if ($result['is_verified'] == 0 && $result['user'] == $username) {
-                $loginMessage = "Verifieer uw account eerst<br><br>";
+            if ($username == "" || $password == "") {
+                $loginMessage = "Vul een gebruikersnaam en een wachtwoord in<br><br>";
             } else {
-                if ($result['user'] == $username) {
-                    $_SESSION["username"] = $username;
+                $sql = "SELECT [user],password, is_verified  FROM TBL_User WHERE [user]=:user and password = :password";
+                $login_query = $pdo->prepare($sql);
+                $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
+                $result = $login_query->fetch();
+                if ($result['is_verified'] == 0 && $result['user'] == $username) {
+                    $loginMessage = "Verifieer je account eerst<br><br>";
                 } else {
-                    $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
+                    if ($result['user'] == $username) {
+                        $_SESSION["username"] = $username;
+                    } else {
+                        $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
+                    }
                 }
             }
         }
     }
-}
 
-if (isset($_GET["logout"]) && isset($_SESSION)) {
-    $_SESSION = array();
-    session_destroy();
-    unset($_GET);
-    header("location: " . htmlspecialchars($_SERVER['PHP_SELF']));
-}
+    if (isset($_GET["logout"]) && isset($_SESSION)) {
+        $_SESSION = array();
+        session_destroy();
+        unset($_GET);
+        header("location: " . htmlspecialchars($_SERVER['PHP_SELF']));
+    }
 
 function isPasswordGood($password)
 {
@@ -266,29 +266,29 @@ function register()
 
                 $phoneQuery->execute(array($regUsername, $telephone_number, ($is_mobile ? 1 : 0)));
 
-                $subject = "Verifieer uw e-mail!";
-                $text = "
-                    Geachte heer of mevrouw $lastname,<br><br>
+                    $subject = "Verifieer je e-mail!";
+                    $text = "
+                    Beste heer of mevrouw $lastname,<br><br>
                     
-                    Klik op de link hieronder om uw registratie te voltooien.<br>
-                    <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om uw registratie te voltooien</a><br><br>
+                    Klik op de link hieronder om je registratie te voltooien.<br>
+                    <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om je registratie te voltooien</a><br><br>
                     
-                    Of plak onderstaande link in uw browser:<br>
+                    Of plak onderstaande link in je browser:<br>
                     http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token<br><br>
                     
-                    Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.<br><br>
+                    Als je geen account aan heeft gemaakt op onze website, kun je deze e-mail negeren.<br><br>
                     
                     Met vriendelijke groet,<br><br>
                     
                     Het team van Eenmaal Andermaal
                 ";
-                sendEmail($email, $regUsername, $subject, $text);
-                echo "<p style=\"color: green;\">Er is een bevestigingsmail naar $email verstuurd,<br>klik op de bevestigingslink in de email om uw registratie te voltooien .</p>";
+                    sendEmail($email, $regUsername, $subject, $text);
+                    echo "<p style=\"color: green;\">Er is een bevestigingsmail naar $email verstuurd,<br>klik op de bevestigingslink in de email om je registratie te voltooien .</p>";
+                }
             }
+            echo "<script>document.getElementById('openRegister').click();</script>";
         }
-        echo "<script>document.getElementById('openRegister').click();</script>";
     }
-}
 
 function confirm()
 {
@@ -305,22 +305,22 @@ function confirm()
         }
 
 
-        $confirm = array();
-        $confirm = $sql->fetch();
-        if (isset($confirm['email']) && $confirm['email'] == $email) {
-            try {
-                $sql = $pdo->prepare("UPDATE TBL_User SET is_verified = 1, verification_code = null, verification_code_valid_until = null WHERE email=?");
-                $sql->execute(array($email));
-                echo '<p style="color: green;">Uw account is geverifieerd, u kunt nu inloggen.</p>';
-            } catch (PDOException $e) {
-                echo $e;
+            $confirm = array();
+            $confirm = $sql->fetch();
+            if (isset($confirm['email']) && $confirm['email'] == $email) {
+                try {
+                    $sql = $pdo->prepare("UPDATE TBL_User SET is_verified = 1, verification_code = null, verification_code_valid_until = null WHERE email=?");
+                    $sql->execute(array($email));
+                    echo '<p style="color: green;">Je account is geverifieerd, je kunt nu inloggen.</p>';
+                } catch (PDOException $e) {
+                    echo $e;
+                }
+            } else {
+                echo 'verificatiecode is niet geldig.';
             }
-        } else {
-            echo 'verificatiecode is niet geldig.';
+            echo "<script>document.getElementById('openLogin').click();</script>";
         }
-        echo "<script>document.getElementById('openLogin').click();</script>";
     }
-}
 
 function placeholderAccountData($input)
 {
@@ -428,15 +428,15 @@ function resetPasswordEmail()
         $query->execute(array(':email' => $email));
         $data = $query->fetch();
 
-        if ($data[0][0] == 0) {
-            echo "Emailadres bestaat niet";
-        } else {
-            sendResetPasswordEmail($email);
-            echo '<p style="color: green;">Er is een email naar uw opgegeven adres gestuurd!</p>';
+            if ($data[0][0] == 0) {
+                echo "Emailadres bestaat niet";
+            } else {
+                sendResetPasswordEmail($email);
+                echo '<p style="color: green;">Er is een email naar je opgegeven adres gestuurd!</p>';
+            }
+            echo "<script>document.getElementById('openforgetpassword').click();</script>";
         }
-        echo "<script>document.getElementById('openforgetpassword').click();</script>";
     }
-}
 
 function sendResetPasswordEmail($email)
 {
@@ -447,11 +447,11 @@ function sendResetPasswordEmail($email)
     $regUsername = $data['user'];
     $lastname = $data['lastname'];
 
-    $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
-    $token = str_shuffle($token);
-    $token = substr($token, 0, 10);
-    $query = $pdo->prepare("update TBL_User set verification_code =:token verification_code_valid_until = GETDATE() + DAY(7) where email = :email");
-    $query->execute(array(':token' => $token, ':email' => $email));
+        $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
+        $token = str_shuffle($token);
+        $token = substr($token, 0, 10);
+        $query = $pdo->prepare("update TBL_User set verification_code =:token, verification_code_valid_until = GETDATE() + DAY(7) where email = :email");
+        $query->execute(array(':token' => $token, ':email' => $email));
     $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
     $token = str_shuffle($token);
     $token = substr($token, 0, 10);
@@ -462,14 +462,14 @@ function sendResetPasswordEmail($email)
     $text = "
                     Geachte heer of mevrouw $lastname,<br><br>
 
-                    Klik op de link hieronder om uw wachtwoord opnieuw in te stellen.<br>
-                    <a href='http://localhost/iproject/wachtwoordresetten.php?email=$email&verification=$token'>Klik hier om uw wachtwoord opnieuw in te stellen</a><br><br>
+                    Klik op de link hieronder om je wachtwoord opnieuw in te stellen.<br>
+                    <a href='http://localhost/iproject/wachtwoordresetten.php?email=$email&verification=$token'>Klik hier om je wachtwoord opnieuw in te stellen</a><br><br>
 
-                    Of plak onderstaande link in uw browser:
+                    Of plak onderstaande link in je browser:
                     http://localhost/iproject/wachtwoordresetten.php?email=$email&verification=$token<br>
                     <br><br>
 
-                    Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.<br><br>
+                    Als je geen account aan hebt gemaakt op onze website, kun je deze e-mail negeren.<br><br>
 
                     Met vriendelijke groet,<br><br>
 
@@ -478,27 +478,26 @@ function sendResetPasswordEmail($email)
     sendEmail($email, $regUsername, $subject, $text);
 }
 
-function verificatiecodeEmail()
-{
-    if (isset($_POST['resendCode'])) {
-        $email = $_POST['resendCode_emailadres'];
-        global $pdo;
-        $query = $pdo->prepare("select * from TBL_User where email = :email");
-        $query->execute(array(':email' => $email));
-        $data = $query->fetch();
-        if ($data['is_verified'] == 1) {
-            echo "Emailadres is al geverifieerd";
-        } else {
-            if ($data['email'] == $email) {
-                sendVerificatiecodeEmail($email);
-                echo '<p style="color: green;">Er is een email naar uw opgegeven adres gestuurd!</p>';
+    function verificatiecodeEmail() {
+        if (isset($_POST['resendCode'])) {
+            $email = $_POST['resendCode_emailadres'];
+            global $pdo;
+            $query = $pdo->prepare("select * from TBL_User where email = :email");
+            $query->execute(array(':email' => $email));
+            $data = $query->fetch();
+            if ($data['is_verified'] == 1) {
+                echo "Emailadres is al geverifieerd";
             } else {
-                echo "Emailadres bestaat niet";
+                if ($data['email'] == $email) {
+                    sendVerificatiecodeEmail($email);
+                    echo '<p style="color: green;">Er is een email naar je opgegeven adres gestuurd!</p>';
+                } else {
+                    echo "Emailadres bestaat niet";
+                }
             }
+            echo "<script>document.getElementById('openResendCodeMenu').click();</script>";
         }
-        echo "<script>document.getElementById('openResendCodeMenu').click();</script>";
     }
-}
 
 function sendVerificatiecodeEmail($email)
 {
@@ -517,14 +516,14 @@ function sendVerificatiecodeEmail($email)
     $query = $pdo->prepare("update TBL_User set verification_code =:token, verification_code_valid_until = GETDATE() + DAY(7) where email = :email");
     $query->execute(array(':token' => $token, ':email' => $email));
 
-    $subject = "Verifieer uw e-mail!";
-    $text = "
+        $subject = "Verifieer je e-mail!";
+        $text = "
                     Geachte heer of mevrouw $lastname,<br><br>
                     
-                    Klik op de link hieronder om uw registratie te voltooien.<br>
-                    <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om uw registratie te voltooien</a><br><br>
+                    Klik op de link hieronder om je registratie te voltooien.<br>
+                    <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om je registratie te voltooien</a><br><br>
                     
-                    Of plak onderstaande link in uw browser:<br>
+                    Of plak onderstaande link in je browser:<br>
                     http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token<br><br>
                     
                     Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.<br><br>
@@ -576,8 +575,6 @@ function placeNewBid($auctionid, $newPrice, $username)
         if ($sameBids[0][0] == 0) {
             $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
             $query->execute(array($auctionid, $newPrice, $username));
-        } else {
-            echo "er is al een bod met dit bedrag error 404";
         }
     } catch (PDOException $e) {
         echo $e;
