@@ -182,11 +182,11 @@ require "includes/header.php";
     if (isset($_SESSION['username'])) {
         echo '<p class="font-weight-bold">Verhoog bod met:</p>
                             <form method="post" class="form-inline">
-                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue + $itemprice) . '">+ €' . $buttonvalue . '</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue + $itemprice) . '">+ €' . ($buttonvalue + $itemprice) . '</button>
                                 <div class="space"></div>
-                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 2 + $itemprice) . '">+ €' . $buttonvalue * 2 . '</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 2 + $itemprice) . '">+ €' . ($buttonvalue * 2 + $itemprice) . '</button>
                                 <div class="space"></div>
-                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 3 + $itemprice) . '">+ €' . $buttonvalue * 3 . '</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 3 + $itemprice) . '">+ €' . ($buttonvalue * 3 + $itemprice) . '</button>
                             </form>
                             <div class="my-3">
                                 <p class="font-weight-bold">Eerdere biedingen:</p>';

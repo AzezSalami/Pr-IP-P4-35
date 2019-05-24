@@ -82,11 +82,11 @@ require "includes/header.php";
                                         <div class="collapse show" id="accordion-tab-1-content-1"
                                              aria-labelledby="accordion-tab-1-heading-1" data-parent="#accordion-tab-1">
                                             <div class="card-body">
-                                                <p>In de rechterbovenhoek van deze site kunt u een blauwe knop zien met
+                                                <p>In de rechterbovenhoek van deze site kun je een blauwe knop zien met
                                                     de aanduiding account.
-                                                    Om uzelf te registeren moet u dan op de optie registeren kiezen.
-                                                    Nadat U het registratieproces
-                                                    voltooid heeft en geverifieerd hebt, heeft u een geldig account.</p>
+                                                    Om jezelf te registeren moet je dan de optie registeren kiezen.
+                                                    Nadat je het registratieproces
+                                                    voltooid hebt en geverifieerd hebt, heeft u een geldig account.</p>
                                             </div>
                                         </div>
                                     </div>
