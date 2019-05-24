@@ -73,11 +73,9 @@ $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order b
 $bidquery->execute(array($auctionid));
 $biddata = $bidquery->fetchAll();
 
-$highestBidQuery = $pdo->prepare("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
+$highestBidQuery = $pdo->prepare ("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
 $highestBidQuery->execute(array($auctionid));
 $highestBidData = $highestBidQuery->fetchAll();
-
-var_dump($highestBidData);
 
 if (sizeof($highestBidData) == null) {
     $itemprice = 0;
@@ -114,7 +112,7 @@ echo '<main>
                     <h1 class="text-left font-weight-bold">' . $itemtitle . '</h1>
                 </div>
                 <div class="col">
-                    <h1 class="text-right font-weight-bold">' . $itemprice . '</h1>
+                    <h1 class="text-right font-weight-bold">€' . $itemprice . '</h1>
                 </div>
             </div>
             <div class="row">
@@ -139,7 +137,7 @@ echo '<main>
                                 <p>Status van veiling: ' . $auctionstatus . '</p>
                                 <p>Startdatum: ' . $startdate . '</p>
                                 <p>Sluitdatum: ' . $enddate . '</p>
-                                <p>Minimale prijs: ' . $itempricestart . '</p>
+                                <p>Minimale prijs: €' . $itempricestart . '</p>
                                 
                         </div>
                     </div>
@@ -166,11 +164,11 @@ echo '<main>
 if (isset($_SESSION['username'])) {
     echo '<p class="font-weight-bold">Verhoog bod met:</p>
                             <form method="post" class="form-inline">
-                                <button name="bidbutton" type="submit" class="btn" value="' . $buttonvalue . '">+' . $buttonvalue . '</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . $buttonvalue . '">+ €' . $buttonvalue . '</button>
                                 <div class="space"></div>
-                                <button name="bidbutton" type="submit" class="btn" value="' . $buttonvalue * 2 . '">+' . $buttonvalue * 2 . '</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . $buttonvalue * 2 . '">+ €' . $buttonvalue * 2 . '</button>
                                 <div class="space"></div>
-                                <button name="bidbutton" type="submit" class="btn" value="' . $buttonvalue * 3 . '">+' . $buttonvalue * 3 . '</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . $buttonvalue * 3 . '">+ €' . $buttonvalue * 3 . '</button>
                             </form>
                             <div class="my-3">
                                 <p class="font-weight-bold">Bieden:</p>';
@@ -183,7 +181,7 @@ $bidquery->execute(array($auctionid));
 $html = "";
 
 while ($bid = $bidquery->fetch()) {
-    $html .= '<p class="bod">' . $bid['user'] . ': ' . $bid['amount'] . '</p>';
+    $html .= '<p class="bod">' . $bid['user'] . ': €' . $bid['amount'] . '</p>';
 }
 
 echo $html . '</div>' . '
