@@ -67,9 +67,9 @@ require "includes/header.php";
                         /* If the user has auctions the user will be set to "null", open auctions from the deleted user will be closed */
 
                         $query = $pdo->prepare("update TBL_Bid set user = null where seller = ?");
-                        $query->execute($username);
+                        $query->execute(array($username));
                         $query = $pdo->prepare("update TBL_Auction set seller = null, auction_closed = 0 where seller = ?");
-                        $query->execute($username);
+                        $query->execute(array($username));
 
                         /* Delete row with information of the deleted user */
 
