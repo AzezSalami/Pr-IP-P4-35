@@ -132,7 +132,7 @@ require "includes/header.php";
                     <h2 class=\"text-left font-weight-bold\">$itemtitle</h2>
                 </div>
                 <div class=\"col\">
-                    <h1 class=\"text-right font-weight-bold\">€$itemprice</h1>
+                    <h1 class=\"text-right font-weight-bold\">€". ($itemprice > $itempricestart ? $itemprice : $itempricestart) . "</h1>
                 </div>
             </div>
             <div class=\"row\">
@@ -182,11 +182,11 @@ require "includes/header.php";
     if (isset($_SESSION['username'])) {
         echo '<p class="font-weight-bold">Verhoog bod met:</p>
                             <form method="post" class="form-inline">
-                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue + $itemprice) . '">+ €' . ($buttonvalue + $itemprice) . '</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">+ €' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
                                 <div class="space"></div>
-                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 2 + $itemprice) . '">+ €' . ($buttonvalue * 2 + $itemprice) . '</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">+ €' . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
                                 <div class="space"></div>
-                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 3 + $itemprice) . '">+ €' . ($buttonvalue * 3 + $itemprice) . '</button>
+                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">+ €' . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
                             </form>
                             <div class="my-3">
                                 <p class="font-weight-bold">Eerdere biedingen:</p>';
