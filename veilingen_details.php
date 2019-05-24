@@ -64,7 +64,7 @@ $sellerQuery->execute(array($seller));
 $sellerData = $sellerQuery->fetch();
 $bankNumber = $sellerData['bank_account'];
 $verificationStatus = (int)$sellerData['verification_status'];
-if($verificationStatus == 1) {
+if ($verificationStatus == 1) {
     $verificationStatus = "Niet geverifieerd";
 } else {
     $verificationStatus = "Geverifieerd";
@@ -85,7 +85,7 @@ $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order b
 $bidquery->execute(array($auctionid));
 $biddata = $bidquery->fetchAll();
 
-$highestBidQuery = $pdo->prepare ("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
+$highestBidQuery = $pdo->prepare("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
 $highestBidQuery->execute(array($auctionid));
 $highestBidData = $highestBidQuery->fetchAll();
 
@@ -130,11 +130,11 @@ echo '<main>
             </div>
             <div class="row">
                 <div class="col-lg-4">
-                    <div class="row foto">
-                        <div>
-                            <img class="mx-auto my-2" src="images/android-chrome-192x192.png" alt="Afbeelding van veiling">
+                    
+                        <div class="imageContainer row">
+                            <img class=" foto mx-auto my-2" src="images/android-chrome-192x192.png" alt="Afbeelding van veiling">
                         </div>
-                    </div>
+                    
                     <div class="row">
                         <div class="col details-product">
                             <h3>Productdetails</h3>
@@ -165,9 +165,9 @@ echo '<main>
                     <div class="row">
                         <div class="col details-gebruiker">
                             <h3>details verkoper</h3>
-                            <p>Naam verkoper: '. $seller .'</p>
-                            <p>Status verkoper: '. $verificationStatus .'</p>
-                            <p>Bankrekening verkoper: '. $bankNumber .'</p>
+                            <p>Naam verkoper: ' . $seller . '</p>
+                            <p>Status verkoper: ' . $verificationStatus . '</p>
+                            <p>Bankrekening verkoper: ' . $bankNumber . '</p>
                         </div>
                     </div>
                     <div class="row">
