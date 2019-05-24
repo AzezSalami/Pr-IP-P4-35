@@ -65,9 +65,10 @@
 			                <p class="font-weight-bold">prijs:</p>
 			                <div class="row">
 				                <div class="col-lg-5 text-left">
-					                <input class="bg-gray text-center input-details" type="number" id="amount-min"
+
+					                <input onchange="this.value = parseFloat(this.value).toFixed(2);" class="bg-gray text-center input-details" type="number" id="amount-min"
 					                       placeholder="min" <?php
-                                        if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice)) {
+                                        if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice) && ((float)$minPrice)>=0) {
                                             echo " value='$minPrice'";
                                         }
                                     ?>>
@@ -76,9 +77,9 @@
 					                <p class="text-white font-weight-bold">-</p>
 				                </div>
 				                <div class="col-lg-5 text-right">
-					                <input class="bg-gray text-center input-details" type="number" id="amount-max"
+					                <input onchange="this.value = parseFloat(this.value).toFixed(2);" class="bg-gray text-center input-details" type="number" id="amount-max"
 					                       placeholder="max" <?php
-                                        if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice)) {
+                                        if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice) && ((float)$maxPrice)>=0) {
                                             echo " value='$maxPrice'";
                                         }
                                     ?>>
