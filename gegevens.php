@@ -122,7 +122,7 @@ require "includes/header.php";
                                maxlength="20" readonly>
 
                         <label for="address">Adres</label>
-                        <input class="form-control mb-3" type="text" id="address1" placeholder="Adres"
+                        <input class="form-control mb-3" type="text" id="address1" placeholder="<?php placeholderAccountData("address_line_1") ?>"
                                name="address">
                         <script>
                             var placesAutocomplete = places({
@@ -131,7 +131,6 @@ require "includes/header.php";
                                 container: document.querySelector('#address1')
                             });
                         </script>
-
 
                     </div>
                     <div class="col">
