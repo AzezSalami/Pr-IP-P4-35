@@ -114,7 +114,9 @@ echo '<main>
             <div class="row">
                 <div class="col-lg-4">
                     <div class="row foto">
-                        <img src="images/android-chrome-192x192.png" alt="veiling foto">
+                        <div>
+                            <img class="mx-auto my-2" src="images/android-chrome-192x192.png" alt="Afbeelding van veiling">
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col details-product">
