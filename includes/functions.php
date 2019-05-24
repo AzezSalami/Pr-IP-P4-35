@@ -33,8 +33,8 @@
 
     function loadRubrics() {
 
-        echo "<h2>Filters</h2><br>
-                            <p class=\"font-weight-bold mb-0\">Rubrieken:</p>";
+        echo "
+                            <h2>Rubrieken</h2>";
 
         global $pdo;
         //$rubric = 0;
@@ -90,8 +90,13 @@
                     SELECT rubric
                     FROM subRubrics) OR rubric = " . $rubric . ") AND ";
             }
-
-            $query .= ($promoted_only ? "is_promoted = 1 AND " : "");
+            if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice)) {
+                $query .= "(amount > $minPrice OR price_start > $minPrice) AND ";
+            }
+            if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice)) {
+                $query .= "((amount < $maxPrice OR amount is null) AND price_start < $maxPrice) AND ";
+            }
+                $query .= ($promoted_only ? "is_promoted = 1 AND " : "");
 
             $filters = array();
             $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));

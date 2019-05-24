@@ -29,6 +29,20 @@ login();
                         }
                     ?>
 	            >
+	            <input type='hidden' id="minPrice" name='minPrice'
+                    <?php
+                        if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice)) {
+                            echo " value='$minPrice'";
+                        }
+                    ?>
+	            >
+	            <input type='hidden' id="maxPrice" name='maxPrice'
+                    <?php
+                        if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice)) {
+                            echo " value='$maxPrice'";
+                        }
+                    ?>
+	            >
 	            <input type='hidden' id="pageNumber" name='page' value='0'>
             </form>
             <div class="col-2 my-auto text-center">

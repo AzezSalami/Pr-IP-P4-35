@@ -59,34 +59,50 @@
             </div>
             <div class="desktoprubricsmedia">
                 <div class="desktoprubrics bg-yellow">
-                    <?php loadRubrics(); ?>
-                    <div class="dropdown-divider"></div>
-                    <div class="range-filter container text-left my-2 pl-0">
-                        <form method="post" action="...">
-                            <p class="font-weight-bold">prijs:</p>
-                            <div class="row">
-                                <div class="col-lg-5 text-left">
-                                    <input class="bg-gray text-center input-details" type="number" id="amount-min"
-                                           placeholder="min">
-                                </div>
-                                <div class="col-lg-1 text-center">
-                                    <p class="text-white font-weight-bold">-</p>
-                                </div>
-                                <div class="col-lg-5 text-right">
-                                    <input class="bg-gray text-center input-details" type="number" id="amount-max"
-                                           placeholder="max">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+	                <h2>Filters</h2><br>
+	                <div class="range-filter container text-left my-2 pl-0">
+		                <form action="#">
+			                <p class="font-weight-bold">prijs:</p>
+			                <div class="row">
+				                <div class="col-lg-5 text-left">
+					                <input class="bg-gray text-center input-details" type="number" id="amount-min"
+					                       placeholder="min" <?php
+                                        if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice)) {
+                                            echo " value='$minPrice'";
+                                        }
+                                    ?>>
+				                </div>
+				                <div class="col-lg-1 text-center">
+					                <p class="text-white font-weight-bold">-</p>
+				                </div>
+				                <div class="col-lg-5 text-right">
+					                <input class="bg-gray text-center input-details" type="number" id="amount-max"
+					                       placeholder="max" <?php
+                                        if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice)) {
+                                            echo " value='$maxPrice'";
+                                        }
+                                    ?>>
+				                </div>
+			                </div>
+			                <br>
+
+		                </form>
+		                <button class="btn mb-1" onclick="
+					                document.getElementById('minPrice').value = document.getElementById('amount-min').value;
+					                document.getElementById('maxPrice').value = document.getElementById('amount-max').value;
+					                document.getElementById('searchbutton').click();"
+		                >Pas filters toe</button>
+	                </div>
+	                <div class="dropdown-divider"></div>
+	                <?php loadRubrics(); ?>
+
                     <br>
-                    <input type="submit" class="btn mb-1" value="Pas filters toe">
                 </div>
             </div>
         </div>
         <div class="col-lg-10 auction-page">
             <div class="container">
-                <?php search(9); ?>
+                <?php search(8); ?>
             </div>
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
