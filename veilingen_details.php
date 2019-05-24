@@ -57,6 +57,18 @@ if ($auctiondata['auction_closed'] == 0) {
 $startdate = $auctiondata['moment_start'];
 $enddate = $auctiondata['moment_end'];
 $item = $auctiondata['item'];
+$seller = $auctiondata['seller'];
+
+$sellerQuery = $pdo->prepare("SELECT * FROM TBL_Seller WHERE user = ?");
+$sellerQuery->execute(array($seller));
+$sellerData = $sellerQuery->fetch();
+$bankNumber = $sellerData['bank_account'];
+$verificationStatus = (int)$sellerData['verification_status'];
+if($verificationStatus == 1) {
+    $verificationStatus = "Niet geverifieerd";
+} else {
+    $verificationStatus = "Geverifieerd";
+}
 
 $itemquery = $pdo->prepare("SELECT * FROM TBL_Item WHERE item = ?");
 $itemquery->execute(array($item));
@@ -95,6 +107,7 @@ if (isset($_POST['bidbutton'])) {
     $amount = (int)$_POST['bidbutton'];
     $username = $_SESSION['username'];
     placeNewBid($auctionid, $itemprice, $amount, $username);
+    $itemprice = $itemprice + $amount;
 }
 
 echo '<main>
@@ -146,9 +159,9 @@ echo '<main>
                     <div class="row">
                         <div class="col details-gebruiker">
                             <h3>details verkoper</h3>
-                            <p>naam:</p>
-                            <p>etc:</p>
-                            <p>etc:</p>
+                            <p>Naam verkoper: '. $seller .'</p>
+                            <p>Status verkoper: '. $verificationStatus .'</p>
+                            <p>Bankrekening verkoper: '. $bankNumber .'</p>
                         </div>
                     </div>
                     <div class="row">
