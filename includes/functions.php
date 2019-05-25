@@ -103,8 +103,8 @@ function search($amount = 0, $promoted_only = false)
         }
         $query .= ($promoted_only ? "is_promoted = 1 AND " : "");
 
-            $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));
-            $filters = array();
+        $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));
+        $filters = array();
 
         foreach ($searchArray as $key => $word) {
             $query .= "name LIKE ?";
@@ -168,32 +168,32 @@ function login()
         $username = cleanUpUserInput(strtolower($_POST['username']));
         $password = cleanUpUserInput($_POST['password']);
 
-            if ($username == "" || $password == "") {
-                $loginMessage = "Vul een gebruikersnaam en een wachtwoord in<br><br>";
+        if ($username == "" || $password == "") {
+            $loginMessage = "Vul een gebruikersnaam en een wachtwoord in<br><br>";
+        } else {
+            $sql = "SELECT [user],password, is_verified  FROM TBL_User WHERE [user]=:user and password = :password";
+            $login_query = $pdo->prepare($sql);
+            $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
+            $result = $login_query->fetch();
+            if ($result['is_verified'] == 0 && $result['user'] == $username) {
+                $loginMessage = "Verifieer je account eerst<br><br>";
             } else {
-                $sql = "SELECT [user],password, is_verified  FROM TBL_User WHERE [user]=:user and password = :password";
-                $login_query = $pdo->prepare($sql);
-                $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
-                $result = $login_query->fetch();
-                if ($result['is_verified'] == 0 && $result['user'] == $username) {
-                    $loginMessage = "Verifieer je account eerst<br><br>";
+                if ($result['user'] == $username) {
+                    $_SESSION["username"] = $username;
                 } else {
-                    if ($result['user'] == $username) {
-                        $_SESSION["username"] = $username;
-                    } else {
-                        $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
-                    }
+                    $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
                 }
             }
         }
     }
+}
 
-    if (isset($_GET["logout"]) && isset($_SESSION)) {
-        $_SESSION = array();
-        session_destroy();
-        unset($_GET);
-        header("location: " . htmlspecialchars($_SERVER['PHP_SELF']));
-    }
+if (isset($_GET["logout"]) && isset($_SESSION)) {
+    $_SESSION = array();
+    session_destroy();
+    unset($_GET);
+    header("location: " . htmlspecialchars($_SERVER['PHP_SELF']));
+}
 
 function isPasswordGood($password)
 {
@@ -266,8 +266,8 @@ function register()
 
                 $phoneQuery->execute(array($regUsername, $telephone_number, ($is_mobile ? 1 : 0)));
 
-                    $subject = "Verifieer je e-mail!";
-                    $text = "
+                $subject = "Verifieer je e-mail!";
+                $text = "
                     Beste heer of mevrouw $lastname,<br><br>
                     
                     Klik op de link hieronder om je registratie te voltooien.<br>
@@ -282,13 +282,13 @@ function register()
                     
                     Het team van Eenmaal Andermaal
                 ";
-                    sendEmail($email, $regUsername, $subject, $text);
-                    echo "<p style=\"color: green;\">Er is een bevestigingsmail naar $email verstuurd,<br>klik op de bevestigingslink in de email om je registratie te voltooien .</p>";
-                }
+                sendEmail($email, $regUsername, $subject, $text);
+                echo "<p style=\"color: green;\">Er is een bevestigingsmail naar $email verstuurd,<br>klik op de bevestigingslink in de email om je registratie te voltooien .</p>";
             }
-            echo "<script>document.getElementById('openRegister').click();</script>";
         }
+        echo "<script>document.getElementById('openRegister').click();</script>";
     }
+}
 
 function confirm()
 {
@@ -305,22 +305,22 @@ function confirm()
         }
 
 
-            $confirm = array();
-            $confirm = $sql->fetch();
-            if (isset($confirm['email']) && $confirm['email'] == $email) {
-                try {
-                    $sql = $pdo->prepare("UPDATE TBL_User SET is_verified = 1, verification_code = null, verification_code_valid_until = null WHERE email=?");
-                    $sql->execute(array($email));
-                    echo '<p style="color: green;">Je account is geverifieerd, je kunt nu inloggen.</p>';
-                } catch (PDOException $e) {
-                    echo $e;
-                }
-            } else {
-                echo 'verificatiecode is niet geldig.';
+        $confirm = array();
+        $confirm = $sql->fetch();
+        if (isset($confirm['email']) && $confirm['email'] == $email) {
+            try {
+                $sql = $pdo->prepare("UPDATE TBL_User SET is_verified = 1, verification_code = null, verification_code_valid_until = null WHERE email=?");
+                $sql->execute(array($email));
+                echo '<p style="color: green;">Je account is geverifieerd, je kunt nu inloggen.</p>';
+            } catch (PDOException $e) {
+                echo $e;
             }
-            echo "<script>document.getElementById('openLogin').click();</script>";
+        } else {
+            echo 'verificatiecode is niet geldig.';
         }
+        echo "<script>document.getElementById('openLogin').click();</script>";
     }
+}
 
 function placeholderAccountData($input)
 {
@@ -403,11 +403,14 @@ function updateAccountData()
             }
         }
         if (!empty($telephone_number)) {
-            echo '<p class="text-success">jouw gegevens zijn geüpdatet </p>';
-            $sql = "update TBL_Phone SET phone_number = :telephone_number WHERE [user] = :username";
-            $query = $pdo->prepare($sql);
-            $query->execute(array(':telephone_number' => $telephone_number, ':username' => $username));
-
+            if (strlen($telephone_number) < 10 || !preg_match("#[0-9]+#", $telephone_number)) {
+                echo "Een telefonnummer moet uit minimaal 10 cijfers bestaan<br>";
+            } else {
+                echo '<p class="text-success">jouw gegevens zijn geüpdatet </p>';
+                $sql = "update TBL_Phone SET phone_number = :telephone_number WHERE [user] = :username";
+                $query = $pdo->prepare($sql);
+                $query->execute(array(':telephone_number' => $telephone_number, ':username' => $username));
+            }
         }
         if (!empty($firstname) || !empty($lastname) || !empty($address) || $password_check) {
             echo '<p class="text-success">jouw gegevens zijn geüpdatet</p>';
@@ -428,15 +431,15 @@ function resetPasswordEmail()
         $query->execute(array(':email' => $email));
         $data = $query->fetch();
 
-            if ($data[0][0] == 0) {
-                echo "Emailadres bestaat niet";
-            } else {
-                sendResetPasswordEmail($email);
-                echo '<p style="color: green;">Er is een email naar je opgegeven adres gestuurd!</p>';
-            }
-            echo "<script>document.getElementById('openforgetpassword').click();</script>";
+        if ($data[0][0] == 0) {
+            echo "Emailadres bestaat niet";
+        } else {
+            sendResetPasswordEmail($email);
+            echo '<p style="color: green;">Er is een email naar je opgegeven adres gestuurd!</p>';
         }
+        echo "<script>document.getElementById('openforgetpassword').click();</script>";
     }
+}
 
 function sendResetPasswordEmail($email)
 {
@@ -447,11 +450,11 @@ function sendResetPasswordEmail($email)
     $regUsername = $data['user'];
     $lastname = $data['lastname'];
 
-        $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
-        $token = str_shuffle($token);
-        $token = substr($token, 0, 10);
-        $query = $pdo->prepare("update TBL_User set verification_code =:token, verification_code_valid_until = GETDATE() + DAY(7) where email = :email");
-        $query->execute(array(':token' => $token, ':email' => $email));
+    $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
+    $token = str_shuffle($token);
+    $token = substr($token, 0, 10);
+    $query = $pdo->prepare("update TBL_User set verification_code =:token, verification_code_valid_until = GETDATE() + DAY(7) where email = :email");
+    $query->execute(array(':token' => $token, ':email' => $email));
     $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
     $token = str_shuffle($token);
     $token = substr($token, 0, 10);
@@ -478,26 +481,27 @@ function sendResetPasswordEmail($email)
     sendEmail($email, $regUsername, $subject, $text);
 }
 
-    function verificatiecodeEmail() {
-        if (isset($_POST['resendCode'])) {
-            $email = $_POST['resendCode_emailadres'];
-            global $pdo;
-            $query = $pdo->prepare("select * from TBL_User where email = :email");
-            $query->execute(array(':email' => $email));
-            $data = $query->fetch();
-            if ($data['is_verified'] == 1) {
-                echo "Emailadres is al geverifieerd";
+function verificatiecodeEmail()
+{
+    if (isset($_POST['resendCode'])) {
+        $email = $_POST['resendCode_emailadres'];
+        global $pdo;
+        $query = $pdo->prepare("select * from TBL_User where email = :email");
+        $query->execute(array(':email' => $email));
+        $data = $query->fetch();
+        if ($data['is_verified'] == 1) {
+            echo "Emailadres is al geverifieerd";
+        } else {
+            if ($data['email'] == $email) {
+                sendVerificatiecodeEmail($email);
+                echo '<p style="color: green;">Er is een email naar je opgegeven adres gestuurd!</p>';
             } else {
-                if ($data['email'] == $email) {
-                    sendVerificatiecodeEmail($email);
-                    echo '<p style="color: green;">Er is een email naar je opgegeven adres gestuurd!</p>';
-                } else {
-                    echo "Emailadres bestaat niet";
-                }
+                echo "Emailadres bestaat niet";
             }
-            echo "<script>document.getElementById('openResendCodeMenu').click();</script>";
         }
+        echo "<script>document.getElementById('openResendCodeMenu').click();</script>";
     }
+}
 
 function sendVerificatiecodeEmail($email)
 {
@@ -516,8 +520,8 @@ function sendVerificatiecodeEmail($email)
     $query = $pdo->prepare("update TBL_User set verification_code =:token, verification_code_valid_until = GETDATE() + DAY(7) where email = :email");
     $query->execute(array(':token' => $token, ':email' => $email));
 
-        $subject = "Verifieer je e-mail!";
-        $text = "
+    $subject = "Verifieer je e-mail!";
+    $text = "
                     Geachte heer of mevrouw $lastname,<br><br>
                     
                     Klik op de link hieronder om je registratie te voltooien.<br>
