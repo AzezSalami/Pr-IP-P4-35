@@ -2,7 +2,7 @@
 
 if (isset($_GET['auction'])) {
 
-echo '<!DOCTYPE html>
+    echo '<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -42,7 +42,7 @@ echo '<!DOCTYPE html>
 </head>
 <body>';
 
-require "includes/header.php";
+    require "includes/header.php";
 
     global $pdo;
     $auctionquery = $pdo->prepare("SELECT * FROM TBL_Auction WHERE auction = ?");
@@ -88,9 +88,11 @@ require "includes/header.php";
     $itemshippingmethod = $itemdata['shipping_instructions'];
 
 
-    $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order by amount DESC");
-    $bidquery->execute(array($auctionid));
-    $biddata = $bidquery->fetchAll();
+    if (isset($_POST['bidbutton'])) {
+        $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order by amount DESC");
+        $bidquery->execute(array($auctionid));
+        $biddata = $bidquery->fetchAll();
+    }
 
     $highestBidQuery = $pdo->prepare("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
     $highestBidQuery->execute(array($auctionid));
@@ -119,6 +121,11 @@ require "includes/header.php";
         $username = $_SESSION['username'];
         placeNewBid($auctionid, $newPrice, $username);
         $itemprice = $newPrice;
+    }
+
+    if (isset($_POST['blockAuction'])) {
+        $blockAuctionQuery = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE auction = ?");
+        $blockAuctionQuery->execute(array($auctionid));
     }
 
     $emailQuery = $pdo->prepare("SELECT * FROM TBL_User WHERE [user] = ?");
@@ -198,6 +205,9 @@ require "includes/header.php";
                         }
 
                         $bidquery->execute(array($auctionid));
+    if (isset($_POST['bidbutton'])) {
+        $bidquery->execute(array($auctionid));
+    }
 
                         $html = "";
 
@@ -208,6 +218,13 @@ require "includes/header.php";
                                 $html .= '<p class="bod">' . $bid['user'] . ': €' . $bid['amount'] . '</p>';
                             }
                         }
+    while ($bid = $bidquery->fetch()) {
+        if ($bid['user'] == null) {
+            $html .= '<p class="bod">[Verwijderde gebruiker]: €' . $bid['amount'] . '</p>';
+        } else {
+            $html .= '<p class="bod">' . $bid['user'] . ': €' . $bid['amount'] . '</p>';
+        }
+    }
 
                         echo $html . '</div>' . '
                    
