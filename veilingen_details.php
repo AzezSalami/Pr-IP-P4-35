@@ -2,7 +2,7 @@
 
 if (isset($_GET['auction'])) {
 
-echo '<!DOCTYPE html>
+    echo '<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -42,7 +42,7 @@ echo '<!DOCTYPE html>
 </head>
 <body>';
 
-require "includes/header.php";
+    require "includes/header.php";
 
     global $pdo;
     $auctionquery = $pdo->prepare("SELECT * FROM TBL_Auction WHERE auction = ?");
@@ -88,9 +88,11 @@ require "includes/header.php";
     $itemshippingmethod = $itemdata['shipping_instructions'];
 
 
-    $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order by amount DESC");
-    $bidquery->execute(array($auctionid));
-    $biddata = $bidquery->fetchAll();
+    if (isset($_POST['bidbutton'])) {
+        $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order by amount DESC");
+        $bidquery->execute(array($auctionid));
+        $biddata = $bidquery->fetchAll();
+    }
 
     $highestBidQuery = $pdo->prepare("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
     $highestBidQuery->execute(array($auctionid));
@@ -121,6 +123,11 @@ require "includes/header.php";
         $itemprice = $newPrice;
     }
 
+    if (isset($_POST['blockAuction'])) {
+        $blockAuctionQuery = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE auction = ?");
+        $blockAuctionQuery->execute(array($auctionid));
+    }
+
     echo "<main>
     <div class=\"row\"> 
         <div class=\"col-lg-2\">
@@ -132,7 +139,7 @@ require "includes/header.php";
                     <h2 class=\"text-left font-weight-bold\">$itemtitle</h2>
                 </div>
                 <div class=\"col\">
-                    <h1 class=\"text-right font-weight-bold\">€". ($itemprice > $itempricestart ? $itemprice : $itempricestart) . "</h1>
+                    <h1 class=\"text-right font-weight-bold\">€" . ($itemprice > $itempricestart ? $itemprice : $itempricestart) . "</h1>
                 </div>
             </div>
             <div class=\"row\">
@@ -145,8 +152,15 @@ require "includes/header.php";
                             <h3>Productdetails</h3>
                             <p>Locatie van product: $itemaddress</p>
                             <p>Verzendkosten: $itemshippingcost</p>
-                            <p>Verzendmethode: $itemshippingmethod</p>
-                        </div>
+                            <p>Verzendmethode: $itemshippingmethod</p>";
+
+    if ($_SESSION['is_admin'] == 1) {
+        echo '<form method = "post" >
+                              <button name="blockAuction" type="submit" class="btn">Blokkeer veiling</button>  
+                              </form >';
+    }
+
+    echo "</div>
                     </div>
                 </div>
                 <div class=\"col-lg-4\">
@@ -194,12 +208,14 @@ require "includes/header.php";
         echo '<p style="color: red">Je moet ingelogd zijn om te kunnen bieden.</p>';
     }
 
-    $bidquery->execute(array($auctionid));
+    if (isset($_POST['bidbutton'])) {
+        $bidquery->execute(array($auctionid));
+    }
 
     $html = "";
 
     while ($bid = $bidquery->fetch()) {
-        if($bid['user'] == null) {
+        if ($bid['user'] == null) {
             $html .= '<p class="bod">[Verwijderde gebruiker]: €' . $bid['amount'] . '</p>';
         } else {
             $html .= '<p class="bod">' . $bid['user'] . ': €' . $bid['amount'] . '</p>';
