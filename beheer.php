@@ -30,3 +30,20 @@
         ?>
 	</body>
 </html>
+
+<?php
+//    if(isset($_POST['blockUser'])){
+//        if(isset($_POST['blockUsername'])) {
+//            $username = cleanUpUserInput($_POST['blockUsername']);
+//            $sql = $pdo->prepare("UPDATE TBL_User SET is_Blocked WHERE user = ?");
+//            $sql->execute(array($username));
+//            $sql->fetch();
+//            echo " Gebruiker $username is nu geblokkeerd.";
+//        }
+//        else{
+//
+//            echo 'Voer eerst een gebruikersnaam in.';
+//        }
+//    }
+//?>
+
