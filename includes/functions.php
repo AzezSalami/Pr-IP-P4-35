@@ -162,17 +162,22 @@ function login()
         if ($username == "" || $password == "") {
             $loginMessage = "Vul een gebruikersnaam en een wachtwoord in<br><br>";
         } else {
-            $sql = "SELECT [user],password, is_verified  FROM TBL_User WHERE [user]=:user and password = :password";
+            $sql = "SELECT [user],password, is_verified, is_blocked FROM TBL_User WHERE [user]=:user and password = :password";
             $login_query = $pdo->prepare($sql);
             $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
             $result = $login_query->fetch();
-            if ($result['is_verified'] == 0) {
-                $loginMessage = "Verifieer uw account eerst<br><br>";
-            } else {
-                if ($result['user'] == $username) {
-                    $_SESSION["username"] = $username;
+
+            if($result['is_blocked'] == 1) {
+                $loginMessage = "Uw account is geblokkeerd";
+            }else{
+                if ($result['is_verified'] == 0) {
+                    $loginMessage = "Verifieer uw account eerst<br><br>";
                 } else {
-                    $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
+                    if ($result['user'] == $username) {
+                        $_SESSION["username"] = $username;
+                    } else {
+                        $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
+                    }
                 }
             }
         }
