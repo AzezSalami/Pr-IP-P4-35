@@ -121,103 +121,102 @@ require "includes/header.php";
         $itemprice = $newPrice;
     }
 
+    $emailQuery = $pdo->prepare("SELECT * FROM TBL_User WHERE [user] = ?");
+    $emailQuery -> execute(array($seller));
+    $emailSeller = $emailQuery->fetch()['email'];
+
+
+
     echo "<main>
     <div class=\"row\"> 
         <div class=\"col-lg-2\">
             <!---->
         </div>
-        <div class=\"col-lg-8 text-dark veiling-details\">
+        <div class=\"col-lg-8 text-dark veiling-details my-2 mx-3\">
             <div class=\"row my-3\">
-                <div class=\"col\">
+                <div class=\"col-lg-9\">
                     <h2 class=\"text-left font-weight-bold\">$itemtitle</h2>
                 </div>
-                <div class=\"col\">
+                <div class=\"col-lg-3\">
                     <h1 class=\"text-right font-weight-bold\">€". ($itemprice > $itempricestart ? $itemprice : $itempricestart) . "</h1>
                 </div>
             </div>
             <div class=\"row\">
-                <div class=\"col-lg-4\">
-                        <div class=\"imageContainer row\">
-                            <img class=\"foto mx-auto my-2\" src=\"data:image/png;base64," . base64_encode($imagedata) . "\" alt=\"Afbeelding van veiling\">
-                        </div>
-                    <div class=\"row\">
-                        <div class=\"col details-product\">
-                            <h3>Productdetails</h3>
-                            <p>Locatie van product: $itemaddress</p>
-                            <p>Verzendkosten: $itemshippingcost</p>
-                            <p>Verzendmethode: $itemshippingmethod</p>
-                        </div>
+                <div class=\"col-lg-4 imageContainer\">    
+                    <img class=\"foto mx-auto\" src=\"data:image/png;base64," . base64_encode($imagedata) . "\" alt=\"Afbeelding van veiling\">
+                </div>
+                <div class=\"col-line\"></div>
+                <div class=\"col-lg-4 details-product\">
+                    <h3>Productdetails</h3>
+                    <p>Locatie van product: $itemaddress</p>
+                    <p>Verzendkosten: $itemshippingcost</p>
+                    <p>Verzendmethode: $itemshippingmethod</p>
+                </div>
+                <div class=\"col-line\"></div>
+                <div class=\"col-lg details-gebruiker\">
+                    <h3>Verkoperdetails</h3>
+                    <p>Naam verkoper: $seller</p>
+                    <p>Status verkoper: $verificationStatus</p>
+                    <a href=\"mailto:$emailSeller \" target=\"_top\" class=\" btn \">Mail verkoper</a>
+                </div>
+            </div>
+            <div class=\"dropdown-divider\"></div>  
+            <div class=\"row mb-2\">
+                <div class=\"col\">
+                    <div class=\"details-veiling\">
+                        <h3>Veilingdetails</h3>
+                        <p>Status van veiling: $auctionstatus</p>
+                        <p>Startdatum: $startdate</p>
+                        <p>Sluitdatum: $enddate</p>
+                        <p>Minimale prijs: €$itempricestart</p>            
                     </div>
                 </div>
-                <div class=\"col-lg-4\">
-                    <div class=\"row\">
-                        <div class=\"col details-veiling\">
-                            <h3>Veilingdetails</h3>
-                                <p>Status van veiling: $auctionstatus</p>
-                                <p>Startdatum: $startdate</p>
-                                <p>Sluitdatum: $enddate</p>
-                                <p>Minimale prijs: €$itempricestart</p>
-                                
-                        </div>
-                    </div>
-                    <div class=\"row\">
-                        <div class=\"col details-product\">
-                            <h3>Beschrijving:</h3>
-                            <p>$itemdescription</p>
-                        </div>
+                <div class=\"col-line\"></div>
+                <div class=\"col\">
+                    <div class=\"beschrijving-product\">
+                        <h3>Beschrijving:</h3>
+                        <p>$itemdescription</p>
                     </div>
                 </div>
-                <div class=\"col-lg-4\">
-                    <div class=\"row\">
-                        <div class=\"col details-gebruiker\">
-                            <h3>Verkoperdetails</h3>
-                            <p>Naam verkoper: $seller</p>
-                            <p>Status verkoper: $verificationStatus</p>
-                        </div>
-                    </div>
-                    <div class=\"row\">
-                        <div class=\"col\">
-                            <h3>Bieden</h3>";
+                <div class=\"col-line\"></div>
+                <div class=\"col\">
+                    <div class=\"bieden mb-2\">
+                        <h3>Bieden</h3>";
+                        if (isset($_SESSION['username'])) {
+                            echo '<p class="font-weight-bold">Mijn bod wordt:</p>
+                                                <form method="post" class="form-inline">
+                                                    <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
+                                                    <div class="space"></div>
+                                                    <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
+                                                    <div class="space"></div>
+                                                    <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
+                                                </form>
+                                                <div class="my-3">
+                                                    <p class="font-weight-bold">Eerdere biedingen:</p>';
+                        } else {
+                            echo '<p style="color: red">Je moet ingelogd zijn om te kunnen bieden.</p>';
+                        }
 
-    if (isset($_SESSION['username'])) {
-        echo '<p class="font-weight-bold">Mijn bod wordt:</p>
-                            <form method="post" class="form-inline">
-                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
-                                <div class="space"></div>
-                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
-                                <div class="space"></div>
-                                <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
-                            </form>
-                            <div class="my-3">
-                                <p class="font-weight-bold">Eerdere biedingen:</p>';
-    } else {
-        echo '<p style="color: red">Je moet ingelogd zijn om te kunnen bieden.</p>';
-    }
+                        $bidquery->execute(array($auctionid));
 
-    $bidquery->execute(array($auctionid));
+                        $html = "";
 
-    $html = "";
+                        while ($bid = $bidquery->fetch()) {
+                            if($bid['user'] == null) {
+                                $html .= '<p class="bod">[Verwijderde gebruiker]: €' . $bid['amount'] . '</p>';
+                            } else {
+                                $html .= '<p class="bod">' . $bid['user'] . ': €' . $bid['amount'] . '</p>';
+                            }
+                        }
 
-    while ($bid = $bidquery->fetch()) {
-        if($bid['user'] == null) {
-            $html .= '<p class="bod">[Verwijderde gebruiker]: €' . $bid['amount'] . '</p>';
-        } else {
-            $html .= '<p class="bod">' . $bid['user'] . ': €' . $bid['amount'] . '</p>';
-        }
-    }
-
-    echo $html . '</div>' . '
-
-                        </div>
-                    </div>
+                        echo $html . '</div>' . '
+                   
                 </div>
             </div>
         </div>
         <div class="col-lg-2">
             <!---->
         </div>
-    </div>
-
 </main>';
 
     include_once "includes/footer.php";

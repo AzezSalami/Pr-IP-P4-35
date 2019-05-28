@@ -1,9 +1,15 @@
-.details-gebruiker, .details-veiling, .foto{
-    height: 22vh;
+.imageContainer{;
+    height: auto;
+    width: 100%;
+}
+
+.foto{
+    max-width: 100%;
 }
 
 .veiling-details{
-    min-height: 80.2vh;
+    border: #FFAD4F solid 2px;
+    background: white;
 }
 
 .btn-bod{
@@ -20,6 +26,13 @@
     background: white;
     padding: 5px 0;
     margin: 3px 8px;
+}
+
+/*Vertical line*/
+
+.col-line {
+    width: 1px;
+    background-color: #e9ecef;
 }
 
 
