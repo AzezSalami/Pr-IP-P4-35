@@ -87,12 +87,8 @@ if (isset($_GET['auction'])) {
     $itemshippingcost = $itemdata['shipping_cost'];
     $itemshippingmethod = $itemdata['shipping_instructions'];
 
-
-    if (isset($_POST['bidbutton'])) {
-        $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order by amount DESC");
-        $bidquery->execute(array($auctionid));
-        $biddata = $bidquery->fetchAll();
-    }
+    $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order by amount DESC");
+    $bidquery->execute(array($auctionid));
 
     $highestBidQuery = $pdo->prepare("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
     $highestBidQuery->execute(array($auctionid));
