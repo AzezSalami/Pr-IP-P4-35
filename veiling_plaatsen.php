@@ -43,6 +43,7 @@
 
 <?php
 require "includes/header.php";
+createAuction();
 ?>
 
 <main>
@@ -54,20 +55,22 @@ require "includes/header.php";
                 <h1>Veiling maken</h1>
             </div>
             <div class="dropdown-divider"></div>
-            <div class="row m-3">
-                <div class="col-lg-3">
-                    <form>
+            <form method="post" action="" enctype="multipart/form-data">
+                <div class="row m-3">
+                    <div class="col-lg-3">
                         <div class="form-label-group">
-                            <input type="text" class="form-control" id="Titel" placeholder="titel">
-                            <label for="Titel">Titel</label>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="titel">
+                            <label for="name">Titel</label>
                         </div>
                         <div class="form-label-group">
-                            <input type="number" class="form-control" id="prijsStart" placeholder="prijsStart">
-                            <label for="prijsStart">Start prijs</label>
+                            <input type="number" class="form-control" name="price_start" id="price_start"
+                                   placeholder="prijsStart">
+                            <label for="price_start">Start prijs</label>
                         </div>
                         <div class="form-group">
-                            <input class="form-control mb-3" type="text" id="locatie" placeholder="Locatie"
-                                   name="locatie">
+                            <label class="d-none" for="locatie">Locatie</label>
+                            <input class="form-control mb-3" type="text" name="locatie" id="locatie"
+                                   placeholder="Locatie">
                             <script>
                                 var placesAutocomplete = places({
                                     appId: 'plK904BLG7JJ',
@@ -76,33 +79,42 @@ require "includes/header.php";
                                 });
                             </script>
                         </div>
-                        <div class="form-label-group">
-                            <input type="number" class="form-control" id="verzendkosten" placeholder="verzendkosten">
-                            <label for="verzendkosten">Verzendkosten</label>
-                        </div>
                         <div class="form-group">
-                            <select class="form-control">
-                                <option>Ophalen</option>
-                                <option>Verzenden</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control">
-                                <option>Looptijd</option>
-                                <option>1 dag</option>
-                                <option>3 dagen</option>
-                                <option>5 dagen</option>
-                                <option>7 dagen</option>
-                                <option>10 dagen</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
+                            <label class="d-none" for="shipping_instructions"></label>
+                            <select onchange="
+                            if(this.value === 'Verzenden'){
+                            document.getElementById('shipping_cost').parentNode.classList.remove('d-none');
+                            } else {
+                            document.getElementById('shipping_cost').parentNode.classList.add('d-none');
+                            }
 
-                <div class="col-lg-4 mb-3">
-                    <form>
+                            " class="form-control" name="shipping_instructions" id="shipping_instructions">
+                                <option value="Ophalen">Ophalen</option>
+                                <option value="Verzenden">Verzenden</option>
+                            </select>
+                        </div>
+                        <div class="form-label-group d-none">
+                            <input type="number" class="form-control" name="shipping_cost" id="shipping_cost"
+                                   placeholder="verzendkosten">
+                            <label for="shipping_cost">Verzendkosten</label>
+                        </div>
                         <div class="form-group">
-                            <select class="form-control">
+                            <select class="form-control" name="duration" id="duration">
+                                <option>Looptijd</option>
+                                <option value="1">1 dag</option>
+                                <option value="3">3 dagen</option>
+                                <option value="5">5 dagen</option>
+                                <option value="7">7 dagen</option>
+                                <option value="10">10 dagen</option>
+                            </select>
+                            <label class="d-none" for="duration"></label>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mb-3">
+                        <div class="form-group">
+                            <label class="d-none" for="rubriek"></label>
+                            <select class="form-control" name="rubriek" id="rubriek">
                                 <option>Rubriek</option>
                             </select>
                         </div>
@@ -110,26 +122,26 @@ require "includes/header.php";
                             <div class="input-group-prepend">
                                 <span class="input-group-text">beschrijving</span>
                             </div>
-                            <textarea class="form-control" aria-label="With textarea"></textarea>
+                            <textarea class="form-control" aria-label="With textarea" name="description"> </textarea>
                         </div>
-                    </form>
-                </div>
-                <div class="col-lg-5">
-                    <div class="form-group">
-                        <div class="input-group mb-3">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="imgInp">
-                                <label class="custom-file-label" for="imgInp"
-                                       aria-describedby="imgInp">Kies bestand</label>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            <div class="input-group mb-3">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="image" name="image">
+                                    <label class="custom-file-label" for="image"
+                                           aria-describedby="image">Kies bestand</label>
+                                </div>
                             </div>
+                            <img id='img-upload'/>
                         </div>
-                        <img id='img-upload'/>
                     </div>
                 </div>
-            </div>
-            <div class="row m-4 btn-maakveiling">
-                <input class="btn" type="submit" value="Maak veiling aan">
-            </div>
+                <div class="row m-4 btn-maakveiling">
+                    <input class="btn" type="submit" value="Maak veiling aan" name="createAuction">
+                </div>
+            </form>
         </div>
         <div class="col-lg-1">
         </div>

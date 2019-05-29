@@ -29,7 +29,7 @@ $(document).ready( function() {
         }
     }
 
-    $("#imgInp").change(function(){
+    $("#image").change(function(){
         readURL(this);
     });
 });

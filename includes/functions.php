@@ -30,6 +30,7 @@ function connectToDatabase()
     try {
         $pdo = new PDO ("sqlsrv:Server=$hostname;Database=$databasename;ConnectionPooling=0", "$username", "$password");
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->setAttribute(PDO::SQLSRV_ATTR_ENCODING, PDO::SQLSRV_ENCODING_UTF8);
     } catch (PDOException $e) {
         echo $e;
     }
@@ -177,9 +178,9 @@ function login()
             $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
             $result = $login_query->fetch();
 
-            if($result['is_blocked'] == 1) {
+            if ($result['is_blocked'] == 1) {
                 $loginMessage = "Uw account is geblokkeerd<br><br>";
-            }else{
+            } else {
                 if ($result['is_verified'] == 0) {
                     $loginMessage = "Verifieer uw account eerst<br><br>";
                 } else {
@@ -407,7 +408,7 @@ function updateAccountData()
                         } else {
                             echo 'Huidige wachtwoord is incorrect';
                         }
-                    } catch(PDOException $e){
+                    } catch (PDOException $e) {
                         echo $e;
                     }
                 }
@@ -593,6 +594,14 @@ function placeNewBid($auctionid, $newPrice, $username)
 
 function createAuction()
 {
+    /*print_r( *///$image = unpack("H*hex", /*base64_decode(*/file_get_contents($_FILES['image']["tmp_name"]));// );
+    //$imgData =addslashes (file_get_contents($_FILES['image']["tmp_name"]));
+
+//    echo "<img class='mx-auto my-2' src='data:image/jpg;base64," . base64_encode(unpack("h", $blob)) . "'
+//                                                 alt='Afbeelding van veiling'>";
+//
+
+
     if (isset($_POST['createAuction'])) {
         global $pdo;
         $name = cleanUpUserInput($_POST['name']);
@@ -600,25 +609,63 @@ function createAuction()
         $price_start = cleanUpUserInput($_POST['price_start']);
         $shipping_cost = cleanUpUserInput($_POST['shipping_cost']);
         $shipping_instructions = cleanUpUserInput($_POST['shipping_instructions']);
-        $address = cleanUpUserInput($_POST['adress']);
+        $duration = cleanUpUserInput($_POST['duration']);
+        $address = cleanUpUserInput($_POST['locatie']);
         $seller = $_SESSION["username"];
-
-        if (empty($name) || empty($description) || empty($price_start) || empty($shipping_cost) || empty($shipping_instructions) || empty($address)) {
-            echo "Alle velden zijn verplicht";
+        $rubriek = 1;//cleanUpUserInput($_POST['rubriek']);
+        if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
+            echo "Geen geldig beeld";
         } else {
+            $media_type = getimagesize($_FILES['image']["tmp_name"])["mime"];
+            if (empty($name) || empty($description) || empty($price_start) || empty($shipping_cost) || empty($shipping_instructions) || empty($address)) {
+                echo "Alle velden zijn verplicht";
+            } else {
+                echo "jaa";
+                try {
+                    $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1 ) VALUES(?,?,?,?,?,?)");
+                    $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
+                } catch (PDOException $e) {
+                    echo $e;
+                }
+                $item="";
+                try {
+                    $item_select_query = $pdo->prepare("SELECT item FROM TBL_Item WHERE name = ? AND description = ? AND price_start = ? AND shipping_cost= ? AND shipping_instructions= ? AND address_line_1= ?");
+                    $item_select_query->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
+                    $item_select_result = $item_select_query->fetch();
 
-            $auctionquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1 ) VALUES(?,?,?,?,?,?)");
-            $auctionquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
+                    $item = $item_select_result['item'];
+                } catch (PDOException $e) {
+                    echo $e;
+                }
+                try {
+                    $rubricquery = $pdo->prepare("INSERT INTO TBL_Item_In_Rubric( item ,rubric) VALUES(?,?)");
+                    $rubricquery->execute(array($item, $rubriek));
+                } catch (PDOException $e) {
+                    echo $e;
+                }
+                try {
+                    $auctionquery = $pdo->prepare("INSERT INTO TBL_Auction( seller, item ,moment_end) VALUES(:seller,:item,GETDATE() + DAY(:duration))");
+                    $duration=(int)$duration;
+                    $auctionquery->bindParam(':duration', $duration, PDO::PARAM_INT);
+                    $auctionquery->bindParam(':seller', $seller, PDO::PARAM_STR);
+                    $auctionquery->bindParam(':item', $item, PDO::PARAM_INT);
+                    $auctionquery->execute();
+                } catch (PDOException $e) {
+                    echo $e;
+                }
+                try {
+                    $blob = mb_convert_encoding(base64_decode(fopen($_FILES['image']["tmp_name"], 'rb')), 'UTF-16', 'UTF-8');
 
-            $itemquery = $pdo->prepare("SELECT item FROM TBL_Item WHERE name = ? AND description = ? AND price_start = ? AND shipping_cost= ? AND shipping_instructions= ? AND address_line_1= ?");
-            $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
-            $itemResult = $itemquery->fetch();
+                    $resourcequery = $pdo->prepare("INSERT INTO TBL_Resource(item , [file] ,media_type, sort_number) VALUES(:item,CONVERT(VARBINARY(MAX), :image),:media_type,0)");
+                    $resourcequery->bindParam(':image', $blob, PDO::PARAM_LOB);
+                    $resourcequery->bindParam(':item', $item, PDO::PARAM_INT);
+                    $resourcequery->bindParam(':media_type', $media_type, PDO::PARAM_STR);
+                    $resourcequery->execute();
+                } catch (PDOException $e) {
+                    echo $e;
+                }
 
-            $item = $itemResult['item'];
-
-            $query = $pdo->prepare("INSERT INTO TBL_Auction( seller, item) VALUES(?,?)");
-            $query->execute(array($seller, $item));
-            $result = $query->fetch();
+            }
         }
     }
 }
