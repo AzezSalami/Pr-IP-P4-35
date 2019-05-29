@@ -286,7 +286,7 @@ login();
                             <div class="row">
                                 <div class="col-lg mx-4 mt-0 mb-2">
                                     <input type="checkbox" class="form-check-input " name="is_mobile">
-                                    <label class="form-check-label text-dark" for="is_mobile">mobielnummer?</label>
+                                    <label class="form-check-label text-dark" for="is_mobile"><i class="fas fa-mobile-alt"></i> ?</label>
                                 </div>
                             </div>
                             <div class="row">
