@@ -177,7 +177,7 @@ function login()
             $result = $login_query->fetch();
 
             if($result['is_blocked'] == 1) {
-                $loginMessage = "Uw account is geblokkeerd";
+                $loginMessage = "Uw account is geblokkeerd<br><br>";
             }else{
                 if ($result['is_verified'] == 0) {
                     $loginMessage = "Verifieer uw account eerst<br><br>";
