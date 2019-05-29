@@ -152,9 +152,9 @@ if (isset($_GET['auction'])) {
                 <div class=\"col-line\"></div>
                 <div class=\"col-lg-4 details-product\">
                     <h3>Productdetails</h3>
-                    <p>Locatie van product: $itemaddress</p>
-                    <p>Verzendkosten: $itemshippingcost</p>
-                    <p>Verzendmethode: $itemshippingmethod</p>
+                    <p><span>Locatie van product:</span> $itemaddress</p>
+                    <p><span>Verzendkosten:</span> $itemshippingcost</p>
+                    <p><span>Verzendmethode:</span> $itemshippingmethod</p>
                 </div>
                 <div class=\"col-line\"></div>
                 <div class=\"col-lg details-gebruiker\">
@@ -169,10 +169,10 @@ if (isset($_GET['auction'])) {
                 <div class=\"col-lg\">
                     <div class=\"details-veiling\">
                         <h3>Veilingdetails</h3>
-                        <p>Status van veiling: $auctionstatus</p>
-                        <p>Startdatum: $startdate</p>
-                        <p>Sluitdatum: $enddate</p>
-                        <p>Minimale prijs: €$itempricestart</p>            
+                        <p><span>Status van veiling:</span> $auctionstatus</p>
+                        <p><span>Startdatum:</span> $startdate</p>
+                        <p><span>Sluitdatum:</span> $enddate</p>
+                        <p><span>Minimale prijs:</span> €$itempricestart</p>            
                     </div>
                 </div>
                 <div class=\"col-line\"></div>
@@ -205,9 +205,9 @@ if (isset($_GET['auction'])) {
 
                         while ($bid = $bidquery->fetch()) {
                             if($bid['user'] == null) {
-                                $html .= '<p class="bod button-left">[Verwijderde gebruiker]: €' . $bid['amount'] . '</p>';
+                                $html .= '<p class="bod button-left">&nbsp;&nbsp;<span class="verwijderd">verwijderd:</span> &nbsp; €' . $bid['amount'] . '</p>';
                             } else {
-                                $html .= '<p class="bod button-left">' . $bid['user'] . ': €' . $bid['amount'] . '</p>';
+                                $html .= '<p class="bod button-left">&nbsp;&nbsp;<span>' . $bid['user'] . ':</span> &nbsp; €' . $bid['amount'] . '</p>';
                             }
                         }
 

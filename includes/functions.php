@@ -252,7 +252,7 @@ function register()
             $canRegister = false;
         }
 
-        if (strlen($telephone_number) < 10 || !preg_match("#[0-9]+#", $telephone_number)) {
+        if (strlen($telephone_number) < 10 || !preg_match("/([0-9]){10}/", $telephone_number)) {
             echo "Een telefonnummer moet uit minimaal 10 cijfers bestaan<br>";
             $canRegister = false;
         }
@@ -392,25 +392,29 @@ function updateAccountData()
                     echo 'Zorg dat beide wachtwoorden hetzelfde zijn';
 
                 } else {
-                    $sql = "SELECT [user],password FROM TBL_User WHERE [user]=:username and password = :password";
-                    $reset_query = $pdo->prepare($sql);
-                    $reset_query->execute(array(':username' => $username, ':password' => hash('sha1', $cur_password)));
-                    $result = $reset_query->fetch();
-                    if ($result['password'] == hash('sha1', $cur_password)) {
-                        if (!empty($firstname) || !empty($lastname) || !empty($address)) {
-                            $values .= ", ";
+                    try {
+                        $sql = "SELECT [user],password FROM TBL_User WHERE [user]=:username and password = :password";
+                        $reset_query = $pdo->prepare($sql);
+                        $reset_query->execute(array(':username' => $username, ':password' => hash('sha1', $cur_password)));
+                        $result = $reset_query->fetch();
+                        if ($result['password'] == hash('sha1', $cur_password)) {
+                            if (!empty($firstname) || !empty($lastname) || !empty($address)) {
+                                $values .= ", ";
+                            }
+                            $values .= "password = ?";
+                            $password_check = true;
+                            $array[] = hash('sha1', $resPassword);
+                        } else {
+                            echo 'Huidige wachtwoord is incorrect';
                         }
-                        $values .= "password = ?";
-                        $password_check = true;
-                        $array[] = hash('sha1', $resPassword);
-                    } else {
-                        echo 'Huidige wachtwoord is incorrect';
+                    } catch(PDOException $e){
+                        echo $e;
                     }
                 }
             }
         }
         if (!empty($telephone_number)) {
-            if (strlen($telephone_number) < 10 || !preg_match("#[0-9]+#", $telephone_number)) {
+            if (strlen($telephone_number) != 10 || !preg_match("/([0-9]){10}/", $telephone_number)) {
                 echo "Een telefonnummer moet uit minimaal 10 cijfers bestaan<br>";
             } else {
                 echo '<p class="text-success">jouw gegevens zijn geüpdatet </p>';
@@ -596,25 +600,28 @@ function createAuction()
         $price_start = cleanUpUserInput($_POST['price_start']);
         $shipping_cost = cleanUpUserInput($_POST['shipping_cost']);
         $shipping_instructions = cleanUpUserInput($_POST['shipping_instructions']);
-        $address =cleanUpUserInput($_POST['adress']);
-        $seller = $_SESSION["username"];;
+        $address = cleanUpUserInput($_POST['adress']);
+        $seller = $_SESSION["username"];
 
-        $auctionquery = $pdo->prepare( "INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1 ) VALUES(?,?,?,?,?,?)");
-        $auctionquery->execute(array($name,$description,$price_start ,$shipping_cost,$shipping_instructions,$address));
-//        $auctionResult = $auctionquery->fetch();
+        if (empty($name) || empty($description) || empty($price_start) || empty($shipping_cost) || empty($shipping_instructions) || empty($address)) {
+            echo "Alle velden zijn verplicht";
+        } else {
 
-        $itemquery = $pdo->prepare( "SELECT item FROM TBL_Item WHERE name = ? AND description = ? AND price_start = ? AND shipping_cost= ? AND shipping_instructions= ? AND address_line_1= ?");
-        $itemquery ->execute(array($name,$description,$price_start ,$shipping_cost,$shipping_instructions,$address));
-        $itemResult = $itemquery->fetch();
+            $auctionquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1 ) VALUES(?,?,?,?,?,?)");
+            $auctionquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
 
-        $item = $itemResult['item'];
+            $itemquery = $pdo->prepare("SELECT item FROM TBL_Item WHERE name = ? AND description = ? AND price_start = ? AND shipping_cost= ? AND shipping_instructions= ? AND address_line_1= ?");
+            $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
+            $itemResult = $itemquery->fetch();
 
-        $query = $pdo->prepare("INSERT INTO TBL_Auction( seller, item) VALUES(?,?)");
-        $query->execute(array($seller,$item));
-        $result = $query->fetch();
+            $item = $itemResult['item'];
+
+            $query = $pdo->prepare("INSERT INTO TBL_Auction( seller, item) VALUES(?,?)");
+            $query->execute(array($seller, $item));
+            $result = $query->fetch();
+        }
     }
-
-    }
+}
 
 function deleteNotActiveAccount()
 {

@@ -55,11 +55,10 @@ login();
                             <button class="btn btn-account bg-lightblue dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-user"></i>
                             </button>
-                            
                             <div class="dropdown-menu bg-lightblue">
                                 <a class="dropdown-item" href="gegevens.php">Mijn gegevens</a>
-                                <!--<a class="dropdown-item" href="#">Mijn veilingen</a>-->
-                                <!--<a class="dropdown-item" href="#">Mijn biedingen</a>-->
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="veiling_plaatsen.php">Nieuwe veiling</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="?logout=true">Uitloggen</a>
                             </div>
@@ -73,8 +72,8 @@ login();
                             
                             <div class="dropdown-menu bg-lightblue">
                                 <a class="dropdown-item" href="gegevens.php">Mijn gegevens</a>
-                                <!--<a class="dropdown-item" href="#">Mijn veilingen</a>-->
-                                <!--<a class="dropdown-item" href="#">Mijn biedingen</a>-->
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="veiling_plaatsen.php">Nieuwe veiling</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="?logout=true">Uitloggen</a>
                             </div>
@@ -286,7 +285,7 @@ login();
                             <div class="row">
                                 <div class="col-lg mx-4 mt-0 mb-2">
                                     <input type="checkbox" class="form-check-input " name="is_mobile">
-                                    <label class="form-check-label text-dark" for="is_mobile">mobielnummer?</label>
+                                    <label class="form-check-label text-dark" for="is_mobile"><i class="fas fa-mobile-alt"></i> ?</label>
                                 </div>
                             </div>
                             <div class="row">
@@ -330,7 +329,7 @@ login();
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title text-dark">reset password</h4>
+                    <h4 class="modal-title text-dark">Wachtwoord vergeten?</h4>
                     <button id="" type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->

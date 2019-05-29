@@ -37,7 +37,16 @@
     background-color: #e9ecef;
 }
 
+span{
+    font-weight: bold;
+    text-decoration: underline #FFD042;
+}
 
+.prijs{
+    font-weight: unset;
+    text-decoration: none;
+    text-align: right;
+}
 
 @media only screen and (min-device-width: 991px){
     h2{
@@ -83,3 +92,8 @@
 }
 
 
+
+.verwijderd{
+    color: red;
+
+}
