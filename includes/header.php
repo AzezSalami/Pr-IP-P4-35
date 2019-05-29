@@ -330,7 +330,7 @@ login();
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title text-dark">reset password</h4>
+                    <h4 class="modal-title text-dark">Wachtwoord vergeten?</h4>
                     <button id="" type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
