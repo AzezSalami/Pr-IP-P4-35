@@ -5,6 +5,8 @@
 
 .foto{
     max-width: 100%;
+    display: flex;
+    justify-content: space-around;
 }
 
 .veiling-details{
@@ -33,6 +35,48 @@
 .col-line {
     width: 1px;
     background-color: #e9ecef;
+}
+
+.button-left{
+    margin: 0 0 0 15px;
+}
+
+h1, h2, h3, p{
+    margin: 0 15px 0 15px;
+}
+@media only screen and (min-device-width: 991px){
+    h2{
+        text-align: left;
+        font-weight: bold;
+    }
+}
+
+@media only screen and (max-device-width: 991px){
+    h1{
+         font-weight: bold;
+
+     }
+    h2{
+        text-align: left;
+        font-weight: bold;
+    }
+
+}
+
+@media only screen and (max-device-width: 575px){
+    h2{
+        font-size: 1.5em;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    h1{
+        text-align: center;
+        font_weight: bold;
+        font-size: 2em;
+    }
+
+    z
 }
 
 
