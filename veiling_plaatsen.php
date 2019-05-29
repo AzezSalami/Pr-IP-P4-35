@@ -52,7 +52,7 @@ createAuction();
         </div>
         <div class="col-lg-10 my-2 ml-2 mr-1 veiling-maken">
             <div class="row m-3">
-                <h1>Veiling maken</h1>
+                <h1>Nieuwe veiling</h1>
             </div>
             <div class="dropdown-divider"></div>
             <form method="post" action="" enctype="multipart/form-data">
@@ -118,9 +118,17 @@ createAuction();
                                 <option>Rubriek</option>
                             </select>
                         </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Beschrijving</span>
+                            </div>
+                            <textarea class="form-control" name="auctionDescription"></textarea>
+                        </div>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">beschrijving</span>
+                                <div class="input-group-text">
+                                    <input type="radio">
+                                </div>
                             </div>
                             <textarea class="form-control" aria-label="With textarea" name="description"> </textarea>
                         </div>

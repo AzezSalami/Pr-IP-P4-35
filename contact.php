@@ -40,7 +40,7 @@
 require "includes/header.php";
 ?>
 
-<main>
+<main style="text-align: center">
     <div class="row">
         <div class="col-lg-2">
         </div>

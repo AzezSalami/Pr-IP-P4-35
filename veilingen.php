@@ -60,7 +60,7 @@
 		                <form action="#">
 			                <p class="font-weight-bold">Prijs:</p>
 			                <div class="row">
-				                <div class="col-lg-5 text-left">
+				                <div class="col-lg-5 pr-0 text-center">
 					                <input onchange="this.value = parseFloat(this.value).toFixed(2);" class="bg-gray text-center input-details" type="number" id="amount-min"
 					                       placeholder="min" <?php
                                         if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice) && ((float)$minPrice)>=0) {
@@ -68,10 +68,10 @@
                                         }
                                     ?>>
 				                </div>
-				                <div class="col-lg-1 text-center">
+				                <div class="col-lg-1 px-0 text-center">
 					                <p class="text-white font-weight-bold">-</p>
 				                </div>
-				                <div class="col-lg-5 text-right">
+				                <div class="col-lg-5 pl-0 text-center">
 					                <input onchange="this.value = parseFloat(this.value).toFixed(2);" class="bg-gray text-center input-details" type="number" id="amount-max"
 					                       placeholder="max" <?php
                                         if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice) && ((float)$maxPrice)>=0) {

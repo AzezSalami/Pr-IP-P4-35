@@ -139,10 +139,10 @@ if (isset($_GET['auction'])) {
         <div class=\"col-lg-8 text-dark veiling-details my-2 mx-3\">
             <div class=\"row my-3\">
                 <div class=\"col-lg-9\">
-                    <h2 class=\"text-left font-weight-bold\">$itemtitle</h2>
+                    <h2>$itemtitle</h2>
                 </div>
                 <div class=\"col-lg-3\">
-                    <h1 class=\"text-right font-weight-bold\">€". ($itemprice > $itempricestart ? $itemprice : $itempricestart) . "</h1>
+                    <h1 class='\prijs\'>€". ($itemprice > $itempricestart ? $itemprice : $itempricestart) . "</h1>
                 </div>
             </div>
             <div class=\"row\">
@@ -152,43 +152,43 @@ if (isset($_GET['auction'])) {
                 <div class=\"col-line\"></div>
                 <div class=\"col-lg-4 details-product\">
                     <h3>Productdetails</h3>
-                    <p>Locatie van product: $itemaddress</p>
-                    <p>Verzendkosten: $itemshippingcost</p>
-                    <p>Verzendmethode: $itemshippingmethod</p>
+                    <p><span>Locatie van product:</span> $itemaddress</p>
+                    <p><span>Verzendkosten:</span> $itemshippingcost</p>
+                    <p><span>Verzendmethode:</span> $itemshippingmethod</p>
                 </div>
                 <div class=\"col-line\"></div>
                 <div class=\"col-lg details-gebruiker\">
                     <h3>Verkoperdetails</h3>
                     <p>Naam verkoper: $seller</p>
                     <p>Status verkoper: $verificationStatus</p>
-                    <a href=\"mailto:$emailSeller \" target=\"_top\" class=\" btn \">Mail verkoper</a>
+                    <a href=\"mailto:$emailSeller \" target=\"_top\" class=\" btn button-left\">Mail verkoper</a>
                 </div>
             </div>
             <div class=\"dropdown-divider\"></div>  
             <div class=\"row mb-2\">
-                <div class=\"col\">
+                <div class=\"col-lg\">
                     <div class=\"details-veiling\">
                         <h3>Veilingdetails</h3>
-                        <p>Status van veiling: $auctionstatus</p>
-                        <p>Startdatum: $startdate</p>
-                        <p>Sluitdatum: $enddate</p>
-                        <p>Minimale prijs: €$itempricestart</p>            
+                        <p><span>Status van veiling:</span> $auctionstatus</p>
+                        <p><span>Startdatum:</span> $startdate</p>
+                        <p><span>Sluitdatum:</span> $enddate</p>
+                        <p><span>Minimale prijs:</span> €$itempricestart</p>            
                     </div>
                 </div>
                 <div class=\"col-line\"></div>
-                <div class=\"col\">
+                <div class=\"col-lg\">
                     <div class=\"beschrijving-product\">
                         <h3>Beschrijving:</h3>
                         <p>$itemdescription</p>
                     </div>
                 </div>
                 <div class=\"col-line\"></div>
-                <div class=\"col\">
+                <div class=\"col-lg\">
                     <div class=\"bieden mb-2\">
                         <h3>Bieden</h3>";
                         if (isset($_SESSION['username'])) {
                             echo '<p class="font-weight-bold">Mijn bod wordt:</p>
-                                                <form method="post" class="form-inline">
+                                                <form method="post" class="form-inline button-left">
                                                     <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
                                                     <div class="space"></div>
                                                     <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
@@ -205,9 +205,9 @@ if (isset($_GET['auction'])) {
 
                         while ($bid = $bidquery->fetch()) {
                             if($bid['user'] == null) {
-                                $html .= '<p class="bod">[Verwijderde gebruiker]: €' . $bid['amount'] . '</p>';
+                                $html .= '<p class="bod button-left">&nbsp;&nbsp;<span class="verwijderd">verwijderd:</span> &nbsp; €' . $bid['amount'] . '</p>';
                             } else {
-                                $html .= '<p class="bod">' . $bid['user'] . ': €' . $bid['amount'] . '</p>';
+                                $html .= '<p class="bod button-left">&nbsp;&nbsp;<span>' . $bid['user'] . ':</span> &nbsp; €' . $bid['amount'] . '</p>';
                             }
                         }
 
