@@ -55,11 +55,10 @@ login();
                             <button class="btn btn-account bg-lightblue dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-user"></i>
                             </button>
-                            
                             <div class="dropdown-menu bg-lightblue">
                                 <a class="dropdown-item" href="gegevens.php">Mijn gegevens</a>
-                                <!--<a class="dropdown-item" href="#">Mijn veilingen</a>-->
-                                <!--<a class="dropdown-item" href="#">Mijn biedingen</a>-->
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="veiling_plaatsen.php">Nieuwe veiling</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="?logout=true">Uitloggen</a>
                             </div>
@@ -73,8 +72,8 @@ login();
                             
                             <div class="dropdown-menu bg-lightblue">
                                 <a class="dropdown-item" href="gegevens.php">Mijn gegevens</a>
-                                <!--<a class="dropdown-item" href="#">Mijn veilingen</a>-->
-                                <!--<a class="dropdown-item" href="#">Mijn biedingen</a>-->
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="veiling_plaatsen.php">Nieuwe veiling</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="?logout=true">Uitloggen</a>
                             </div>

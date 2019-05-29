@@ -43,6 +43,28 @@
 
 <?php
 require "includes/header.php";
+
+/* ik ga er hier vanuit dat user al een seller is, moet nog gecontroleerd worden in een nog niet gemaakte session variabele */
+/* als user nog geen seller is moet hier een 'hoe wordt je seller' pagina komen */
+
+if(isset($_POST['auctionSubmit'])) {
+    global $pdo;
+    $username = $_SESSION['username'];
+
+    $auctionTitle = $_POST['auctionName'];
+    $priceStart = $_POST['priceStart'];
+    $auctionShippingCosts = $_POST['auctionShippingCosts'];
+    $auctionShippingMethod = $_POST['auctionShippingMethod'];
+    $auctionDuration = $_POST['auctionDuration'];
+    $auctionRubric = $_POST['auctionRubric'];
+    $auctionDescription = $_POST['auctionDescription'];
+    $auctionImage = $_POST['auctionImage'];
+
+    $newAuctionQuery = $pdo->prepare("INSERT INTO TBL_Auction (seller, moment_start, moment_end, is_promoted, is_blocked)");
+    $newAuctionQuery->execute();
+
+}
+
 ?>
 
 <main>
@@ -51,23 +73,23 @@ require "includes/header.php";
         </div>
         <div class="col-lg-10 my-2 ml-2 mr-1 veiling-maken">
             <div class="row m-3">
-                <h1>Veiling maken</h1>
+                <h1>Nieuwe veiling</h1>
             </div>
             <div class="dropdown-divider"></div>
             <div class="row m-3">
                 <div class="col-lg-3">
-                    <form>
+                    <form method="POST">
                         <div class="form-label-group">
-                            <input type="text" class="form-control" id="Titel" placeholder="titel">
+                            <input type="text" class="form-control" id="Titel" placeholder="auctionName">
                             <label for="Titel">Titel</label>
                         </div>
                         <div class="form-label-group">
-                            <input type="number" class="form-control" id="prijsStart" placeholder="prijsStart">
+                            <input type="number" class="form-control" id="prijsStart" placeholder="priceStart">
                             <label for="prijsStart">Start prijs</label>
                         </div>
                         <div class="form-group">
                             <input class="form-control mb-3" type="text" id="locatie" placeholder="Locatie"
-                                   name="locatie">
+                                   name="auctionLocation">
                             <script>
                                 var placesAutocomplete = places({
                                     appId: 'plK904BLG7JJ',
@@ -77,17 +99,17 @@ require "includes/header.php";
                             </script>
                         </div>
                         <div class="form-label-group">
-                            <input type="number" class="form-control" id="verzendkosten" placeholder="verzendkosten">
+                            <input type="number" class="form-control" id="verzendkosten" placeholder="auctionShippingCosts">
                             <label for="verzendkosten">Verzendkosten</label>
                         </div>
                         <div class="form-group">
-                            <select class="form-control">
+                            <select class="form-control" name="auctionShippingMethod">
                                 <option>Ophalen</option>
                                 <option>Verzenden</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control">
+                            <select class="form-control" name="auctionDuration">
                                 <option>Looptijd</option>
                                 <option>1 dag</option>
                                 <option>3 dagen</option>
@@ -102,15 +124,15 @@ require "includes/header.php";
                 <div class="col-lg-4 mb-3">
                     <form>
                         <div class="form-group">
-                            <select class="form-control">
+                            <select class="form-control" name="auctionRubric">
                                 <option>Rubriek</option>
                             </select>
                         </div>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">beschrijving</span>
+                                <span class="input-group-text">Beschrijving</span>
                             </div>
-                            <textarea class="form-control" aria-label="With textarea"></textarea>
+                            <textarea class="form-control" aria-label="With textarea" name="auctionDescription"></textarea>
                         </div>
                     </form>
                 </div>
@@ -118,7 +140,7 @@ require "includes/header.php";
                     <div class="form-group">
                         <div class="input-group mb-3">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="imgInp">
+                                <input type="file" class="custom-file-input" id="imgInp" name="auctionImage">
                                 <label class="custom-file-label" for="imgInp"
                                        aria-describedby="imgInp">Kies bestand</label>
                             </div>
@@ -128,7 +150,7 @@ require "includes/header.php";
                 </div>
             </div>
             <div class="row m-4 btn-maakveiling">
-                <input class="btn" type="submit" value="Maak veiling aan">
+                <input class="btn" type="submit" value="Maak veiling aan" name="auctionSubmit">
             </div>
         </div>
         <div class="col-lg-1">
