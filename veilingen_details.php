@@ -205,7 +205,7 @@ if (isset($_GET['auction'])) {
 
                         while ($bid = $bidquery->fetch()) {
                             if($bid['user'] == null) {
-                                $html .= '<p class="bod">&nbsp;&nbsp;<span>[Verwijderde gebruiker]:</span> &nbsp; €' . $bid['amount'] . '</p>';
+                                $html .= '<p class="bod">&nbsp;&nbsp;<span class="verwijderd">verwijderd:</span> &nbsp; €' . $bid['amount'] . '</p>';
                             } else {
                                 $html .= '<p class="bod">&nbsp;&nbsp;<span>' . $bid['user'] . ':</span> &nbsp; €' . $bid['amount'] . '</p>';
                             }

@@ -45,3 +45,8 @@ span{
     text-decoration: none;
     text-align: right;
 }
+
+.verwijderd{
+    color: red;
+
+}
