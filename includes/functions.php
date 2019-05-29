@@ -10,6 +10,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 global $loginMessage;
+
 function cleanUpUserInput($input)
 {
     $input = trim($input);
@@ -584,6 +585,35 @@ function placeNewBid($auctionid, $newPrice, $username)
         echo $e;
     }
 }
+
+function createAuction()
+{
+    if (isset($_POST['createAuction'])) {
+        global $pdo;
+        $name = cleanUpUserInput($_POST['name']);
+        $description = cleanUpUserInput($_POST['description']);
+        $price_start = cleanUpUserInput($_POST['price_start']);
+        $shipping_cost = cleanUpUserInput($_POST['shipping_cost']);
+        $shipping_instructions = cleanUpUserInput($_POST['shipping_instructions']);
+        $address =cleanUpUserInput($_POST['adress']);
+        $seller = $_SESSION["username"];;
+
+        $auctionquery = $pdo->prepare( "INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1 ) VALUES(?,?,?,?,?,?)");
+        $auctionquery->execute(array($name,$description,$price_start ,$shipping_cost,$shipping_instructions,$address));
+//        $auctionResult = $auctionquery->fetch();
+
+        $itemquery = $pdo->prepare( "SELECT item FROM TBL_Item WHERE name = ? AND description = ? AND price_start = ? AND shipping_cost= ? AND shipping_instructions= ? AND address_line_1= ?");
+        $itemquery ->execute(array($name,$description,$price_start ,$shipping_cost,$shipping_instructions,$address));
+        $itemResult = $itemquery->fetch();
+
+        $item = $itemResult['item'];
+
+        $query = $pdo->prepare("INSERT INTO TBL_Auction( seller, item) VALUES(?,?)");
+        $query->execute(array($seller,$item));
+        $result = $query->fetch();
+    }
+
+    }
 
 function deleteNotActiveAccount()
 {
