@@ -49,13 +49,13 @@ require "includes/header.php";
     <div class="row">
         <div class="col-lg-1">
         </div>
-        <div class="col-lg-10 my-2 veiling-maken">
+        <div class="col-lg-10 my-2 ml-2 mr-1 veiling-maken">
             <div class="row m-3">
                 <h1>Veiling maken</h1>
             </div>
             <div class="dropdown-divider"></div>
             <div class="row m-3">
-                <div class="col-3">
+                <div class="col-lg-3">
                     <form>
                         <div class="form-label-group">
                             <input type="text" class="form-control" id="Titel" placeholder="titel">
@@ -99,7 +99,7 @@ require "includes/header.php";
                     </form>
                 </div>
 
-                <div class="col-4">
+                <div class="col-lg-4 mb-3">
                     <form>
                         <div class="form-group">
                             <select class="form-control">
@@ -114,7 +114,7 @@ require "includes/header.php";
                         </div>
                     </form>
                 </div>
-                <div class="col-5">
+                <div class="col-lg-5">
                     <div class="form-group">
                         <div class="input-group mb-3">
                             <div class="custom-file">
