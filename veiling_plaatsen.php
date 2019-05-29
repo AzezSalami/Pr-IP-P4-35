@@ -128,11 +128,19 @@ if(isset($_POST['auctionSubmit'])) {
                                 <option>Rubriek</option>
                             </select>
                         </div>
-                        <div class="input-group">
+                        <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Beschrijving</span>
                             </div>
-                            <textarea class="form-control" aria-label="With textarea" name="auctionDescription"></textarea>
+                            <textarea class="form-control" name="auctionDescription"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="radio">
+                                </div>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Wilt u deze advertentie promoten?" readonly>
                         </div>
                     </form>
                 </div>
