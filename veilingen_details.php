@@ -117,6 +117,7 @@ if (isset($_GET['auction'])) {
         $username = $_SESSION['username'];
         placeNewBid($auctionid, $newPrice, $username);
         $itemprice = $newPrice;
+        $bidquery->execute(array($auctionid));
     }
 
     if (isset($_POST['blockAuction'])) {
@@ -200,11 +201,6 @@ if (isset($_GET['auction'])) {
                             echo '<p style="color: red">Je moet ingelogd zijn om te kunnen bieden.</p>';
                         }
 
-                        $bidquery->execute(array($auctionid));
-    if (isset($_POST['bidbutton'])) {
-        $bidquery->execute(array($auctionid));
-    }
-
                         $html = "";
 
                         while ($bid = $bidquery->fetch()) {
@@ -214,13 +210,6 @@ if (isset($_GET['auction'])) {
                                 $html .= '<p class="bod">' . $bid['user'] . ': €' . $bid['amount'] . '</p>';
                             }
                         }
-    while ($bid = $bidquery->fetch()) {
-        if ($bid['user'] == null) {
-            $html .= '<p class="bod">[Verwijderde gebruiker]: €' . $bid['amount'] . '</p>';
-        } else {
-            $html .= '<p class="bod">' . $bid['user'] . ': €' . $bid['amount'] . '</p>';
-        }
-    }
 
                         echo $html . '</div>' . '
                    
