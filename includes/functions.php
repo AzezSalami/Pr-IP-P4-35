@@ -172,18 +172,23 @@ function login()
         if ($username == "" || $password == "") {
             $loginMessage = "Vul een gebruikersnaam en een wachtwoord in<br><br>";
         } else {
-            $sql = "SELECT [user],password, is_verified, is_admin FROM TBL_User WHERE [user]=:user and password = :password";
+            $sql = "SELECT [user],password, is_verified, is_admin,  is_blocked FROM TBL_User WHERE [user]=:user and password = :password";
             $login_query = $pdo->prepare($sql);
             $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
             $result = $login_query->fetch();
-            if ($result['is_verified'] == 0 && $result['user'] == $username) {
-                $loginMessage = "Verifieer uw account eerst<br><br>";
-            } else {
-                if ($result['user'] == $username) {
-                    $_SESSION["username"] = $username;
-                    $_SESSION['is_admin'] = (int)$result['is_admin'];
+
+            if($result['is_blocked'] == 1) {
+                $loginMessage = "Uw account is geblokkeerd<br><br>";
+            }else{
+                if ($result['is_verified'] == 0) {
+                    $loginMessage = "Verifieer uw account eerst<br><br>";
                 } else {
-                    $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
+                    if ($result['user'] == $username) {
+                        $_SESSION["username"] = $username;
+                        $_SESSION['is_admin'] = (int)$result['is_admin'];
+                    } else {
+                        $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
+                    }
                 }
             }
         }
@@ -460,11 +465,6 @@ function sendResetPasswordEmail($email)
     $token = str_shuffle($token);
     $token = substr($token, 0, 10);
     $query = $pdo->prepare("update TBL_User set verification_code =:token, verification_code_valid_until = GETDATE() + DAY(7) where email = :email");
-    $query->execute(array(':token' => $token, ':email' => $email));
-    $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
-    $token = str_shuffle($token);
-    $token = substr($token, 0, 10);
-    $query = $pdo->prepare("update TBL_User set verification_code =:token where email = :email");
     $query->execute(array(':token' => $token, ':email' => $email));
 
     $subject = "Wachtwoord opnieuw instellen";
