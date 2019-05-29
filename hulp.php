@@ -82,11 +82,15 @@ require "includes/header.php";
                                         <div class="collapse show" id="accordion-tab-1-content-1"
                                              aria-labelledby="accordion-tab-1-heading-1" data-parent="#accordion-tab-1">
                                             <div class="card-body">
-                                                <p>In de rechterbovenhoek van deze site kun je een blauwe knop zien met
-                                                    de aanduiding account.
-                                                    Om jezelf te registeren moet je dan de optie registeren kiezen.
-                                                    Nadat je het registratieproces
-                                                    voltooid hebt en geverifieerd hebt, heb je een geldig account.</p>
+                                                <p>Als je je op onze website begeeft kan je op elke pagina in de rechter
+                                                    hoek aan de bovenkant van het scherm een blauwe knop zien waarop
+                                                    'Aanmelden' staat. Nadat je hier op hebt geklikt kun je een keuze
+                                                    maken om in te loggen op een bestaand account of jezelf te registreren.
+                                                    Als je op registreren klikt wordt er een pop-up weergeven waar je
+                                                    een nieuw  account kunt maken. Nadat je alle stappen inclusief de
+                                                    verificatie hebt voltooid zal het registratieproces voltooid zijn en
+                                                    kan je gebruik maken van het nieuw gecreëerde account.
+                                                    </p>
                                             </div>
                                         </div>
                                     </div>
@@ -103,12 +107,17 @@ require "includes/header.php";
                                         <div class="collapse" id="accordion-tab-1-content-2"
                                              aria-labelledby="accordion-tab-1-heading-2" data-parent="#accordion-tab-1">
                                             <div class="card-body">
-                                                <p>- je kunt proberen opnieuw een mail te laten sturen, klik dan op
-                                                    “Nieuwe verificatiecode?” in het inlogvenster.<br>
-                                                    - Check of je het goede e-mail adres hebt ingevoerd.<br>
-                                                    - Check je spam. De e-mail kan daar beland zijn.</p>
-                                                <p><strong>Let op: </strong>Soms duurt het even voordat de mail binnen
-                                                    is, wacht een paar minuten.</p>
+                                                <p>Soms kan het zijn dat er iets is misgegaan tijdens het verzenden van
+                                                    de verificatiemail. Hieronder verschillende acties die je zelf kunt
+                                                    ondernemen om dit op te lossen.<br><br>
+                                                    - Kies voor 'Nieuwe verificatiecode?' op het inlogvenster. Na het
+                                                    invullen van de email die je tijdens het registratieproces hebt
+                                                    gebruiker wordt een nieuwe verificatiecode naar jouw inbox verzonden.<br>
+                                                    - Check de 'Spam' folder op je email. Soms kan het zijn dat de email
+                                                    daar is beland en daarom niet wordt weergeven in jouw normale inbox.<br><br>
+                                                    Als geen van de bovenstaande acties het probleem oplossen, aarzel dan
+                                                    niet om contant op te nemen met ons personeel. Dit kan op de contactpagina.
+                                                   </p>
                                             </div>
                                         </div>
                                     </div>
@@ -121,19 +130,21 @@ require "includes/header.php";
                                             <h5>
                                                 <button class="btn btn-hulp" type="button" data-toggle="collapse"
                                                         data-target="#accordion-tab-2-content-1" aria-expanded="false"
-                                                        aria-controls="accordion-tab-2-content-1">Hoe kan ik mijzelf
-                                                    inloggen?
+                                                        aria-controls="accordion-tab-2-content-1">Hoe kan ik inloggen?
                                                 </button>
                                             </h5>
                                         </div>
                                         <div class="collapse show" id="accordion-tab-2-content-1"
                                              aria-labelledby="accordion-tab-2-heading-1" data-parent="#accordion-tab-2">
                                             <div class="card-body">
-                                                <p>In de rechterbovenhoek van deze site kun je een blauwe knop zien met
-                                                    de aanduiding account. Om
-                                                    jezelf in te loggen moet je dan de optie inloggen kiezen. Hier voer
-                                                    je de tijdens het registreren
-                                                    gekozen gebruikersnaam en wachtwoord in.</p>
+                                                <p>Als je je op onze website begeeft kan je op elke pagina in de rechter
+                                                    hoek aan de bovenkant van het scherm een blauwe knop zien waarop
+                                                    'Aanmelden' staat. Nadat je hier op hebt geklikt kun je een keuze
+                                                    maken om in te loggen op een bestaand account of jezelf te registreren,
+                                                    kies voor 'Inloggen'. Nu je hierop hebt geklikt zal een pop-up worden
+                                                    weergeven waar je jouw gebruikersnaam en wachtwoord kunt invullen,
+                                                    klik hierna op de knop waar 'Inloggen' op staat.
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -151,10 +162,10 @@ require "includes/header.php";
                                              aria-labelledby="accordion-tab-2-heading-2" data-parent="#accordion-tab-2">
                                             <div class="card-body">
                                                 <p>Probeer de volgende dingen:<br>
-                                                    - Controleer of je gebruikersnaam correct is. ( dit is niet
-                                                    hoofdletter gevoelig)<br>
-                                                    - Controleer of je wachtwoord goed is.<br>
-                                                    - Controleer of je account al geverifieerd is.</p>
+                                                    - Controleer of je gebruikersnaam correct is (Deze is niet hoofdletter
+                                                    gevoelig.).<br>
+                                                    - Controleer of je je gebruikersnaam en wachtwoord goed hebt ingevuld.<br>
+                                                    - Controleer of je het verificatieproces volledig hebt doorlopen.</p>
                                             </div>
                                         </div>
                                     </div>
