@@ -170,11 +170,13 @@ if (isset($_GET['auction'])) {
                     <div class=\"details-veiling\">
                         <h3>Veilingdetails</h3>
                         <p><span>Status van veiling:</span> $auctionstatus</p>
+                        <div class=\"row pl-3\">
                             <!-- Display the countdown timer in an element -->
-                            <p id=\"demo\"></p>
+                            <p><span>Veiling sluit over:</span>&nbsp;</p>
+                            <p id=\"timer\"></p>
                             <script>
                                 // Set the date we're counting down to
-                                var countDownDate = new Date(\"Jan 5, 2021 15:37:25\").getTime();
+                                var countDownDate = new Date(\"$enddate\").getTime();
                                 
                                 // Update the count down every 1 second
                                 var x = setInterval(function() {
@@ -192,16 +194,17 @@ if (isset($_GET['auction'])) {
                                   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
                                 
                                   // Display the result in the element with id=\"demo\"
-                                  document.getElementById(\"demo\").innerHTML = days + \"d \" + hours + \"h \"
+                                  document.getElementById(\"timer\").innerHTML = days + \"d \" + hours + \"h \"
                                   + minutes + \"m \" + seconds + \"s \";
                                 
                                   // If the count down is finished, write some text 
                                   if (distance < 0) {
                                     clearInterval(x);
-                                    document.getElementById(\"demo\").innerHTML = \"EXPIRED\";
+                                    document.getElementById(\"timer\").innerHTML = \"Gesloten\";
                                   }
                                 }, 1000);
                                 </script>
+                            </div>
                         <p><span>Startdatum:</span> $startdate</p>
                         <p><span>Sluitdatum:</span> $enddate</p>
                         <p><span>Minimale prijs:</span> €$itempricestart</p>            
