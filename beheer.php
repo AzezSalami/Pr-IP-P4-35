@@ -31,7 +31,7 @@
 		<!-- iOS Safari -->
 		<meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
 		<meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-		<link rel="stylesheet" href="CSS/homepage.css" type="text/css">
+		<link rel="stylesheet" href="CSS/general.css" type="text/css">
 
 
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
