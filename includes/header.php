@@ -224,7 +224,8 @@ login();
                                     <div class="form-label-group">
                                         <input class="form-control" placeholder="Voornaam" type="text"
                                                name="firstname"
-                                               id="firstname" maxlength="20" required>
+                                               id="firstname" maxlength="20"
+                                               pattern="[A-Za-z]{1,20}" required>
                                         <label for="firstname">Voornaam</label>
                                     </div>
                                 </div>
@@ -233,7 +234,8 @@ login();
                                         <input class="form-control" placeholder="Achternaam" type="text"
                                                name="lastname"
                                                id="lastname"
-                                               maxlength="20" required>
+                                               maxlength="20"
+                                               pattern="[A-Za-z]{1,20}" required>
                                         <label for="lastname">Achternaam</label>
                                     </div>
                                 </div>
@@ -277,8 +279,8 @@ login();
                             <div class="row">
                                 <div class="col-lg ">
                                     <div class="form-label-group mb-0">
-                                        <input class="form-control" placeholder="telefoonnummer" type="tel"
-                                               name="telephone_number" id="telephone_number" maxlength="10">
+                                        <input class="form-control" placeholder="telefoonnummer" type="number"
+                                               name="telephone_number" id="telephone_number" maxlength="10" pattern="[0-9]{10}">
                                         <label for="telephone_number">Telefoonnummer</label>
                                     </div>
                                 </div>

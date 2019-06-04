@@ -1,0 +1,35 @@
+.admin-tab {
+    color: black;
+    min-height: 70vh;
+}
+
+.adminContainer > .btn {
+    display: flex;
+}
+
+.admin-buttons .btn{
+    min-width: 150px;
+    margin: 15px;
+}
+
+.red {
+    background-color: red;
+}
+
+.table td.fit,
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+    padding: auto;
+}
+
+.table td.inputRubric {
+padding: inherit;
+}
+
+
+/*@media only screen and (max-device-width: 575px) {*/
+/*    .contentYa > btn {*/
+/*        display: block;*/
+/*    }*/
+/*}*/

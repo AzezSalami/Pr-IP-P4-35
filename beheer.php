@@ -1,66 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title>EenmaalAndermaal</title>
+<head>
+    <?php include 'includes/head.html'; ?>
+    <link rel="stylesheet" href="CSS/beheer.css" type="text/css">
+</head>
+<body class="bg-gray">
 
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-		      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-		      crossorigin="anonymous">
+<?php
+require "includes/header.php";
+?>
 
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-		      integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
-		      crossorigin="anonymous">
+<main>
+    <div class="row">
+        <div class="col-lg-2">
+        </div>
+        <div class="col-lg-8 admin-page">
+            <div class="classic-tabs mx-2">
+                <ul class="nav nav-tabs nav-justified" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link  active show" id="profile-tab-classic-shadow" data-toggle="tab"
+                           href="#profile-classic-shadow"
+                           role="tab">Rubrieken bewerken</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="follow-tab-classic-shadow" data-toggle="tab"
+                           href="#follow-classic-shadow"
+                           role="tab">Gebruiker blokkeren</a>
+                    </li>
+                </ul>
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-		<script src="JS/sidenavscript.js"></script>
-		<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-		<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#FFAD4F">
-		<meta name="msapplication-TileColor" content="#FFAD4F">
-		<meta name="theme-color" content="#FFAD4F">
-		<!-- Chrome, Firefox OS and Opera colored tabs-->
-		<meta name="theme-color" content="#FFAD4F">
+                <div class="tab-content card">
+                    <div class="adminContainer tab-pane fade active show container admin-tab table-responsive text-center"
+                         id="profile-classic-shadow"
+                         role="tabpanel">
+                        <table class="table table-bordered table-sm col-lg mt-3">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="fit"></th>
+                                <th scope="col" class="fit">#</th>
+                                <th scope="col">Rubrieknaam</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row" class="fit"><input type="radio" value="geselecteerd"
+                                                                   name="geselecteerd"></th>
+                                <td class="fit">1</td>
+                                <td>Testrubriek</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="fit"><input type="radio" value="geselecteerd"
+                                                                   name="geselecteerd"></th>
+                                <td class="fit">2</td>
+                                <td>Testrubriek</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="fit"><input type="radio" value="geselecteerd"
+                                                                   name="geselecteerd"></th>
+                                <td class="fit">3</td>
+                                <td>Testrubriek</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="fit"><input type="radio" value="geselecteerd"
+                                                                   name="geselecteerd"></th>
+                                <td class="fit">4</td>
+                                <td>Testrubriek</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="fit"><input type="radio" value="geselecteerd"
+                                                                   name="geselecteerd"></th>
+                                <td class="fit">5</td>
+                                <td>Testrubriek</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="fit"></th>
+                                <td class="inputRubric"><input type="number" name="addRubricNumber"
+                                                               placeholder="Positie rubriek">
+                                </td>
+                                <td class="inputRubric"><input type="text" name="addRubricName"
+                                                               placeholder="Naam rubriek"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-lg admin-buttons text-center">
+                                <input type="submit" class="btn mb-1 red" value="Verwijderen" name="removeRubric">
+                                <input type="submit" class="btn mb-1" value="Aanpassen" name="changeRubric">
+                                <input type="submit" class="btn mb-1" value="Uitfaseren" name="depracateRubric">
+                                <input type="submit" class="btn mb-1" value="Toepassen" name="confirmChangesRubric">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade admin-tab text-center " id="follow-classic-shadow" role="tabpanel">
+                        <form action="includes/functions.php">
+                            <div class="col-lg-10 input-group mx-auto mt-3">
+                                <input type="text" class="form-control" placeholder="block user">
+                                <div class="input-group-append">
+                                    <button class="btn" type="button" id="button-addon2">Button</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
-		<!-- Windows Phone -->
-		<meta name="msapplication-navbutton-color" content="#FFAD4F">
-
-		<!-- iOS Safari -->
-		<meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-		<meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-		<link rel="stylesheet" href="CSS/homepage.css" type="text/css">
-
-
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	</head>
-	<body class="bg-gray">
-
-        <?php
-            require "includes/header.php";
-        ?>
-
-		<main>
-			<div class="row">
-				<div class="col-lg-2">
-				</div>
-				<div class="col-lg-8">
-					Klik op de knop hieronder om alle data die in de SQL map van de server staat te importeren.
-					<a href="conversion.php"><button>Importeer data</button></a>
-				</div>
-				<div class="col-lg-2">
-				</div>
-			</div>
-
-		</main>
-        <?php
-            include_once "includes/footer.php";
-        ?>
-	</body>
+        </div>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</main>
+<div class="fixed-bottom">
+    <?php
+    include_once "includes/footer.php";
+    ?>
+</div>
+</body>
 </html>
 
 <?php

@@ -5,40 +5,41 @@ if (isset($_GET['auction'])) {
     echo '<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>EenmaalAndermaal</title>
+<meta charset="UTF-8">
+<title>EenmaalAndermaal</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
-          crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+      integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+      crossorigin="anonymous">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="JS/sidenavscript.js"></script>
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-    <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#FFAD4F">
-    <meta name="msapplication-TileColor" content="#FFAD4F">
-    <meta name="theme-color" content="#FFAD4F">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+<link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#FFAD4F">
+<meta name="msapplication-TileColor" content="#FFAD4F">
+<meta name="theme-color" content="#FFAD4F">
 
-    <!-- Chrome, Firefox OS and Opera colored tabs-->
-    <meta name="theme-color" content="#FFAD4F">
+<!-- Chrome, Firefox OS and Opera colored tabs-->
+<meta name="theme-color" content="#FFAD4F">
 
-    <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content="#FFAD4F">
+<!-- Windows Phone -->
+<meta name="msapplication-navbutton-color" content="#FFAD4F">
 
-    <!-- iOS Safari -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
+<meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
+<link rel="stylesheet" href="CSS/general.css" type="text/css">
+<script src="JS/sidenavscript.js"></script>
+
     <link rel="stylesheet" href="CSS/general.css" type="text/css">
     <link rel="stylesheet" href="CSS/veilingen-details.css" type="text/css">
-
 </head>
 <body>';
 
@@ -54,7 +55,9 @@ if (isset($_GET['auction'])) {
 
     if ($auctiondata['is_closed'] == 1) {
         $auctionstatus = "Gesloten";
-    } else {
+    } elseif ($auctiondata['is_closed'] == 2){
+        $auctionstatus = "Geblokkeerd";
+    }else {
         $auctionstatus = "Open";
     }
     $startdate = $auctiondata['moment_start'];
@@ -97,7 +100,7 @@ if (isset($_GET['auction'])) {
     if (sizeof($highestBidData) == null) {
         $itemprice = $itempricestart;
     } else {
-        $itemprice = (int)$highestBidData[0][0];
+        $itemprice = (float)$highestBidData[0][0];
     }
 
     if ($itemprice < 1) {
@@ -123,31 +126,29 @@ if (isset($_GET['auction'])) {
     if (isset($_POST['blockAuction'])) {
         $blockAuctionQuery = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE auction = ?");
         $blockAuctionQuery->execute(array($auctionid));
+        echo '<script>window.location.replace("index.php");</script>';
     }
 
     $emailQuery = $pdo->prepare("SELECT * FROM TBL_User WHERE [user] = ?");
-    $emailQuery -> execute(array($seller));
+    $emailQuery->execute(array($seller));
     $emailSeller = $emailQuery->fetch()['email'];
-
-
 
     echo "<main>
     <div class=\"row\"> 
         <div class=\"col-lg-2\">
-            <!---->
         </div>
-        <div class=\"col-lg-8 text-dark veiling-details my-2 mx-3\">
+        <div class=\"col-lg-8 text-dark details-auction my-2 mx-3\">
             <div class=\"row my-3\">
                 <div class=\"col-lg-9\">
                     <h2>$itemtitle</h2>
                 </div>
                 <div class=\"col-lg-3\">
-                    <h1 class='\prijs\'>€". ($itemprice > $itempricestart ? $itemprice : $itempricestart) . "</h1>
+                    <h1 class='\price\'>€" . ($itemprice > $itempricestart ? $itemprice : $itempricestart) . "</h1>
                 </div>
             </div>
             <div class=\"row\">
                 <div class=\"col-lg-4 imageContainer\">    
-                    <img class=\"foto mx-auto\" src=\"data:image/png;base64," . base64_encode($imagedata) . "\" alt=\"Afbeelding van veiling\">
+                    <img class=\"picture mx-auto\" src=\"data:image/png;base64," . base64_encode($imagedata) . "\" alt=\"Afbeelding van veiling\">
                 </div>
                 <div class=\"col-line\"></div>
                 <div class=\"col-lg-4 details-product\">
@@ -157,7 +158,7 @@ if (isset($_GET['auction'])) {
                     <p><span>Verzendmethode:</span> $itemshippingmethod</p>
                 </div>
                 <div class=\"col-line\"></div>
-                <div class=\"col-lg details-gebruiker\">
+                <div class=\"col-lg details-seller\">
                     <h3>Verkoperdetails</h3>
                     <p>Naam verkoper: $seller</p>
                     <p>Status verkoper: $verificationStatus</p>
@@ -167,7 +168,7 @@ if (isset($_GET['auction'])) {
             <div class=\"dropdown-divider\"></div>  
             <div class=\"row mb-2\">
                 <div class=\"col-lg\">
-                    <div class=\"details-veiling\">
+                    <div class=\"auction-details\">
                         <h3>Veilingdetails</h3>
                         <p><span>Status van veiling:</span> $auctionstatus</p>
                         <div class=\"row pl-3\">
@@ -201,52 +202,66 @@ if (isset($_GET['auction'])) {
                                   if (distance < 0) {
                                     clearInterval(x);
                                     document.getElementById(\"timer\").innerHTML = \"Gesloten\";
+                                    document.getElementById(\"bidtext\").innerHTML = \"\";
+                                    document.getElementById(\"bidform\").innerHTML = \"\";
                                   }
                                 }, 1000);
                                 </script>
                             </div>
                         <p><span>Startdatum:</span> $startdate</p>
                         <p><span>Sluitdatum:</span> $enddate</p>
-                        <p><span>Minimale prijs:</span> €$itempricestart</p>            
-                    </div>
+                        <p><span>Minimale prijs:</span> €$itempricestart</p>";
+
+    if (sizeof($_SESSION) > 0) {
+        if ($_SESSION['is_admin'] == 1) {
+
+            echo "<form method='POST'>
+            <br><button name='blockAuction' type='submit' class='btn'>Blokkeer veiling</button>
+</form>";
+        }
+    }
+
+
+    echo "</div>
                 </div>
                 <div class=\"col-line\"></div>
                 <div class=\"col-lg\">
-                    <div class=\"beschrijving-product\">
+                    <div class=\"description\">
                         <h3>Beschrijving:</h3>
                         <p>$itemdescription</p>
                     </div>
                 </div>
                 <div class=\"col-line\"></div>
                 <div class=\"col-lg\">
-                    <div class=\"bieden mb-2\">
+                    <div class=\"bid mb-2\">
                         <h3>Bieden</h3>";
-                        if (isset($_SESSION['username'])) {
-                            echo '<p class="font-weight-bold">Mijn bod wordt:</p>
-                                                <form method="post" class="form-inline button-left">
-                                                    <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
-                                                    <div class="space"></div>
-                                                    <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
-                                                    <div class="space"></div>
-                                                    <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
+    if (isset($_SESSION['username'])) {
+        echo "
+                                                <p id='bidtext' class=\"font-weight-bold\">Mijn bod wordt:</p>
+                                                <form id='bidform' method=\"post\" class=\"form-inline button-left\">
+                                                    <button name=\"bidbutton\" type=\"submit\" class=\"btn\" value=\"" . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "\">€" . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "</button>
+                                                    <div class=\"space\"></div>
+                                                    <button name=\"bidbutton\" type=\"submit\" class=\"btn\" value=\"" . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "\">€" . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "</button>
+                                                    <div class=\"space\"></div>
+                                                    <button name=\"bidbutton\" type=\"submit\" class=\"btn\" value=\"" . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "\">€" . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "</button>
                                                 </form>
-                                                <div class="my-3">
-                                                    <p class="font-weight-bold">Eerdere biedingen:</p>';
-                        } else {
-                            echo '<p style="color: red">Je moet ingelogd zijn om te kunnen bieden.</p>';
-                        }
+                                                <div class=\"my-3\">
+                                                    <p class=\"font-weight-bold\">Eerdere biedingen:</p>";
+    } else {
+        echo '<p style="color: red">Je moet ingelogd zijn om te kunnen bieden.</p>';
+    }
 
-                        $html = "";
+    $html = "";
 
-                        while ($bid = $bidquery->fetch()) {
-                            if($bid['user'] == null) {
-                                $html .= '<p class="bod button-left">&nbsp;&nbsp;<span class="verwijderd">verwijderd:</span> &nbsp; €' . $bid['amount'] . '</p>';
-                            } else {
-                                $html .= '<p class="bod button-left">&nbsp;&nbsp;<span>' . $bid['user'] . ':</span> &nbsp; €' . $bid['amount'] . '</p>';
-                            }
-                        }
+    while ($bid = $bidquery->fetch()) {
+        if ($bid['user'] == null) {
+            $html .= '<p class="offer button-left">&nbsp;&nbsp;<span class="removed">Verwijderd:</span> &nbsp; €' . $bid['amount'] . '</p>';
+        } else {
+            $html .= '<p class="offer button-left">&nbsp;&nbsp;<span>' . $bid['user'] . ':</span> &nbsp; €' . $bid['amount'] . '</p>';
+        }
+    }
 
-                        echo $html . '</div>' . '
+    echo $html . '</div>' . '
                    
                 </div>
             </div>
@@ -263,4 +278,5 @@ if (isset($_GET['auction'])) {
 }
 
 ?>
+
 

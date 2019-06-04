@@ -91,7 +91,7 @@ function search($amount = 0, $promoted_only = false)
                 LEFT JOIN (SELECT auction, max(amount) AS amount FROM TBL_Bid WHERE [user] is not null group by auction) as B
                 ON A.auction = B.auction
                 LEFT JOIN (SELECT item, [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item)) as R on I.item = R.item
-                WHERE is_closed = 0 AND ";
+                WHERE " . (isset($_SESSION['is_admin'] ) && $_SESSION['is_admin'] ? "is_closed != 1" : "is_closed = 0") . " AND ";
         if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
             $query .= "I.item in (SELECT item from TBL_Item_In_Rubric WHERE rubric in (
                     SELECT rubric
@@ -217,6 +217,7 @@ function isPasswordGood($password)
 function register()
 {
     if (isset($_POST['make_account'])) {
+
         global $pdo;
         $email = cleanUpUserInput($_POST['email']);
         $regPassword = cleanUpUserInput($_POST['reg_password']);
@@ -277,17 +278,17 @@ function register()
                 $subject = "Verifieer je e-mail!";
                 $text = "
                     Beste heer of mevrouw $lastname,<br><br>
-                    
+
                     Klik op de link hieronder om je registratie te voltooien.<br>
                     <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om je registratie te voltooien</a><br><br>
-                    
+
                     Of plak onderstaande link in je browser:<br>
                     http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token<br><br>
-                    
+
                     Als je geen account aan heeft gemaakt op onze website, kun je deze e-mail negeren.<br><br>
-                    
+
                     Met vriendelijke groet,<br><br>
-                    
+
                     Het team van Eenmaal Andermaal
                 ";
                 sendEmail($email, $regUsername, $subject, $text);
@@ -576,6 +577,7 @@ function sendEmail($email, $username, $subject, $text)
 
 function placeNewBid($auctionid, $newPrice, $username)
 {
+
     global $pdo;
 
     try {
