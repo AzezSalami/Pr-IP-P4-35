@@ -217,6 +217,7 @@ function isPasswordGood($password)
 function register()
 {
     if (isset($_POST['make_account'])) {
+
         global $pdo;
         $email = cleanUpUserInput($_POST['email']);
         $regPassword = cleanUpUserInput($_POST['reg_password']);
@@ -277,17 +278,17 @@ function register()
                 $subject = "Verifieer je e-mail!";
                 $text = "
                     Beste heer of mevrouw $lastname,<br><br>
-                    
+
                     Klik op de link hieronder om je registratie te voltooien.<br>
                     <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om je registratie te voltooien</a><br><br>
-                    
+
                     Of plak onderstaande link in je browser:<br>
                     http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token<br><br>
-                    
+
                     Als je geen account aan heeft gemaakt op onze website, kun je deze e-mail negeren.<br><br>
-                    
+
                     Met vriendelijke groet,<br><br>
-                    
+
                     Het team van Eenmaal Andermaal
                 ";
                 sendEmail($email, $regUsername, $subject, $text);
