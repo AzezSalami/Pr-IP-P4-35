@@ -221,8 +221,8 @@ if (isset($_GET['auction'])) {
                 <div class=\"col-lg\">
                     <div class=\"bieden mb-2\">
                         <h3>Bieden</h3>";
-                        if (isset($_SESSION['username'])) {
-                            echo '<p class="font-weight-bold">Mijn bod wordt:</p>
+    if (isset($_SESSION['username'])) {
+        echo '<p class="font-weight-bold">Mijn bod wordt:</p>
                                                 <form method="post" class="form-inline button-left">
                                                     <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
                                                     <div class="space"></div>
@@ -232,21 +232,21 @@ if (isset($_GET['auction'])) {
                                                 </form>
                                                 <div class="my-3">
                                                     <p class="font-weight-bold">Eerdere biedingen:</p>';
-                        } else {
-                            echo '<p style="color: red">Je moet ingelogd zijn om te kunnen bieden.</p>';
-                        }
+    } else {
+        echo '<p style="color: red">Je moet ingelogd zijn om te kunnen bieden.</p>';
+    }
 
-                        $html = "";
+    $html = "";
 
-                        while ($bid = $bidquery->fetch()) {
-                            if($bid['user'] == null) {
-                                $html .= '<p class="bod button-left">&nbsp;&nbsp;<span class="verwijderd">verwijderd:</span> &nbsp; €' . $bid['amount'] . '</p>';
-                            } else {
-                                $html .= '<p class="bod button-left">&nbsp;&nbsp;<span>' . $bid['user'] . ':</span> &nbsp; €' . $bid['amount'] . '</p>';
-                            }
-                        }
+    while ($bid = $bidquery->fetch()) {
+        if($bid['user'] == null) {
+            $html .= '<p class="bod button-left">&nbsp;&nbsp;<span class="verwijderd">verwijderd:</span> &nbsp; €' . $bid['amount'] . '</p>';
+        } else {
+            $html .= '<p class="bod button-left">&nbsp;&nbsp;<span>' . $bid['user'] . ':</span> &nbsp; €' . $bid['amount'] . '</p>';
+        }
+    }
 
-                        echo $html . '</div>' . '
+    echo $html . '</div>' . '
                    
                 </div>
             </div>
@@ -263,3 +263,5 @@ if (isset($_GET['auction'])) {
 }
 
 ?>
+
+
