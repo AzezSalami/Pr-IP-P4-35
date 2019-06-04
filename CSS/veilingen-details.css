@@ -3,18 +3,18 @@
     width: 100%;
 }
 
-.foto{
+.picture{
     max-width: 100%;
     display: flex;
     justify-content: space-around;
 }
 
-.veiling-details{
+.auction-details{
     border: #FFAD4F solid 2px;
     background: white;
 }
 
-.btn-bod{
+.btn-offer{
     width: 30%;
 }
 
@@ -22,7 +22,7 @@
     width: 5%;
 }
 
-.bod{
+.offer{
     border: #FFAD4F solid 1px;
     border-radius: 5px;
     background: white;
@@ -42,7 +42,7 @@ span{
     text-decoration: underline #FFD042;
 }
 
-.prijs{
+.price{
     font-weight: unset;
     text-decoration: none;
     text-align: right;
@@ -84,16 +84,16 @@ span{
 
     h1{
         text-align: center;
-        font_weight: bold;
+        font-weight: bold;
         font-size: 2em;
     }
 
-    z
+
 }
 
 
 
-.verwijderd{
+.removed{
     color: red;
 
 }
