@@ -260,11 +260,12 @@ login();
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <input class="form-control mb-3" type="text" id="address" placeholder="Adres"
+                                    <input onchange="alert(.search('paris')['latlng']['lat']);" class="form-control mb-3" type="text" id="address" placeholder="Adres"
                                            name="address"
                                            required>
                                     <label for="address" class="sr-only">Adres</label>
                                     <script>
+
                                         var placesAutocomplete = places({
                                             appId: 'plK904BLG7JJ',
                                             apiKey: '551154e9c4e6dfefd99359b532faaa99',

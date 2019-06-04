@@ -43,7 +43,6 @@
 
 <?php
 require "includes/header.php";
-createAuction();
 ?>
 
 <main>
@@ -54,6 +53,7 @@ createAuction();
             <div class="row m-3">
                 <h1>Nieuwe veiling</h1>
             </div>
+            <div class=" mb-2 text-danger" ><?php createAuction(); ?></div>
             <div class="dropdown-divider"></div>
             <form method="post" action="" enctype="multipart/form-data">
                 <div class="row m-3">
@@ -68,14 +68,14 @@ createAuction();
                             <label for="price_start">Start prijs</label>
                         </div>
                         <div class="form-group">
-                            <label class="d-none" for="locatie">Locatie</label>
-                            <input class="form-control mb-3" type="text" name="locatie" id="locatie"
+                            <label class="d-none" for="location">Locatie</label>
+                            <input class="form-control mb-3" type="text" name="location" id="location"
                                    placeholder="Locatie">
                             <script>
                                 var placesAutocomplete = places({
                                     appId: 'plK904BLG7JJ',
                                     apiKey: '551154e9c4e6dfefd99359b532faaa99',
-                                    container: document.querySelector('#locatie')
+                                    container: document.querySelector('#location')
                                 });
                             </script>
                         </div>
@@ -114,23 +114,34 @@ createAuction();
                     <div class="col-lg-4 mb-3">
                         <div class="form-group">
                             <label class="d-none" for="rubriek"></label>
-                            <select class="form-control" name="rubriek" id="rubriek">
-                                <option>Rubriek</option>
+                            <select class="form-control" name="rubriek" id="rubriek" onchange="showRubriek(this.value)">
+                                <option selected disabled>Rubriek</option>
+                                <?php
+                                $mainRubricQuery = $pdo->prepare("select DISTINCT [name] from TBL_Rubric WHERE super=-1");
+                                $mainRubricQuery->execute();
+                                $mainRubric = $mainRubricQuery->fetchAll();
+
+                                foreach ($mainRubric as $result) {
+                                    echo $result['name'];
+                                    echo "<option value='".$result['rubric']."'>". $result['name']."</option>";
+                                }
+                                ?>
                             </select>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Beschrijving</span>
                             </div>
-                            <textarea class="form-control" name="auctionDescription"></textarea>
+                            <label class="d-none" for="description"></label>
+                            <textarea class="form-control" name="description" id="description"></textarea>
                         </div>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <input type="radio">
+                                    <input type="checkbox">
                                 </div>
                             </div>
-                            <textarea class="form-control" aria-label="With textarea" name="description"> </textarea>
+                            <input class="form-control" aria-label="With textarea" placeholder="wilt u deze veiling promoten?" readonly>
                         </div>
                     </div>
                     <div class="col-lg-5">
