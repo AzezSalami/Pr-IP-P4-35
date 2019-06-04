@@ -16,9 +16,17 @@
     background-color: red;
 }
 
-.block-user {
-
+.table td.fit,
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+    padding: auto;
 }
+
+.table td.inputRubric {
+padding: inherit;
+}
+
 
 /*@media only screen and (max-device-width: 575px) {*/
 /*    .contentYa > btn {*/

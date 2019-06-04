@@ -50,7 +50,7 @@ createAuction();
     <div class="row">
         <div class="col-lg-1">
         </div>
-        <div class="col-lg-10 my-2 ml-2 mr-1 veiling-maken">
+        <div class="col-lg-10 my-2 ml-2 mr-1 make-auction">
             <div class="row m-3">
                 <h1>Nieuwe veiling</h1>
             </div>
@@ -146,7 +146,7 @@ createAuction();
                         </div>
                     </div>
                 </div>
-                <div class="row m-4 btn-maakveiling">
+                <div class="row m-4 btn-makeauction">
                     <input class="btn" type="submit" value="Maak veiling aan" name="createAuction">
                 </div>
             </form>
