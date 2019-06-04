@@ -263,4 +263,3 @@ if (isset($_GET['auction'])) {
 }
 
 ?>
-
