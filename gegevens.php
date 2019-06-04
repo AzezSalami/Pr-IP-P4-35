@@ -145,8 +145,7 @@ require "includes/header.php";
                             <label for="telephone_number">Telefoonnummer</label>
                             <input class="form-control" placeholder="<?php placeholderAccountData("phone_number"); ?>"
                                    type="tel"
-                                   name="telephone_number" id="telephone_number" maxlength="10">
-
+                                   name="telephone_number" id="telephone_number" maxlength="10" pattern="[0-9]{10}">
                         </div>
                     </div>
                 </div>
