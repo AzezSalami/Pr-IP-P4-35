@@ -91,7 +91,7 @@ function search($amount = 0, $promoted_only = false)
                 LEFT JOIN (SELECT auction, max(amount) AS amount FROM TBL_Bid WHERE [user] is not null group by auction) as B
                 ON A.auction = B.auction
                 LEFT JOIN (SELECT item, [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item)) as R on I.item = R.item
-                WHERE is_closed = 0 AND ";
+                WHERE " . (isset($_SESSION['is_admin'] ) && $_SESSION['is_admin'] ? "is_closed != 1" : "is_closed = 0") . " AND ";
         if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
             $query .= "I.item in (SELECT item from TBL_Item_In_Rubric WHERE rubric in (
                     SELECT rubric
