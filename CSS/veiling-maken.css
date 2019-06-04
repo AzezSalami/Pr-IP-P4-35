@@ -1,4 +1,4 @@
-.veiling-maken{
+.make-auction{
     background: white;
     border: #FFAD4F solid 2px;
     color: black;
@@ -8,6 +8,6 @@
     width: 100%;
 }
 
-.btn-maakveiling{
+.btn-makeauction{
     float: right;
 }

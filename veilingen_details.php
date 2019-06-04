@@ -136,90 +136,18 @@ if (isset($_GET['auction'])) {
         <div class=\"col-lg-2\">
             <!---->
         </div>
-        <div class=\"col-lg-8 text-dark veiling-details my-2 mx-3\">
+        <div class=\"col-lg-8 text-dark auction-details my-2 mx-3\">
             <div class=\"row my-3\">
                 <div class=\"col-lg-9\">
                     <h2>$itemtitle</h2>
                 </div>
                 <div class=\"col-lg-3\">
-                    <h1 class='\prijs\'>€". ($itemprice > $itempricestart ? $itemprice : $itempricestart) . "</h1>
+                    <h1 class='\price\'>€". ($itemprice > $itempricestart ? $itemprice : $itempricestart) . "</h1>
                 </div>
             </div>
             <div class=\"row\">
                 <div class=\"col-lg-4 imageContainer\">    
-                    <img class=\"foto mx-auto\" src=\"data:image/png;base64," . base64_encode($imagedata) . "\" alt=\"Afbeelding van veiling\">
-                </div>
-                <div class=\"col-line\"></div>
-                <div class=\"col-lg-4 details-product\">
-                    <h3>Productdetails</h3>
-                    <p><span>Locatie van product:</span> $itemaddress</p>
-                    <p><span>Verzendkosten:</span> $itemshippingcost</p>
-                    <p><span>Verzendmethode:</span> $itemshippingmethod</p>
-                </div>
-                <div class=\"col-line\"></div>
-                <div class=\"col-lg details-gebruiker\">
-                    <h3>Verkoperdetails</h3>
-                    <p>Naam verkoper: $seller</p>
-                    <p>Status verkoper: $verificationStatus</p>
-                    <a href=\"mailto:$emailSeller \" target=\"_top\" class=\" btn button-left\">Mail verkoper</a>
-                </div>
-            </div>
-            <div class=\"dropdown-divider\"></div>  
-            <div class=\"row mb-2\">
-                <div class=\"col-lg\">
-                    <div class=\"details-veiling\">
-                        <h3>Veilingdetails</h3>
-                        <p><span>Status van veiling:</span> $auctionstatus</p>
-                        <div class=\"row pl-3\">
-                            <!-- Display the countdown timer in an element -->
-                            <p><span>Veiling sluit over:</span>&nbsp;</p>
-                            <p id=\"timer\"></p>
-                            <script>
-                                // Set the date we're counting down to
-                                var countDownDate = new Date(\"$enddate\").getTime();
-                                
-                                // Update the count down every 1 second
-                                var x = setInterval(function() {
-                                
-                                  // Get today's date and time
-                                  var now = new Date().getTime();
-                                
-                                  // Find the distance between now and the count down date
-                                  var distance = countDownDate - now;
-                                
-                                  // Time calculations for days, hours, minutes and seconds
-                                  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                                  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                                  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                                  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                                
-                                  // Display the result in the element with id=\"demo\"
-                                  document.getElementById(\"timer\").innerHTML = days + \"d \" + hours + \"h \"
-                                  + minutes + \"m \" + seconds + \"s \";
-                                
-                                  // If the count down is finished, write some text 
-                                  if (distance < 0) {
-                                    clearInterval(x);
-                                    document.getElementById(\"timer\").innerHTML = \"Gesloten\";
-                                  }
-                                }, 1000);
-                                </script>
-                            </div>
-                        <p><span>Startdatum:</span> $startdate</p>
-                        <p><span>Sluitdatum:</span> $enddate</p>
-                        <p><span>Minimale prijs:</span> €$itempricestart</p>            
-                    </div>
-                </div>
-                <div class=\"col-line\"></div>
-                <div class=\"col-lg\">
-                    <div class=\"beschrijving-product\">
-                        <h3>Beschrijving:</h3>
-                        <p>$itemdescription</p>
-                    </div>
-                </div>
-                <div class=\"col-line\"></div>
-                <div class=\"col-lg\">
-                    <div class=\"bieden mb-2\">
+                    <img class=\"picture mx-auto\" src=\"data:image/png;base64," . base64_encode($imagedata) . ">
                         <h3>Bieden</h3>";
                         if (isset($_SESSION['username'])) {
                             echo '<p class="font-weight-bold">Mijn bod wordt:</p>
@@ -240,9 +168,9 @@ if (isset($_GET['auction'])) {
 
                         while ($bid = $bidquery->fetch()) {
                             if($bid['user'] == null) {
-                                $html .= '<p class="bod button-left">&nbsp;&nbsp;<span class="verwijderd">verwijderd:</span> &nbsp; €' . $bid['amount'] . '</p>';
+                                $html .= '<p class="offer button-left">&nbsp;&nbsp;<span class="removed">verwijderd:</span> &nbsp; €' . $bid['amount'] . '</p>';
                             } else {
-                                $html .= '<p class="bod button-left">&nbsp;&nbsp;<span>' . $bid['user'] . ':</span> &nbsp; €' . $bid['amount'] . '</p>';
+                                $html .= '<p class="offer button-left">&nbsp;&nbsp;<span>' . $bid['user'] . ':</span> &nbsp; €' . $bid['amount'] . '</p>';
                             }
                         }
 
