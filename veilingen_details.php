@@ -97,7 +97,7 @@ if (isset($_GET['auction'])) {
     if (sizeof($highestBidData) == null) {
         $itemprice = $itempricestart;
     } else {
-        $itemprice = (int)$highestBidData[0][0];
+        $itemprice = (float)$highestBidData[0][0];
     }
 
     if ($itemprice < 1) {
