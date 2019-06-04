@@ -128,9 +128,8 @@ if (isset($_GET['auction'])) {
     }
 
     $emailQuery = $pdo->prepare("SELECT * FROM TBL_User WHERE [user] = ?");
-    $emailQuery -> execute(array($seller));
+    $emailQuery->execute(array($seller));
     $emailSeller = $emailQuery->fetch()['email'];
-
 
     echo "<main>
     <div class=\"row\"> 
@@ -142,7 +141,7 @@ if (isset($_GET['auction'])) {
                     <h2>$itemtitle</h2>
                 </div>
                 <div class=\"col-lg-3\">
-                    <h1 class='\price\'>€". ($itemprice > $itempricestart ? $itemprice : $itempricestart) . "</h1>
+                    <h1 class='\price\'>€" . ($itemprice > $itempricestart ? $itemprice : $itempricestart) . "</h1>
                 </div>
             </div>
             <div class=\"row\">
@@ -207,11 +206,19 @@ if (isset($_GET['auction'])) {
                             </div>
                         <p><span>Startdatum:</span> $startdate</p>
                         <p><span>Sluitdatum:</span> $enddate</p>
-                        <p><span>Minimale prijs:</span> €$itempricestart</p> 
-                         <form method='POST'>
+                        <p><span>Minimale prijs:</span> €$itempricestart</p>";
+
+    if (sizeof($_SESSION) > 0) {
+        if ($_SESSION['is_admin'] == 1) {
+
+            echo "<form method='POST'>
             <br><button name='blockAuction' type='submit' class='btn'>Blokkeer veiling</button>
-</form>           
-                    </div>
+</form>";
+        }
+    }
+
+
+    echo "</div>
                 </div>
                 <div class=\"col-line\"></div>
                 <div class=\"col-lg\">
@@ -242,7 +249,7 @@ if (isset($_GET['auction'])) {
     $html = "";
 
     while ($bid = $bidquery->fetch()) {
-        if($bid['user'] == null) {
+        if ($bid['user'] == null) {
             $html .= '<p class="offer button-left">&nbsp;&nbsp;<span class="removed">Verwijderd:</span> &nbsp; €' . $bid['amount'] . '</p>';
         } else {
             $html .= '<p class="offer button-left">&nbsp;&nbsp;<span>' . $bid['user'] . ':</span> &nbsp; €' . $bid['amount'] . '</p>';
