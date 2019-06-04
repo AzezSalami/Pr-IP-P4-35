@@ -9,13 +9,9 @@
     justify-content: space-around;
 }
 
-.auction-details{
+.details-auction{
     border: #FFAD4F solid 2px;
     background: white;
-}
-
-.btn-offer{
-    width: 30%;
 }
 
 .space{
@@ -90,8 +86,6 @@ span{
 
 
 }
-
-
 
 .removed{
     color: red;
