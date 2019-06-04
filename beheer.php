@@ -30,61 +30,61 @@ require "includes/header.php";
                 </ul>
 
                 <div class="tab-content card">
-                    <div class="adminContainer tab-pane fade active show container admin-tab" id="profile-classic-shadow"
+                    <div class="adminContainer tab-pane fade active show container admin-tab table-responsive" id="profile-classic-shadow"
                          role="tabpanel">
                         <table class="table table-bordered table-sm col-lg-auto">
                             <thead>
                             <tr>
-                                <th scope="col"></th>
-                                <th scope="col">#</th>
+                                <th scope="col" class="fit"></th>
+                                <th scope="col" class="fit">#</th>
                                 <th scope="col">Rubrieknaam</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <th scope="row"><input type="radio" value="geselecteerd" name="geselecteerd"></th>
-                                <td>1</td>
+                                <th scope="row" class="fit"><input type="radio" value="geselecteerd" name="geselecteerd"></th>
+                                <td class="fit">1</td>
                                 <td>Testrubriek</td>
                             </tr>
                             <tr>
-                                <th scope="row"><input type="radio" value="geselecteerd" name="geselecteerd"></th>
-                                <td>2</td>
+                                <th scope="row" class="fit"><input type="radio" value="geselecteerd" name="geselecteerd"></th>
+                                <td class="fit">2</td>
                                 <td>Testrubriek</td>
                             </tr>
                             <tr>
-                                <th scope="row"><input type="radio" value="geselecteerd" name="geselecteerd"></th>
-                                <td>3</td>
+                                <th scope="row" class="fit"><input type="radio" value="geselecteerd" name="geselecteerd"></th>
+                                <td class="fit">3</td>
                                 <td>Testrubriek</td>
                             </tr>
                             <tr>
-                                <th scope="row"><input type="radio" value="geselecteerd" name="geselecteerd"></th>
-                                <td>4</td>
+                                <th scope="row" class="fit"><input type="radio" value="geselecteerd" name="geselecteerd"></th>
+                                <td class="fit">4</td>
                                 <td>Testrubriek</td>
                             </tr>
                             <tr>
-                                <th scope="row"><input type="radio" value="geselecteerd" name="geselecteerd"></th>
-                                <td>5</td>
+                                <th scope="row" class="fit"><input type="radio" value="geselecteerd" name="geselecteerd"></th>
+                                <td class="fit">5</td>
                                 <td>Testrubriek</td>
                             </tr>
                             <tr>
-                                <th scope="row"></th>
-                                <td><input type="number" name="addRubricNumber" placeholder="Positie van rubriek">
+                                <th scope="row" class="fit"></th>
+                                <td class="inputRubric"><input type="number" name="addRubricNumber" placeholder="Positie rubriek">
                                 </td>
-                                <td><input type="text" name="addRubricName" placeholder="Naam van rubriek"></td>
+                                <td class="inputRubric"><input type="text" name="addRubricName" placeholder="Naam rubriek"></td>
                             </tr>
                             </tbody>
                         </table>
-                        <div class="col-lg-10 admin-buttons float-right">
+                        <div class="col-lg-10 admin-buttons text-center">
                             <input type="submit" class="btn mb-1 red" value="Verwijderen" name="removeRubric">
                             <input type="submit" class="btn mb-1" value="Aanpassen" name="changeRubric">
                             <input type="submit" class="btn mb-1" value="Uitfaseren" name="depracateRubric">
                             <input type="submit" class="btn mb-1" value="Toepassen" name="confirmChangesRubric">
                         </div>
                     </div>
-                    <div class="tab-pane fade admin-tab" id="follow-classic-shadow" role="tabpanel">
-                        <form action="includes/functions.php" class="block-user">
+                    <div class="tab-pane fade admin-tab text-center " id="follow-classic-shadow" role="tabpanel">
+                        <form action="includes/functions.php">
                             <input type="text" name="blockUsername" placeholder="Gebruikersnaam">
-                            <input type="submit" name="blockUser" value="Blokkeren">
+                            <input type="submit" class="btn" name="blockUser" value="Blokkeren">
                         </form>
                     </div>
                 </div>
