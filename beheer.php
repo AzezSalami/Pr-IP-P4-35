@@ -33,7 +33,7 @@ require "includes/header.php";
                     <div class="adminContainer tab-pane fade active show container admin-tab table-responsive text-center"
                          id="profile-classic-shadow"
                          role="tabpanel">
-                        <table class="table table-bordered table-sm col-lg-auto">
+                        <table class="table table-bordered table-sm col-lg mt-3">
                             <thead>
                             <tr>
                                 <th scope="col" class="fit"></th>
@@ -82,17 +82,23 @@ require "includes/header.php";
                             </tr>
                             </tbody>
                         </table>
-                        <div class="col-lg-10 admin-buttons text-center">
-                            <input type="submit" class="btn mb-1 red" value="Verwijderen" name="removeRubric">
-                            <input type="submit" class="btn mb-1" value="Aanpassen" name="changeRubric">
-                            <input type="submit" class="btn mb-1" value="Uitfaseren" name="depracateRubric">
-                            <input type="submit" class="btn mb-1" value="Toepassen" name="confirmChangesRubric">
+                        <div class="row">
+                            <div class="col-lg admin-buttons text-center">
+                                <input type="submit" class="btn mb-1 red" value="Verwijderen" name="removeRubric">
+                                <input type="submit" class="btn mb-1" value="Aanpassen" name="changeRubric">
+                                <input type="submit" class="btn mb-1" value="Uitfaseren" name="depracateRubric">
+                                <input type="submit" class="btn mb-1" value="Toepassen" name="confirmChangesRubric">
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane fade admin-tab text-center " id="follow-classic-shadow" role="tabpanel">
                         <form action="includes/functions.php">
-                            <input type="text" name="blockUsername" placeholder="Gebruikersnaam">
-                            <input type="submit" class="btn" name="blockUser" value="Blokkeren">
+                            <div class="col-lg-10 input-group mx-auto mt-3">
+                                <input type="text" class="form-control" placeholder="block user">
+                                <div class="input-group-append">
+                                    <button class="btn" type="button" id="button-addon2">Button</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
