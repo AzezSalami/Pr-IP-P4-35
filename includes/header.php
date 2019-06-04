@@ -279,7 +279,7 @@ login();
                                 <div class="col-lg ">
                                     <div class="form-label-group mb-0">
                                         <input class="form-control" placeholder="telefoonnummer" type="number"
-                                               name="telephone_number" id="telephone_number" maxlength="9999999999">
+                                               name="telephone_number" id="telephone_number" maxlength="10" pattern="[0-9]{10}">
                                         <label for="telephone_number">Telefoonnummer</label>
                                     </div>
                                 </div>

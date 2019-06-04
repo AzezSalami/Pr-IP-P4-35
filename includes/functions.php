@@ -577,6 +577,7 @@ function sendEmail($email, $username, $subject, $text)
 
 function placeNewBid($auctionid, $newPrice, $username)
 {
+
     global $pdo;
 
     try {
