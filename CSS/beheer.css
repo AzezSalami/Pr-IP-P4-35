@@ -7,7 +7,7 @@
     display: flex;
 }
 
-.admin-buttons .btn {
+.admin-buttons .btn{
     min-width: 150px;
     margin: 15px;
 }
