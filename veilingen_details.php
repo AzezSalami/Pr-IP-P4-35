@@ -97,7 +97,7 @@ if (isset($_GET['auction'])) {
     if (sizeof($highestBidData) == null) {
         $itemprice = $itempricestart;
     } else {
-        $itemprice = (int)$highestBidData[0][0];
+        $itemprice = (float)$highestBidData[0][0];
     }
 
     if ($itemprice < 1) {
@@ -240,7 +240,7 @@ if (isset($_GET['auction'])) {
 
     while ($bid = $bidquery->fetch()) {
         if($bid['user'] == null) {
-            $html .= '<p class="bod button-left">&nbsp;&nbsp;<span class="verwijderd">verwijderd:</span> &nbsp; €' . $bid['amount'] . '</p>';
+            $html .= '<p class="bod button-left">&nbsp;&nbsp;<span class="verwijderd">Verwijderd:</span> &nbsp; €' . $bid['amount'] . '</p>';
         } else {
             $html .= '<p class="bod button-left">&nbsp;&nbsp;<span>' . $bid['user'] . ':</span> &nbsp; €' . $bid['amount'] . '</p>';
         }
