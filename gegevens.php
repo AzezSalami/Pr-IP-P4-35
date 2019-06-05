@@ -46,7 +46,7 @@ require "includes/header.php";
     <div class="row">
         <div class="col-lg-2">
         </div>
-        <div class="col-lg-8 data-form">
+        <div class="col-lg-8 data-form mobile-spacing">
             <h1 class="text-dark">Mijn gegevens</h1>
             <?php
             if (isset($_POST['deleteaccountsubmit'])) {

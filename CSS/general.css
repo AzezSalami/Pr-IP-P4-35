@@ -357,6 +357,10 @@ body {
         max-width: unset;
         margin: 1.75rem 10px;
     }
+
+    .mobile-spacing{
+        margin: 0 10px 0 10px;
+    }
 }
 
 
