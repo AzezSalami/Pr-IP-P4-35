@@ -37,6 +37,14 @@
             echo $e;
         }
     }
+    try {
+        $pdo = new PDO ("sqlsrv:Server=$hostname;Database=$databasename;ConnectionPooling=0", "$username", "$password");
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->setAttribute(PDO::SQLSRV_ATTR_ENCODING, PDO::SQLSRV_ENCODING_UTF8);
+    } catch (PDOException $e) {
+        echo $e;
+    }
+}
 
     function loadRubrics() {
 
@@ -91,7 +99,7 @@
                 LEFT JOIN (SELECT auction, max(amount) AS amount FROM TBL_Bid WHERE [user] is not null group by auction) as B
                 ON A.auction = B.auction
                 LEFT JOIN (SELECT item, [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item)) as R on I.item = R.item
-                WHERE is_closed = 0 AND ";
+                WHERE " . (isset($_SESSION['is_admin'] ) && $_SESSION['is_admin'] ? "is_closed != 1" : "is_closed = 0") . "  AND ";
             if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
                 $query .= "I.item in (SELECT item from TBL_Item_In_Rubric WHERE rubric in (
                     SELECT rubric
@@ -176,17 +184,23 @@
             if ($username == "" || $password == "") {
                 $loginMessage = "Vul een gebruikersnaam en een wachtwoord in<br><br>";
             } else {
-                $sql = "SELECT [user],password, is_verified  FROM TBL_User WHERE [user]=:user and password = :password";
+                $sql = "SELECT [user],password, is_verified, is_admin,  is_blocked FROM TBL_User WHERE [user]=:user and password = :password";
                 $login_query = $pdo->prepare($sql);
                 $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
                 $result = $login_query->fetch();
-                if ($result['is_verified'] == 0 && $result['user'] == $username) {
-                    $loginMessage = "Verifieer je account eerst<br><br>";
+
+                if ($result['is_blocked'] == 1) {
+                    $loginMessage = "Uw account is geblokkeerd<br><br>";
                 } else {
-                    if ($result['user'] == $username) {
-                        $_SESSION["username"] = $username;
+                    if ($result['is_verified'] == 0) {
+                        $loginMessage = "Verifieer uw account eerst<br><br>";
                     } else {
-                        $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
+                        if ($result['user'] == $username) {
+                            $_SESSION["username"] = $username;
+                            $_SESSION['is_admin'] = (int)$result['is_admin'];
+                        } else {
+                            $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
+                        }
                     }
                 }
             }
@@ -250,7 +264,7 @@
                 $canRegister = false;
             }
 
-            if (strlen($telephone_number) < 10 || !preg_match("#[0-9]+#", $telephone_number)) {
+            if (strlen($telephone_number) < 10 || !preg_match("/([0-9]){10}/", $telephone_number)) {
                 echo "Een telefonnummer moet uit minimaal 10 cijfers bestaan<br>";
                 $canRegister = false;
             }
@@ -395,31 +409,39 @@
                         echo 'Zorg dat beide wachtwoorden hetzelfde zijn';
 
                     } else {
-                        $sql = "SELECT [user],password FROM TBL_User WHERE [user]=:username and password = :password";
-                        $reset_query = $pdo->prepare($sql);
-                        $reset_query->execute(array(':username' => $username, ':password' => hash('sha1', $cur_password)));
-                        $result = $reset_query->fetch();
-                        if ($result['password'] == hash('sha1', $cur_password)) {
-                            if (!empty($firstname) || !empty($lastname) || !empty($address)) {
-                                $values .= ", ";
+                        try {
+                            $sql = "SELECT [user],password FROM TBL_User WHERE [user]=:username and password = :password";
+                            $reset_query = $pdo->prepare($sql);
+                            $reset_query->execute(array(':username' => $username, ':password' => hash('sha1', $cur_password)));
+                            $result = $reset_query->fetch();
+                            if ($result['password'] == hash('sha1', $cur_password)) {
+                                if (!empty($firstname) || !empty($lastname) || !empty($address)) {
+                                    $values .= ", ";
+                                }
+                                $values .= "password = ?";
+                                $password_check = true;
+                                $array[] = hash('sha1', $resPassword);
+                            } else {
+                                echo 'Huidige wachtwoord is incorrect';
                             }
-                            $values .= "password = ?";
-                            $password_check = true;
-                            $array[] = hash('sha1', $resPassword);
-                        } else {
-                            echo 'Huidige wachtwoord is incorrect';
+                        } catch (PDOException $e) {
+                            echo $e;
                         }
                     }
                 }
             }
             if (!empty($telephone_number)) {
-                if (strlen($telephone_number) < 10 || !preg_match("#[0-9]+#", $telephone_number)) {
+                if (strlen($telephone_number) != 10 || !preg_match("/([0-9]){10}/", $telephone_number)) {
                     echo "Een telefonnummer moet uit minimaal 10 cijfers bestaan<br>";
                 } else {
-                    echo '<p class="text-success">jouw gegevens zijn geüpdatet </p>';
-                    $sql = "update TBL_Phone SET phone_number = :telephone_number WHERE [user] = :username";
-                    $query = $pdo->prepare($sql);
-                    $query->execute(array(':telephone_number' => $telephone_number, ':username' => $username));
+                    try {
+                        $sql = "update TBL_Phone SET phone_number = :telephone_number WHERE [user] = :username";
+                        $query = $pdo->prepare($sql);
+                        $query->execute(array(':telephone_number' => $telephone_number, ':username' => $username));
+                        echo '<p class="text-success">jouw gegevens zijn geüpdatet </p>';
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
                 }
             }
             if (!empty($firstname) || !empty($lastname) || !empty($address) || $password_check) {
@@ -462,11 +484,6 @@
         $token = str_shuffle($token);
         $token = substr($token, 0, 10);
         $query = $pdo->prepare("update TBL_User set verification_code =:token, verification_code_valid_until = GETDATE() + DAY(7) where email = :email");
-        $query->execute(array(':token' => $token, ':email' => $email));
-        $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
-        $token = str_shuffle($token);
-        $token = substr($token, 0, 10);
-        $query = $pdo->prepare("update TBL_User set verification_code =:token where email = :email");
         $query->execute(array(':token' => $token, ':email' => $email));
 
         $subject = "Wachtwoord opnieuw instellen";
@@ -589,22 +606,91 @@
         }
     }
 
+    function createAuction() {
+        /*print_r( *///$image = unpack("H*hex", /*base64_decode(*/file_get_contents($_FILES['image']["tmp_name"]));// );
+        //$imgData =addslashes (file_get_contents($_FILES['image']["tmp_name"]));
+
+//    echo "<img class='mx-auto my-2' src='data:image/jpg;base64," . base64_encode(unpack("h", $blob)) . "'
+//                                                 alt='Afbeelding van veiling'>";
+//
+
+
+        if (isset($_POST['createAuction'])) {
+            //var_dump($_POST);
+            global $pdo;
+            $is_Verzenden = false;
+            $name = cleanUpUserInput($_POST['name']);
+            $description = cleanUpUserInput($_POST['description']);
+            $price_start = cleanUpUserInput($_POST['price_start']);
+            $shipping_instructions = (cleanUpUserInput($_POST['shipping_instructions']) == 'Verzenden' ? 'Verzenden' : 'Ophalen');
+            $shipping_cost = ($shipping_instructions == "Verzenden" && !empty(cleanUpUserInput($_POST['shipping_cost'])) ? cleanUpUserInput($_POST['shipping_cost']) : 0);
+            $durationOptions = array(1, 3, 5, 7, 10);
+            $duration = (in_array(cleanUpUserInput($_POST['duration']), $durationOptions) ? cleanUpUserInput($_POST['duration']) : 0);
+            //$duration = cleanUpUserInput($_POST['duration']);
+            $address = cleanUpUserInput($_POST['location']);
+            $seller = $_SESSION["username"];
+            $rubriek = cleanUpUserInput($_POST['rubriek']);
+            if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
+                echo "Geen geldig beeld";
+            } else {
+                $media_type = getimagesize($_FILES['image']["tmp_name"])["mime"];
+                if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address)) {
+                    echo "Alle velden zijn verplicht";
+                } else {
+                    echo "jaa";
+                    try {
+                        $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1 ) VALUES(?,?,?,?,?,?)");
+                        $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+                    $item = "";
+                    try {
+                        $item_select_query = $pdo->prepare("SELECT item FROM TBL_Item WHERE name = ? AND description = ? AND price_start = ? AND shipping_cost= ? AND shipping_instructions= ? AND address_line_1= ?");
+                        $item_select_query->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
+                        $item_select_result = $item_select_query->fetch();
+
+                        $item = $item_select_result['item'];
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+                    try {
+                        $rubricquery = $pdo->prepare("INSERT INTO TBL_Item_In_Rubric( item ,rubric) VALUES(?,?)");
+                        $rubricquery->execute(array($item, $rubriek));
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+                    try {
+                        $auctionquery = $pdo->prepare("INSERT INTO TBL_Auction( seller, item ,moment_end) VALUES(:seller,:item,GETDATE() + DAY(:duration))");
+                        $duration = (int)$duration;
+                        $auctionquery->bindParam(':duration', $duration, PDO::PARAM_INT);
+                        $auctionquery->bindParam(':seller', $seller, PDO::PARAM_STR);
+                        $auctionquery->bindParam(':item', $item, PDO::PARAM_INT);
+                        $auctionquery->execute();
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+                    try {
+                        $blob = mb_convert_encoding(base64_decode(fopen($_FILES['image']["tmp_name"], 'rb')), 'UTF-16', 'UTF-8');
+
+                        $resourcequery = $pdo->prepare("INSERT INTO TBL_Resource(item , [file] ,media_type, sort_number) VALUES(:item,CONVERT(VARBINARY(MAX), :image),:media_type,0)");
+                        $resourcequery->bindParam(':image', $blob, PDO::PARAM_LOB);
+                        $resourcequery->bindParam(':item', $item, PDO::PARAM_INT);
+                        $resourcequery->bindParam(':media_type', $media_type, PDO::PARAM_STR);
+                        $resourcequery->execute();
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+
+                }
+            }
+        }
+    }
+
     function deleteNotActiveAccount() {
         global $pdo;
         $sql = $pdo->prepare("DELETE FROM TBL_User WHERE DATEDIFF(second, GETDATE(), verification_code_valid_until) <= 0 AND is_verified = 0");
         $sql->execute();
     }
 
-
-// if you are not using composer
-// require_once 'path/to/algolia/folder/autoload.php';
-
-//    $client = Algolia\AlgoliaSearch\SearchClient::create(
-//        'plK904BLG7JJ',
-//        '551154e9c4e6dfefd99359b532faaa99'
-//    );
-//
-//    $appId = 'plK904BLG7JJ';
-//    $apiKey = '551154e9c4e6dfefd99359b532faaa99';
-    //var_dump($result);
 ?>

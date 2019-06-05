@@ -1,0 +1,13 @@
+.make-auction{
+    background: white;
+    border: #FFAD4F solid 2px;
+    color: black;
+}
+
+#img-upload{
+    width: 100%;
+}
+
+.btn-makeauction{
+    float: right;
+}

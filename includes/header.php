@@ -63,11 +63,10 @@ logout();
                             <button class="btn btn-account bg-lightblue dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-user"></i>
                             </button>
-                            
                             <div class="dropdown-menu bg-lightblue">
                                 <a class="dropdown-item" href="gegevens.php">Mijn gegevens</a>
-                                <!--<a class="dropdown-item" href="#">Mijn veilingen</a>-->
-                                <!--<a class="dropdown-item" href="#">Mijn biedingen</a>-->
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="veiling_plaatsen.php">Nieuwe veiling</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="?logout=true">Uitloggen</a>
                             </div>
@@ -81,8 +80,8 @@ logout();
                             
                             <div class="dropdown-menu bg-lightblue">
                                 <a class="dropdown-item" href="gegevens.php">Mijn gegevens</a>
-                                <!--<a class="dropdown-item" href="#">Mijn veilingen</a>-->
-                                <!--<a class="dropdown-item" href="#">Mijn biedingen</a>-->
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="veiling_plaatsen.php">Nieuwe veiling</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="?logout=true">Uitloggen</a>
                             </div>
@@ -233,7 +232,8 @@ logout();
                                     <div class="form-label-group">
                                         <input class="form-control" placeholder="Voornaam" type="text"
                                                name="firstname"
-                                               id="firstname" maxlength="20" required>
+                                               id="firstname" maxlength="20"
+                                               pattern="[A-Za-z]{1,20}" required>
                                         <label for="firstname">Voornaam</label>
                                     </div>
                                 </div>
@@ -242,7 +242,8 @@ logout();
                                         <input class="form-control" placeholder="Achternaam" type="text"
                                                name="lastname"
                                                id="lastname"
-                                               maxlength="20" required>
+                                               maxlength="20"
+                                               pattern="[A-Za-z]{1,20}" required>
                                         <label for="lastname">Achternaam</label>
                                     </div>
                                 </div>
@@ -269,11 +270,12 @@ logout();
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <input class="form-control mb-3" type="text" id="address" placeholder="Adres"
+                                    <input onchange="alert(.search('paris')['latlng']['lat']);" class="form-control mb-3" type="text" id="address" placeholder="Adres"
                                            name="address"
                                            required>
                                     <label for="address" class="sr-only">Adres</label>
                                     <script>
+
                                         var placesAutocomplete = places({
                                             appId: 'plK904BLG7JJ',
                                             apiKey: '551154e9c4e6dfefd99359b532faaa99',
@@ -285,8 +287,8 @@ logout();
                             <div class="row">
                                 <div class="col-lg ">
                                     <div class="form-label-group mb-0">
-                                        <input class="form-control" placeholder="telefoonnummer" type="tel"
-                                               name="telephone_number" id="telephone_number" maxlength="10">
+                                        <input class="form-control" placeholder="Telefoonnummer" type="text"
+                                               name="telephone_number" id="telephone_number" maxlength="13" pattern="[0-9]{13}">
                                         <label for="telephone_number">Telefoonnummer</label>
                                     </div>
                                 </div>
@@ -294,7 +296,7 @@ logout();
                             <div class="row">
                                 <div class="col-lg mx-4 mt-0 mb-2">
                                     <input type="checkbox" class="form-check-input " name="is_mobile">
-                                    <label class="form-check-label text-dark" for="is_mobile">mobielnummer?</label>
+                                    <label class="form-check-label text-dark" for="is_mobile"><i class="fas fa-mobile-alt"></i> ?</label>
                                 </div>
                             </div>
                             <div class="row">
@@ -338,7 +340,7 @@ logout();
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title text-dark">reset password</h4>
+                    <h4 class="modal-title text-dark">Wachtwoord vergeten?</h4>
                     <button id="" type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
