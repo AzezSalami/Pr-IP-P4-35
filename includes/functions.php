@@ -91,7 +91,7 @@ function search($amount = 0, $promoted_only = false)
                 LEFT JOIN (SELECT auction, max(amount) AS amount FROM TBL_Bid WHERE [user] is not null group by auction) as B
                 ON A.auction = B.auction
                 LEFT JOIN (SELECT item, [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item)) as R on I.item = R.item
-                WHERE is_closed = 0 AND ";
+                WHERE " . (isset($_SESSION['is_admin'] ) && $_SESSION['is_admin'] ? "is_closed != 1" : "is_closed = 0") . " AND ";
         if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
             $query .= "I.item in (SELECT item from TBL_Item_In_Rubric WHERE rubric in (
                     SELECT rubric
@@ -605,21 +605,25 @@ function createAuction()
 
 
     if (isset($_POST['createAuction'])) {
+        //var_dump($_POST);
         global $pdo;
+        $is_Verzenden = false;
         $name = cleanUpUserInput($_POST['name']);
         $description = cleanUpUserInput($_POST['description']);
         $price_start = cleanUpUserInput($_POST['price_start']);
-        $shipping_cost = cleanUpUserInput($_POST['shipping_cost']);
-        $shipping_instructions = cleanUpUserInput($_POST['shipping_instructions']);
-        $duration = cleanUpUserInput($_POST['duration']);
-        $address = cleanUpUserInput($_POST['locatie']);
+        $shipping_instructions = (cleanUpUserInput($_POST['shipping_instructions']) == 'Verzenden' ? 'Verzenden' : 'Ophalen');
+        $shipping_cost = ($shipping_instructions == "Verzenden" && !empty(cleanUpUserInput($_POST['shipping_cost']))? cleanUpUserInput($_POST['shipping_cost']) : 0);
+        $durationOptions =array(1 ,3,5 ,7,10);
+        $duration = (in_array(cleanUpUserInput($_POST['duration']), $durationOptions)? cleanUpUserInput($_POST['duration']) : 0);
+        //$duration = cleanUpUserInput($_POST['duration']);
+        $address = cleanUpUserInput($_POST['location']);
         $seller = $_SESSION["username"];
-        $rubriek = 1;//cleanUpUserInput($_POST['rubriek']);
+        $rubriek = cleanUpUserInput($_POST['rubriek']);
         if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
             echo "Geen geldig beeld";
         } else {
             $media_type = getimagesize($_FILES['image']["tmp_name"])["mime"];
-            if (empty($name) || empty($description) || empty($price_start) || empty($shipping_cost) || empty($shipping_instructions) || empty($address)) {
+            if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address)) {
                 echo "Alle velden zijn verplicht";
             } else {
                 echo "jaa";
@@ -678,5 +682,22 @@ function deleteNotActiveAccount()
     $sql = $pdo->prepare("DELETE FROM TBL_User WHERE DATEDIFF(second, GETDATE(), verification_code_valid_until) <= 0 AND is_verified = 0");
     $sql->execute();
 }
+
+
+//
+//require "algoliasearch-client-php-master/autoload.php";
+//
+//$appId = 'YOUR_PLACES_APP_ID';
+//$apiKey = 'YOUR_PLACES_API_KEY';
+//
+//$client = Algolia\AlgoliaSearch\SearchClient::create(
+//    'plK904BLG7JJ',
+//    '551154e9c4e6dfefd99359b532faaa99'
+//);
+//
+//$index = $client->initIndex('test_search');
+//
+//$result = $client->search('Paris');
+//var_dump($result);
 
 ?>

@@ -55,7 +55,9 @@ if (isset($_GET['auction'])) {
 
     if ($auctiondata['is_closed'] == 1) {
         $auctionstatus = "Gesloten";
-    } else {
+    } elseif ($auctiondata['is_closed'] == 2){
+        $auctionstatus = "Geblokkeerd";
+    }else {
         $auctionstatus = "Open";
     }
     $startdate = $auctiondata['moment_start'];
@@ -200,6 +202,8 @@ if (isset($_GET['auction'])) {
                                   if (distance < 0) {
                                     clearInterval(x);
                                     document.getElementById(\"timer\").innerHTML = \"Gesloten\";
+                                    document.getElementById(\"bidtext\").innerHTML = \"\";
+                                    document.getElementById(\"bidform\").innerHTML = \"\";
                                   }
                                 }, 1000);
                                 </script>
@@ -232,16 +236,17 @@ if (isset($_GET['auction'])) {
                     <div class=\"bid mb-2\">
                         <h3>Bieden</h3>";
     if (isset($_SESSION['username'])) {
-        echo '<p class="font-weight-bold">Mijn bod wordt:</p>
-                                                <form method="post" class="form-inline button-left">
-                                                    <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
-                                                    <div class="space"></div>
-                                                    <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
-                                                    <div class="space"></div>
-                                                    <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
+        echo "
+                                                <p id='bidtext' class=\"font-weight-bold\">Mijn bod wordt:</p>
+                                                <form id='bidform' method=\"post\" class=\"form-inline button-left\">
+                                                    <button name=\"bidbutton\" type=\"submit\" class=\"btn\" value=\"" . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "\">€" . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "</button>
+                                                    <div class=\"space\"></div>
+                                                    <button name=\"bidbutton\" type=\"submit\" class=\"btn\" value=\"" . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "\">€" . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "</button>
+                                                    <div class=\"space\"></div>
+                                                    <button name=\"bidbutton\" type=\"submit\" class=\"btn\" value=\"" . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "\">€" . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "</button>
                                                 </form>
-                                                <div class="my-3">
-                                                    <p class="font-weight-bold">Eerdere biedingen:</p>';
+                                                <div class=\"my-3\">
+                                                    <p class=\"font-weight-bold\">Eerdere biedingen:</p>";
     } else {
         echo '<p style="color: red">Je moet ingelogd zijn om te kunnen bieden.</p>';
     }
