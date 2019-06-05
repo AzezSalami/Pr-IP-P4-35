@@ -1,6 +1,7 @@
 <?php
 require_once "functions.php";
 login();
+logout();
 ?>
 <script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
 <header>
@@ -40,6 +41,13 @@ login();
                     <?php
                         if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice) && ((float)$maxPrice)>=0) {
                             echo " value='$maxPrice'";
+                        }
+                    ?>
+	            >
+	            <input type='hidden' id="maxDistance" name='maxDistance'
+                    <?php
+                        if (isset($_SESSION['username']) && isset($_GET['maxDistance']) && ($maxDistance = cleanUpUserInput($_GET['maxDistance'])) != "" && is_numeric($maxDistance) && ((float)$maxDistance)>=0) {
+                            echo " value='$maxDistance'";
                         }
                     ?>
 	            >
