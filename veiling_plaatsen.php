@@ -46,43 +46,7 @@
 require "includes/header.php";
 global $pdo;
 
-if (isset($_POST['sendVerification'])) {
-
-    $username = $_SESSION['username'];
-
-    $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
-    $token = str_shuffle($token);
-    $token = substr($token, 0, 10);
-
-    $verificationQuery = $pdo->prepare('UPDATE TBL_User SET verification_code = ? WHERE [user] = ?');
-    $verificationQuery->execute(array($token, $username));
-
-    //send verificationcode to submitted email
-
-}
-
-if (isset($_POST['submitVerification'])) {
-
-    $username = $_SESSION['username'];
-    $submittedCode = $_POST['vericode'];
-
-    $checkCodeQuery = $pdo->prepare('SELECT * FROM TBL_User WHERE [user] = ?');
-    $checkCodeQuery->execute(array($username));
-    $checkCodeData = $checkCodeQuery->fetch();
-    $verificationCode = $checkCodeData['verification_code'];
-
-    if($submittedCode == $verificationCode) {
-
-        $setSellerQuery = $pdo->prepare('UPDATE TBL_User SET is_seller = 1 WHERE [user] = ?');
-        $setSellerQuery->execute(array($username));
-
-    } else {
-        //foutmelding
-    }
-
-}
-
-if (sizeof($_SESSION) == 0) {
+if (isset($_SESSION['username']) == 0) {
 
     echo 'faka neef doe ff inloggen anders kan je geen veiling plaatsen je weet toch broski';
     echo 'aka een guide on how to become seller yadig';
@@ -94,9 +58,11 @@ if (sizeof($_SESSION) == 0) {
     $userQuery = $pdo->prepare('select * from TBL_User WHERE [user] = ?');
     $userQuery->execute(array($username));
     $userData = $userQuery->fetch();
-    $is_seller = $userData['is_seller'];
 
-    if ($is_seller == 1) {
+    sendSellerVerification($username);
+    checkSellerVerification($username);
+
+    if ($_SESSION['is_seller'] == 1) {
 
         echo '<main>
     <div class="row">
@@ -224,9 +190,7 @@ if (sizeof($_SESSION) == 0) {
 
     } else {
 
-        $verification_sent = strlen($userData['verification_code']);
-
-        if ($verification_sent == 0) {
+        if (!hasCodeBeenSent($username)) {
 
             echo '<main>
     <div class="row">
@@ -248,6 +212,10 @@ if (sizeof($_SESSION) == 0) {
                             <input type="text" class="form-control" name="email" id="price_start"
                                    value="' . $userData['email'] . '">
                             <label for="price_start">Email</label>
+                        </div>
+                        <div class="form-label-group">
+                            <input type="text" class="form-control" name="bankNumber" id="price_start">
+                            <label for="price_start">IBAN</label>
                         </div>
                     </div>
                 </div>
@@ -271,7 +239,7 @@ if (sizeof($_SESSION) == 0) {
             <div class="row m-3">
                 <h1>Wordt verkoper</h1>
             </div>
-            <div class=" mb-2 text-danger"><?php createAuction(); ?></div>
+                    <div class=" mb-2 text-danger"><?php createAuction(); ?></div>
             <div class="dropdown-divider"></div>
             <form method="post" action="" enctype="multipart/form-data">
                 <div class="row m-3">
@@ -298,7 +266,6 @@ if (sizeof($_SESSION) == 0) {
 </main>';
 
         }
-
     }
 }
 
