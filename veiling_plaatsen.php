@@ -190,7 +190,7 @@ if (isset($_SESSION['username']) == 0) {
 
     } else {
 
-        if (!hasCodeBeenSent($username)) {
+        if (canSendNewCode($username)) {
 
             echo '<main>
     <div class="row">
@@ -209,11 +209,6 @@ if (isset($_SESSION['username']) == 0) {
                             <p>joejoe kijk hier toelichting van deze pagina</p>
                         </div>
                         <div class="form-label-group">
-                            <input type="text" class="form-control" name="email" id="price_start"
-                                   value="' . $userData['email'] . '">
-                            <label for="price_start">Email</label>
-                        </div>
-                        <div class="form-label-group">
                             <input type="text" class="form-control" name="bankNumber" id="price_start">
                             <label for="price_start">IBAN</label>
                         </div>
@@ -229,6 +224,7 @@ if (isset($_SESSION['username']) == 0) {
     </div>
 
 </main>';
+
         } else {
 
             echo '<main>
@@ -249,8 +245,8 @@ if (isset($_SESSION['username']) == 0) {
                         </div>
                         <div class="form-label-group">
                             <input type="text" class="form-control" name="vericode" id="price_start"
-                                   value="Verificatiecode">
-                            <label for="price_start">Email</label>
+                                   placeholder="Verificatiecode">
+                            <label for="price_start">Verificatiecode</label>
                         </div>
                     </div>
                 </div>
