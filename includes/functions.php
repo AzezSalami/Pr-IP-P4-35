@@ -36,7 +36,7 @@
         } catch (PDOException $e) {
             echo $e;
         }
-    }
+
     try {
         $pdo = new PDO ("sqlsrv:Server=$hostname;Database=$databasename;ConnectionPooling=0", "$username", "$password");
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -45,7 +45,6 @@
         echo $e;
     }
 }
-
     function loadRubrics() {
 
         echo "
@@ -121,7 +120,7 @@
             $filters = array();
 
             foreach ($searchArray as $key => $word) {
-                $query .= "name LIKE ?";
+                $query .= "CONCAT(name, ' ', description) LIKE ?";
                 if ($key < count($searchArray) - 1) {
                     $query .= " AND ";
                 }
