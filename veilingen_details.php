@@ -142,7 +142,7 @@
                     <div class=\"auction-details\">
                         <h3>Veilingdetails</h3>
                         <p><span>Status van veiling:</span> $auctionstatus</p>
-                        <div class=\"row pl-3\">
+                        <div class=\"row\">
                             <!-- Display the countdown timer in an element -->
                             <p><span>Veiling sluit over:</span>&nbsp;</p>
                             <p id=\"timer\"></p>
