@@ -64,6 +64,14 @@ require "includes/header.php";
         $bidquery->execute(array($auctionid));
         $biddata = $bidquery->fetchAll();
 
+
+        if (isset($_POST['bidbutton'])) {
+            $newPrice = $_POST['bidbutton'];
+            $username = $_SESSION['username'];
+            placeNewBid($auctionid, $newPrice, $username);
+            $bidquery->execute(array($auctionid));
+        }
+
         $highestBidQuery = $pdo->prepare("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
         $highestBidQuery->execute(array($auctionid));
         $highestBidData = $highestBidQuery->fetchAll();
@@ -86,13 +94,6 @@ require "includes/header.php";
             $buttonvalue = 50;
         }
 
-        if (isset($_POST['bidbutton'])) {
-            $newPrice = $_POST['bidbutton'];
-            $username = $_SESSION['username'];
-            placeNewBid($auctionid, $newPrice, $username);
-            $itemprice = $newPrice;
-            $bidquery->execute(array($auctionid));
-        }
 
         if (isset($_POST['blockAuction'])) {
             $blockAuctionQuery = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE auction = ?");
@@ -122,75 +123,97 @@ require "includes/header.php";
                     <img class=\"picture mx-auto\" src=\"data:image/png;base64," . base64_encode($imagedata) . "\" alt=\"Afbeelding van veiling\">
                 </div>
                 <div class=\"col-line\"></div>
-                <div class=\"col-lg-4 details-product\">
+                <div class=\"col-lg-4\">
                     <h3>Productdetails</h3>
-                    <p><span>Locatie van product:</span> $itemaddress</p>
-                    <p><span>Verzendkosten:</span> $itemshippingcost</p>
-                    <p><span>Verzendmethode:</span> $itemshippingmethod</p>
+                    <table class='table table-striped'>
+                        <tbody>
+                            <tr>
+                                <th scope='row'> Locatie van product</th>
+                                <td> $itemaddress</td>
+                            </tr>
+                            <tr>
+                                <th scope='row'>verzendkosten </th>
+                                <td> $itemshippingcost</td>
+                            </tr>
+                            <tr>
+                                <th scope='row'> verzendmethode</th>
+                                <td> $itemshippingmethod</td>
+                            </tr>
+                        </tbody>                       
+                    </table>
                 </div>
                 <div class=\"col-line\"></div>
-                <div class=\"col-lg details-seller\">
-                    <h3>Verkoperdetails</h3>
-                    <p>Naam verkoper: $seller</p>
-                    <p>Status verkoper: $verificationStatus</p>
-                    <a href=\"mailto:$emailSeller \" target=\"_top\" class=\" btn button-left\">Mail verkoper</a>
-                </div>
-            </div>
-            <div class=\"dropdown-divider\"></div>  
-            <div class=\"row mb-2\">
                 <div class=\"col-lg\">
-                    <div class=\"auction-details\">
+                    <h3>Verkoperdetails</h3>
+                    <table class=\"table table-striped\">
+                        <tr>
+                            <th scope='row'>Naam verkoper</th>
+                            <td> $seller</td>
+                        </tr>
+                        <tr>
+                            <th scope='row'>Status verkoper</th>
+                            <td> $verificationStatus</td>
+                        </tr>
+                    </table>
+                    <a href=\"mailto:$emailSeller \" target=\"_top\" class=\" btn button - left\">Mail verkoper</a>
+                </div>
+            <div class=\"dropdown-divider\"></div>  
+                <div class=\"col-lg mt-2\">
                         <h3>Veilingdetails</h3>
-                        <p><span>Status van veiling:</span> $auctionstatus</p>
-                        <div class=\"row\">
-                            <!-- Display the countdown timer in an element -->
-                            <p><span>Veiling sluit over:</span>&nbsp;</p>
-                            <p id=\"timer\"></p>
-                            <script>
-                                // Set the date we're counting down to
-                                var countDownDate = new Date(\"$enddate\").getTime();
-                                
-                                // Update the count down every 1 second
-                                var x = setInterval(function() {
-                                
-                                  // Get today's date and time
-                                  var now = new Date().getTime();
-                                
-                                  // Find the distance between now and the count down date
-                                  var distance = countDownDate - now;
-                                
-                                  // Time calculations for days, hours, minutes and seconds
-                                  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                                  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                                  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                                  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                                
-                                  // Display the result in the element with id=\"demo\"
-                                  document.getElementById(\"timer\").innerHTML = days + \"d \" + hours + \"h \"
-                                  + minutes + \"m \" + seconds + \"s \";
-                                
-                                  // If the count down is finished, write some text 
-                                  if (distance < 0) {
-                                    clearInterval(x);
-                                    document.getElementById(\"timer\").innerHTML = \"Gesloten\";
-                                    document.getElementById(\"bidtext\").innerHTML = \"\";
-                                    document.getElementById(\"bidform\").innerHTML = \"\";
-                                  }
-                                }, 1000);
-                                </script>
-                            </div>
-                        <p><span>Startdatum:</span> $startdate</p>
-                        <p><span>Sluitdatum:</span> $enddate</p>
-                        <p><span>Minimale prijs:</span> €$itempricestart</p>";
-
-        if (sizeof($_SESSION) > 0) {
-            if ($_SESSION['is_admin'] == 1) {
-
-                echo "<form method='POST'>
-            <br><button name='blockAuction' type='submit' class='btn'>Blokkeer veiling</button>
+                        <table class='table table-striped'>
+                            <tr>
+                                <th> status van veiling</th>
+                                <td> $auctionstatus</td>
+                            </tr>
+                            <tr>
+                                <th> veiling sluit over</th>
+                                <td id=\"timer\"></td>
+                            </tr>
+                            <tr>
+                                <th>Startdatum</th>
+                                <td>$startdate</td>
+                            </tr>
+                            <tr>    
+                                <th>Sluitdatum</th>
+                                <td>$enddate</td>
+                            </tr>
+                            <tr>    
+                                <th>Minimale prijs</th>
+                                <td>€$itempricestart</td>
+                            </tr>
+                        </table>
+                                <!-- Display the countdown timer in an element -->
+                                <script>
+                                    // Set the date we're counting down to
+                                    var countDownDate = new Date(\"$enddate\").getTime();
+                                    
+                                    // Update the count down every 1 second
+                                    var x = setInterval(function() {
+                                    
+                                      // Get today's date and time
+                                      var now = new Date().getTime();
+                                    
+                                      // Find the distance between now and the count down date
+                                      var distance = countDownDate - now;
+                                    
+                                      // Time calculations for days, hours, minutes and seconds
+                                      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                                    
+                                      // Display the result in the element with id=\"demo\"
+                                      document.getElementById(\"timer\").innerHTML = days + \"d \" + hours + \"h \"
+                                      + minutes + \"m \" + seconds + \"s \";
+                                    
+                                      // If the count down is finished, write some text 
+                                      if (distance < 0) {
+                                        clearInterval(x);
+                                        document.getElementById(\"timer\").innerHTML = \"Gesloten\";
+                                      }
+                                    }, 1000);
+                                    </script>
 </form>";
-            }
-        }
 
 
         echo "</div>
@@ -206,8 +229,8 @@ require "includes/header.php";
                 <div class=\"col-lg\">
                     <div class=\"bid mb-2\">
                         <h3>Bieden</h3>";
-        if (isset($_SESSION['username'])) {
-            echo "
+    if (isset($_SESSION['username']))  {
+        echo "
                                                 <p id='bidtext' class=\"font-weight-bold\">Mijn bod wordt:</p>
                                                 <form id='bidform' method=\"post\" class=\"form-inline button-left\">
                                                     <button name=\"bidbutton\" type=\"submit\" class=\"btn\" value=\"" . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "\">€" . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "</button>
@@ -219,20 +242,30 @@ require "includes/header.php";
                                                 <div class=\"my-3\">
                                                     <p class=\"font-weight-bold\">Eerdere biedingen:</p>";
         } else {
-            echo '<p style="color: red">Je moet ingelogd zijn om te kunnen bieden.</p>';
+            echo '<p style="color:red">Je moet ingelogd zijn om te kunnen bieden.</p>';
         }
 
         $html = "";
 
+
         $bidquery->execute(array($auctionid));
+        echo '<table class="table table-striped">';
         while ($bid = $bidquery->fetch()) {
             if ($bid['user'] == null) {
-                $html .= '<p class="offer button-left">&nbsp;&nbsp;<span class="removed">Verwijderd:</span> &nbsp; €' . $bid['amount'] . '</p>';
+                echo '<tr><th class="text-danger">verwijderd</th><td>€' . $bid['amount'] . '</td></tr>';
             } else {
-                $html .= '<p class="offer button-left">&nbsp;&nbsp;<span>' . $bid['user'] . ':</span> &nbsp; €' . $bid['amount'] . '</p>';
+                echo '<tr><th>' . $bid['user'] . '</th><td>€' . $bid['amount'] . '</td></tr>';
             }
         }
+        echo '</table>';
+        if (sizeof($_SESSION) > 0) {
+            if ($_SESSION['is_admin'] == 1 && $auctiondata['is_closed'] == 0) {
 
+                echo "<form method='POST'>
+            <br><button name='blockAuction' type='submit' class='btn'>Blokkeer veiling</button>
+";
+            }
+        }
         echo $html . '</div>' . '
                    
                 </div>
