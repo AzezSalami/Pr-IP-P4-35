@@ -728,4 +728,103 @@ function deleteNotActiveAccount()
     $sql->execute();
 }
 
+function sendSellerVerification($username)
+{
+
+    //supposedly a banktransaction should occur here which includes the code in its description
+
+    if (isset($_POST['sendVerification'])) {
+
+        global $pdo;
+
+        $bankNumber = $_POST['bankNumber'];
+
+        $newSellerQuery = $pdo->prepare('INSERT INTO TBL_Seller ([user], bank_account, verification_status) VALUES (?, ?, 0)');
+        $newSellerQuery->execute(array($username, $bankNumber));
+
+        $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
+        $token = str_shuffle($token);
+        $token = substr($token, 0, 10);
+
+        $verificationQuery = $pdo->prepare('UPDATE TBL_Seller SET verification_code = ?,
+verification_code_valid_until = GETDATE() + MONTH(1) WHERE [user] = ?');
+        $verificationQuery->execute(array($token, $username));
+    }
+}
+
+function checkSellerVerification($username)
+{
+
+    if (isset($_POST['submitVerification'])) {
+
+        global $pdo;
+
+        $submittedCode = $_POST['vericode'];
+
+        $checkCodeQuery = $pdo->prepare('SELECT * FROM TBL_Seller WHERE [user] = ? AND verification_code_valid_until > GETDATE()');
+        $checkCodeQuery->execute(array($username));
+        $checkCodeData = $checkCodeQuery->fetchAll();
+
+        if(sizeof($checkCodeData) == 0) {
+
+            echo 'verificatiecode is niet meer geldig';
+
+        } else {
+
+            $checkCodeQuery->execute(array($username));
+            $checkCodeData = $checkCodeQuery->fetch();
+            $verificationCode = $checkCodeData['verification_code'];
+
+            if ($submittedCode == $verificationCode) {
+
+                $setSellerQuery = $pdo->prepare('UPDATE TBL_User SET is_seller = 1 WHERE [user] = ?');
+                $setSellerQuery->execute(array($username));
+                $setVerifiedQuery = $pdo->prepare('UPDATE TBL_Seller SET verification_status = 1 WHERE [user] = ?');
+                $setVerifiedQuery->execute(array($username));
+
+                $_SESSION['is_seller'] = 1;
+
+            } else {
+
+                echo 'code is fout';
+
+            }
+
+        }
+
+    }
+
+}
+
+function canSendNewCode($username)
+{
+
+    global $pdo;
+
+    $isSellerQuery = $pdo->prepare('SELECT * FROM TBL_Seller WHERE [user] = ?');
+    $isSellerQuery->execute(array($username));
+    $isSellerData = $isSellerQuery->fetchAll();
+
+    if (sizeof($isSellerData) == 0) {
+
+        /* if the user isnt a seller yet, he should always be able to request a code */
+        return true;
+
+    } else {
+
+        $beenSentQuery = $pdo->prepare('SELECT * FROM TBL_Seller WHERE [user] = ? AND verification_status = 0
+                                                  AND verification_code_valid_until < GETDATE()');
+        $beenSentQuery->execute(array($username));
+        $beenSentData = $beenSentQuery->fetchAll();
+
+        if (sizeof($beenSentData) == 1) {
+
+            /* the code has expired, user should request a new code */
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
 ?>
