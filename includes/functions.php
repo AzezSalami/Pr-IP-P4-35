@@ -185,29 +185,35 @@ function login()
         $username = cleanUpUserInput(strtolower($_POST['username']));
         $password = cleanUpUserInput($_POST['password']);
 
+        $canLogin = true;
         if ($username == "" || $password == "") {
             $loginMessage = "Vul een gebruikersnaam en een wachtwoord in<br><br>";
-        } else {
-            $sql = "SELECT [user],password, is_verified, is_admin,  is_blocked, is_seller FROM TBL_User WHERE [user]=:user and password = :password";
-            $login_query = $pdo->prepare($sql);
-            $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
-            $result = $login_query->fetch();
+            $canLogin = false;
+        }
 
-            if ($result['is_blocked'] == 1) {
-                $loginMessage = "Uw account is geblokkeerd<br><br>";
-            } else {
-                if ($result['is_verified'] == 0) {
-                    $loginMessage = "Verifieer uw account eerst<br><br>";
-                } else {
-                    if ($result['user'] == $username) {
-                        $_SESSION["username"] = $username;
-                        $_SESSION['is_admin'] = (int)$result['is_admin'];
-                        $_SESSION['is_seller'] = (int)$result['is_seller'];
-                    } else {
-                        $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
-                    }
-                }
-            }
+        $sql = "SELECT [user],password, is_verified, is_admin,  is_blocked, is_seller FROM TBL_User WHERE [user]=:user and password = :password";
+        $login_query = $pdo->prepare($sql);
+        $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
+        $result = $login_query->fetch();
+
+        if ($result['is_blocked'] == 1) {
+            $loginMessage = "Uw account is geblokkeerd<br><br>";
+            $canLogin = false;
+        }
+        if ($result['is_verified'] == 0) {
+            $loginMessage = "Verifieer uw account eerst<br><br>";
+            $canLogin = false;
+        }
+
+        if ($result['user'] != $username) {
+            $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
+            $canLogin = false;
+        }
+        if ($canLogin) {
+            $_SESSION["username"] = $username;
+            $_SESSION['is_admin'] = (int)$result['is_admin'];
+            $_SESSION['is_seller'] = (int)$result['is_seller'];
+
         }
     }
 }
@@ -625,9 +631,9 @@ function placeNewBid($auctionid, $newPrice, $username)
 
 function createAuction()
 {
-    if(isset($_SESSION["username"])) {
+    if (isset($_SESSION["username"])) {
         if (isset($_POST['createAuction'])) {
-           // var_dump($_POST);
+            // var_dump($_POST);
             global $pdo;
             $name = cleanUpUserInput($_POST['name']);
             $description = cleanUpUserInput($_POST['description']);
@@ -640,9 +646,9 @@ function createAuction()
             $seller = $_SESSION["username"];
             $is_promoted = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
             $rubric_post = cleanUpUserInput($_POST['rubriek']);
-            if(is_array ($rubric_post)){
+            if (is_array($rubric_post)) {
                 $rubric = end($rubric_post);
-            }else {
+            } else {
                 $rubric = $rubric_post;
             }
 
@@ -682,7 +688,7 @@ function createAuction()
                         $auctionquery->bindParam(':duration', $duration, PDO::PARAM_INT);
                         $auctionquery->bindParam(':seller', $seller, PDO::PARAM_STR);
                         $auctionquery->bindParam(':item', $item, PDO::PARAM_INT);
-                        $auctionquery->bindParam(':is_promoted' ,$is_promoted,PDO::PARAM_BOOL);
+                        $auctionquery->bindParam(':is_promoted', $is_promoted, PDO::PARAM_BOOL);
                         $auctionquery->execute();
                     } catch (PDOException $e) {
                         echo $e;
@@ -690,7 +696,7 @@ function createAuction()
                     try {
                         $img = addslashes(file_get_contents($_FILES['image']["tmp_name"]));
                         //echo "<br>" . ;
-                        $img =  iconv(mb_detect_encoding ($img),'UTF-8//IGNORE',$img);
+                        $img = iconv(mb_detect_encoding($img), 'UTF-8//IGNORE', $img);
                         $data = base64_encode($img);
 
                         $blob = mb_convert_encoding(fopen($_FILES['image']["tmp_name"], 'rb'), 'UTF-16', 'UTF-8');
@@ -716,7 +722,7 @@ function createAuction()
                 }
             }
         }
-    }else{
+    } else {
         echo "Je moet ingelogd zijn";
     }
 }
@@ -765,7 +771,7 @@ function checkSellerVerification($username)
         $checkCodeQuery->execute(array($username));
         $checkCodeData = $checkCodeQuery->fetchAll();
 
-        if(sizeof($checkCodeData) == 0) {
+        if (sizeof($checkCodeData) == 0) {
 
             echo 'verificatiecode is niet meer geldig';
 
