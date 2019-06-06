@@ -108,7 +108,7 @@ require "includes/header.php";
     <div class=\"row\"> 
         <div class=\"col-lg-2\">
         </div>
-        <div class=\"col-lg-8 text-dark auction-details my-2 mx-3\">
+        <div class=\"col-lg-8 text-dark details-auction my-2 mx-3\">
             <div class=\"row my-3\">
                 <div class=\"col-lg-9\">
                     <h2>$itemtitle</h2>
@@ -157,7 +157,7 @@ require "includes/header.php";
                     <a href=\"mailto:$emailSeller \" target=\"_top\" class=\" btn button - left\">Mail verkoper</a>
                 </div>
             <div class=\"dropdown-divider\"></div>  
-                <div class=\"col-lg\">
+                <div class=\"col-lg mt-2\">
                         <h3>Veilingdetails</h3>
                         <table class='table table-striped'>
                             <tr>
