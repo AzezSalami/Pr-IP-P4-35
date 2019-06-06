@@ -246,10 +246,10 @@ require "includes/header.php";
                                                     <div class=\"space\"></div>
                                                     <button name=\"bidbutton\" type=\"submit\" class=\"btn\" value=\"" . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "\">€" . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "</button>
                                                 </form>
-                                                <div class="my-3">
-                                                    <p class="font-weight-bold">Eerdere biedingen:</p>';
+                                                <div class=\"my-3\">
+                                                    <p class=\"font-weight-bold\">Eerdere biedingen:</p>";
         } else {
-            echo '<p style="color: red">Je moet ingelogd zijn om te kunnen bieden.</p>';
+            echo '<p style=\"color: red\">Je moet ingelogd zijn om te kunnen bieden.</p>';
         }
 
         $html = "";
