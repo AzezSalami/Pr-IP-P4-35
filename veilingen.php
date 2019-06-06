@@ -96,10 +96,8 @@
 									</div>
 									<?php if(isset($_SESSION['username'])){
 										echo "<div class=\"row\">
-										<div class=\"col-6\">
-											Maximale afstand in kilometers:
-										</div>
-										<div class=\"col-5 text-right\">
+										<div class=\"col-11\">
+											<p>Maximale afstand in kilometers:</p>										
 											<input class=\"bg-gray text-center input-details-mobile\" type=\"number\"
 											       id=\"distance-max\"
 											       placeholder=\"max\"" .
