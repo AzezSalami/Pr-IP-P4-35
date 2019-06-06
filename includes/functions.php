@@ -197,16 +197,16 @@ function login()
         $result = $login_query->fetch();
 
         if ($result['is_blocked'] == 1) {
-            $loginMessage = "Uw account is geblokkeerd<br><br>";
+            $loginMessage = "Uw account is geblokkeerd<br>";
             $canLogin = false;
         }
         if ($result['is_verified'] == 0) {
-            $loginMessage = "Verifieer uw account eerst<br><br>";
+            $loginMessage = "Verifieer uw account eerst<br>";
             $canLogin = false;
         }
 
         if ($result['user'] != $username) {
-            $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
+            $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br>";
             $canLogin = false;
         }
         if ($canLogin) {

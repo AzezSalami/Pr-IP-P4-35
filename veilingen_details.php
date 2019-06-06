@@ -259,7 +259,7 @@ require "includes/header.php";
         echo '<table class="table table-striped">';
         while ($bid = $bidquery->fetch()) {
             if ($bid['user'] == null) {
-                echo '<tr><th>verwijderd</th><td>€' . $bid['amount'] . '</td></tr>';
+                echo '<tr><th class="text-danger">verwijderd</th><td>€' . $bid['amount'] . '</td></tr>';
             } else {
                 echo '<tr><th>' . $bid['user'] . '</th><td>€' . $bid['amount'] . '</td></tr>';
             }
