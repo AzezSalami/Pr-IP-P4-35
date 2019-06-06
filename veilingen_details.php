@@ -86,13 +86,12 @@ require "includes/header.php";
             $buttonvalue = 50;
         }
 
-        if (isset($_POST['bidbutton'])) {
-            $newPrice = $_POST['bidbutton'];
-            $username = $_SESSION['username'];
-            placeNewBid($auctionid, $newPrice, $username);
-            $itemprice = $newPrice;
-            $bidquery->execute(array($auctionid));
-        }
+    if (isset($_POST['bidbutton'])) {
+        $newPrice = $_POST['bidbutton'];
+        $username = $_SESSION['username'];
+        placeNewBid($auctionid, $newPrice, $username);
+        $bidquery->execute(array($auctionid));
+    }
 
         if (isset($_POST['blockAuction'])) {
             $blockAuctionQuery = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE auction = ?");
@@ -114,7 +113,7 @@ require "includes/header.php";
                     <h2>$itemtitle</h2>
                 </div>
                 <div class=\"col-lg-3\">
-                    <h1 class='\prijs\'>€" . ($itemprice > $itempricestart ? $itemprice : $itempricestart) . "</h1>
+                    <h1 class='\price\'>€" . ($itemprice > $itempricestart ? $itemprice : $itempricestart) . "</h1>
                 </div>
             </div>
             <div class=\"row\">
@@ -228,23 +227,24 @@ require "includes/header.php";
                 </div>
                 <div class=\"col-line\"></div>
                 <div class=\"col-lg\">
-                    <div class=\"beschrijving-product\">
+                    <div class=\"description\">
                         <h3>Beschrijving:</h3>
                         <p>$itemdescription</p>
                     </div>
                 </div>
                 <div class=\"col-line\"></div>
                 <div class=\"col-lg\">
-                    <div class=\"bieden mb-2\">
+                    <div class=\"bid mb-2\">
                         <h3>Bieden</h3>";
-        if (isset($_SESSION['username'])) {
-            echo '<p class="font-weight-bold">Mijn bod wordt:</p>
-                                                <form method="post" class="form-inline button-left">
-                                                    <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
-                                                    <div class="space"></div>
-                                                    <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
-                                                    <div class="space"></div>
-                                                    <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
+    if (isset($_SESSION['username']))  {
+        echo "
+                                                <p id='bidtext' class=\"font-weight-bold\">Mijn bod wordt:</p>
+                                                <form id='bidform' method=\"post\" class=\"form-inline button-left\">
+                                                    <button name=\"bidbutton\" type=\"submit\" class=\"btn\" value=\"" . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "\">€" . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "</button>
+                                                    <div class=\"space\"></div>
+                                                    <button name=\"bidbutton\" type=\"submit\" class=\"btn\" value=\"" . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "\">€" . ($buttonvalue * 2 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "</button>
+                                                    <div class=\"space\"></div>
+                                                    <button name=\"bidbutton\" type=\"submit\" class=\"btn\" value=\"" . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "\">€" . ($buttonvalue * 3 + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "</button>
                                                 </form>
                                                 <div class="my-3">
                                                     <p class="font-weight-bold">Eerdere biedingen:</p>';

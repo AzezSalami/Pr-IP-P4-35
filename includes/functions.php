@@ -615,19 +615,39 @@ function placeNewBid($auctionid, $newPrice, $username)
 {
     global $pdo;
 
-    try {
-        $query = $pdo->prepare("select count(*) from TBL_Bid where auction = ? and amount = ? and user is not null");
-        $query->execute(array($auctionid, $newPrice));
-        $sameBids = $query->fetch();
-
-        if ($sameBids[0][0] == 0) {
-            $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
-            $query->execute(array($auctionid, $newPrice, $username));
-        }
-    } catch (PDOException $e) {
-        echo $e;
-    }
+        try {
+            $query = $pdo->prepare("select max(amount) as amount from TBL_Bid where auction = ? and user is not null group by auction");
+            $query->execute(array($auctionid));
+            $sameBids = $query->fetch();
+if(empty($sameBids)){
+    $sameBids = array('amount' => )
 }
+            if ($sameBids['amount'] < $newPrice) {
+                if ($sameBids['amount'] < 1) {
+                    $buttonvalue = 0.50;
+                } else if ($sameBids['amount'] <= 5) {
+                    $buttonvalue = 1;
+                } else if ($sameBids['amount'] <= 10) {
+                    $buttonvalue = 5;
+                } else if ($sameBids['amount'] <= 50) {
+                    $buttonvalue = 10;
+                } else {
+                    $buttonvalue = 50;
+                }
+                if($newPrice-$sameBids['amount'] == $buttonvalue || $newPrice-$sameBids['amount'] == $buttonvalue*2 || $newPrice-$sameBids['amount'] == $buttonvalue*3) {
+                    $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
+                    $query->execute(array($auctionid, $newPrice, $username));
+                } else{
+                    echo "Er is iets mis gegaan, probeer het opnieuw";
+                    echo $sameBids . "s<br>";echo $buttonvalue . "b<br>";
+                    echo $newPrice;
+                }
+            }
+
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
 
 function createAuction()
 {
