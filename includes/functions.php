@@ -200,16 +200,16 @@ function login()
         $result = $login_query->fetch();
 
         if ($result['is_blocked'] == 1) {
-            $loginMessage = "Uw account is geblokkeerd<br><br>";
+            $loginMessage = "Uw account is geblokkeerd<br>";
             $canLogin = false;
         }
         if ($result['is_verified'] == 0) {
-            $loginMessage = "Verifieer uw account eerst<br><br>";
+            $loginMessage = "Verifieer uw account eerst<br>";
             $canLogin = false;
         }
 
         if ($result['user'] != $username) {
-            $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
+            $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br>";
             $canLogin = false;
         }
         if ($canLogin) {
@@ -272,7 +272,7 @@ function register()
                 $canRegister = false;
             }
             if ($row['user'] == $regUsername) {
-                echo 'De gebruikersnaam: ' . $regUsername . ' is al in gebruik, probeer een andere<br>';
+                echo '<span class="font-weight-bold">De gebruikersnaam:</span> ' . $regUsername . ' is al in gebruik, probeer een andere<br>';
                 echo "<script>document.getElementById('openRegister').click();</script>";
                 $canRegister = false;
             }
@@ -281,8 +281,8 @@ function register()
             $canRegister = false;
         }
 
-        if (strlen($telephone_number) < 10 || !preg_match("/([0-9]){10}/", $telephone_number)) {
-            echo "Een telefonnummer moet uit minimaal 10 cijfers bestaan<br>";
+        if (strlen($telephone_number) < 10 || !preg_match("/(([\+]\d{2})|(0{2}\d{2})|(0)){1}\d{9}/", $telephone_number)) {
+            echo "Een telefoonnummer moet uit minimaal 10 cijfers bestaan<br>";
             $canRegister = false;
         }
 
@@ -621,14 +621,36 @@ function placeNewBid($auctionid, $newPrice, $username)
     global $pdo;
 
     try {
-        $query = $pdo->prepare("select count(*) from TBL_Bid where auction = ? and amount = ? and user is not null");
-        $query->execute(array($auctionid, $newPrice));
+        $query = $pdo->prepare("select max(amount) as amount from TBL_Bid where auction = ? and user is not null group by auction");
+        $query->execute(array($auctionid));
         $sameBids = $query->fetch();
+        if (empty($sameBids)) {
 
-        if ($sameBids[0][0] == 0) {
-            $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
-            $query->execute(array($auctionid, $newPrice, $username));
+            $priceQuery = $pdo->prepare("select price_start from TBL_item where item=(SELECT item FROM TBL_Auction WHERE auction = ?)");
+            $priceQuery->execute(array($auctionid));
+            $start_price = $priceQuery->fetch()['price_start'];
+
+            $sameBids = array('amount' => $start_price);
         }
+        if ($sameBids['amount'] < $newPrice) {
+            if ($sameBids['amount'] < 1) {
+                $buttonvalue = 0.50;
+            } else if ($sameBids['amount'] <= 5) {
+                $buttonvalue = 1;
+            } else if ($sameBids['amount'] <= 10) {
+                $buttonvalue = 5;
+            } else if ($sameBids['amount'] <= 50) {
+                $buttonvalue = 10;
+            } else {
+                $buttonvalue = 50;
+            }
+            if (((int)$newPrice - (int)$sameBids['amount']) == $buttonvalue || (int)$newPrice - (int)$sameBids['amount'] == $buttonvalue * 2 || (int)$newPrice - (int)$sameBids['amount'] == $buttonvalue * 3) {
+                $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
+                $query->execute(array($auctionid, $newPrice, $username));
+            }else{
+            }
+        }
+
     } catch (PDOException $e) {
         echo $e;
     }
@@ -776,7 +798,7 @@ function checkSellerVerification($username)
 
         if (sizeof($checkCodeData) == 0) {
 
-            echo 'verificatiecode is niet meer geldig';
+            return '<p style="color: red">Code is onjuist, probeer het nog een keer.</p>';
 
         } else {
 
@@ -795,7 +817,7 @@ function checkSellerVerification($username)
 
             } else {
 
-                echo 'code is fout';
+                return '<p style="color: red">Code is onjuist, probeer het nog een keer.</p>';
 
             }
 

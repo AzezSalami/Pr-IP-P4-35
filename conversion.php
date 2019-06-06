@@ -12,6 +12,14 @@
         echo $e;
     }
 
+    require 'vendor/autoload.php';
+
+    global $places;
+    $places = Algolia\AlgoliaSearch\PlacesClient::create(
+        'plK904BLG7JJ',
+        '551154e9c4e6dfefd99359b532faaa99'
+    );
+
     try {
         ignore_user_abort(true);
         set_time_limit(0);
@@ -43,9 +51,15 @@
             FROM Temp35.dbo.Categorieen
             ORDER BY ID ASC
             ");
-        $username='ebay';
-        $pdo->exec("INSERT INTO groep35test3.dbo.TBL_User ([user],firstname,lastname,address_line_1,email,password,is_seller,is_verified)
-                              values ('$username','Pierre','Omidyar','2145 Hamilton Avenue, San José, California, Verenigde Staten van Amerika','eenmaalandermaal35@gmail.com','abc',1,1)");
+        $username = 'ebay';
+        $address = '2145 Hamilton Avenue, San José, California, Verenigde Staten van Amerika';
+        global $places;
+        $result = $places->search($address);
+        $coords = $result['hits'][0]['_geoloc'];
+
+
+        $pdo->exec("INSERT INTO groep35test3.dbo.TBL_User ([user],firstname,lastname,address_line_1,email,password,is_seller,is_verified, geolocation)
+                              values ('$username','Pierre','Omidyar','$address','eenmaalandermaal35@gmail.com','abc',1,1,geography::Point(" . $coords['lat'] . ", " . $coords['lng'] . ", 4326))");
         $pdo->exec("INSERT INTO groep35test3.dbo.TBL_Seller ([user],bank_account,verification_status)
                               values ('$username', 'NL50INGB1234567890',1)");
         while ($rubric = $rubrics->fetch()) {
@@ -97,10 +111,15 @@
                     );
                     while ($item = $items->fetch()) {
                         try {
+
+                            global $places;
+                            $result = $places->search($item['Postcode'] . " " . $item['Locatie']);
+                            $coords = $result['hits'][0]['_geoloc'];
+
                             $currentItemID = $pdo->query("SELECT TOP(1) item FROM groep35test3.dbo.TBL_Item ORDER BY item DESC")->fetch()['item'] + 1;
                             $pdo->exec("
                                 SET IDENTITY_INSERT groep35test3.dbo.TBL_Item ON
-                                INSERT INTO groep35test3.dbo.TBL_Item (item, name, description, price_start, address_line_1)
+                                INSERT INTO groep35test3.dbo.TBL_Item (item, name, description, price_start, address_line_1, geolocation)
                                 SELECT CAST(" . $currentItemID . " AS BIGINT),
                                        CAST(Titel AS VARCHAR(100)),
                                        CAST('" . strip_tags(preg_replace('/<style\b[^>]*>(.*?)/i', "",
@@ -116,7 +135,8 @@
                                             WHEN (Valuta = 'USD') THEN CONVERT(NUMERIC(9, 2), CONVERT(NUMERIC(9,2),Prijs) * 1.15)
                                            WHEN (Valuta = 'GBP') THEN CONVERT(NUMERIC(9, 2), CONVERT(NUMERIC(9,2),Prijs) * 0.89)
                                            END,
-                                       CAST(Postcode + ' ' + Locatie AS VARCHAR(100))
+                                       CAST(Postcode + ' ' + Locatie AS VARCHAR(100)),
+                                       geography::Point(" . $coords['lat'] . ", " . $coords['lng'] . ", 4326)
                                 FROM Temp35.dbo.Items
                                 WHERE ID = " . $item['ID'] . "
                                 
@@ -194,29 +214,29 @@
 
         $images = $pdo->query("SELECT ItemID, IllustratieFile FROM Temp35.dbo.Illustraties order by ItemID DESC");
 
-        while ($image = $images->fetch()){
+        while ($image = $images->fetch()) {
 
             //To download all images to your pc:
 //            file_put_contents("images/databatch3/" . $image['IllustratieFile'], fopen("http://iproject35.icasites.nl/pics/". $image['IllustratieFile'], 'r'));
             //After downloading, put them in a folder on the same machine you'll be running the conversion script from.
 
-            if(preg_match('/^.*\.(jpg)$/i', $image['IllustratieFile'])){
+            if (preg_match('/^.*\.(jpg)$/i', $image['IllustratieFile'])) {
                 echo "
                   INSERT INTO groep35test3.dbo.TBL_Resource (ITEM, [FILE], MEDIA_TYPE) VALUES (
-                    ". $image['ItemID'] .",
-                    (SELECT * FROM OPENROWSET(BULK N'http://iproject35.icasites.nl/pics/". $image['IllustratieFile'] . "', SINGLE_BLOB) as BLOB),
+                    " . $image['ItemID'] . ",
+                    (SELECT * FROM OPENROWSET(BULK N'http://iproject35.icasites.nl/pics/" . $image['IllustratieFile'] . "', SINGLE_BLOB) as BLOB),
                     'image/jpg'
                 )";
                 $pdo->exec("
                   INSERT INTO groep35test3.dbo.TBL_Resource (ITEM, [FILE], MEDIA_TYPE) VALUES (
-                    ". $image['ItemID'] .",
-                    (SELECT * FROM OPENROWSET(BULK N'http://iproject35.icasites.nl/pics/". $image['IllustratieFile'] . "', SINGLE_BLOB) as BLOB),
+                    " . $image['ItemID'] . ",
+                    (SELECT * FROM OPENROWSET(BULK N'http://iproject35.icasites.nl/pics/" . $image['IllustratieFile'] . "', SINGLE_BLOB) as BLOB),
                     'image/jpg'
                 )");
             }
         }
 
-       //$pdo->exec("DROP DATABASE Temp35");
+        //$pdo->exec("DROP DATABASE Temp35");
     } catch (PDOException $e) {
         echo $e;
         echo "<br>Conversion took " . (microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"]) . " seconds";

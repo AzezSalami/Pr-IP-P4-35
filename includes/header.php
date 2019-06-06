@@ -23,35 +23,35 @@ logout();
                         </button>
                     </div>
                 </div>
-	            <input type='hidden' id="rubricFilter" name='rubric'
+                <input type='hidden' id="rubricFilter" name='rubric'
                     <?php
-                        if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
-                            echo " value='$rubric'";
-                        }
+                    if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
+                        echo " value='$rubric'";
+                    }
                     ?>
-	            >
-	            <input type='hidden' id="minPrice" name='minPrice'
+                >
+                <input type='hidden' id="minPrice" name='minPrice'
                     <?php
-                        if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice) && ((float)$minPrice)>=0) {
-                            echo " value='$minPrice'";
-                        }
+                    if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice) && ((float)$minPrice) >= 0) {
+                        echo " value='$minPrice'";
+                    }
                     ?>
-	            >
-	            <input type='hidden' id="maxPrice" name='maxPrice'
+                >
+                <input type='hidden' id="maxPrice" name='maxPrice'
                     <?php
-                        if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice) && ((float)$maxPrice)>=0) {
-                            echo " value='$maxPrice'";
-                        }
+                    if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice) && ((float)$maxPrice) >= 0) {
+                        echo " value='$maxPrice'";
+                    }
                     ?>
-	            >
-	            <input type='hidden' id="maxDistance" name='maxDistance'
+                >
+                <input type='hidden' id="maxDistance" name='maxDistance'
                     <?php
-                        if (isset($_SESSION['username']) && isset($_GET['maxDistance']) && ($maxDistance = cleanUpUserInput($_GET['maxDistance'])) != "" && is_numeric($maxDistance) && ((float)$maxDistance)>=0) {
-                            echo " value='$maxDistance'";
-                        }
+                    if (isset($_SESSION['username']) && isset($_GET['maxDistance']) && ($maxDistance = cleanUpUserInput($_GET['maxDistance'])) != "" && is_numeric($maxDistance) && ((float)$maxDistance) >= 0) {
+                        echo " value='$maxDistance'";
+                    }
                     ?>
-	            >
-	            <input type='hidden' id="pageNumber" name='page' value='0'>
+                >
+                <input type='hidden' id="pageNumber" name='page' value='0'>
             </form>
             <div class="col-2 my-auto text-center">
                 <?php
@@ -158,15 +158,17 @@ logout();
                     <h4 class="modal-title text-dark">Inloggen</h4>
                     <button id="loginCloseButton" type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <div class="col text-danger"><?php global $loginMessage;
-                    if ($loginMessage != "") {
-                        echo $loginMessage;
-                        echo "<script>document.getElementById('openLogin').click();</script>";
-                    };
-                    confirm(); ?></div>
+
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="container-fluid">
+                        <div class="col ml-1 text-danger"><?php global $loginMessage;
+                            if ($loginMessage != "") {
+                                echo $loginMessage;
+                                echo "<script>document.getElementById('openLogin').click();</script>";
+                            };
+                            confirm(); ?>
+                        </div>
                         <form class="form-signin" method="POST" name="inloggen">
                             <div class="form-label-group">
 
@@ -224,10 +226,11 @@ logout();
                     <h4 class="modal-title text-dark">Registreren</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <div class="col text-danger"><?php register(); ?></div>
+
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="container-fluid">
+                        <div class="col text-danger ml-2"><?php register(); ?></div>
                         <form class="form-signin" method="POST" name="registreren">
                             <div class="row">
                                 <div class="col">
@@ -272,7 +275,8 @@ logout();
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <input onchange="alert(.search('paris')['latlng']['lat']);" class="form-control mb-3" type="text" id="address" placeholder="Adres"
+                                    <input onchange="alert(.search('paris')['latlng']['lat']);"
+                                           class="form-control mb-3" type="text" id="address" placeholder="Adres"
                                            name="address"
                                            required>
                                     <label for="address" class="sr-only">Adres</label>
@@ -290,7 +294,8 @@ logout();
                                 <div class="col-lg ">
                                     <div class="form-label-group mb-0">
                                         <input class="form-control" placeholder="Telefoonnummer" type="text"
-                                               name="telephone_number" id="telephone_number" maxlength="13" pattern="[0-9]{13}">
+                                               name="telephone_number" id="telephone_number" maxlength="13"
+                                               pattern="(([\+]\d{2})|(0{2}\d{2})|(0)){1}\d{9}">
                                         <label for="telephone_number">Telefoonnummer</label>
                                     </div>
                                 </div>
@@ -298,7 +303,8 @@ logout();
                             <div class="row">
                                 <div class="col-lg mx-4 mt-0 mb-2">
                                     <input type="checkbox" class="form-check-input " name="is_mobile">
-                                    <label class="form-check-label text-dark" for="is_mobile"><i class="fas fa-mobile-alt"></i> ?</label>
+                                    <label class="form-check-label text-dark" for="is_mobile"><i
+                                                class="fas fa-mobile-alt"></i> ?</label>
                                 </div>
                             </div>
                             <div class="row">
