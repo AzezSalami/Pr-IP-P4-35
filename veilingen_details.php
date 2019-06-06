@@ -1,110 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-        <?php
-            include 'includes/head.html';
-        ?>
-		<link rel="stylesheet" href="CSS/veilingen-details.css" type="text/css">
-	</head>
-	<body>
-        <?php
-            require "includes/header.php";
-        ?>
-		<main>
-            <?php
+<head>
+    <?php
+    include 'includes/head.html';
+    ?>
+    <link rel="stylesheet" href="CSS/veilingen-details.css" type="text/css">
+</head>
+<body>
+<?php
+require "includes/header.php";
+?>
+<main>
+    <?php
 
-                if (isset($_GET['auction'])) {
-                    global $pdo;
-                    $auctionquery = $pdo->prepare("SELECT * FROM TBL_Auction WHERE auction = ?");
-                    $auctionid = $_GET['auction'];
-                    $auctionquery->execute(array($auctionid));
-                    $auctiondata = $auctionquery->fetch();
+    if (isset($_GET['auction'])) {
+        global $pdo;
+        $auctionquery = $pdo->prepare("SELECT * FROM TBL_Auction WHERE auction = ?");
+        $auctionid = $_GET['auction'];
+        $auctionquery->execute(array($auctionid));
+        $auctiondata = $auctionquery->fetch();
 
-                    /* all sellers are null atm, hence why sellerinfo will be empty for now */
+        /* all sellers are null atm, hence why sellerinfo will be empty for now */
 
-    if ($auctiondata['is_closed'] == 1) {
-        $auctionstatus = "Gesloten";
-    } elseif ($auctiondata['is_closed'] == 2) {
-        $auctionstatus = "Geblokkeerd";
-    } else {
-        $auctionstatus = "Open";
-    }
-    $startdate = $auctiondata['moment_start'];
-    $enddate = $auctiondata['moment_end'];
-    $item = $auctiondata['item'];
-    $seller = $auctiondata['seller'];
+        if ($auctiondata['is_closed'] == 1) {
+            $auctionstatus = "Gesloten";
+        } elseif ($auctiondata['is_closed'] == 2) {
+            $auctionstatus = "Geblokkeerd";
+        } else {
+            $auctionstatus = "Open";
+        }
+        $startdate = $auctiondata['moment_start'];
+        $enddate = $auctiondata['moment_end'];
+        $item = $auctiondata['item'];
+        $seller = $auctiondata['seller'];
 
-                    $sellerQuery = $pdo->prepare("SELECT * FROM TBL_Seller WHERE user = ?");
-                    $sellerQuery->execute(array($seller));
-                    $sellerData = $sellerQuery->fetch();
-                    $bankNumber = $sellerData['bank_account'];
-                    $verificationStatus = (int)$sellerData['verification_status'];
-                    if ($verificationStatus == 1) {
-                        $verificationStatus = "Niet geverifieerd";
-                    } else {
-                        $verificationStatus = "Geverifieerd";
-                    }
+        $sellerQuery = $pdo->prepare("SELECT * FROM TBL_Seller WHERE user = ?");
+        $sellerQuery->execute(array($seller));
+        $sellerData = $sellerQuery->fetch();
+        $bankNumber = $sellerData['bank_account'];
+        $verificationStatus = (int)$sellerData['verification_status'];
+        if ($verificationStatus == 1) {
+            $verificationStatus = "Niet geverifieerd";
+        } else {
+            $verificationStatus = "Geverifieerd";
+        }
 
-                    $itemquery = $pdo->prepare("SELECT * FROM TBL_Item WHERE item = ?");
-                    $itemquery->execute(array($item));
-                    $itemdata = $itemquery->fetch();
-                    $imageQuery = $pdo->prepare("SELECT [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item) AND item = ?");
-                    $imageQuery->execute(array($itemdata['item']));
-                    $imagedata = $imageQuery->fetch()['file'];
+        $itemquery = $pdo->prepare("SELECT * FROM TBL_Item WHERE item = ?");
+        $itemquery->execute(array($item));
+        $itemdata = $itemquery->fetch();
+        $imageQuery = $pdo->prepare("SELECT [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item) AND item = ?");
+        $imageQuery->execute(array($itemdata['item']));
+        $imagedata = $imageQuery->fetch()['file'];
 
-                    $itemtitle = $itemdata['name'];
-                    $itemdescription = $itemdata['description'];
-                    $itempricestart = $itemdata['price_start'];
-                    $itemaddress = $itemdata['address_line_1'];
-                    $itemshippingcost = $itemdata['shipping_cost'];
-                    $itemshippingmethod = $itemdata['shipping_instructions'];
+        $itemtitle = $itemdata['name'];
+        $itemdescription = $itemdata['description'];
+        $itempricestart = $itemdata['price_start'];
+        $itemaddress = $itemdata['address_line_1'];
+        $itemshippingcost = $itemdata['shipping_cost'];
+        $itemshippingmethod = $itemdata['shipping_instructions'];
 
 
-                    $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order by amount DESC");
-                    $bidquery->execute(array($auctionid));
-                    $biddata = $bidquery->fetchAll();
-
-                    $highestBidQuery = $pdo->prepare("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
-                    $highestBidQuery->execute(array($auctionid));
-                    $highestBidData = $highestBidQuery->fetchAll();
-
-    if (sizeof($highestBidData) == null) {
-        $itemprice = $itempricestart;
-    } else {
-        $itemprice = (float)$highestBidData[0][0];
-    }
-
-    if ($itemprice < 1) {
-        $buttonvalue = 0.50;
-    } else if ($itemprice <= 5) {
-        $buttonvalue = 1;
-    } else if ($itemprice <= 10) {
-        $buttonvalue = 5;
-    } else if ($itemprice <= 50) {
-        $buttonvalue = 10;
-    } else {
-        $buttonvalue = 50;
-    }
-
-    if (isset($_POST['bidbutton'])) {
-        $newPrice = $_POST['bidbutton'];
-        $username = $_SESSION['username'];
-        placeNewBid($auctionid, $newPrice, $username);
-        $itemprice = $newPrice;
+        $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order by amount DESC");
         $bidquery->execute(array($auctionid));
-    }
+        $biddata = $bidquery->fetchAll();
 
-    if (isset($_POST['blockAuction'])) {
-        $blockAuctionQuery = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE auction = ?");
-        $blockAuctionQuery->execute(array($auctionid));
-        echo '<script>window.location.replace("index.php");</script>';
-    }
+        $highestBidQuery = $pdo->prepare("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
+        $highestBidQuery->execute(array($auctionid));
+        $highestBidData = $highestBidQuery->fetchAll();
 
-    $emailQuery = $pdo->prepare("SELECT * FROM TBL_User WHERE [user] = ?");
-    $emailQuery->execute(array($seller));
-    $emailSeller = $emailQuery->fetch()['email'];
+        if (sizeof($highestBidData) == null) {
+            $itemprice = $itempricestart;
+        } else {
+            $itemprice = (float)$highestBidData[0][0];
+        }
 
-                    echo "
+        if ($itemprice < 1) {
+            $buttonvalue = 0.50;
+        } else if ($itemprice <= 5) {
+            $buttonvalue = 1;
+        } else if ($itemprice <= 10) {
+            $buttonvalue = 5;
+        } else if ($itemprice <= 50) {
+            $buttonvalue = 10;
+        } else {
+            $buttonvalue = 50;
+        }
+
+        if (isset($_POST['bidbutton'])) {
+            $newPrice = $_POST['bidbutton'];
+            $username = $_SESSION['username'];
+            placeNewBid($auctionid, $newPrice, $username);
+            $itemprice = $newPrice;
+            $bidquery->execute(array($auctionid));
+        }
+
+        if (isset($_POST['blockAuction'])) {
+            $blockAuctionQuery = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE auction = ?");
+            $blockAuctionQuery->execute(array($auctionid));
+            echo '<script>window.location.replace("index.php");</script>';
+        }
+
+        $emailQuery = $pdo->prepare("SELECT * FROM TBL_User WHERE [user] = ?");
+        $emailQuery->execute(array($seller));
+        $emailSeller = $emailQuery->fetch()['email'];
+
+        echo "
     <div class=\"row\"> 
         <div class=\"col-lg-2\">
         </div>
@@ -214,17 +214,17 @@
                                     </script>
 ";
 
-    if (sizeof($_SESSION) > 0) {
-        if ($_SESSION['is_admin'] == 1) {
+        if (sizeof($_SESSION) > 0) {
+            if ($_SESSION['is_admin'] == 1) {
 
-            echo "<form method='POST'>
+                echo "<form method='POST'>
             <br><button name='blockAuction' type='submit' class='btn'>Blokkeer veiling</button>
 </form>";
+            }
         }
-    }
 
 
-    echo "</div>
+        echo "</div>
                 </div>
                 <div class=\"col-line\"></div>
                 <div class=\"col-lg\">
@@ -237,8 +237,8 @@
                 <div class=\"col-lg\">
                     <div class=\"bieden mb-2\">
                         <h3>Bieden</h3>";
-    if (isset($_SESSION['username'])) {
-        echo '<p class="font-weight-bold">Mijn bod wordt:</p>
+        if (isset($_SESSION['username'])) {
+            echo '<p class="font-weight-bold">Mijn bod wordt:</p>
                                                 <form method="post" class="form-inline button-left">
                                                     <button name="bidbutton" type="submit" class="btn" value="' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '">€' . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . '</button>
                                                     <div class="space"></div>
@@ -248,27 +248,25 @@
                                                 </form>
                                                 <div class="my-3">
                                                     <p class="font-weight-bold">Eerdere biedingen:</p>';
-    } else {
-        echo '<p style="color: red">Je moet ingelogd zijn om te kunnen bieden.</p>';
-    }
-
-    $html = "";
-
-
-
-
-
-    echo '<table class="table table-striped">';
-    while ($bid = $bidquery->fetch()){
-        if ($bid['user'] == null) {
-            echo '<tr><th>verwijderd</th><td>€' . $bid['amount'] . '</td></tr>';
         } else {
-            echo '<tr><th>' . $bid['user'] .'</th><td>€' . $bid['amount'] . '</td></tr>';
+            echo '<p style="color: red">Je moet ingelogd zijn om te kunnen bieden.</p>';
         }
-    }
-    echo '</table>';
 
-    echo $html . '</div>' . '
+        $html = "";
+
+
+        $bidquery->execute(array($auctionid));
+        echo '<table class="table table-striped">';
+        while ($bid = $bidquery->fetch()) {
+            if ($bid['user'] == null) {
+                echo '<tr><th>verwijderd</th><td>€' . $bid['amount'] . '</td></tr>';
+            } else {
+                echo '<tr><th>' . $bid['user'] . '</th><td>€' . $bid['amount'] . '</td></tr>';
+            }
+        }
+        echo '</table>';
+
+        echo $html . '</div>' . '
                    
                 </div>
             </div>
@@ -279,13 +277,13 @@
     </div>';
 
 
-                }
+    }
 
-            ?>
+    ?>
 
-		</main>
-        <?php
-            include_once "includes/footer.php";
-        ?>
-	</body>
+</main>
+<?php
+include_once "includes/footer.php";
+?>
+</body>
 </html>
