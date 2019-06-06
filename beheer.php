@@ -14,8 +14,8 @@ require "includes/header.php";
     <div class="row">
         <div class="col-lg-2">
         </div>
-        <div class="col-lg-8 admin-page mb-5 pb-3">
-            <div class="classic-tabs mx-2">
+        <div class="col-lg-8 admin-page pb-3">
+            <div class="classic-tabs mt-2 mx-2">
                 <ul class="nav nav-tabs nav-justified" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link  active show" id="profile-tab-classic-shadow" data-toggle="tab"
