@@ -273,7 +273,7 @@ if (isset($_SESSION['username']) == 0) {
 
 include_once "includes/footer.php";
 
-<!--?>-->
+?>
 
 <script>
     function showRubric(str, element) {
