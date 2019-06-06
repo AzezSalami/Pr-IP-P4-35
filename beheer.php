@@ -14,7 +14,7 @@ require "includes/header.php";
     <div class="row">
         <div class="col-lg-2">
         </div>
-        <div class="col-lg-8 admin-page">
+        <div class="col-lg-8 admin-page mb-5 pb-3">
             <div class="classic-tabs mx-2">
                 <ul class="nav nav-tabs nav-justified" role="tablist">
                     <li class="nav-item">
@@ -43,45 +43,19 @@ require "includes/header.php";
                             </thead>
                             <tbody>
                             <?php
-                            echo " <tr>
-                                      <th scope=\"row\" class=\"fit\"><input type=\"radio\" value=\"geselecteerd\"
-                                                                   name=\"geselecteerd\"></th>
-                                     <td class=\"fit\">1</td>
+                            $rubricQuery = $pdo ->prepare("SELECT * FROM TBL_Rubric WHERE super=-1 ");
+                            $rubricQuery -> execute();
+                            $rubrics = $rubricQuery->fetchAll();
+                            foreach ($rubrics as $result) {
+                                echo " <tr>
+                                      <th scope=\"row\" class=\"fit\"><input type=\"radio\" value=\"" . $result['name'] . "\"
+                                                                   name=\"rubricRadio\"></th>
+                                     <td class=\"fit\">" . $result['sort_number'] . "</td>
                                      
-                                    <td>Testrubriek</td>
-                                   </tr>"
-
+                                    <td>" . $result['name'] . "</td>
+                                   </tr>";
+                            }
                             ?>
-                            <tr>
-                                <th scope="row" class="fit"><input type="radio" value="geselecteerd"
-                                                                   name="geselecteerd"></th>
-                                <td class="fit">1</td>
-                                <td>Testrubriek</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="fit"><input type="radio" value="geselecteerd"
-                                                                   name="geselecteerd"></th>
-                                <td class="fit">2</td>
-                                <td>Testrubriek</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="fit"><input type="radio" value="geselecteerd"
-                                                                   name="geselecteerd"></th>
-                                <td class="fit">3</td>
-                                <td>Testrubriek</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="fit"><input type="radio" value="geselecteerd"
-                                                                   name="geselecteerd"></th>
-                                <td class="fit">4</td>
-                                <td>Testrubriek</td>
-                            </tr>
-                            <tr>
-                                <th scope="row" class="fit"><input type="radio" value="geselecteerd"
-                                                                   name="geselecteerd"></th>
-                                <td class="fit">5</td>
-                                <td>Testrubriek</td>
-                            </tr>
                             <tr>
                                 <th scope="row" class="fit"></th>
                                 <td class="inputRubric"><input type="number" name="addRubricNumber"
@@ -92,12 +66,10 @@ require "includes/header.php";
                             </tr>
                             </tbody>
                         </table>
-                        <div class="row">
+                        <div class="row pb-2 mb-2">
                             <div class="col-lg admin-buttons text-center">
-                                <input type="submit" class="btn mb-1 red" value="Verwijderen" name="removeRubric">
                                 <input type="submit" class="btn mb-1" value="Aanpassen" name="changeRubric">
                                 <input type="submit" class="btn mb-1" value="Uitfaseren" name="depracateRubric">
-                                <input type="submit" class="btn mb-1" value="Toepassen" name="confirmChangesRubric">
                             </div>
                         </div>
                     </div>
