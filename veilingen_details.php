@@ -129,7 +129,7 @@ require "includes/header.php";
                         <tbody>
                             <tr>
                                 <th scope='row'> Locatie van product</th>
-                                <td> $itemaddress</td>
+                                <td class='text-break'> $itemaddress</td>
                             </tr>
                             <tr>
                                 <th scope='row'>verzendkosten </th>
