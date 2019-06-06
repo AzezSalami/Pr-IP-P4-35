@@ -131,21 +131,26 @@ if (isset($_SESSION['username']) == 0) {
                     </div>
 
                     <div class="col-lg-4 mb-3">
+                        <div>
                         <div class="form-group">
                             <label class="d-none" for="rubriek"></label>
-                            <select class="form-control" name="rubriek" id="rubriek" onchange="showRubriek(this.value)">
-                                <option selected disabled>Rubriek</option>
-                                <?php
-                                $mainRubricQuery = $pdo->prepare("select DISTINCT [name] from TBL_Rubric WHERE super=-1");
+                            <select class="form-control" name="rubriek" id="rubriek" onchange="showRubric(this.value, this)">
+                                <option selected disabled>Rubriek</option>';
+
+                                $mainRubricQuery = $pdo->prepare("select DISTINCT rubric,[name] from TBL_Rubric WHERE super=-1");
                                 $mainRubricQuery->execute();
                                 $mainRubric = $mainRubricQuery->fetchAll();
 
                                 foreach ($mainRubric as $result) {
-                                    echo $result[\'name\'];
-                                    echo "<option value=\'" . $result[\'rubric\'] . "\'>" . $result[\'name\'] . "</option>";
+                                    echo $result["name"];
+                                    echo '<option value="'. (int)$result["rubric"] . '" >' . $result["name"] .' </option>';
                                 }
-                                ?>
+                                echo '
+
                             </select>
+
+                        </div>
+                            <div></div>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -157,7 +162,8 @@ if (isset($_SESSION['username']) == 0) {
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <input type="checkbox">
+                                    <label for="is_promoted"></label>
+                                    <input id="is_promoted" name="is_promoted" type="checkbox">
                                 </div>
                             </div>
                             <input class="form-control" aria-label="With textarea"
@@ -268,6 +274,26 @@ if (isset($_SESSION['username']) == 0) {
 include_once "includes/footer.php";
 
 ?>
+
+<script>
+    function showRubric(str, element) {
+        var xhttp;
+        if (str === "") {
+            document.getElementById("txt").innerHTML = "";
+            return;
+        }
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                if(this.responseText) {
+                    element.parentNode.parentNode.lastElementChild.innerHTML = this.responseText;
+                }
+            }
+        };
+        xhttp.open("GET", "AJAX/rubric_dropdown.php?super="+str, true);
+        xhttp.send();
+    }
+</script>
 
 </body>
 </html>
