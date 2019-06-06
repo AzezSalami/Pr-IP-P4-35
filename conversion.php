@@ -113,7 +113,7 @@
                         try {
 
                             global $places;
-                            $result = $places->search($item['Postcode'] . " " . $item['Locatie']);
+                            $result = $places->search($item['adresregel_1']);
                             $coords = $result['hits'][0]['_geoloc'];
 
                             $currentItemID = $pdo->query("SELECT TOP(1) item FROM groep35test3.dbo.TBL_Item ORDER BY item DESC")->fetch()['item'] + 1;
@@ -214,29 +214,29 @@
 
         $images = $pdo->query("SELECT ItemID, IllustratieFile FROM Temp35.dbo.Illustraties order by ItemID DESC");
 
-        while ($image = $images->fetch()) {
+//        while ($image = $images->fetch()) {
+//
+//            //To download all images to your pc:
+////            file_put_contents("images/databatch3/" . $image['IllustratieFile'], fopen("http://iproject35.icasites.nl/pics/". $image['IllustratieFile'], 'r'));
+//            //After downloading, put them in a folder on the same machine you'll be running the conversion script from.
+//
+//            if (preg_match('/^.*\.(jpg)$/i', $image['IllustratieFile'])) {
+//                echo "
+//                  INSERT INTO groep35test3.dbo.TBL_Resource (ITEM, [FILE], MEDIA_TYPE) VALUES (
+//                    " . $image['ItemID'] . ",
+//                    (SELECT * FROM OPENROWSET(BULK N'http://iproject35.icasites.nl/pics/" . $image['IllustratieFile'] . "', SINGLE_BLOB) as BLOB),
+//                    'image/jpg'
+//                )";
+//                $pdo->exec("
+//                  INSERT INTO groep35test3.dbo.TBL_Resource (ITEM, [FILE], MEDIA_TYPE) VALUES (
+//                    " . $image['ItemID'] . ",
+//                    (SELECT * FROM OPENROWSET(BULK N'http://iproject35.icasites.nl/pics/" . $image['IllustratieFile'] . "', SINGLE_BLOB) as BLOB),
+//                    'image/jpg'
+//                )");
+//            }
+//        }
 
-            //To download all images to your pc:
-//            file_put_contents("images/databatch3/" . $image['IllustratieFile'], fopen("http://iproject35.icasites.nl/pics/". $image['IllustratieFile'], 'r'));
-            //After downloading, put them in a folder on the same machine you'll be running the conversion script from.
-
-            if (preg_match('/^.*\.(jpg)$/i', $image['IllustratieFile'])) {
-                echo "
-                  INSERT INTO groep35test3.dbo.TBL_Resource (ITEM, [FILE], MEDIA_TYPE) VALUES (
-                    " . $image['ItemID'] . ",
-                    (SELECT * FROM OPENROWSET(BULK N'http://iproject35.icasites.nl/pics/" . $image['IllustratieFile'] . "', SINGLE_BLOB) as BLOB),
-                    'image/jpg'
-                )";
-                $pdo->exec("
-                  INSERT INTO groep35test3.dbo.TBL_Resource (ITEM, [FILE], MEDIA_TYPE) VALUES (
-                    " . $image['ItemID'] . ",
-                    (SELECT * FROM OPENROWSET(BULK N'http://iproject35.icasites.nl/pics/" . $image['IllustratieFile'] . "', SINGLE_BLOB) as BLOB),
-                    'image/jpg'
-                )");
-            }
-        }
-
-        //$pdo->exec("DROP DATABASE Temp35");
+//        $pdo->exec("use master DROP DATABASE Temp35");
     } catch (PDOException $e) {
         echo $e;
         echo "<br>Conversion took " . (microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"]) . " seconds";
