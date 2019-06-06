@@ -269,7 +269,7 @@ function register()
                 $canRegister = false;
             }
             if ($row['user'] == $regUsername) {
-                echo 'De gebruikersnaam: ' . $regUsername . ' is al in gebruik, probeer een andere<br>';
+                echo '<span class="font-weight-bold">De gebruikersnaam:</span> ' . $regUsername . ' is al in gebruik, probeer een andere<br>';
                 echo "<script>document.getElementById('openRegister').click();</script>";
                 $canRegister = false;
             }
@@ -278,8 +278,8 @@ function register()
             $canRegister = false;
         }
 
-        if (strlen($telephone_number) < 10 || !preg_match("/([0-9]){10}/", $telephone_number)) {
-            echo "Een telefonnummer moet uit minimaal 10 cijfers bestaan<br>";
+        if (strlen($telephone_number) < 10 || !preg_match("/(([\+]\d{2})|(0{2}\d{2})|(0)){1}\d{9}/", $telephone_number)) {
+            echo "Een telefoonnummer moet uit minimaal 10 cijfers bestaan<br>";
             $canRegister = false;
         }
 

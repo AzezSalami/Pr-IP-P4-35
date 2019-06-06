@@ -224,10 +224,11 @@ logout();
                     <h4 class="modal-title text-dark">Registreren</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <div class="col text-danger"><?php register(); ?></div>
+
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="container-fluid">
+                        <div class="col text-danger ml-2"><?php register(); ?></div>
                         <form class="form-signin" method="POST" name="registreren">
                             <div class="row">
                                 <div class="col">
@@ -292,7 +293,7 @@ logout();
                                     <div class="form-label-group mb-0">
                                         <input class="form-control" placeholder="Telefoonnummer" type="text"
                                                name="telephone_number" id="telephone_number" maxlength="13"
-                                               pattern="[0-9]{13}">
+                                               pattern="(([\+]\d{2})|(0{2}\d{2})|(0)){1}\d{9}">
                                         <label for="telephone_number">Telefoonnummer</label>
                                     </div>
                                 </div>
