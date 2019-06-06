@@ -72,7 +72,7 @@ if (isset($_SESSION['username']) == 0) {
             <div class="row m-3">
                 <h1>Nieuwe veiling</h1>
             </div>
-            <div class=" mb-2 text-danger"><?php createAuction(); ?></div>
+            <div class=" mb-2 text-danger">'. createAuction().'</div>
             <div class="dropdown-divider"></div>
             <form method="post" action="" enctype="multipart/form-data">
                 <div class="row m-3">
@@ -83,13 +83,13 @@ if (isset($_SESSION['username']) == 0) {
                         </div>
                         <div class="form-label-group">
                             <input type="number" class="form-control" name="price_start" id="price_start"
-                                   placeholder="prijsStart">
+                                   placeholder="prijsStart"' . (isset($_POST['price_start'])? 'value=\'' .cleanUpUserInput($_POST['price_start']) . '\'': "") .'>
                             <label for="price_start">Start prijs</label>
                         </div>
                         <div class="form-group">
                             <label class="d-none" for="location">Locatie</label>
                             <input class="form-control mb-3" type="text" name="location" id="location"
-                                   placeholder="Locatie">
+                                   placeholder="Locatie" ' . (isset($_POST['location'])? 'value=\'' .cleanUpUserInput($_POST['location']) . '\'': "") .'>
                             <script>
                                 var placesAutocomplete = places({
                                     appId: \'plK904BLG7JJ\',
@@ -114,7 +114,7 @@ if (isset($_SESSION['username']) == 0) {
                         </div>
                         <div class="form-label-group d-none">
                             <input type="number" class="form-control" name="shipping_cost" id="shipping_cost"
-                                   placeholder="verzendkosten">
+                                   placeholder="verzendkosten" ' . (isset($_POST['shipping_cost'])? 'value=\'' .cleanUpUserInput($_POST['shipping_cost']) . '\'': "") .'>
                             <label for="shipping_cost">Verzendkosten</label>
                         </div>
                         <div class="form-group">
@@ -135,7 +135,7 @@ if (isset($_SESSION['username']) == 0) {
                         <div class="form-group">
                             <label class="d-none" for="rubriek"></label>
                             <select class="form-control" name="rubriek" id="rubriek" onchange="showRubric(this.value, this)">
-                                <option selected disabled>Rubriek</option>';
+                                <option selected disabled value="">Rubriek</option>';
 
                                 $mainRubricQuery = $pdo->prepare("select DISTINCT rubric,[name] from TBL_Rubric WHERE super=-1");
                                 $mainRubricQuery->execute();
@@ -157,7 +157,7 @@ if (isset($_SESSION['username']) == 0) {
                                 <span class="input-group-text">Beschrijving</span>
                             </div>
                             <label class="d-none" for="description"></label>
-                            <textarea class="form-control" name="description" id="description"></textarea>
+                            <textarea class="form-control" name="description" id="description" >' . (isset($_POST['description'])? cleanUpUserInput($_POST['description']) : "") .'</textarea>
                         </div>
                         <div class="input-group">
                             <div class="input-group-prepend">

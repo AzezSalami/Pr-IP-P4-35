@@ -81,6 +81,8 @@ logout();
                             <div class="dropdown-menu bg-lightblue">
                                 <a class="dropdown-item" href="gegevens.php">Mijn gegevens</a>
                                 <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="beheer.php">Beheer pagina</a>
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="veiling_plaatsen.php">Nieuwe veiling</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="?logout=true">Uitloggen</a>
