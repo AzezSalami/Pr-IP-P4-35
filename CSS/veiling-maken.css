@@ -11,3 +11,7 @@
 .btn-makeauction{
     float: right;
 }
+
+.notloggedin {
+    text-align: center;
+}

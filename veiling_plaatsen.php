@@ -48,8 +48,9 @@ global $pdo;
 
 if (isset($_SESSION['username']) == 0) {
 
-    echo 'faka neef doe ff inloggen anders kan je geen veiling plaatsen je weet toch broski';
-    echo 'aka een guide on how to become seller yadig';
+    echo '<div class="notloggedin"><br><h1>Verkoper worden</h1>
+                <p>Om een verkoper te worden moet je eerst een account aanmaken, lees hierover meer op onze 
+                <a href="hulp.php">hulp</a> pagina.</p><br></div>';
 
 } else {
 
@@ -60,7 +61,6 @@ if (isset($_SESSION['username']) == 0) {
     $userData = $userQuery->fetch();
 
     sendSellerVerification($username);
-    checkSellerVerification($username);
 
     if ($_SESSION['is_seller'] == 1) {
 
@@ -137,15 +137,15 @@ if (isset($_SESSION['username']) == 0) {
                             <select class="form-control" name="rubriek" id="rubriek" onchange="showRubric(this.value, this)">
                                 <option selected disabled>Rubriek</option>';
 
-                                $mainRubricQuery = $pdo->prepare("select DISTINCT rubric,[name] from TBL_Rubric WHERE super=-1");
-                                $mainRubricQuery->execute();
-                                $mainRubric = $mainRubricQuery->fetchAll();
+        $mainRubricQuery = $pdo->prepare("select DISTINCT rubric,[name] from TBL_Rubric WHERE super=-1");
+        $mainRubricQuery->execute();
+        $mainRubric = $mainRubricQuery->fetchAll();
 
-                                foreach ($mainRubric as $result) {
-                                    echo $result["name"];
-                                    echo '<option value="'. (int)$result["rubric"] . '" >' . $result["name"] .' </option>';
-                                }
-                                echo '
+        foreach ($mainRubric as $result) {
+            echo $result["name"];
+            echo '<option value="' . (int)$result["rubric"] . '" >' . $result["name"] . ' </option>';
+        }
+        echo '
 
                             </select>
 
@@ -196,69 +196,49 @@ if (isset($_SESSION['username']) == 0) {
 
     } else {
 
-        if (canSendNewCode($username)) {
-
-            echo '<main>
+        $html = '<main>
     <div class="row">
         <div class="col-lg-1">
         </div>
         <div class="col-lg-10 my-2 ml-2 mr-1 make-auction">
             <div class="row m-3">
-                <h1>Wordt verkoper</h1>
+                <h1>Verkoper worden</h1>
             </div>
             <div class=" mb-2 text-danger"><?php createAuction(); ?></div>
             <div class="dropdown-divider"></div>
             <form method="post" action="" enctype="multipart/form-data">
                 <div class="row m-3">
                     <div class="col-lg-3">
-                        <div class="form-label-group">
-                            <p>joejoe kijk hier toelichting van deze pagina</p>
+                        <div class="form-label-group">';
+
+        if (canSendNewCode($username)) {
+
+            $html .= '<p>Vul hieronder jouw IBAN in om een verificatiecode te onvangen.</p>
+<p>Lees meer over het worden van een verkoper op de <a href="hulp.php" target="_blank">hulp</a> pagina.</p>
                         </div>
                         <div class="form-label-group">
                             <input type="text" class="form-control" name="bankNumber" id="price_start">
                             <label for="price_start">IBAN</label>
-                        </div>
-                    </div>
-                </div>
+                            </div></div></div>
                 <div class="row m-4 btn-makeauction">
-                    <input class="btn" type="submit" value="Verzend code" name="sendVerification">
-                </div>
-            </form>
-        </div>
-        <div class="col-lg-1">
-        </div>
-    </div>
+                    <input class="btn" type="submit" value="Verzend code" name="sendVerification">';
 
-</main>';
 
         } else {
 
-            echo '<main>
-    <div class="row">
-        <div class="col-lg-1">
-        </div>
-        <div class="col-lg-10 my-2 ml-2 mr-1 make-auction">
-            <div class="row m-3">
-                <h1>Wordt verkoper</h1>
-            </div>
-                    <div class=" mb-2 text-danger"><?php createAuction(); ?></div>
-            <div class="dropdown-divider"></div>
-            <form method="post" action="" enctype="multipart/form-data">
-                <div class="row m-3">
-                    <div class="col-lg-3">
-                        <div class="form-label-group">
-                            <p>Vul hieronder uw verificatiecode in:</p>
+            $html .= '<p>Vul hieronder uw verificatiecode in:</p>
                         </div>
                         <div class="form-label-group">
                             <input type="text" class="form-control" name="vericode" id="price_start"
                                    placeholder="Verificatiecode">
                             <label for="price_start">Verificatiecode</label>
-                        </div>
-                    </div>
-                </div>
+                            ' . checkSellerVerification($username) . '
+                            </div></div></div>
                 <div class="row m-4 btn-makeauction">
-                    <input class="btn" type="submit" value="Verzend" name="submitVerification">
-                </div>
+                    <input class="btn" type="submit" value="Check code" name="submitVerification">';
+        }
+
+        $html .= '</div>
             </form>
         </div>
         <div class="col-lg-1">
@@ -267,7 +247,8 @@ if (isset($_SESSION['username']) == 0) {
 
 </main>';
 
-        }
+        echo $html;
+
     }
 }
 
@@ -283,14 +264,14 @@ include_once "includes/footer.php";
             return;
         }
         xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
+        xhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                if(this.responseText) {
+                if (this.responseText) {
                     element.parentNode.parentNode.lastElementChild.innerHTML = this.responseText;
                 }
             }
         };
-        xhttp.open("GET", "AJAX/rubric_dropdown.php?super="+str, true);
+        xhttp.open("GET", "AJAX/rubric_dropdown.php?super=" + str, true);
         xhttp.send();
     }
 </script>
