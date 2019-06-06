@@ -2,15 +2,20 @@
 set_time_limit(0);
 //error_reporting(0);
 session_start();
+require 'vendor/autoload.php';
 connectToDatabase();
 deleteNotActiveAccount();
 global $lastPage;
+global $places;
+$places = Algolia\AlgoliaSearch\PlacesClient::create(
+    'plK904BLG7JJ',
+    '551154e9c4e6dfefd99359b532faaa99'
+);
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 global $loginMessage;
-
 function cleanUpUserInput($input)
 {
     $input = trim($input);
@@ -26,6 +31,13 @@ function connectToDatabase()
     $username = "iproject35";
     $password = "iProject35";
     global $pdo;
+
+    try {
+        $pdo = new PDO ("sqlsrv:Server=$hostname;Database=$databasename;ConnectionPooling=0", "$username", "$password");
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        echo $e;
+    }
 
     try {
         $pdo = new PDO ("sqlsrv:Server=$hostname;Database=$databasename;ConnectionPooling=0", "$username", "$password");
@@ -90,7 +102,7 @@ function search($amount = 0, $promoted_only = false)
                 LEFT JOIN (SELECT auction, max(amount) AS amount FROM TBL_Bid WHERE [user] is not null group by auction) as B
                 ON A.auction = B.auction
                 LEFT JOIN (SELECT item, [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item)) as R on I.item = R.item
-                WHERE " . (isset($_SESSION['is_admin'] ) && $_SESSION['is_admin'] ? "is_closed != 1" : "is_closed = 0") . " AND ";
+                WHERE " . (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] ? "is_closed != 1" : "is_closed = 0") . " AND ";
         if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
             $query .= "I.item in (SELECT item from TBL_Item_In_Rubric WHERE rubric in (
                     SELECT rubric
@@ -102,13 +114,17 @@ function search($amount = 0, $promoted_only = false)
         if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice) && ((float)$maxPrice) >= 0) {
             $query .= "((amount < $maxPrice OR amount is null) AND price_start < $maxPrice) AND ";
         }
+        if (isset($_SESSION['username']) && isset($_GET['maxDistance']) && ($maxDistance = cleanUpUserInput($_GET['maxDistance'])) != "" && is_numeric($maxDistance) && ((float)$maxDistance) >= 0) {
+            $maxDistance *= 1000;
+            $query .= "$maxDistance >= geolocation.STDistance((select geolocation from TBL_User where [user] = '" . $_SESSION['username'] . "')) AND ";
+        }
         $query .= ($promoted_only ? "is_promoted = 1 AND " : "");
 
         $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));
         $filters = array();
 
         foreach ($searchArray as $key => $word) {
-            $query .= "name LIKE ?";
+            $query .= "CONCAT(name, ' ', description) LIKE ?";
             if ($key < count($searchArray) - 1) {
                 $query .= " AND ";
             }
@@ -147,7 +163,8 @@ function search($amount = 0, $promoted_only = false)
 						</div>
 					</div>
 				</div>";
-          //  var_dump($auction['file']);
+
+
         }
         if ($amountOfAuctions < $amount) {
             global $lastPage;
@@ -171,7 +188,7 @@ function login()
         if ($username == "" || $password == "") {
             $loginMessage = "Vul een gebruikersnaam en een wachtwoord in<br><br>";
         } else {
-            $sql = "SELECT [user],password, is_verified, is_admin,  is_blocked FROM TBL_User WHERE [user]=:user and password = :password";
+            $sql = "SELECT [user],password, is_verified, is_admin,  is_blocked, is_seller FROM TBL_User WHERE [user]=:user and password = :password";
             $login_query = $pdo->prepare($sql);
             $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
             $result = $login_query->fetch();
@@ -185,6 +202,7 @@ function login()
                     if ($result['user'] == $username) {
                         $_SESSION["username"] = $username;
                         $_SESSION['is_admin'] = (int)$result['is_admin'];
+                        $_SESSION['is_seller'] = (int)$result['is_seller'];
                     } else {
                         $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
                     }
@@ -194,11 +212,14 @@ function login()
     }
 }
 
-if (isset($_GET["logout"]) && isset($_SESSION)) {
-    $_SESSION = array();
-    session_destroy();
-    unset($_GET);
-    header("location: " . htmlspecialchars($_SERVER['PHP_SELF']));
+function logout()
+{
+    if (isset($_GET["logout"]) && isset($_SESSION)) {
+        $_SESSION = array();
+        session_destroy();
+        //unset($_GET);
+        header("location: index.php");
+    }
 }
 
 function isPasswordGood($password)
@@ -215,7 +236,6 @@ function isPasswordGood($password)
 function register()
 {
     if (isset($_POST['make_account'])) {
-
         global $pdo;
         $email = cleanUpUserInput($_POST['email']);
         $regPassword = cleanUpUserInput($_POST['reg_password']);
@@ -264,11 +284,13 @@ function register()
                 $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
                 $token = str_shuffle($token);
                 $token = substr($token, 0, 10);
+                global $places;
+                $result = $places->search($address);
+                $coords = $result['hits'][0]['_geoloc'];
 
-
-                $sql = "INSERT INTO TBL_User ([user],firstname,lastname,address_line_1,email,password ,verification_code , verification_code_valid_until) values (?,?,?,?,?,?,?, GETDATE() + DAY(7))";
+                $sql = "INSERT INTO TBL_User ([user],firstname,lastname,address_line_1,email,password ,verification_code, verification_code_valid_until, geolocation) values (?,?,?,?,?,?,?, GETDATE() + DAY(7), geography::Point(?, ?, 4326))";
                 $query = $pdo->prepare($sql);
-                $query->execute(array($regUsername, $firstname, $lastname, $address, $email, hash('sha1', $regPassword), $token));
+                $query->execute(array($regUsername, $firstname, $lastname, $address, $email, hash('sha1', $regPassword), $token, $coords['lat'], $coords['lng']));
                 $phoneQuery = $pdo->prepare(" INSERT INTO TBL_Phone ([user],phone_number,is_mobile) values (?,?,?)");
 
                 $phoneQuery->execute(array($regUsername, $telephone_number, ($is_mobile ? 1 : 0)));
@@ -276,17 +298,17 @@ function register()
                 $subject = "Verifieer je e-mail!";
                 $text = "
                     Beste heer of mevrouw $lastname,<br><br>
-
+                    
                     Klik op de link hieronder om je registratie te voltooien.<br>
                     <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om je registratie te voltooien</a><br><br>
-
+                    
                     Of plak onderstaande link in je browser:<br>
                     http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token<br><br>
-
+                    
                     Als je geen account aan heeft gemaakt op onze website, kun je deze e-mail negeren.<br><br>
-
+                    
                     Met vriendelijke groet,<br><br>
-
+                    
                     Het team van Eenmaal Andermaal
                 ";
                 sendEmail($email, $regUsername, $subject, $text);
@@ -381,8 +403,14 @@ function updateAccountData()
             if (!empty($firstname) || !empty($lastname)) {
                 $values .= ", ";
             }
-            $values .= "address_line_1 = ?";
+            $values .= "address_line_1 = ?, ";
             $array[] = $address;
+            global $places;
+            $result = $places->search($address);
+            $coords = $result['hits'][0]['_geoloc'];
+            $values .= "geolocation = geography::Point(?, ?, 4326)";
+            $array[] = $coords['lat'];
+            $array[] = $coords['lng'];
         }
 
         $password_check = false;
@@ -417,10 +445,14 @@ function updateAccountData()
             if (strlen($telephone_number) != 10 || !preg_match("/([0-9]){10}/", $telephone_number)) {
                 echo "Een telefonnummer moet uit minimaal 10 cijfers bestaan<br>";
             } else {
-                echo '<p class="text-success">jouw gegevens zijn geüpdatet </p>';
-                $sql = "update TBL_Phone SET phone_number = :telephone_number WHERE [user] = :username";
-                $query = $pdo->prepare($sql);
-                $query->execute(array(':telephone_number' => $telephone_number, ':username' => $username));
+                try {
+                    $sql = "update TBL_Phone SET phone_number = :telephone_number WHERE [user] = :username";
+                    $query = $pdo->prepare($sql);
+                    $query->execute(array(':telephone_number' => $telephone_number, ':username' => $username));
+                    echo '<p class="text-success">jouw gegevens zijn geüpdatet </p>';
+                } catch (PDOException $e) {
+                    echo $e;
+                }
             }
         }
         if (!empty($firstname) || !empty($lastname) || !empty($address) || $password_check) {
@@ -575,7 +607,6 @@ function sendEmail($email, $username, $subject, $text)
 
 function placeNewBid($auctionid, $newPrice, $username)
 {
-
     global $pdo;
 
     try {

@@ -46,43 +46,7 @@
 require "includes/header.php";
 global $pdo;
 
-if (isset($_POST['sendVerification'])) {
-
-    $username = $_SESSION['username'];
-
-    $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
-    $token = str_shuffle($token);
-    $token = substr($token, 0, 10);
-
-    $verificationQuery = $pdo->prepare('UPDATE TBL_User SET verification_code = ? WHERE [user] = ?');
-    $verificationQuery->execute(array($token, $username));
-
-    //send verificationcode to submitted email
-
-}
-
-if (isset($_POST['submitVerification'])) {
-
-    $username = $_SESSION['username'];
-    $submittedCode = $_POST['vericode'];
-
-    $checkCodeQuery = $pdo->prepare('SELECT * FROM TBL_User WHERE [user] = ?');
-    $checkCodeQuery->execute(array($username));
-    $checkCodeData = $checkCodeQuery->fetch();
-    $verificationCode = $checkCodeData['verification_code'];
-
-    if($submittedCode == $verificationCode) {
-
-        $setSellerQuery = $pdo->prepare('UPDATE TBL_User SET is_seller = 1 WHERE [user] = ?');
-        $setSellerQuery->execute(array($username));
-
-    } else {
-        //foutmelding
-    }
-
-}
-
-if (sizeof($_SESSION) == 0) {
+if (isset($_SESSION['username']) == 0) {
 
     echo 'faka neef doe ff inloggen anders kan je geen veiling plaatsen je weet toch broski';
     echo 'aka een guide on how to become seller yadig';
@@ -94,11 +58,13 @@ if (sizeof($_SESSION) == 0) {
     $userQuery = $pdo->prepare('select * from TBL_User WHERE [user] = ?');
     $userQuery->execute(array($username));
     $userData = $userQuery->fetch();
-    $is_seller = $userData['is_seller'];
 
-    if ($is_seller == 1) {
-    }}
-        echo '';?> <main>
+    sendSellerVerification($username);
+    checkSellerVerification($username);
+
+    if ($_SESSION['is_seller'] == 1) {
+
+        echo '<main>
     <div class="row">
         <div class="col-lg-1">
         </div>
@@ -126,19 +92,19 @@ if (sizeof($_SESSION) == 0) {
                                    placeholder="Locatie">
                             <script>
                                 var placesAutocomplete = places({
-                                    appId: 'plK904BLG7JJ',
-                                    apiKey: '551154e9c4e6dfefd99359b532faaa99',
-                                    container: document.querySelector('#location')
+                                    appId: \'plK904BLG7JJ\',
+                                    apiKey: \'551154e9c4e6dfefd99359b532faaa99\',
+                                    container: document.querySelector(\'#location\')
                                 });
                             </script>
                         </div>
                         <div class="form-group">
                             <label class="d-none" for="shipping_instructions"></label>
                             <select onchange="
-                            if(this.value === 'Verzenden'){
-                            document.getElementById('shipping_cost').parentNode.classList.remove('d-none');
+                            if(this.value === \'Verzenden\'){
+                            document.getElementById(\'shipping_cost\').parentNode.classList.remove(\'d-none\');
                             } else {
-                            document.getElementById('shipping_cost').parentNode.classList.add('d-none');
+                            document.getElementById(\'shipping_cost\').parentNode.classList.add(\'d-none\');
                             }
 
                             " class="form-control" name="shipping_instructions" id="shipping_instructions">
@@ -169,7 +135,7 @@ if (sizeof($_SESSION) == 0) {
                         <div class="form-group">
                             <label class="d-none" for="rubriek"></label>
                             <select class="form-control" name="rubriek" id="rubriek" onchange="showRubric(this.value, this)">
-                                <option selected disabled>Rubriek</option><?php
+                                <option selected disabled>Rubriek</option>';
 
                                 $mainRubricQuery = $pdo->prepare("select DISTINCT rubric,[name] from TBL_Rubric WHERE super=-1");
                                 $mainRubricQuery->execute();
@@ -178,7 +144,8 @@ if (sizeof($_SESSION) == 0) {
                                 foreach ($mainRubric as $result) {
                                     echo $result["name"];
                                     echo '<option value="'. (int)$result["rubric"] . '" >' . $result["name"] .' </option>';
-                                }?>
+                                }
+                                echo '
 
                             </select>
 
@@ -212,7 +179,7 @@ if (sizeof($_SESSION) == 0) {
                                            aria-describedby="image">Kies bestand</label>
                                 </div>
                             </div>
-                            <img id='img-upload'/>
+                            <img id=\'img-upload\'/>
                         </div>
                     </div>
                 </div>
@@ -225,89 +192,84 @@ if (sizeof($_SESSION) == 0) {
         </div>
     </div>
 
-</main>
-<!--';-->
-<!---->
-<!--    } else {-->
-<!---->
-<!--        $verification_sent = strlen($userData['verification_code']);-->
-<!---->
-<!--        if ($verification_sent == 0) {-->
-<!---->
-<!--            echo '<main>-->
-<!--    <div class="row">-->
-<!--        <div class="col-lg-1">-->
-<!--        </div>-->
-<!--        <div class="col-lg-10 my-2 ml-2 mr-1 make-auction">-->
-<!--            <div class="row m-3">-->
-<!--                <h1>Wordt verkoper</h1>-->
-<!--            </div>-->
-<!--            <div class=" mb-2 text-danger">--><?php //createAuction(); ?><!--</div>-->
-<!--            <div class="dropdown-divider"></div>-->
-<!--            <form method="post" action="" enctype="multipart/form-data">-->
-<!--                <div class="row m-3">-->
-<!--                    <div class="col-lg-3">-->
-<!--                        <div class="form-label-group">-->
-<!--                            <p>joejoe kijk hier toelichting van deze pagina</p>-->
-<!--                        </div>-->
-<!--                        <div class="form-label-group">-->
-<!--                            <input type="text" class="form-control" name="email" id="price_start"-->
-<!--                                   value="' . $userData['email'] . '">-->
-<!--                            <label for="price_start">Email</label>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="row m-4 btn-makeauction">-->
-<!--                    <input class="btn" type="submit" value="Verzend code" name="sendVerification">-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--        <div class="col-lg-1">-->
-<!--        </div>-->
-<!--    </div>-->
-<!---->
-<!--</main>-->
-<!--';-->
-<!--        } else {-->
-<!---->
-<!--            echo '<main>-->
-<!--    <div class="row">-->
-<!--        <div class="col-lg-1">-->
-<!--        </div>-->
-<!--        <div class="col-lg-10 my-2 ml-2 mr-1 make-auction">-->
-<!--            <div class="row m-3">-->
-<!--                <h1>Wordt verkoper</h1>-->
-<!--            </div>-->
-<!--            <div class=" mb-2 text-danger">--><?php //createAuction(); ?><!--</div>-->
-<!--            <div class="dropdown-divider"></div>-->
-<!--            <form method="post" action="" enctype="multipart/form-data">-->
-<!--                <div class="row m-3">-->
-<!--                    <div class="col-lg-3">-->
-<!--                        <div class="form-label-group">-->
-<!--                            <p>Vul hieronder uw verificatiecode in:</p>-->
-<!--                        </div>-->
-<!--                        <div class="form-label-group">-->
-<!--                            <input type="text" class="form-control" name="vericode" id="price_start"-->
-<!--                                   value="Verificatiecode">-->
-<!--                            <label for="price_start">Email</label>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="row m-4 btn-makeauction">-->
-<!--                    <input class="btn" type="submit" value="Verzend" name="submitVerification">-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--        <div class="col-lg-1">-->
-<!--        </div>-->
-<!--    </div>-->
-<!---->
-<!--</main>-->
+</main>';
 
-<!--        }-->
-<!---->
-<!--    }-->
-<!--}-->
+    } else {
+
+        if (canSendNewCode($username)) {
+
+            echo '<main>
+    <div class="row">
+        <div class="col-lg-1">
+        </div>
+        <div class="col-lg-10 my-2 ml-2 mr-1 make-auction">
+            <div class="row m-3">
+                <h1>Wordt verkoper</h1>
+            </div>
+            <div class=" mb-2 text-danger"><?php createAuction(); ?></div>
+            <div class="dropdown-divider"></div>
+            <form method="post" action="" enctype="multipart/form-data">
+                <div class="row m-3">
+                    <div class="col-lg-3">
+                        <div class="form-label-group">
+                            <p>joejoe kijk hier toelichting van deze pagina</p>
+                        </div>
+                        <div class="form-label-group">
+                            <input type="text" class="form-control" name="bankNumber" id="price_start">
+                            <label for="price_start">IBAN</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-4 btn-makeauction">
+                    <input class="btn" type="submit" value="Verzend code" name="sendVerification">
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-1">
+        </div>
+    </div>
+
+</main>';
+
+        } else {
+
+            echo '<main>
+    <div class="row">
+        <div class="col-lg-1">
+        </div>
+        <div class="col-lg-10 my-2 ml-2 mr-1 make-auction">
+            <div class="row m-3">
+                <h1>Wordt verkoper</h1>
+            </div>
+                    <div class=" mb-2 text-danger"><?php createAuction(); ?></div>
+            <div class="dropdown-divider"></div>
+            <form method="post" action="" enctype="multipart/form-data">
+                <div class="row m-3">
+                    <div class="col-lg-3">
+                        <div class="form-label-group">
+                            <p>Vul hieronder uw verificatiecode in:</p>
+                        </div>
+                        <div class="form-label-group">
+                            <input type="text" class="form-control" name="vericode" id="price_start"
+                                   placeholder="Verificatiecode">
+                            <label for="price_start">Verificatiecode</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-4 btn-makeauction">
+                    <input class="btn" type="submit" value="Verzend" name="submitVerification">
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-1">
+        </div>
+    </div>
+
+</main>';
+
+        }
+    }
+}
 
 include_once "includes/footer.php";
 
