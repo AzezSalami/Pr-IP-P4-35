@@ -46,43 +46,7 @@
 require "includes/header.php";
 global $pdo;
 
-if (isset($_POST['sendVerification'])) {
-
-    $username = $_SESSION['username'];
-
-    $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
-    $token = str_shuffle($token);
-    $token = substr($token, 0, 10);
-
-    $verificationQuery = $pdo->prepare('UPDATE TBL_User SET verification_code = ? WHERE [user] = ?');
-    $verificationQuery->execute(array($token, $username));
-
-    //send verificationcode to submitted email
-
-}
-
-if (isset($_POST['submitVerification'])) {
-
-    $username = $_SESSION['username'];
-    $submittedCode = $_POST['vericode'];
-
-    $checkCodeQuery = $pdo->prepare('SELECT * FROM TBL_User WHERE [user] = ?');
-    $checkCodeQuery->execute(array($username));
-    $checkCodeData = $checkCodeQuery->fetch();
-    $verificationCode = $checkCodeData['verification_code'];
-
-    if($submittedCode == $verificationCode) {
-
-        $setSellerQuery = $pdo->prepare('UPDATE TBL_User SET is_seller = 1 WHERE [user] = ?');
-        $setSellerQuery->execute(array($username));
-
-    } else {
-        //foutmelding
-    }
-
-}
-
-if (sizeof($_SESSION) == 0) {
+if (isset($_SESSION['username']) == 0) {
 
     echo 'faka neef doe ff inloggen anders kan je geen veiling plaatsen je weet toch broski';
     echo 'aka een guide on how to become seller yadig';
@@ -94,9 +58,11 @@ if (sizeof($_SESSION) == 0) {
     $userQuery = $pdo->prepare('select * from TBL_User WHERE [user] = ?');
     $userQuery->execute(array($username));
     $userData = $userQuery->fetch();
-    $is_seller = $userData['is_seller'];
 
-    if ($is_seller == 1) {
+    sendSellerVerification($username);
+    checkSellerVerification($username);
+
+    if ($_SESSION['is_seller'] == 1) {
 
         echo '<main>
     <div class="row">
@@ -165,21 +131,26 @@ if (sizeof($_SESSION) == 0) {
                     </div>
 
                     <div class="col-lg-4 mb-3">
+                        <div>
                         <div class="form-group">
                             <label class="d-none" for="rubriek"></label>
-                            <select class="form-control" name="rubriek" id="rubriek" onchange="showRubriek(this.value)">
-                                <option selected disabled>Rubriek</option>
-                                <?php
-                                $mainRubricQuery = $pdo->prepare("select DISTINCT [name] from TBL_Rubric WHERE super=-1");
+                            <select class="form-control" name="rubriek" id="rubriek" onchange="showRubric(this.value, this)">
+                                <option selected disabled>Rubriek</option>';
+
+                                $mainRubricQuery = $pdo->prepare("select DISTINCT rubric,[name] from TBL_Rubric WHERE super=-1");
                                 $mainRubricQuery->execute();
                                 $mainRubric = $mainRubricQuery->fetchAll();
 
                                 foreach ($mainRubric as $result) {
-                                    echo $result[\'name\'];
-                                    echo "<option value=\'" . $result[\'rubric\'] . "\'>" . $result[\'name\'] . "</option>";
+                                    echo $result["name"];
+                                    echo '<option value="'. (int)$result["rubric"] . '" >' . $result["name"] .' </option>';
                                 }
-                                ?>
+                                echo '
+
                             </select>
+
+                        </div>
+                            <div></div>
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -191,7 +162,8 @@ if (sizeof($_SESSION) == 0) {
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <input type="checkbox">
+                                    <label for="is_promoted"></label>
+                                    <input id="is_promoted" name="is_promoted" type="checkbox">
                                 </div>
                             </div>
                             <input class="form-control" aria-label="With textarea"
@@ -224,9 +196,7 @@ if (sizeof($_SESSION) == 0) {
 
     } else {
 
-        $verification_sent = strlen($userData['verification_code']);
-
-        if ($verification_sent == 0) {
+        if (canSendNewCode($username)) {
 
             echo '<main>
     <div class="row">
@@ -245,9 +215,8 @@ if (sizeof($_SESSION) == 0) {
                             <p>joejoe kijk hier toelichting van deze pagina</p>
                         </div>
                         <div class="form-label-group">
-                            <input type="text" class="form-control" name="email" id="price_start"
-                                   value="' . $userData['email'] . '">
-                            <label for="price_start">Email</label>
+                            <input type="text" class="form-control" name="bankNumber" id="price_start">
+                            <label for="price_start">IBAN</label>
                         </div>
                     </div>
                 </div>
@@ -261,6 +230,7 @@ if (sizeof($_SESSION) == 0) {
     </div>
 
 </main>';
+
         } else {
 
             echo '<main>
@@ -271,7 +241,7 @@ if (sizeof($_SESSION) == 0) {
             <div class="row m-3">
                 <h1>Wordt verkoper</h1>
             </div>
-            <div class=" mb-2 text-danger"><?php createAuction(); ?></div>
+                    <div class=" mb-2 text-danger"><?php createAuction(); ?></div>
             <div class="dropdown-divider"></div>
             <form method="post" action="" enctype="multipart/form-data">
                 <div class="row m-3">
@@ -281,8 +251,8 @@ if (sizeof($_SESSION) == 0) {
                         </div>
                         <div class="form-label-group">
                             <input type="text" class="form-control" name="vericode" id="price_start"
-                                   value="Verificatiecode">
-                            <label for="price_start">Email</label>
+                                   placeholder="Verificatiecode">
+                            <label for="price_start">Verificatiecode</label>
                         </div>
                     </div>
                 </div>
@@ -298,13 +268,32 @@ if (sizeof($_SESSION) == 0) {
 </main>';
 
         }
-
     }
 }
 
 include_once "includes/footer.php";
 
 ?>
+
+<script>
+    function showRubric(str, element) {
+        var xhttp;
+        if (str === "") {
+            document.getElementById("txt").innerHTML = "";
+            return;
+        }
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                if(this.responseText) {
+                    element.parentNode.parentNode.lastElementChild.innerHTML = this.responseText;
+                }
+            }
+        };
+        xhttp.open("GET", "AJAX/rubric_dropdown.php?super="+str, true);
+        xhttp.send();
+    }
+</script>
 
 </body>
 </html>

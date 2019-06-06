@@ -1,6 +1,7 @@
 <?php
 require_once "functions.php";
 login();
+logout();
 ?>
 <script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
 <header>
@@ -40,6 +41,13 @@ login();
                     <?php
                         if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice) && ((float)$maxPrice)>=0) {
                             echo " value='$maxPrice'";
+                        }
+                    ?>
+	            >
+	            <input type='hidden' id="maxDistance" name='maxDistance'
+                    <?php
+                        if (isset($_SESSION['username']) && isset($_GET['maxDistance']) && ($maxDistance = cleanUpUserInput($_GET['maxDistance'])) != "" && is_numeric($maxDistance) && ((float)$maxDistance)>=0) {
+                            echo " value='$maxDistance'";
                         }
                     ?>
 	            >
@@ -279,8 +287,8 @@ login();
                             <div class="row">
                                 <div class="col-lg ">
                                     <div class="form-label-group mb-0">
-                                        <input class="form-control" placeholder="telefoonnummer" type="number"
-                                               name="telephone_number" id="telephone_number" maxlength="10" pattern="[0-9]{10}">
+                                        <input class="form-control" placeholder="Telefoonnummer" type="text"
+                                               name="telephone_number" id="telephone_number" maxlength="13" pattern="[0-9]{13}">
                                         <label for="telephone_number">Telefoonnummer</label>
                                     </div>
                                 </div>

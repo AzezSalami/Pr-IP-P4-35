@@ -1,58 +1,26 @@
-<?php
-
-if (isset($_GET['auction'])) {
-
-    echo '<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>EenmaalAndermaal</title>
-    
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
-    
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
-          crossorigin="anonymous">
+	<head>
+        <?php
+            include 'includes/head.html';
+        ?>
+		<link rel="stylesheet" href="CSS/veilingen-details.css" type="text/css">
+	</head>
+	<body>
+        <?php
+            require "includes/header.php";
+        ?>
+		<main>
+            <?php
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="JS/sidenavscript.js"></script>
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-    <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#FFAD4F">
-    <meta name="msapplication-TileColor" content="#FFAD4F">
-    <meta name="theme-color" content="#FFAD4F">
+                if (isset($_GET['auction'])) {
+                    global $pdo;
+                    $auctionquery = $pdo->prepare("SELECT * FROM TBL_Auction WHERE auction = ?");
+                    $auctionid = $_GET['auction'];
+                    $auctionquery->execute(array($auctionid));
+                    $auctiondata = $auctionquery->fetch();
 
-    <!-- Chrome, Firefox OS and Opera colored tabs-->
-    <meta name="theme-color" content="#FFAD4F">
-
-    <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content="#FFAD4F">
-
-    <!-- iOS Safari -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#FFAD4F">
-    <link rel="stylesheet" href="CSS/general.css" type="text/css">
-    <script src="JS/sidenavscript.js"></script>
-
-    <link rel="stylesheet" href="CSS/general.css" type="text/css">
-    <link rel="stylesheet" href="CSS/veilingen-details.css" type="text/css">
-</head>
-<body>';
-
-    require "includes/header.php";
-
-    global $pdo;
-    $auctionquery = $pdo->prepare("SELECT * FROM TBL_Auction WHERE auction = ?");
-    $auctionid = $_GET['auction'];
-    $auctionquery->execute(array($auctionid));
-    $auctiondata = $auctionquery->fetch();
-
-    /* all sellers are null atm, hence why sellerinfo will be empty for now */
+                    /* all sellers are null atm, hence why sellerinfo will be empty for now */
 
     if ($auctiondata['is_closed'] == 1) {
         $auctionstatus = "Gesloten";
@@ -66,37 +34,39 @@ if (isset($_GET['auction'])) {
     $item = $auctiondata['item'];
     $seller = $auctiondata['seller'];
 
-    $sellerQuery = $pdo->prepare("SELECT * FROM TBL_Seller WHERE user = ?");
-    $sellerQuery->execute(array($seller));
-    $sellerData = $sellerQuery->fetch();
-    $bankNumber = $sellerData['bank_account'];
-    $verificationStatus = (int)$sellerData['verification_status'];
-    if ($verificationStatus == 1) {
-        $verificationStatus = "Niet geverifieerd";
-    } else {
-        $verificationStatus = "Geverifieerd";
-    }
+                    $sellerQuery = $pdo->prepare("SELECT * FROM TBL_Seller WHERE user = ?");
+                    $sellerQuery->execute(array($seller));
+                    $sellerData = $sellerQuery->fetch();
+                    $bankNumber = $sellerData['bank_account'];
+                    $verificationStatus = (int)$sellerData['verification_status'];
+                    if ($verificationStatus == 1) {
+                        $verificationStatus = "Niet geverifieerd";
+                    } else {
+                        $verificationStatus = "Geverifieerd";
+                    }
 
-    $itemquery = $pdo->prepare("SELECT * FROM TBL_Item WHERE item = ?");
-    $itemquery->execute(array($item));
-    $itemdata = $itemquery->fetch();
-    $imageQuery = $pdo->prepare("SELECT [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item) AND item = ?");
-    $imageQuery->execute(array($itemdata['item']));
-    $imagedata = $imageQuery->fetch()['file'];
+                    $itemquery = $pdo->prepare("SELECT * FROM TBL_Item WHERE item = ?");
+                    $itemquery->execute(array($item));
+                    $itemdata = $itemquery->fetch();
+                    $imageQuery = $pdo->prepare("SELECT [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item) AND item = ?");
+                    $imageQuery->execute(array($itemdata['item']));
+                    $imagedata = $imageQuery->fetch()['file'];
 
-    $itemtitle = $itemdata['name'];
-    $itemdescription = $itemdata['description'];
-    $itempricestart = $itemdata['price_start'];
-    $itemaddress = $itemdata['address_line_1'];
-    $itemshippingcost = $itemdata['shipping_cost'];
-    $itemshippingmethod = $itemdata['shipping_instructions'];
+                    $itemtitle = $itemdata['name'];
+                    $itemdescription = $itemdata['description'];
+                    $itempricestart = $itemdata['price_start'];
+                    $itemaddress = $itemdata['address_line_1'];
+                    $itemshippingcost = $itemdata['shipping_cost'];
+                    $itemshippingmethod = $itemdata['shipping_instructions'];
 
-    $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order by amount DESC");
-    $bidquery->execute(array($auctionid));
 
-    $highestBidQuery = $pdo->prepare("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
-    $highestBidQuery->execute(array($auctionid));
-    $highestBidData = $highestBidQuery->fetchAll();
+                    $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order by amount DESC");
+                    $bidquery->execute(array($auctionid));
+                    $biddata = $bidquery->fetchAll();
+
+                    $highestBidQuery = $pdo->prepare("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
+                    $highestBidQuery->execute(array($auctionid));
+                    $highestBidData = $highestBidQuery->fetchAll();
 
     if (sizeof($highestBidData) == null) {
         $itemprice = $itempricestart;
@@ -134,7 +104,7 @@ if (isset($_GET['auction'])) {
     $emailQuery->execute(array($seller));
     $emailSeller = $emailQuery->fetch()['email'];
 
-    echo "<main>
+                    echo "
     <div class=\"row\"> 
         <div class=\"col-lg-2\">
         </div>
@@ -298,22 +268,6 @@ if (isset($_GET['auction'])) {
     }
     echo '</table>';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     echo $html . '</div>' . '
                    
                 </div>
@@ -322,14 +276,16 @@ if (isset($_GET['auction'])) {
         <div class="col-lg-2">
             <!---->
         </div>
-</main>';
-
-    include_once "includes/footer.php";
-
-    echo '</body></html>';
-
-}
-
-?>
+    </div>';
 
 
+                }
+
+            ?>
+
+		</main>
+        <?php
+            include_once "includes/footer.php";
+        ?>
+	</body>
+</html>

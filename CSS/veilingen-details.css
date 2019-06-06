@@ -9,7 +9,7 @@
     justify-content: space-around;
 }
 
-.auction-details{
+.details-auction{
     border: #FFAD4F solid 2px;
     background: white;
 }
@@ -83,6 +83,8 @@ span{
         font-weight: bold;
         font-size: 2em;
     }
+
+
 }
 
 .removed{
@@ -90,3 +92,7 @@ span{
 
 }
 
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}

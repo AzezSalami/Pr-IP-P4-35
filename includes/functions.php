@@ -2,15 +2,20 @@
 set_time_limit(0);
 //error_reporting(0);
 session_start();
+require 'vendor/autoload.php';
 connectToDatabase();
 deleteNotActiveAccount();
 global $lastPage;
+global $places;
+$places = Algolia\AlgoliaSearch\PlacesClient::create(
+    'plK904BLG7JJ',
+    '551154e9c4e6dfefd99359b532faaa99'
+);
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 global $loginMessage;
-
 function cleanUpUserInput($input)
 {
     $input = trim($input);
@@ -30,7 +35,13 @@ function connectToDatabase()
     try {
         $pdo = new PDO ("sqlsrv:Server=$hostname;Database=$databasename;ConnectionPooling=0", "$username", "$password");
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->setAttribute(PDO::SQLSRV_ATTR_ENCODING, PDO::SQLSRV_ENCODING_UTF8);
+    } catch (PDOException $e) {
+        echo $e;
+    }
+
+    try {
+        $pdo = new PDO ("sqlsrv:Server=$hostname;Database=$databasename;ConnectionPooling=0", "$username", "$password");
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         echo $e;
     }
@@ -91,7 +102,7 @@ function search($amount = 0, $promoted_only = false)
                 LEFT JOIN (SELECT auction, max(amount) AS amount FROM TBL_Bid WHERE [user] is not null group by auction) as B
                 ON A.auction = B.auction
                 LEFT JOIN (SELECT item, [file] FROM TBL_Resource WHERE sort_number IN (SELECT min(sort_number) FROM TBL_Resource GROUP BY item)) as R on I.item = R.item
-                WHERE " . (isset($_SESSION['is_admin'] ) && $_SESSION['is_admin'] ? "is_closed != 1" : "is_closed = 0") . " AND ";
+                WHERE " . (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] ? "is_closed != 1" : "is_closed = 0") . " AND ";
         if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
             $query .= "I.item in (SELECT item from TBL_Item_In_Rubric WHERE rubric in (
                     SELECT rubric
@@ -103,13 +114,17 @@ function search($amount = 0, $promoted_only = false)
         if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice) && ((float)$maxPrice) >= 0) {
             $query .= "((amount < $maxPrice OR amount is null) AND price_start < $maxPrice) AND ";
         }
+        if (isset($_SESSION['username']) && isset($_GET['maxDistance']) && ($maxDistance = cleanUpUserInput($_GET['maxDistance'])) != "" && is_numeric($maxDistance) && ((float)$maxDistance) >= 0) {
+            $maxDistance *= 1000;
+            $query .= "$maxDistance >= geolocation.STDistance((select geolocation from TBL_User where [user] = '" . $_SESSION['username'] . "')) AND ";
+        }
         $query .= ($promoted_only ? "is_promoted = 1 AND " : "");
 
         $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));
         $filters = array();
 
         foreach ($searchArray as $key => $word) {
-            $query .= "name LIKE ?";
+            $query .= "CONCAT(name, ' ', description) LIKE ?";
             if ($key < count($searchArray) - 1) {
                 $query .= " AND ";
             }
@@ -173,7 +188,7 @@ function login()
         if ($username == "" || $password == "") {
             $loginMessage = "Vul een gebruikersnaam en een wachtwoord in<br><br>";
         } else {
-            $sql = "SELECT [user],password, is_verified, is_admin,  is_blocked FROM TBL_User WHERE [user]=:user and password = :password";
+            $sql = "SELECT [user],password, is_verified, is_admin,  is_blocked, is_seller FROM TBL_User WHERE [user]=:user and password = :password";
             $login_query = $pdo->prepare($sql);
             $login_query->execute(array(':user' => $username, ':password' => hash('sha1', $password)));
             $result = $login_query->fetch();
@@ -187,6 +202,7 @@ function login()
                     if ($result['user'] == $username) {
                         $_SESSION["username"] = $username;
                         $_SESSION['is_admin'] = (int)$result['is_admin'];
+                        $_SESSION['is_seller'] = (int)$result['is_seller'];
                     } else {
                         $loginMessage = "Wachtwoord of gebruikersnaam incorrect<br><br>";
                     }
@@ -196,11 +212,14 @@ function login()
     }
 }
 
-if (isset($_GET["logout"]) && isset($_SESSION)) {
-    $_SESSION = array();
-    session_destroy();
-    unset($_GET);
-    header("location: " . htmlspecialchars($_SERVER['PHP_SELF']));
+function logout()
+{
+    if (isset($_GET["logout"]) && isset($_SESSION)) {
+        $_SESSION = array();
+        session_destroy();
+        //unset($_GET);
+        header("location: index.php");
+    }
 }
 
 function isPasswordGood($password)
@@ -217,7 +236,6 @@ function isPasswordGood($password)
 function register()
 {
     if (isset($_POST['make_account'])) {
-
         global $pdo;
         $email = cleanUpUserInput($_POST['email']);
         $regPassword = cleanUpUserInput($_POST['reg_password']);
@@ -266,11 +284,13 @@ function register()
                 $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
                 $token = str_shuffle($token);
                 $token = substr($token, 0, 10);
+                global $places;
+                $result = $places->search($address);
+                $coords = $result['hits'][0]['_geoloc'];
 
-
-                $sql = "INSERT INTO TBL_User ([user],firstname,lastname,address_line_1,email,password ,verification_code , verification_code_valid_until) values (?,?,?,?,?,?,?, GETDATE() + DAY(7))";
+                $sql = "INSERT INTO TBL_User ([user],firstname,lastname,address_line_1,email,password ,verification_code, verification_code_valid_until, geolocation) values (?,?,?,?,?,?,?, GETDATE() + DAY(7), geography::Point(?, ?, 4326))";
                 $query = $pdo->prepare($sql);
-                $query->execute(array($regUsername, $firstname, $lastname, $address, $email, hash('sha1', $regPassword), $token));
+                $query->execute(array($regUsername, $firstname, $lastname, $address, $email, hash('sha1', $regPassword), $token, $coords['lat'], $coords['lng']));
                 $phoneQuery = $pdo->prepare(" INSERT INTO TBL_Phone ([user],phone_number,is_mobile) values (?,?,?)");
 
                 $phoneQuery->execute(array($regUsername, $telephone_number, ($is_mobile ? 1 : 0)));
@@ -278,17 +298,17 @@ function register()
                 $subject = "Verifieer je e-mail!";
                 $text = "
                     Beste heer of mevrouw $lastname,<br><br>
-
+                    
                     Klik op de link hieronder om je registratie te voltooien.<br>
                     <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om je registratie te voltooien</a><br><br>
-
+                    
                     Of plak onderstaande link in je browser:<br>
                     http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token<br><br>
-
+                    
                     Als je geen account aan heeft gemaakt op onze website, kun je deze e-mail negeren.<br><br>
-
+                    
                     Met vriendelijke groet,<br><br>
-
+                    
                     Het team van Eenmaal Andermaal
                 ";
                 sendEmail($email, $regUsername, $subject, $text);
@@ -383,8 +403,14 @@ function updateAccountData()
             if (!empty($firstname) || !empty($lastname)) {
                 $values .= ", ";
             }
-            $values .= "address_line_1 = ?";
+            $values .= "address_line_1 = ?, ";
             $array[] = $address;
+            global $places;
+            $result = $places->search($address);
+            $coords = $result['hits'][0]['_geoloc'];
+            $values .= "geolocation = geography::Point(?, ?, 4326)";
+            $array[] = $coords['lat'];
+            $array[] = $coords['lng'];
         }
 
         $password_check = false;
@@ -419,10 +445,14 @@ function updateAccountData()
             if (strlen($telephone_number) != 10 || !preg_match("/([0-9]){10}/", $telephone_number)) {
                 echo "Een telefonnummer moet uit minimaal 10 cijfers bestaan<br>";
             } else {
-                echo '<p class="text-success">jouw gegevens zijn geüpdatet </p>';
-                $sql = "update TBL_Phone SET phone_number = :telephone_number WHERE [user] = :username";
-                $query = $pdo->prepare($sql);
-                $query->execute(array(':telephone_number' => $telephone_number, ':username' => $username));
+                try {
+                    $sql = "update TBL_Phone SET phone_number = :telephone_number WHERE [user] = :username";
+                    $query = $pdo->prepare($sql);
+                    $query->execute(array(':telephone_number' => $telephone_number, ':username' => $username));
+                    echo '<p class="text-success">jouw gegevens zijn geüpdatet </p>';
+                } catch (PDOException $e) {
+                    echo $e;
+                }
             }
         }
         if (!empty($firstname) || !empty($lastname) || !empty($address) || $password_check) {
@@ -577,7 +607,6 @@ function sendEmail($email, $username, $subject, $text)
 
 function placeNewBid($auctionid, $newPrice, $username)
 {
-
     global $pdo;
 
     try {
@@ -596,83 +625,99 @@ function placeNewBid($auctionid, $newPrice, $username)
 
 function createAuction()
 {
-    /*print_r( *///$image = unpack("H*hex", /*base64_decode(*/file_get_contents($_FILES['image']["tmp_name"]));// );
-    //$imgData =addslashes (file_get_contents($_FILES['image']["tmp_name"]));
+    if(isset($_SESSION["username"])) {
+        if (isset($_POST['createAuction'])) {
+           // var_dump($_POST);
+            global $pdo;
+            $name = cleanUpUserInput($_POST['name']);
+            $description = cleanUpUserInput($_POST['description']);
+            $price_start = cleanUpUserInput($_POST['price_start']);
+            $shipping_instructions = (cleanUpUserInput($_POST['shipping_instructions']) == 'Verzenden' ? 'Verzenden' : 'Ophalen');
+            $shipping_cost = ($shipping_instructions == "Verzenden" && !empty(cleanUpUserInput($_POST['shipping_cost'])) ? cleanUpUserInput($_POST['shipping_cost']) : 0);
+            $durationOptions = array(1, 3, 5, 7, 10);
+            $duration = (in_array(cleanUpUserInput($_POST['duration']), $durationOptions) ? cleanUpUserInput($_POST['duration']) : 0);
+            $address = cleanUpUserInput($_POST['location']);
+            $seller = $_SESSION["username"];
+            $is_promoted = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
+            $rubric_post = cleanUpUserInput($_POST['rubriek']);
+            if(is_array ($rubric_post)){
+                $rubric = end($rubric_post);
+            }else {
+                $rubric = $rubric_post;
+            }
 
-//    echo "<img class='mx-auto my-2' src='data:image/jpg;base64," . base64_encode(unpack("h", $blob)) . "'
-//                                                 alt='Afbeelding van veiling'>";
-//
-
-
-    if (isset($_POST['createAuction'])) {
-        //var_dump($_POST);
-        global $pdo;
-        $is_Verzenden = false;
-        $name = cleanUpUserInput($_POST['name']);
-        $description = cleanUpUserInput($_POST['description']);
-        $price_start = cleanUpUserInput($_POST['price_start']);
-        $shipping_instructions = (cleanUpUserInput($_POST['shipping_instructions']) == 'Verzenden' ? 'Verzenden' : 'Ophalen');
-        $shipping_cost = ($shipping_instructions == "Verzenden" && !empty(cleanUpUserInput($_POST['shipping_cost']))? cleanUpUserInput($_POST['shipping_cost']) : 0);
-        $durationOptions =array(1 ,3,5 ,7,10);
-        $duration = (in_array(cleanUpUserInput($_POST['duration']), $durationOptions)? cleanUpUserInput($_POST['duration']) : 0);
-        //$duration = cleanUpUserInput($_POST['duration']);
-        $address = cleanUpUserInput($_POST['location']);
-        $seller = $_SESSION["username"];
-        $rubriek = cleanUpUserInput($_POST['rubriek']);
-        if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
-            echo "Geen geldig beeld";
-        } else {
-            $media_type = getimagesize($_FILES['image']["tmp_name"])["mime"];
-            if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address)) {
-                echo "Alle velden zijn verplicht";
+            if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
+                echo "Geen geldig beeld";
             } else {
-                echo "jaa";
-                try {
-                    $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1 ) VALUES(?,?,?,?,?,?)");
-                    $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
-                } catch (PDOException $e) {
-                    echo $e;
-                }
-                $item="";
-                try {
-                    $item_select_query = $pdo->prepare("SELECT item FROM TBL_Item WHERE name = ? AND description = ? AND price_start = ? AND shipping_cost= ? AND shipping_instructions= ? AND address_line_1= ?");
-                    $item_select_query->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
-                    $item_select_result = $item_select_query->fetch();
+                $media_type = getimagesize($_FILES['image']["tmp_name"])["mime"];
+                if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address)) {
+                    echo "Alle velden zijn verplicht";
+                } else {
+                    echo "jaa";
+                    try {
+                        $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1 ) VALUES(?,?,?,?,?,?)");
+                        $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+                    $item = "";
+                    try {
+                        $item_select_query = $pdo->prepare("SELECT item FROM TBL_Item WHERE name = ? AND description = ? AND price_start = ? AND shipping_cost= ? AND shipping_instructions= ? AND address_line_1= ?");
+                        $item_select_query->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
+                        $item_select_result = $item_select_query->fetch();
 
-                    $item = $item_select_result['item'];
-                } catch (PDOException $e) {
-                    echo $e;
-                }
-                try {
-                    $rubricquery = $pdo->prepare("INSERT INTO TBL_Item_In_Rubric( item ,rubric) VALUES(?,?)");
-                    $rubricquery->execute(array($item, $rubriek));
-                } catch (PDOException $e) {
-                    echo $e;
-                }
-                try {
-                    $auctionquery = $pdo->prepare("INSERT INTO TBL_Auction( seller, item ,moment_end) VALUES(:seller,:item,GETDATE() + DAY(:duration))");
-                    $duration=(int)$duration;
-                    $auctionquery->bindParam(':duration', $duration, PDO::PARAM_INT);
-                    $auctionquery->bindParam(':seller', $seller, PDO::PARAM_STR);
-                    $auctionquery->bindParam(':item', $item, PDO::PARAM_INT);
-                    $auctionquery->execute();
-                } catch (PDOException $e) {
-                    echo $e;
-                }
-                try {
-                    $blob = mb_convert_encoding(base64_decode(fopen($_FILES['image']["tmp_name"], 'rb')), 'UTF-16', 'UTF-8');
+                        $item = $item_select_result['item'];
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+                    try {
+                        $rubricquery = $pdo->prepare("INSERT INTO TBL_Item_In_Rubric( item ,rubric) VALUES(?,?)");
+                        $rubricquery->execute(array($item, $rubric));
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+                    try {
+                        $auctionquery = $pdo->prepare("INSERT INTO TBL_Auction( seller, item ,moment_end , is_promoted) VALUES(:seller,:item,GETDATE() + DAY(:duration), :is_promoted)");
+                        $duration = (int)$duration;
+                        $auctionquery->bindParam(':duration', $duration, PDO::PARAM_INT);
+                        $auctionquery->bindParam(':seller', $seller, PDO::PARAM_STR);
+                        $auctionquery->bindParam(':item', $item, PDO::PARAM_INT);
+                        $auctionquery->bindParam(':is_promoted' ,$is_promoted,PDO::PARAM_BOOL);
+                        $auctionquery->execute();
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+                    try {
+                        $img = addslashes(file_get_contents($_FILES['image']["tmp_name"]));
+                        //echo "<br>" . ;
+                        $img =  iconv(mb_detect_encoding ($img),'UTF-8//IGNORE',$img);
+                        $data = base64_encode($img);
 
-                    $resourcequery = $pdo->prepare("INSERT INTO TBL_Resource(item , [file] ,media_type, sort_number) VALUES(:item,CONVERT(VARBINARY(MAX), :image),:media_type,0)");
-                    $resourcequery->bindParam(':image', $blob, PDO::PARAM_LOB);
-                    $resourcequery->bindParam(':item', $item, PDO::PARAM_INT);
-                    $resourcequery->bindParam(':media_type', $media_type, PDO::PARAM_STR);
-                    $resourcequery->execute();
-                } catch (PDOException $e) {
-                    echo $e;
-                }
+                        $blob = mb_convert_encoding(fopen($_FILES['image']["tmp_name"], 'rb'), 'UTF-16', 'UTF-8');
 
+                        $hex = unpack("H*", file_get_contents($_FILES['image']["tmp_name"]));
+                        $hex = current($hex);
+                        $chars = pack("H*", $hex);
+                        //echo base64_encode($chars);
+
+                        $imgData = addslashes(file_get_contents($_FILES['image']['tmp_name']));
+                        $imageProperties = getimageSize($_FILES['image']['tmp_name']);
+
+
+                        $resourcequery = $pdo->prepare("INSERT INTO TBL_Resource(item , [file] ,media_type, sort_number) VALUES(:item, CONVERT( VARBINARY(MAX),:image) ,:media_type,0)");
+                        $resourcequery->bindParam(':image', $imgData, PDO::PARAM_LOB);
+                        $resourcequery->bindParam(':item', $item, PDO::PARAM_INT);
+                        $resourcequery->bindParam(':media_type', $media_type, PDO::PARAM_STR);
+                        $resourcequery->execute();
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+
+                }
             }
         }
+    }else{
+        echo "Je moet ingelogd zijn";
     }
 }
 
@@ -683,21 +728,103 @@ function deleteNotActiveAccount()
     $sql->execute();
 }
 
+function sendSellerVerification($username)
+{
 
-//
-//require "algoliasearch-client-php-master/autoload.php";
-//
-//$appId = 'YOUR_PLACES_APP_ID';
-//$apiKey = 'YOUR_PLACES_API_KEY';
-//
-//$client = Algolia\AlgoliaSearch\SearchClient::create(
-//    'plK904BLG7JJ',
-//    '551154e9c4e6dfefd99359b532faaa99'
-//);
-//
-//$index = $client->initIndex('test_search');
-//
-//$result = $client->search('Paris');
-//var_dump($result);
+    //supposedly a banktransaction should occur here which includes the code in its description
+
+    if (isset($_POST['sendVerification'])) {
+
+        global $pdo;
+
+        $bankNumber = $_POST['bankNumber'];
+
+        $newSellerQuery = $pdo->prepare('INSERT INTO TBL_Seller ([user], bank_account, verification_status) VALUES (?, ?, 0)');
+        $newSellerQuery->execute(array($username, $bankNumber));
+
+        $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
+        $token = str_shuffle($token);
+        $token = substr($token, 0, 10);
+
+        $verificationQuery = $pdo->prepare('UPDATE TBL_Seller SET verification_code = ?,
+verification_code_valid_until = GETDATE() + MONTH(1) WHERE [user] = ?');
+        $verificationQuery->execute(array($token, $username));
+    }
+}
+
+function checkSellerVerification($username)
+{
+
+    if (isset($_POST['submitVerification'])) {
+
+        global $pdo;
+
+        $submittedCode = $_POST['vericode'];
+
+        $checkCodeQuery = $pdo->prepare('SELECT * FROM TBL_Seller WHERE [user] = ? AND verification_code_valid_until > GETDATE()');
+        $checkCodeQuery->execute(array($username));
+        $checkCodeData = $checkCodeQuery->fetchAll();
+
+        if(sizeof($checkCodeData) == 0) {
+
+            echo 'verificatiecode is niet meer geldig';
+
+        } else {
+
+            $checkCodeQuery->execute(array($username));
+            $checkCodeData = $checkCodeQuery->fetch();
+            $verificationCode = $checkCodeData['verification_code'];
+
+            if ($submittedCode == $verificationCode) {
+
+                $setSellerQuery = $pdo->prepare('UPDATE TBL_User SET is_seller = 1 WHERE [user] = ?');
+                $setSellerQuery->execute(array($username));
+                $setVerifiedQuery = $pdo->prepare('UPDATE TBL_Seller SET verification_status = 1 WHERE [user] = ?');
+                $setVerifiedQuery->execute(array($username));
+
+                $_SESSION['is_seller'] = 1;
+
+            } else {
+
+                echo 'code is fout';
+
+            }
+
+        }
+
+    }
+
+}
+
+function canSendNewCode($username)
+{
+
+    global $pdo;
+
+    $isSellerQuery = $pdo->prepare('SELECT * FROM TBL_Seller WHERE [user] = ?');
+    $isSellerQuery->execute(array($username));
+    $isSellerData = $isSellerQuery->fetchAll();
+
+    if (sizeof($isSellerData) == 0) {
+
+        /* if the user isnt a seller yet, he should always be able to request a code */
+        return true;
+
+    } else {
+
+        $beenSentQuery = $pdo->prepare('SELECT * FROM TBL_Seller WHERE [user] = ? AND verification_status = 0
+                                                  AND verification_code_valid_until < GETDATE()');
+        $beenSentQuery->execute(array($username));
+        $beenSentData = $beenSentQuery->fetchAll();
+
+        if (sizeof($beenSentData) == 1) {
+
+            /* the code has expired, user should request a new code */
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
 
 ?>
