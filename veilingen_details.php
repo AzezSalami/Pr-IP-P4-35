@@ -90,7 +90,6 @@
         $newPrice = $_POST['bidbutton'];
         $username = $_SESSION['username'];
         placeNewBid($auctionid, $newPrice, $username);
-        $itemprice = $newPrice;
         $bidquery->execute(array($auctionid));
     }
 
@@ -206,7 +205,7 @@
                 <div class=\"col-lg\">
                     <div class=\"bid mb-2\">
                         <h3>Bieden</h3>";
-    if (isset($_SESSION['username'])) {
+    if (isset($_SESSION['username']))  {
         echo "
                                                 <p id='bidtext' class=\"font-weight-bold\">Mijn bod wordt:</p>
                                                 <form id='bidform' method=\"post\" class=\"form-inline button-left\">
