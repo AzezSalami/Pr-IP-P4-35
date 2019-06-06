@@ -156,7 +156,7 @@ require "includes/header.php";
                     <a href=\"mailto:$emailSeller \" target=\"_top\" class=\" btn button - left\">Mail verkoper</a>
                 </div>
             <div class=\"dropdown-divider\"></div>  
-                <div class=\"col-lg\">
+                <div class=\"col-lg mt-2\">
                         <h3>Veilingdetails</h3>
                         <table class='table table-striped'>
                             <tr>
