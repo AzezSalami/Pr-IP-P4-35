@@ -107,7 +107,8 @@ if (isset($_SESSION['username']) == 0) {
                             document.getElementById(\'shipping_cost\').parentNode.classList.add(\'d-none\');
                             }
 
-                            " class="form-control" name="shipping_instructions" id="shipping_instructions">
+                            " class="form-control" name="shipping_instructions" id="shipping_instructions" >
+                                <option value="" disabled selected hidden>Verzendmethode</option>
                                 <option value="Ophalen">Ophalen</option>
                                 <option value="Verzenden">Verzenden</option>
                             </select>

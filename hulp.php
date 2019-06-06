@@ -63,6 +63,10 @@ require "includes/header.php";
                                aria-selected="false">
                                 <i class="mdi mdi-account-settings"></i> Bieden
                             </a>
+                            <a href="#tab4" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab4"
+                               aria-selected="false">
+                                <i class="mdi mdi-account-settings"></i> Verkopen
+                            </a>
                         </div>
                     </div>
                     <div class="col-lg-8">
@@ -85,12 +89,13 @@ require "includes/header.php";
                                                 <p>Als je je op onze website begeeft kan je op elke pagina in de rechter
                                                     hoek aan de bovenkant van het scherm een blauwe knop zien waarop
                                                     'Aanmelden' staat. Nadat je hier op hebt geklikt kun je een keuze
-                                                    maken om in te loggen op een bestaand account of jezelf te registreren.
+                                                    maken om in te loggen op een bestaand account of jezelf te
+                                                    registreren.
                                                     Als je op registreren klikt wordt er een pop-up weergeven waar je
-                                                    een nieuw  account kunt maken. Nadat je alle stappen inclusief de
+                                                    een nieuw account kunt maken. Nadat je alle stappen inclusief de
                                                     verificatie hebt voltooid zal het registratieproces voltooid zijn en
                                                     kan je gebruik maken van het nieuw gecreëerde account.
-                                                    </p>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -112,12 +117,15 @@ require "includes/header.php";
                                                     ondernemen om dit op te lossen.<br><br>
                                                     - Kies voor 'Nieuwe verificatiecode?' op het inlogvenster. Na het
                                                     invullen van de email die je tijdens het registratieproces hebt
-                                                    gebruiker wordt een nieuwe verificatiecode naar jouw inbox verzonden.<br>
+                                                    gebruiker wordt een nieuwe verificatiecode naar jouw inbox
+                                                    verzonden.<br>
                                                     - Check de 'Spam' folder op je email. Soms kan het zijn dat de email
                                                     daar is beland en daarom niet wordt weergeven in jouw normale inbox.<br><br>
-                                                    Als geen van de bovenstaande acties het probleem oplossen, aarzel dan
-                                                    niet om contant op te nemen met ons personeel. Dit kan op de contactpagina.
-                                                   </p>
+                                                    Als geen van de bovenstaande acties het probleem oplossen, aarzel
+                                                    dan
+                                                    niet om contant op te nemen met ons personeel. Dit kan op de
+                                                    contactpagina.
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -140,8 +148,10 @@ require "includes/header.php";
                                                 <p>Als je je op onze website begeeft kan je op elke pagina in de rechter
                                                     hoek aan de bovenkant van het scherm een blauwe knop zien waarop
                                                     'Aanmelden' staat. Nadat je hier op hebt geklikt kun je een keuze
-                                                    maken om in te loggen op een bestaand account of jezelf te registreren,
-                                                    kies voor 'Inloggen'. Nu je hierop hebt geklikt zal een pop-up worden
+                                                    maken om in te loggen op een bestaand account of jezelf te
+                                                    registreren,
+                                                    kies voor 'Inloggen'. Nu je hierop hebt geklikt zal een pop-up
+                                                    worden
                                                     weergeven waar je jouw gebruikersnaam en wachtwoord kunt invullen,
                                                     klik hierna op de knop waar 'Inloggen' op staat.
                                                 </p>
@@ -162,10 +172,13 @@ require "includes/header.php";
                                              aria-labelledby="accordion-tab-2-heading-2" data-parent="#accordion-tab-2">
                                             <div class="card-body">
                                                 <p>Probeer de volgende dingen:<br>
-                                                    - Controleer of je gebruikersnaam correct is (Deze is niet hoofdletter
+                                                    - Controleer of je gebruikersnaam correct is (Deze is niet
+                                                    hoofdletter
                                                     gevoelig.).<br>
-                                                    - Controleer of je je gebruikersnaam en wachtwoord goed hebt ingevuld.<br>
-                                                    - Controleer of je het verificatieproces volledig hebt doorlopen.</p>
+                                                    - Controleer of je je gebruikersnaam en wachtwoord goed hebt
+                                                    ingevuld.<br>
+                                                    - Controleer of je het verificatieproces volledig hebt doorlopen.
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -229,10 +242,95 @@ require "includes/header.php";
                                                     - De veiling is verlopen.<br>
                                                     - Je internetverbinding was slecht op moment van bieden.<br>
                                                     - Je bent niet ingelogd als verkoper of gebruiker.<br>
-                                                    o Weet je niet hoe je moet inloggen ? --> Kijk dan bij het kopje
+                                                    &emsp;o Weet je niet hoe je moet inloggen ? --> Kijk dan bij het kopje
                                                     inloggen.<br>
-                                                    o Weet je niet hoe je moet registreren? --> Kijk dan bij het kopje
+                                                    &emsp;o Weet je niet hoe je moet registreren? --> Kijk dan bij het kopje
                                                     registreren.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab4" role="tabpanel" aria-labelledby="tab4">
+                                <div class="accordion" id="accordion-tab-4">
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-4-heading-1">
+                                            <h5>
+                                                <button class="btn btn-hulp" type="button" data-toggle="collapse"
+                                                        data-target="#accordion-tab-4-content-1" aria-expanded="false"
+                                                        aria-controls="accordion-tab-4-content-1">Hoe kan ik verkoper
+                                                    worden?
+                                                </button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse show" id="accordion-tab-4-content-1"
+                                             aria-labelledby="accordion-tab-4-heading-1" data-parent="#accordion-tab-4">
+                                            <div class="card-body">
+                                                <p>Om verkoper te worden moet je eerst een account hebben op de website.<br>
+                                                    Hierna kun je vervolgens verkoper worden door op de accountknop te
+                                                    klikken (de blauwe knop rechtsboven met je gebruikersnaam).
+                                                    Wanneer je hier op hebt geklikt krijg je de optie nieuwe veiling.
+                                                    Bij het klikken op deze optie kom je op de pagina waar je verkoper
+                                                    kunt worden.<br>
+                                                    Hier vul je vervolgens je IBAN. Hierna kom je op een pagina waar je
+                                                    een verificatiecode moet invullen. Deze heb je ontvangen via een
+                                                    transactie. <br>
+                                                    Wanneer je een geldige verificatiecode hebt ingegeven
+                                                    kun je veilingen plaatsen op de veilingsite.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-4-heading-2">
+                                            <h5>
+                                                <button class="btn btn-hulp" type="button" data-toggle="collapse"
+                                                        data-target="#accordion-tab-4-content-2" aria-expanded="false"
+                                                        aria-controls="accordion-tab-4-content-2">Hoe plaats ik een
+                                                    veiling?
+                                                </button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse" id="accordion-tab-4-content-2"
+                                             aria-labelledby="accordion-tab-4-heading-2" data-parent="#accordion-tab-4">
+                                            <div class="card-body">
+                                                <p>Om een veiling te plaatsen moet je verkoper zijn. Weet je niet hoe
+                                                    dit moet? Kijk dan even in het kopje 'Hoe kan ik een verkoper
+                                                    worden?'<br>
+                                                    Wanneer je een verkoper bent kun je op de accountknop klikken en het
+                                                    kopje 'Nieuwe veiling' aanklikken. <br>
+                                                    Op deze pagina kun je een nieuwe veiling aanmaken. De volgende velden
+                                                    moeten worden ingevuld: <br>
+                                                    - Titel<br>
+                                                    &emsp;o Hier vul je de titel van de veiling in<br>
+                                                    - Start prijs<br>
+                                                    &emsp;o Hier vul je het bedrag in waar de veiling mee moet beginnen<br>
+                                                    - Locatie<br>
+                                                    &emsp;o Hier vul je de locatie in waar het product zich bevindt<br>
+                                                    - Ophalen<br>
+                                                    &emsp;o Hier geef<br>
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-4-heading-3">
+                                            <h5>
+                                                <button class="btn btn-hulp" type="button" data-toggle="collapse"
+                                                        data-target="#accordion-tab-4-content-3" aria-expanded="false"
+                                                        aria-controls="accordion-tab-4-content-3">Ik ben mijn wachtwoord
+                                                    vergeten, wat nu?
+                                                </button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse" id="accordion-tab-4-content-3"
+                                             aria-labelledby="accordion-tab-4-heading-3" data-parent="#accordion-tab-4">
+                                            <div class="card-body">
+                                                <p>Als je je wachtwoord vergeten bent, klik dan in het inlogvenster op
+                                                    “wachtwoord resetten”.
+                                                    Je zal dan een mail ontvangen met daarin een link om je wachtwoord
+                                                    opnieuw in te stellen.</p>
                                             </div>
                                         </div>
                                     </div>
