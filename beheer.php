@@ -34,33 +34,44 @@ require "includes/header.php";
                          id="profile-classic-shadow"
                          role="tabpanel">
                         <table class="table table-bordered table-sm col-lg mt-3">
+                            <?php
+                            $super = isset($_GET['rubrics'])? $_GET['rubrics'] : -1;
+                            ?>
+
                             <thead>
                             <tr>
                                 <th scope="col" class="fit"></th>
                                 <th scope="col" class="fit">#</th>
-                                <th scope="col">Rubrieknaam</th>
+                                <th scope="col">Rubrieknaam
+                                <?php
+                                echo "<a  href=\"beheer.php?super=$super\"><i class=\"fas fa-arrow-up\"></i></a>"
+                                ?>
+
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php
-                            $rubricQuery = $pdo ->prepare("SELECT * FROM TBL_Rubric WHERE super=-1 ");
-                            $rubricQuery -> execute();
+                            $rubricQuery = $pdo ->prepare("SELECT * FROM TBL_Rubric WHERE super=?");
+                            $rubricQuery -> execute(array($super));
                             $rubrics = $rubricQuery->fetchAll();
                             foreach ($rubrics as $result) {
                                 echo " <tr>
-                                      <th scope=\"row\" class=\"fit\"><input type=\"radio\" value=\"" . $result['name'] . "\"
+                                      <th scope=\"row\" class=\"fit\"><input type=\"radio\" value=\"" . $result['rubric'] . "\"
                                                                    name=\"rubricRadio\"></th>
                                      <td class=\"fit\">" . $result['sort_number'] . "</td>
                                      
-                                    <td>" . $result['name'] . "</td>
+                                    <td><a href='beheer.php?rubrics=" . $result['rubric'] . "'>" . $result['name'] . "</a></td>
                                    </tr>";
                             }
                             ?>
                             <tr>
                                 <th scope="row" class="fit"></th>
+                                <lable for="addRubricNumber"></lable>
                                 <td class="inputRubric"><input type="number" name="addRubricNumber"
                                                                placeholder="Positie rubriek">
                                 </td>
+                                <lable for="addRubricName"></lable>
                                 <td class="inputRubric"><input type="text" name="addRubricName"
                                                                placeholder="Naam rubriek"></td>
                             </tr>
@@ -70,6 +81,7 @@ require "includes/header.php";
                             <div class="col-lg admin-buttons text-center">
                                 <input type="submit" class="btn mb-1" value="Aanpassen" name="changeRubric">
                                 <input type="submit" class="btn mb-1" value="Uitfaseren" name="depracateRubric">
+                                <input type="submit" class="btn mb-1" value="Toon sub" name="depracateRubric">
                             </div>
                         </div>
                     </div>

@@ -673,13 +673,12 @@ function createAuction()
             $is_promoted = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
             $rubric_post = cleanUpUserInput((isset($_POST['rubriek'])?$_POST['rubriek']:null));
             echo $price_start;
-             var_dump($price_start);
 
 //            if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
 //                echo "Geen geldig beeld";
 //            } else {
 //                $media_type = getimagesize($_FILES['image']["tmp_name"])["mime"];
-                if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address) || $rubric_post) {
+                if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address) || empty($rubric_post)) {
                     return "Alle velden zijn verplicht";
                 } else {
 
@@ -700,11 +699,7 @@ function createAuction()
                     }
                     $item = "";
                     try {
-                        $item_select_query = $pdo->prepare("SELECT item FROM TBL_Item WHERE name = ? AND description = ? AND price_start = ? AND shipping_cost= ? AND shipping_instructions= ? AND address_line_1= ?");
-                        $item_select_query->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
-                        $item_select_result = $item_select_query->fetch();
-
-                        $item = $item_select_result['item'];
+                        $item=$pdo->lastInsertId();
                     } catch (PDOException $e) {
                         echo $e;
                     }
@@ -750,7 +745,9 @@ function createAuction()
 //                    } catch (PDOException $e) {
 //                        echo $e;
 //                    }
-                    return "De veiling is succesvol aangemaakt";
+                    global $auctionCreated;
+                    $auctionCreated = true;
+                    return "<p style=\"color: green;\"> De veiling is succesvol aangemaakt</P>";
 //                }
             }
         }
@@ -884,6 +881,10 @@ function blockUser()
         }
         echo "<script>document.getElementById('blockuserTab').click();</script>";
     }
+}
+
+function updateRubrics(){
+    
 }
 
 ?>
