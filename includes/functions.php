@@ -795,7 +795,7 @@ function checkSellerVerification($username)
 
         if (sizeof($checkCodeData) == 0) {
 
-            echo 'verificatiecode is niet meer geldig';
+            return '<p style="color: red">Code is onjuist, probeer het nog een keer.</p>';
 
         } else {
 
@@ -814,7 +814,7 @@ function checkSellerVerification($username)
 
             } else {
 
-                echo 'code is fout';
+                return '<p style="color: red">Code is onjuist, probeer het nog een keer.</p>';
 
             }
 
