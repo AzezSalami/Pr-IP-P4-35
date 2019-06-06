@@ -689,7 +689,11 @@ function createAuction()
                         $rubric = $rubric_post;
                     }
                     try {
-                        $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1 ) VALUES(?,?,?,?,?,?)");
+                        loadPlaces();
+                        global $places;
+                        $result = $places->search($address);
+                        $coords = $result['hits'][0]['_geoloc'];
+                        $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1, geolocation) VALUES(?,?,?,?,?,?,geography::Point(" . $coords['lat'] . ", " . $coords['lng'] . ", 4326))");
                         $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
                     } catch (PDOException $e) {
                         echo $e;
