@@ -211,16 +211,7 @@ require "includes/header.php";
                                       }
                                     }, 1000);
                                     </script>
-";
-
-        if (sizeof($_SESSION) > 0) {
-            if ($_SESSION['is_admin'] == 1) {
-
-                echo "<form method='POST'>
-            <br><button name='blockAuction' type='submit' class='btn'>Blokkeer veiling</button>
 </form>";
-            }
-        }
 
 
         echo "</div>
@@ -249,7 +240,7 @@ require "includes/header.php";
                                                 <div class=\"my-3\">
                                                     <p class=\"font-weight-bold\">Eerdere biedingen:</p>";
         } else {
-            echo '<p style=\"color: red\">Je moet ingelogd zijn om te kunnen bieden.</p>';
+            echo '<p style="color:red">Je moet ingelogd zijn om te kunnen bieden.</p>';
         }
 
         $html = "";
@@ -265,7 +256,14 @@ require "includes/header.php";
             }
         }
         echo '</table>';
+        if (sizeof($_SESSION) > 0) {
+            if ($_SESSION['is_admin'] == 1 && $auctiondata['is_closed'] == 0) {
 
+                echo "<form method='POST'>
+            <br><button name='blockAuction' type='submit' class='btn'>Blokkeer veiling</button>
+";
+            }
+        }
         echo $html . '</div>' . '
                    
                 </div>

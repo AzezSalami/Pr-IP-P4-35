@@ -620,7 +620,12 @@ function placeNewBid($auctionid, $newPrice, $username)
             $query->execute(array($auctionid));
             $sameBids = $query->fetch();
 if(empty($sameBids)){
-    $sameBids = array('amount' => )
+
+    $priceQuery = $pdo->prepare("select price_start from TBL_bid where auction = ? user is not null group by auction");
+    $priceQuery->execute(array($auctionid));
+    $start_price = $priceQuery->fetch();
+
+    $sameBids = array('amount' => $start_price);
 }
             if ($sameBids['amount'] < $newPrice) {
                 if ($sameBids['amount'] < 1) {
@@ -637,10 +642,6 @@ if(empty($sameBids)){
                 if($newPrice-$sameBids['amount'] == $buttonvalue || $newPrice-$sameBids['amount'] == $buttonvalue*2 || $newPrice-$sameBids['amount'] == $buttonvalue*3) {
                     $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
                     $query->execute(array($auctionid, $newPrice, $username));
-                } else{
-                    echo "Er is iets mis gegaan, probeer het opnieuw";
-                    echo $sameBids . "s<br>";echo $buttonvalue . "b<br>";
-                    echo $newPrice;
                 }
             }
 
