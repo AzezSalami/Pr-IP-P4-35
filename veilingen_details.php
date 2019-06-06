@@ -64,6 +64,14 @@ require "includes/header.php";
         $bidquery->execute(array($auctionid));
         $biddata = $bidquery->fetchAll();
 
+
+        if (isset($_POST['bidbutton'])) {
+            $newPrice = $_POST['bidbutton'];
+            $username = $_SESSION['username'];
+            placeNewBid($auctionid, $newPrice, $username);
+            $bidquery->execute(array($auctionid));
+        }
+
         $highestBidQuery = $pdo->prepare("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
         $highestBidQuery->execute(array($auctionid));
         $highestBidData = $highestBidQuery->fetchAll();
@@ -86,12 +94,6 @@ require "includes/header.php";
             $buttonvalue = 50;
         }
 
-    if (isset($_POST['bidbutton'])) {
-        $newPrice = $_POST['bidbutton'];
-        $username = $_SESSION['username'];
-        placeNewBid($auctionid, $newPrice, $username);
-        $bidquery->execute(array($auctionid));
-    }
 
         if (isset($_POST['blockAuction'])) {
             $blockAuctionQuery = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE auction = ?");

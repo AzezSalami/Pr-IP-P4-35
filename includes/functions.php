@@ -615,40 +615,41 @@ function placeNewBid($auctionid, $newPrice, $username)
 {
     global $pdo;
 
-        try {
-            $query = $pdo->prepare("select max(amount) as amount from TBL_Bid where auction = ? and user is not null group by auction");
-            $query->execute(array($auctionid));
-            $sameBids = $query->fetch();
-if(empty($sameBids)){
+    try {
+        $query = $pdo->prepare("select max(amount) as amount from TBL_Bid where auction = ? and user is not null group by auction");
+        $query->execute(array($auctionid));
+        $sameBids = $query->fetch();
+        if (empty($sameBids)) {
 
-    $priceQuery = $pdo->prepare("select price_start from TBL_bid where auction = ? user is not null group by auction");
-    $priceQuery->execute(array($auctionid));
-    $start_price = $priceQuery->fetch();
+            $priceQuery = $pdo->prepare("select price_start from TBL_item where item=(SELECT item FROM TBL_Auction WHERE auction = ?)");
+            $priceQuery->execute(array($auctionid));
+            $start_price = $priceQuery->fetch()['price_start'];
 
-    $sameBids = array('amount' => $start_price);
-}
-            if ($sameBids['amount'] < $newPrice) {
-                if ($sameBids['amount'] < 1) {
-                    $buttonvalue = 0.50;
-                } else if ($sameBids['amount'] <= 5) {
-                    $buttonvalue = 1;
-                } else if ($sameBids['amount'] <= 10) {
-                    $buttonvalue = 5;
-                } else if ($sameBids['amount'] <= 50) {
-                    $buttonvalue = 10;
-                } else {
-                    $buttonvalue = 50;
-                }
-                if($newPrice-$sameBids['amount'] == $buttonvalue || $newPrice-$sameBids['amount'] == $buttonvalue*2 || $newPrice-$sameBids['amount'] == $buttonvalue*3) {
-                    $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
-                    $query->execute(array($auctionid, $newPrice, $username));
-                }
-            }
-
-        } catch (PDOException $e) {
-            echo $e;
+            $sameBids = array('amount' => $start_price);
         }
+        if ($sameBids['amount'] < $newPrice) {
+            if ($sameBids['amount'] < 1) {
+                $buttonvalue = 0.50;
+            } else if ($sameBids['amount'] <= 5) {
+                $buttonvalue = 1;
+            } else if ($sameBids['amount'] <= 10) {
+                $buttonvalue = 5;
+            } else if ($sameBids['amount'] <= 50) {
+                $buttonvalue = 10;
+            } else {
+                $buttonvalue = 50;
+            }
+            if (((int)$newPrice - (int)$sameBids['amount']) == $buttonvalue || (int)$newPrice - (int)$sameBids['amount'] == $buttonvalue * 2 || (int)$newPrice - (int)$sameBids['amount'] == $buttonvalue * 3) {
+                $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
+                $query->execute(array($auctionid, $newPrice, $username));
+            }else{
+            }
+        }
+
+    } catch (PDOException $e) {
+        echo $e;
     }
+}
 
 function createAuction()
 {
