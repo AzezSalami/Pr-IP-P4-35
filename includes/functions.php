@@ -2,15 +2,9 @@
 set_time_limit(0);
 //error_reporting(0);
 session_start();
-require 'vendor/autoload.php';
 connectToDatabase();
 deleteNotActiveAccount();
 global $lastPage;
-global $places;
-$places = Algolia\AlgoliaSearch\PlacesClient::create(
-    'plK904BLG7JJ',
-    '551154e9c4e6dfefd99359b532faaa99'
-);
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -45,6 +39,15 @@ function connectToDatabase()
     } catch (PDOException $e) {
         echo $e;
     }
+}
+
+function loadPlaces(){
+    require 'vendor/autoload.php';
+    global $places;
+    $places = Algolia\AlgoliaSearch\PlacesClient::create(
+        'plK904BLG7JJ',
+        '551154e9c4e6dfefd99359b532faaa99'
+    );
 }
 
 function loadRubrics()
@@ -290,6 +293,7 @@ function register()
                 $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
                 $token = str_shuffle($token);
                 $token = substr($token, 0, 10);
+                loadPlaces();
                 global $places;
                 $result = $places->search($address);
                 $coords = $result['hits'][0]['_geoloc'];
@@ -411,6 +415,7 @@ function updateAccountData()
             }
             $values .= "address_line_1 = ?, ";
             $array[] = $address;
+            loadPlaces();
             global $places;
             $result = $places->search($address);
             $coords = $result['hits'][0]['_geoloc'];
@@ -653,7 +658,6 @@ function placeNewBid($auctionid, $newPrice, $username)
 
 function createAuction()
 {
-    if (isset($_SESSION["username"])) {
         if (isset($_POST['createAuction'])) {
             // var_dump($_POST);
             global $pdo;
@@ -667,21 +671,23 @@ function createAuction()
             $address = cleanUpUserInput($_POST['location']);
             $seller = $_SESSION["username"];
             $is_promoted = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
-            $rubric_post = cleanUpUserInput($_POST['rubriek']);
-            if (is_array($rubric_post)) {
-                $rubric = end($rubric_post);
-            } else {
-                $rubric = $rubric_post;
-            }
+            $rubric_post = cleanUpUserInput((isset($_POST['rubriek'])?$_POST['rubriek']:null));
+            echo $price_start;
+             var_dump($price_start);
 
-            if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
-                echo "Geen geldig beeld";
-            } else {
-                $media_type = getimagesize($_FILES['image']["tmp_name"])["mime"];
-                if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address)) {
-                    echo "Alle velden zijn verplicht";
+//            if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
+//                echo "Geen geldig beeld";
+//            } else {
+//                $media_type = getimagesize($_FILES['image']["tmp_name"])["mime"];
+                if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address) || $rubric_post) {
+                    return "Alle velden zijn verplicht";
                 } else {
-                    echo "jaa";
+
+                    if (is_array($rubric_post)) {
+                        $rubric = end($rubric_post);
+                    } else {
+                        $rubric = $rubric_post;
+                    }
                     try {
                         $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1 ) VALUES(?,?,?,?,?,?)");
                         $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
@@ -715,38 +721,35 @@ function createAuction()
                     } catch (PDOException $e) {
                         echo $e;
                     }
-                    try {
-                        $img = addslashes(file_get_contents($_FILES['image']["tmp_name"]));
-                        //echo "<br>" . ;
-                        $img = iconv(mb_detect_encoding($img), 'UTF-8//IGNORE', $img);
-                        $data = base64_encode($img);
-
-                        $blob = mb_convert_encoding(fopen($_FILES['image']["tmp_name"], 'rb'), 'UTF-16', 'UTF-8');
-
-                        $hex = unpack("H*", file_get_contents($_FILES['image']["tmp_name"]));
-                        $hex = current($hex);
-                        $chars = pack("H*", $hex);
-                        //echo base64_encode($chars);
-
-                        $imgData = addslashes(file_get_contents($_FILES['image']['tmp_name']));
-                        $imageProperties = getimageSize($_FILES['image']['tmp_name']);
-
-
-                        $resourcequery = $pdo->prepare("INSERT INTO TBL_Resource(item , [file] ,media_type, sort_number) VALUES(:item, CONVERT( VARBINARY(MAX),:image) ,:media_type,0)");
-                        $resourcequery->bindParam(':image', $imgData, PDO::PARAM_LOB);
-                        $resourcequery->bindParam(':item', $item, PDO::PARAM_INT);
-                        $resourcequery->bindParam(':media_type', $media_type, PDO::PARAM_STR);
-                        $resourcequery->execute();
-                    } catch (PDOException $e) {
-                        echo $e;
-                    }
-
-                }
+//                    try {
+//                        $img = addslashes(file_get_contents($_FILES['image']["tmp_name"]));
+//                        //echo "<br>" . ;
+//                        $img = iconv(mb_detect_encoding($img), 'UTF-8//IGNORE', $img);
+//                        $data = base64_encode($img);
+//
+//                        $blob = mb_convert_encoding(fopen($_FILES['image']["tmp_name"], 'rb'), 'UTF-16', 'UTF-8');
+//
+//                        $hex = unpack("H*", file_get_contents($_FILES['image']["tmp_name"]));
+//                        $hex = current($hex);
+//                        $chars = pack("H*", $hex);
+//                        //echo base64_encode($chars);
+//
+//                        $imgData = addslashes(file_get_contents($_FILES['image']['tmp_name']));
+//                        $imageProperties = getimageSize($_FILES['image']['tmp_name']);
+//
+//
+//                        $resourcequery = $pdo->prepare("INSERT INTO TBL_Resource(item , [file] ,media_type, sort_number) VALUES(:item, CONVERT( VARBINARY(MAX),:image) ,:media_type,0)");
+//                        $resourcequery->bindParam(':image', $imgData, PDO::PARAM_LOB);
+//                        $resourcequery->bindParam(':item', $item, PDO::PARAM_INT);
+//                        $resourcequery->bindParam(':media_type', $media_type, PDO::PARAM_STR);
+//                        $resourcequery->execute();
+//                    } catch (PDOException $e) {
+//                        echo $e;
+//                    }
+                    return "De veiling is succesvol aangemaakt";
+//                }
             }
         }
-    } else {
-        echo "Je moet ingelogd zijn";
-    }
 }
 
 function deleteNotActiveAccount()
@@ -852,6 +855,30 @@ function canSendNewCode($username)
         } else {
             return false;
         }
+    }
+}
+
+function blockUser()
+{
+    if (isset($_POST['blockUser'])) {
+        if (isset($_POST['blockUsername'])) {
+            global $pdo;
+            $username = cleanUpUserInput($_POST['blockUsername']);
+            $sql = $pdo->prepare("SELECT [user] FROM TBL_User WHERE [user] = ?");
+            $sql->execute(array($username));
+            $result = $sql ->fetch();
+
+            if($result['user'] == $username){
+                $sql = $pdo->prepare("UPDATE TBL_User SET is_blocked = 1 WHERE [user] = ?");
+                $sql->execute(array($username));
+                echo " Gebruiker $username is nu geblokkeerd.";
+            }else{
+                echo " Gebruiker $username bestaat niet.";
+            }
+        } else {
+            echo 'Voer eerst een gebruikersnaam in.';
+        }
+        echo "<script>document.getElementById('blockuserTab').click();</script>";
     }
 }
 

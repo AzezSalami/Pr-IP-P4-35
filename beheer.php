@@ -23,7 +23,7 @@ require "includes/header.php";
                            role="tab">Rubrieken bewerken</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="follow-tab-classic-shadow" data-toggle="tab"
+                        <a class="nav-link" id="blockuserTab" data-toggle="tab"
                            href="#follow-classic-shadow"
                            role="tab">Gebruiker blokkeren</a>
                     </li>
@@ -42,6 +42,16 @@ require "includes/header.php";
                             </tr>
                             </thead>
                             <tbody>
+                            <?php
+                            echo " <tr>
+                                      <th scope=\"row\" class=\"fit\"><input type=\"radio\" value=\"geselecteerd\"
+                                                                   name=\"geselecteerd\"></th>
+                                     <td class=\"fit\">1</td>
+                                     
+                                    <td>Testrubriek</td>
+                                   </tr>"
+
+                            ?>
                             <tr>
                                 <th scope="row" class="fit"><input type="radio" value="geselecteerd"
                                                                    name="geselecteerd"></th>
@@ -92,18 +102,20 @@ require "includes/header.php";
                         </div>
                     </div>
                     <div class="tab-pane fade admin-tab text-center " id="follow-classic-shadow" role="tabpanel">
-                        <form action="includes/functions.php">
+                        <form method="POST" name="block">
                             <div class="col-lg-10 input-group mx-auto mt-3">
-                                <input type="text" class="form-control" placeholder="block user">
+
+                                <label for="blockUsername"></label>
+                                <input type="text" class="form-control" placeholder="block user" name="blockUsername" id="blockUsername">
                                 <div class="input-group-append">
-                                    <button class="btn" type="button" id="button-addon2">Button</button>
+                                    <input class="btn" type="submit" id="blockUser" name="blockUser" value="Block">
                                 </div>
                             </div>
+                            <div class="text-danger"><?php blockUser()?></div>
                         </form>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="col-lg-2">
@@ -116,20 +128,3 @@ require "includes/header.php";
 </div>
 </body>
 </html>
-
-<?php
-//    if(isset($_POST['blockUser'])){
-//        if(isset($_POST['blockUsername'])) {
-//            $username = cleanUpUserInput($_POST['blockUsername']);
-//            $sql = $pdo->prepare("UPDATE TBL_User SET is_Blocked WHERE user = ?");
-//            $sql->execute(array($username));
-//            $sql->fetch();
-//            echo " Gebruiker $username is nu geblokkeerd.";
-//        }
-//        else{
-//
-//            echo 'Voer eerst een gebruikersnaam in.';
-//        }
-//    }
-//?>
-
