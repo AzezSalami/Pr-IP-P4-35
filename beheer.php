@@ -14,8 +14,8 @@ require "includes/header.php";
     <div class="row">
         <div class="col-lg-2">
         </div>
-        <div class="col-lg-8 admin-page mb-5 pb-3">
-            <div class="classic-tabs mx-2">
+        <div class="col-lg-8 admin-page pb-3">
+            <div class="classic-tabs mt-2 mx-2">
                 <ul class="nav nav-tabs nav-justified" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link  active show" id="profile-tab-classic-shadow" data-toggle="tab"
@@ -43,8 +43,8 @@ require "includes/header.php";
                             </thead>
                             <tbody>
                             <?php
-                            $rubricQuery = $pdo ->prepare("SELECT * FROM TBL_Rubric WHERE super=-1 ");
-                            $rubricQuery -> execute();
+                            $rubricQuery = $pdo->prepare("SELECT * FROM TBL_Rubric WHERE super=-1 ");
+                            $rubricQuery->execute();
                             $rubrics = $rubricQuery->fetchAll();
                             foreach ($rubrics as $result) {
                                 echo " <tr>
@@ -73,17 +73,18 @@ require "includes/header.php";
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade admin-tab text-center " id="follow-classic-shadow" role="tabpanel">
+                    <div class="tab-pane fade admin-tab text-center" id="follow-classic-shadow" role="tabpanel">
                         <form method="POST" name="block">
                             <div class="col-lg-10 input-group mx-auto mt-3">
-
-                                <label for="blockUsername"></label>
-                                <input type="text" class="form-control" placeholder="block user" name="blockUsername" id="blockUsername">
+                                <input type="text" class="form-control" placeholder="blokkeer gebruiker"
+                                       name="blockUsername" id="blockUsername">
                                 <div class="input-group-append">
-                                    <input class="btn" type="submit" id="blockUser" name="blockUser" value="Block">
+                                    <button class="btn btn-outline-secondary" type="submit" id="blockUser"
+                                            name="blockUser">Blokkeer
+                                    </button>
                                 </div>
                             </div>
-                            <div class="text-danger"><?php blockUser()?></div>
+                            <div class="text-danger"><?php blockUser() ?></div>
                         </form>
                     </div>
                 </div>
@@ -93,10 +94,8 @@ require "includes/header.php";
     <div class="col-lg-2">
     </div>
 </main>
-<div class="fixed-bottom">
-    <?php
-    include_once "includes/footer.php";
-    ?>
-</div>
+<?php
+include_once "includes/footer.php";
+?>
 </body>
 </html>
