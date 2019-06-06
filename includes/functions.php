@@ -30,7 +30,6 @@ function connectToDatabase()
     try {
         $pdo = new PDO ("sqlsrv:Server=$hostname;Database=$databasename;ConnectionPooling=0", "$username", "$password");
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $pdo->setAttribute(PDO::SQLSRV_ATTR_ENCODING, PDO::SQLSRV_ENCODING_UTF8);
     } catch (PDOException $e) {
         echo $e;
     }
@@ -148,8 +147,7 @@ function search($amount = 0, $promoted_only = false)
 						</div>
 					</div>
 				</div>";
-
-
+          //  var_dump($auction['file']);
         }
         if ($amountOfAuctions < $amount) {
             global $lastPage;
@@ -596,83 +594,99 @@ function placeNewBid($auctionid, $newPrice, $username)
 
 function createAuction()
 {
-    /*print_r( *///$image = unpack("H*hex", /*base64_decode(*/file_get_contents($_FILES['image']["tmp_name"]));// );
-    //$imgData =addslashes (file_get_contents($_FILES['image']["tmp_name"]));
+    if(isset($_SESSION["username"])) {
+        if (isset($_POST['createAuction'])) {
+           // var_dump($_POST);
+            global $pdo;
+            $name = cleanUpUserInput($_POST['name']);
+            $description = cleanUpUserInput($_POST['description']);
+            $price_start = cleanUpUserInput($_POST['price_start']);
+            $shipping_instructions = (cleanUpUserInput($_POST['shipping_instructions']) == 'Verzenden' ? 'Verzenden' : 'Ophalen');
+            $shipping_cost = ($shipping_instructions == "Verzenden" && !empty(cleanUpUserInput($_POST['shipping_cost'])) ? cleanUpUserInput($_POST['shipping_cost']) : 0);
+            $durationOptions = array(1, 3, 5, 7, 10);
+            $duration = (in_array(cleanUpUserInput($_POST['duration']), $durationOptions) ? cleanUpUserInput($_POST['duration']) : 0);
+            $address = cleanUpUserInput($_POST['location']);
+            $seller = $_SESSION["username"];
+            $is_promoted = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
+            $rubric_post = cleanUpUserInput($_POST['rubriek']);
+            if(is_array ($rubric_post)){
+                $rubric = end($rubric_post);
+            }else {
+                $rubric = $rubric_post;
+            }
 
-//    echo "<img class='mx-auto my-2' src='data:image/jpg;base64," . base64_encode(unpack("h", $blob)) . "'
-//                                                 alt='Afbeelding van veiling'>";
-//
-
-
-    if (isset($_POST['createAuction'])) {
-        //var_dump($_POST);
-        global $pdo;
-        $is_Verzenden = false;
-        $name = cleanUpUserInput($_POST['name']);
-        $description = cleanUpUserInput($_POST['description']);
-        $price_start = cleanUpUserInput($_POST['price_start']);
-        $shipping_instructions = (cleanUpUserInput($_POST['shipping_instructions']) == 'Verzenden' ? 'Verzenden' : 'Ophalen');
-        $shipping_cost = ($shipping_instructions == "Verzenden" && !empty(cleanUpUserInput($_POST['shipping_cost']))? cleanUpUserInput($_POST['shipping_cost']) : 0);
-        $durationOptions =array(1 ,3,5 ,7,10);
-        $duration = (in_array(cleanUpUserInput($_POST['duration']), $durationOptions)? cleanUpUserInput($_POST['duration']) : 0);
-        //$duration = cleanUpUserInput($_POST['duration']);
-        $address = cleanUpUserInput($_POST['location']);
-        $seller = $_SESSION["username"];
-        $rubriek = cleanUpUserInput($_POST['rubriek']);
-        if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
-            echo "Geen geldig beeld";
-        } else {
-            $media_type = getimagesize($_FILES['image']["tmp_name"])["mime"];
-            if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address)) {
-                echo "Alle velden zijn verplicht";
+            if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
+                echo "Geen geldig beeld";
             } else {
-                echo "jaa";
-                try {
-                    $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1 ) VALUES(?,?,?,?,?,?)");
-                    $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
-                } catch (PDOException $e) {
-                    echo $e;
-                }
-                $item="";
-                try {
-                    $item_select_query = $pdo->prepare("SELECT item FROM TBL_Item WHERE name = ? AND description = ? AND price_start = ? AND shipping_cost= ? AND shipping_instructions= ? AND address_line_1= ?");
-                    $item_select_query->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
-                    $item_select_result = $item_select_query->fetch();
+                $media_type = getimagesize($_FILES['image']["tmp_name"])["mime"];
+                if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address)) {
+                    echo "Alle velden zijn verplicht";
+                } else {
+                    echo "jaa";
+                    try {
+                        $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1 ) VALUES(?,?,?,?,?,?)");
+                        $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+                    $item = "";
+                    try {
+                        $item_select_query = $pdo->prepare("SELECT item FROM TBL_Item WHERE name = ? AND description = ? AND price_start = ? AND shipping_cost= ? AND shipping_instructions= ? AND address_line_1= ?");
+                        $item_select_query->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
+                        $item_select_result = $item_select_query->fetch();
 
-                    $item = $item_select_result['item'];
-                } catch (PDOException $e) {
-                    echo $e;
-                }
-                try {
-                    $rubricquery = $pdo->prepare("INSERT INTO TBL_Item_In_Rubric( item ,rubric) VALUES(?,?)");
-                    $rubricquery->execute(array($item, $rubriek));
-                } catch (PDOException $e) {
-                    echo $e;
-                }
-                try {
-                    $auctionquery = $pdo->prepare("INSERT INTO TBL_Auction( seller, item ,moment_end) VALUES(:seller,:item,GETDATE() + DAY(:duration))");
-                    $duration=(int)$duration;
-                    $auctionquery->bindParam(':duration', $duration, PDO::PARAM_INT);
-                    $auctionquery->bindParam(':seller', $seller, PDO::PARAM_STR);
-                    $auctionquery->bindParam(':item', $item, PDO::PARAM_INT);
-                    $auctionquery->execute();
-                } catch (PDOException $e) {
-                    echo $e;
-                }
-                try {
-                    $blob = mb_convert_encoding(base64_decode(fopen($_FILES['image']["tmp_name"], 'rb')), 'UTF-16', 'UTF-8');
+                        $item = $item_select_result['item'];
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+                    try {
+                        $rubricquery = $pdo->prepare("INSERT INTO TBL_Item_In_Rubric( item ,rubric) VALUES(?,?)");
+                        $rubricquery->execute(array($item, $rubric));
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+                    try {
+                        $auctionquery = $pdo->prepare("INSERT INTO TBL_Auction( seller, item ,moment_end , is_promoted) VALUES(:seller,:item,GETDATE() + DAY(:duration), :is_promoted)");
+                        $duration = (int)$duration;
+                        $auctionquery->bindParam(':duration', $duration, PDO::PARAM_INT);
+                        $auctionquery->bindParam(':seller', $seller, PDO::PARAM_STR);
+                        $auctionquery->bindParam(':item', $item, PDO::PARAM_INT);
+                        $auctionquery->bindParam(':is_promoted' ,$is_promoted,PDO::PARAM_BOOL);
+                        $auctionquery->execute();
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+                    try {
+                        $img = addslashes(file_get_contents($_FILES['image']["tmp_name"]));
+                        //echo "<br>" . ;
+                        $img =  iconv(mb_detect_encoding ($img),'UTF-8//IGNORE',$img);
+                        $data = base64_encode($img);
 
-                    $resourcequery = $pdo->prepare("INSERT INTO TBL_Resource(item , [file] ,media_type, sort_number) VALUES(:item,CONVERT(VARBINARY(MAX), :image),:media_type,0)");
-                    $resourcequery->bindParam(':image', $blob, PDO::PARAM_LOB);
-                    $resourcequery->bindParam(':item', $item, PDO::PARAM_INT);
-                    $resourcequery->bindParam(':media_type', $media_type, PDO::PARAM_STR);
-                    $resourcequery->execute();
-                } catch (PDOException $e) {
-                    echo $e;
-                }
+                        $blob = mb_convert_encoding(fopen($_FILES['image']["tmp_name"], 'rb'), 'UTF-16', 'UTF-8');
 
+                        $hex = unpack("H*", file_get_contents($_FILES['image']["tmp_name"]));
+                        $hex = current($hex);
+                        $chars = pack("H*", $hex);
+                        //echo base64_encode($chars);
+
+                        $imgData = addslashes(file_get_contents($_FILES['image']['tmp_name']));
+                        $imageProperties = getimageSize($_FILES['image']['tmp_name']);
+
+
+                        $resourcequery = $pdo->prepare("INSERT INTO TBL_Resource(item , [file] ,media_type, sort_number) VALUES(:item, CONVERT( VARBINARY(MAX),:image) ,:media_type,0)");
+                        $resourcequery->bindParam(':image', $imgData, PDO::PARAM_LOB);
+                        $resourcequery->bindParam(':item', $item, PDO::PARAM_INT);
+                        $resourcequery->bindParam(':media_type', $media_type, PDO::PARAM_STR);
+                        $resourcequery->execute();
+                    } catch (PDOException $e) {
+                        echo $e;
+                    }
+
+                }
             }
         }
+    }else{
+        echo "Je moet ingelogd zijn";
     }
 }
 
@@ -682,22 +696,5 @@ function deleteNotActiveAccount()
     $sql = $pdo->prepare("DELETE FROM TBL_User WHERE DATEDIFF(second, GETDATE(), verification_code_valid_until) <= 0 AND is_verified = 0");
     $sql->execute();
 }
-
-
-//
-//require "algoliasearch-client-php-master/autoload.php";
-//
-//$appId = 'YOUR_PLACES_APP_ID';
-//$apiKey = 'YOUR_PLACES_API_KEY';
-//
-//$client = Algolia\AlgoliaSearch\SearchClient::create(
-//    'plK904BLG7JJ',
-//    '551154e9c4e6dfefd99359b532faaa99'
-//);
-//
-//$index = $client->initIndex('test_search');
-//
-//$result = $client->search('Paris');
-//var_dump($result);
 
 ?>
