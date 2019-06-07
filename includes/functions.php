@@ -932,7 +932,7 @@ function updateRubrics()
                 $array[] = $rubric;
                 $editQuery = $pdo->prepare("UPDATE TBL_Rubric SET  $values WHERE rubric=?");
                 $editQuery->execute($array);
-            }else{
+            } else {
                 return "voer een waarde";
             }
         }
@@ -948,7 +948,7 @@ function updateRubrics()
             $phaseOutQuery->execute(array($rubric));
         }
     }
-
+}
 function checkIBAN($iban)
 {
 // credit: http://monshouwer.org/code-snipets/check-iban-bank-account-number-in-php/
