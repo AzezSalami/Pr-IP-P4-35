@@ -21,7 +21,7 @@ function cleanUpUserInput($input)
 function connectToDatabase()
 {
     $hostname = "51.38.112.111";
-    $databasename = "groep35test3";
+    $databasename = "groep35test2";
     $username = "sa";
     $password = "Hoi123!!";
     global $pdo;

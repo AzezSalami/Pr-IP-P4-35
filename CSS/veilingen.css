@@ -76,27 +76,13 @@
     .rubricsmobile {
         display: none;
     }
+    .desktoprubrics{
+        margin-top: 5px;
+        border-radius: 0 5px 5px 0;
+    }
 }
 
 /* RUBRIEKEN DESKTOP */
-
-.desktoprubrics {
-    width: 100%;
-    height: 100%;
-    margin: 5% 0;
-    border-radius: 0 5px 5px 0;
-}
-
-.desktoprubrics > * {
-    margin-left: 10%;
-    margin-right: 10%;
-}
-
-@media only screen and (max-device-width: 991px) {
-    .desktoprubricsmedia {
-        display: none;
-    }
-}
 
 
 /* range filter */
