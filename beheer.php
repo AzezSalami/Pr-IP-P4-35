@@ -14,7 +14,7 @@ require "includes/header.php";
     <div class="row">
         <div class="col-lg-2">
         </div>
-        <div class="col-lg-8 admin-page pb-3">
+        <div class="col-lg-8 admin-page pb-4 mb-4">
             <div class="classic-tabs mt-2 mx-2">
                 <ul class="nav nav-tabs nav-justified" role="tablist">
                     <li class="nav-item">
@@ -28,76 +28,124 @@ require "includes/header.php";
                            role="tab">Gebruiker blokkeren</a>
                     </li>
                 </ul>
-
-                <div class="tab-content card">
-                    <div class="adminContainer tab-pane fade active show container admin-tab table-responsive text-center"
-                         id="profile-classic-shadow"
-                         role="tabpanel">
-                        <table class="table table-bordered table-sm col-lg mt-3">
-                            <?php
-                            $super = isset($_GET['rubrics'])? $_GET['rubrics'] : -1;
-                            ?>
-
-                            <thead>
-                            <tr>
-                                <th scope="col" class="fit"></th>
-                                <th scope="col" class="fit">#</th>
-                                <th scope="col">Rubrieknaam
+                <form method="post">
+                    <div class="tab-content card">
+                        <div class="adminContainer tab-pane fade active show container admin-tab table-responsive text-center"
+                             id="profile-classic-shadow"
+                             role="tabpanel">
+                            <table class="table table-bordered table-sm col-lg mt-3">
                                 <?php
-                                echo "<a  href=\"beheer.php?super=$super\"><i class=\"fas fa-arrow-up\"></i></a>"
+                                $super = isset($_GET['rubrics']) ? $_GET['rubrics'] : -1;
+
+                                $rubricUpQuery = $pdo->prepare("SELECT super FROM TBL_Rubric WHERE rubric=? ");
+                                $rubricUpQuery->execute(array($super));
+                                $upRubrics = $rubricUpQuery->fetch()['super'];
+                                $up = isset($upRubrics) ? $upRubrics : -1;
                                 ?>
 
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                            $rubricQuery = $pdo ->prepare("SELECT * FROM TBL_Rubric WHERE super=?");
-                            $rubricQuery -> execute(array($super));
-                            $rubrics = $rubricQuery->fetchAll();
-                            foreach ($rubrics as $result) {
-                                echo " <tr>
+                                <thead>
+                                <tr>
+                                    <th scope="col" class="fit"></th>
+                                    <th scope="col" class="fit">#</th>
+                                    <th scope="col">Rubrieknaam
+                                        <?php
+                                        echo "<a  href=\"beheer.php?rubrics=$up\"><i class=\"fas fa-arrow-up\"></i></a>"
+                                        ?>
+
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                $rubricQuery = $pdo->prepare("SELECT * FROM TBL_Rubric WHERE super=?");
+                                $rubricQuery->execute(array($super));
+                                $rubrics = $rubricQuery->fetchAll();
+                                foreach ($rubrics as $result) {
+                                    echo " <tr>
                                       <th scope=\"row\" class=\"fit\"><input type=\"radio\" value=\"" . $result['rubric'] . "\"
                                                                    name=\"rubricRadio\"></th>
                                      <td class=\"fit\">" . $result['sort_number'] . "</td>
                                      
                                     <td><a href='beheer.php?rubrics=" . $result['rubric'] . "'>" . $result['name'] . "</a></td>
                                    </tr>";
-                            }
-                            ?>
-                            <tr>
-                                <th scope="row" class="fit"></th>
-                                <lable for="addRubricNumber"></lable>
-                                <td class="inputRubric"><input type="number" name="addRubricNumber"
-                                                               placeholder="Positie rubriek">
-                                </td>
-                                <lable for="addRubricName"></lable>
-                                <td class="inputRubric"><input type="text" name="addRubricName"
-                                                               placeholder="Naam rubriek"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div class="row pb-2 mb-2">
-                            <div class="col-lg admin-buttons text-center">
-                                <input type="submit" class="btn mb-1" value="Aanpassen" name="changeRubric">
-                                <input type="submit" class="btn mb-1" value="Uitfaseren" name="depracateRubric">
-                                <input type="submit" class="btn mb-1" value="Toon sub" name="depracateRubric">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade admin-tab text-center " id="follow-classic-shadow" role="tabpanel">
-                        <form method="POST" name="block">
-                            <div class="col-lg-10 input-group mx-auto mt-3">
+                                }
+                                ?>
+                                <tr>
+                                    <th scope="row" class="fit"></th>
 
-                                <label for="blockUsername"></label>
-                                <input type="text" class="form-control" placeholder="block user" name="blockUsername" id="blockUsername">
-                                <div class="input-group-append">
-                                    <input class="btn" type="submit" id="blockUser" name="blockUser" value="Block">
+                                    <td class="inputRubric">
+                                        <label for="editRubricNumber"></label>
+                                        <input type="number" name="editRubricNumber" id="editRubricNumber"
+                                               placeholder="Positie rubriek">
+                                    </td>
+                                    <td class="inputRubric">
+                                        <label for="editRubricName"></label>
+                                        <input type="text" name="editRubricName" id="editRubricName"
+                                               placeholder="Naam rubriek">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="row pb-2 mb-2">
+                                <div class="col-lg admin-buttons text-center">
+                                    <input type="submit" class="btn mb-1" value="Aanpassen" name="changeRubric">
+                                    <input type="submit" class="btn mb-1" value="Uitfaseren" name="depracateRubric">
                                 </div>
                             </div>
-                            <div class="text-danger"><?php blockUser()?></div>
-                        </form>
+                        </div>
+                </form>
+
+                <form method="post">
+                    <table class="table table-bordered table-sm col-lg mt-3">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="fit"></th>
+                            <th scope="col" class="fit">#</th>
+                            <th scope="col">Rubrieknaam
+                                <?php
+                                echo "<a  href=\"beheer.php?rubrics=$up\"><i class=\"fas fa-arrow-up\"></i></a>"
+                                ?>
+
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row" class="fit"></th>
+
+                            <td class="inputRubric">
+                                <label for="addRubricNumber"></label>
+                                <input type="number" name="addRubricNumber" id="addRubricNumber"
+                                       placeholder="Positie rubriek">
+                            </td>
+                            <td class="inputRubric">
+                                <label for="addRubricName"></label>
+                                <input type="text" name="addRubricName" id="addRubricName"
+                                       placeholder="Naam rubriek">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row pb-2 mb-2">
+                        <div class="col-lg admin-buttons text-center">
+                            <input type="submit" class="btn mb-1" value="toevoeg" name="addRubric">
+                        </div>
                     </div>
+                </form>
+
+                <div class="tab-pane fade admin-tab text-center " id="follow-classic-shadow" role="tabpanel">
+                    <form method="POST" name="block">
+                        <div class="col-lg-10 input-group mx-auto mt-3">
+
+                            <label for="blockUsername"></label>
+                            <input type="text" class="form-control" placeholder="block user" name="blockUsername"
+                                   id="blockUsername">
+                            <div class="input-group-append">
+                                <input class="btn" type="submit" id="blockUser" name="blockUser" value="Block">
+                            </div>
+                        </div>
+                        <div class="text-danger"><?php blockUser() ?></div>
+                    </form>
                 </div>
             </div>
         </div>
