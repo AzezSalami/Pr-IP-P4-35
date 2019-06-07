@@ -21,7 +21,7 @@ function cleanUpUserInput($input)
 function connectToDatabase()
 {
     $hostname = "51.38.112.111";
-    $databasename = "groep35test3";
+    $databasename = "groep35test2";
     $username = "sa";
     $password = "Hoi123!!";
     global $pdo;
@@ -777,20 +777,25 @@ function sendSellerVerification($username)
 
     if (isset($_POST['sendVerification'])) {
 
-        global $pdo;
-
         $bankNumber = $_POST['bankNumber'];
 
-        $newSellerQuery = $pdo->prepare('INSERT INTO TBL_Seller ([user], bank_account, verification_status) VALUES (?, ?, 0)');
-        $newSellerQuery->execute(array($username, $bankNumber));
+        if (checkIBAN($bankNumber)) {
 
-        $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
-        $token = str_shuffle($token);
-        $token = substr($token, 0, 10);
+            global $pdo;
 
-        $verificationQuery = $pdo->prepare('UPDATE TBL_Seller SET verification_code = ?,
+            $newSellerQuery = $pdo->prepare('INSERT INTO TBL_Seller ([user], bank_account, verification_status) VALUES (?, ?, 0)');
+            $newSellerQuery->execute(array($username, $bankNumber));
+
+            $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
+            $token = str_shuffle($token);
+            $token = substr($token, 0, 10);
+
+            $verificationQuery = $pdo->prepare('UPDATE TBL_Seller SET verification_code = ?,
 verification_code_valid_until = GETDATE() + MONTH(1) WHERE [user] = ?');
-        $verificationQuery->execute(array($token, $username));
+            $verificationQuery->execute(array($token, $username));
+        } else {
+            return '<p style="color: red">Ongeldige IBAN ingevoerd.</p>';
+        }
     }
 }
 
@@ -896,6 +901,36 @@ function blockUser()
 function updateRubrics()
 {
 
+}
+
+function checkIBAN($iban)
+{
+// credit: http://monshouwer.org/code-snipets/check-iban-bank-account-number-in-php/
+    // Normalize input (remove spaces and make upcase)
+    $iban = strtoupper(str_replace(' ', '', $iban));
+
+    if (preg_match('/^[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}$/', $iban)) {
+        $country = substr($iban, 0, 2);
+        $check = intval(substr($iban, 2, 2));
+        $account = substr($iban, 4);
+
+        // To numeric representation
+        $search = range('A', 'Z');
+        foreach (range(10, 35) as $tmp)
+            $replace[] = strval($tmp);
+        $numstr = str_replace($search, $replace, $account . $country . '00');
+
+        // Calculate checksum
+        $checksum = intval(substr($numstr, 0, 1));
+        for ($pos = 1; $pos < strlen($numstr); $pos++) {
+            $checksum *= 10;
+            $checksum += intval(substr($numstr, $pos, 1));
+            $checksum %= 97;
+        }
+
+        return ((98 - $checksum) == $check);
+    } else
+        return false;
 }
 
 ?>
