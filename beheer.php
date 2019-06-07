@@ -59,7 +59,7 @@ require "includes/header.php";
                                 </thead>
                                 <tbody>
                                 <?php
-                                $rubricQuery = $pdo->prepare("SELECT * FROM TBL_Rubric WHERE super=?");
+                                $rubricQuery = $pdo->prepare("SELECT * FROM TBL_Rubric WHERE super=? order by sort_number");
                                 $rubricQuery->execute(array($super));
                                 $rubrics = $rubricQuery->fetchAll();
                                 foreach ($rubrics as $result) {
@@ -108,7 +108,7 @@ require "includes/header.php";
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <div class="col ml-1 text-danger"><?php $rubricErr ?></div>
+                                <div class="col ml-1 text-danger"><?php echo $rubricErr ?></div>
                                 <tr>
                                     <th scope="row"></th>
 
