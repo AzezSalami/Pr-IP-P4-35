@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php
-    include 'includes/head.html';
-    ?>
+    <?php include 'includes/head.html'; ?>
     <link rel="stylesheet" href="CSS/veilingen-details.css" type="text/css">
 </head>
 <body>
