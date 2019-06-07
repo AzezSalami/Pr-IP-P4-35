@@ -91,3 +91,9 @@ span{
     margin-right: 0px;
     margin-left: 0px;
 }
+
+.btn-block{
+    border: solid black 1px;
+    background: red;
+    color: white;
+}

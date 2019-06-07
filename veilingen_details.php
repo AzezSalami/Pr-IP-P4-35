@@ -262,7 +262,7 @@ require "includes/header.php";
             if ($_SESSION['is_admin'] == 1 && $auctiondata['is_closed'] == 0) {
 
                 echo "<form method='POST'>
-            <br><button name='blockAuction' type='submit' class='btn'>Blokkeer veiling</button>
+            <br><button name='blockAuction' type='submit' class='btn btn-block'>Blokkeer veiling</button>
 ";
             }
         }
