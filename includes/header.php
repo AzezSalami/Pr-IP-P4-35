@@ -336,6 +336,14 @@ logout();
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-lg mx-4 mt-0 mb-2">
+                                    <input type="checkbox" class="form-check-input " name="cookies">
+                                    <label class="form-check-label text-dark" for="cookies">Ik ga akkoord met <a href="hulp.php"
+                                        target="_blank">
+                                            cookies</a></label>
+                                </div>
+                            </div><br>
+                            <div class="row">
                                 <div class="col text-left">
                                     <input class="btn bg-lightblue" type="submit" name="make_account"
                                            value="Maak account aan">
