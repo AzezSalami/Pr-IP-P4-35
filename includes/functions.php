@@ -668,68 +668,68 @@ function placeNewBid($auctionid, $newPrice, $username)
 
 function createAuction()
 {
-        if (isset($_POST['createAuction'])) {
-            // var_dump($_POST);
-            global $pdo;
-            $name = cleanUpUserInput($_POST['name']);
-            $description = cleanUpUserInput($_POST['description']);
-            $price_start = cleanUpUserInput($_POST['price_start']);
-            $shipping_instructions = (cleanUpUserInput($_POST['shipping_instructions']) == 'Verzenden' ? 'Verzenden' : 'Ophalen');
-            $shipping_cost = ($shipping_instructions == "Verzenden" && !empty(cleanUpUserInput($_POST['shipping_cost'])) ? cleanUpUserInput($_POST['shipping_cost']) : 0);
-            $durationOptions = array(1, 3, 5, 7, 10);
-            $duration = (in_array(cleanUpUserInput($_POST['duration']), $durationOptions) ? cleanUpUserInput($_POST['duration']) : 0);
-            $address = cleanUpUserInput($_POST['location']);
-            $seller = $_SESSION["username"];
-            $is_promoted = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
-            $rubric_post = cleanUpUserInput((isset($_POST['rubriek'])?$_POST['rubriek']:null));
-            echo $price_start;
+    if (isset($_POST['createAuction'])) {
+        // var_dump($_POST);
+        global $pdo;
+        $name = cleanUpUserInput($_POST['name']);
+        $description = cleanUpUserInput($_POST['description']);
+        $price_start = cleanUpUserInput($_POST['price_start']);
+        $shipping_instructions = (cleanUpUserInput($_POST['shipping_instructions']) == 'Verzenden' ? 'Verzenden' : 'Ophalen');
+        $shipping_cost = ($shipping_instructions == "Verzenden" && !empty(cleanUpUserInput($_POST['shipping_cost'])) ? cleanUpUserInput($_POST['shipping_cost']) : 0);
+        $durationOptions = array(1, 3, 5, 7, 10);
+        $duration = (in_array(cleanUpUserInput($_POST['duration']), $durationOptions) ? cleanUpUserInput($_POST['duration']) : 0);
+        $address = cleanUpUserInput($_POST['location']);
+        $seller = $_SESSION["username"];
+        $is_promoted = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
+        $rubric_post = cleanUpUserInput((isset($_POST['rubriek']) ? $_POST['rubriek'] : null));
+        echo $price_start;
 
 //            if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
 //                echo "Geen geldig beeld";
 //            } else {
 //                $media_type = getimagesize($_FILES['image']["tmp_name"])["mime"];
-                if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address) || empty($rubric_post)) {
-                    return "Alle velden zijn verplicht";
-                } else {
+        if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address) || empty($rubric_post)) {
+            return "Alle velden zijn verplicht";
+        } else {
 
-                    if (is_array($rubric_post)) {
-                        $rubric = end($rubric_post);
-                    } else {
-                        $rubric = $rubric_post;
-                    }
-                    try {
-                        loadPlaces();
-                        global $places;
-                        $result = $places->search($address);
-                        $coords = $result['hits'][0]['_geoloc'];
-                        $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1, geolocation) VALUES(?,?,?,?,?,?,geography::Point(" . $coords['lat'] . ", " . $coords['lng'] . ", 4326))");
-                        $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
-                    } catch (PDOException $e) {
-                        echo $e;
-                    }
-                    $item = "";
-                    try {
-                        $item=$pdo->lastInsertId();
-                    } catch (PDOException $e) {
-                        echo $e;
-                    }
-                    try {
-                        $rubricquery = $pdo->prepare("INSERT INTO TBL_Item_In_Rubric( item ,rubric) VALUES(?,?)");
-                        $rubricquery->execute(array($item, $rubric));
-                    } catch (PDOException $e) {
-                        echo $e;
-                    }
-                    try {
-                        $auctionquery = $pdo->prepare("INSERT INTO TBL_Auction( seller, item ,moment_end , is_promoted) VALUES(:seller,:item,GETDATE() + DAY(:duration), :is_promoted)");
-                        $duration = (int)$duration;
-                        $auctionquery->bindParam(':duration', $duration, PDO::PARAM_INT);
-                        $auctionquery->bindParam(':seller', $seller, PDO::PARAM_STR);
-                        $auctionquery->bindParam(':item', $item, PDO::PARAM_INT);
-                        $auctionquery->bindParam(':is_promoted', $is_promoted, PDO::PARAM_BOOL);
-                        $auctionquery->execute();
-                    } catch (PDOException $e) {
-                        echo $e;
-                    }
+            if (is_array($rubric_post)) {
+                $rubric = end($rubric_post);
+            } else {
+                $rubric = $rubric_post;
+            }
+            try {
+                loadPlaces();
+                global $places;
+                $result = $places->search($address);
+                $coords = $result['hits'][0]['_geoloc'];
+                $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1, geolocation) VALUES(?,?,?,?,?,?,geography::Point(" . $coords['lat'] . ", " . $coords['lng'] . ", 4326))");
+                $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
+            } catch (PDOException $e) {
+                echo $e;
+            }
+            $item = "";
+            try {
+                $item = $pdo->lastInsertId();
+            } catch (PDOException $e) {
+                echo $e;
+            }
+            try {
+                $rubricquery = $pdo->prepare("INSERT INTO TBL_Item_In_Rubric( item ,rubric) VALUES(?,?)");
+                $rubricquery->execute(array($item, $rubric));
+            } catch (PDOException $e) {
+                echo $e;
+            }
+            try {
+                $auctionquery = $pdo->prepare("INSERT INTO TBL_Auction( seller, item ,moment_end , is_promoted) VALUES(:seller,:item,GETDATE() + DAY(:duration), :is_promoted)");
+                $duration = (int)$duration;
+                $auctionquery->bindParam(':duration', $duration, PDO::PARAM_INT);
+                $auctionquery->bindParam(':seller', $seller, PDO::PARAM_STR);
+                $auctionquery->bindParam(':item', $item, PDO::PARAM_INT);
+                $auctionquery->bindParam(':is_promoted', $is_promoted, PDO::PARAM_BOOL);
+                $auctionquery->execute();
+            } catch (PDOException $e) {
+                echo $e;
+            }
 //                    try {
 //                        $img = addslashes(file_get_contents($_FILES['image']["tmp_name"]));
 //                        //echo "<br>" . ;
@@ -755,12 +755,12 @@ function createAuction()
 //                    } catch (PDOException $e) {
 //                        echo $e;
 //                    }
-                    global $auctionCreated;
-                    $auctionCreated = true;
-                    return "<p style=\"color: green;\"> De veiling is succesvol aangemaakt</P>";
+            global $auctionCreated;
+            $auctionCreated = true;
+            return "<p style=\"color: green;\"> De veiling is succesvol aangemaakt</P>";
 //                }
-            }
         }
+    }
 }
 
 function deleteNotActiveAccount()
@@ -882,17 +882,17 @@ function blockUser()
             $username = cleanUpUserInput($_POST['blockUsername']);
             $sql = $pdo->prepare("SELECT [user] FROM TBL_User WHERE [user] = ?");
             $sql->execute(array($username));
-            $result = $sql ->fetch();
+            $result = $sql->fetch();
 
             if ($result['user'] == $username) {
                 $usersql = $pdo->prepare("UPDATE TBL_User SET is_blocked = 1 WHERE [user] = ?");
                 $usersql->execute(array($username));
 
-                $auctionsql = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE [user] = ?");
+                $auctionsql = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE seller = ?");
                 $auctionsql->execute(array($username));
 
                 echo " Gebruiker $username is nu geblokkeerd.";
-            }else{
+            } else {
                 echo " Gebruiker $username bestaat niet.";
             }
         } else {
@@ -910,7 +910,7 @@ function updateRubrics()
 
     if (isset($_POST['changeRubric'])) {
         if (!isset($_POST['rubricRadio'])) {
-            return "kies een rubriek";
+            return "Selecteer een rubriek";
         } else {
 
             $rubric = $_POST['rubricRadio'];
@@ -933,22 +933,46 @@ function updateRubrics()
                 $editQuery = $pdo->prepare("UPDATE TBL_Rubric SET  $values WHERE rubric=?");
                 $editQuery->execute($array);
             } else {
-                return "voer een waarde";
+                return "Voer een geldige waarde in";
             }
         }
     }
     if (isset($_POST['phaseOutRubric'])) {
         if (!isset($_POST['rubricRadio'])) {
-            return "kies een rubriek";
+            return "Selecteer een rubriek";
         } else {
             $rubric = $_POST['rubricRadio'];
-            $phaseOutQuery = $pdo->prepare("SELECT ");
-
             $phaseOutQuery = $pdo->prepare("UPDATE TBL_Rubric SET phased_out = 1 WHERE rubric=?");
             $phaseOutQuery->execute(array($rubric));
         }
     }
+    if (isset($_POST['reactivateRubric'])) {
+        if (!isset($_POST['rubricRadio'])) {
+            return "Selecteer een rubriek";
+        } else {
+            $rubric = $_POST['rubricRadio'];
+            $phaseOutQuery = $pdo->prepare("UPDATE TBL_Rubric SET phased_out = 0 WHERE rubric=?");
+            $phaseOutQuery->execute(array($rubric));
+        }
+    }
 }
+
+function addRubrics()
+{
+    global $pdo;
+    if (isset($_POST['addRubric'])) {
+        if (!empty($_POST['addRubricSort_number']) && !empty($_POST['addRubricName'])) {
+            $rubricName = $_POST['addRubricName'];
+            $super = isset($_GET['rubrics']) ? $_GET['rubrics'] : -1;
+            $RubricSort_number = $_POST['addRubricSort_number'];
+            $addRubricsQuery = $pdo->prepare("INSERT INTO TBL_Rubric ([name] ,super ,sort_number) values (?,?,?)");
+            $addRubricsQuery->execute(array($rubricName,$super,$RubricSort_number));
+            }else{
+            echo "Voer een geldige waarde in";
+        }
+    }
+}
+
 function checkIBAN($iban)
 {
 // credit: http://monshouwer.org/code-snipets/check-iban-bank-account-number-in-php/
