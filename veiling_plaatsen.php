@@ -60,7 +60,8 @@ if (isset($_SESSION['username']) == 0) {
     $userQuery->execute(array($username));
     $userData = $userQuery->fetch();
 
-    sendSellerVerification($username);
+    $errMessage=sendSellerVerification($username);
+    $errMessage2=checkSellerVerification($username);
 
     if ($_SESSION['is_seller'] == 1) {
 
@@ -227,7 +228,7 @@ if (isset($_SESSION['username']) == 0) {
                         <div class="form-label-group">
                             <input type="text" class="form-control" name="bankNumber" id="price_start">
                             <label for="price_start">IBAN</label>
-                            </div></div></div>
+                            </div>'. $errMessage .'</div></div>
                 <div class="row m-4 btn-makeauction">
                     <input class="btn" type="submit" value="Verzend code" name="sendVerification">';
 
@@ -240,7 +241,7 @@ if (isset($_SESSION['username']) == 0) {
                             <input type="text" class="form-control" name="vericode" id="price_start"
                                    placeholder="Verificatiecode">
                             <label for="price_start">Verificatiecode</label>
-                            ' . checkSellerVerification($username) . '
+                            ' . $errMessage2 . '
                             </div></div></div>
                 <div class="row m-4 btn-makeauction">
                     <input class="btn" type="submit" value="Check code" name="submitVerification">';

@@ -14,7 +14,7 @@ require "includes/header.php";
     <div class="row">
         <div class="col-lg-2">
         </div>
-        <div class="col-lg-8 admin-page pb-4 mb-4">
+        <div class="col-lg-8 admin-page pb-4">
             <div class="classic-tabs mt-2 mx-2">
                 <ul class="nav nav-tabs nav-justified" role="tablist">
                     <li class="nav-item">
@@ -98,56 +98,53 @@ require "includes/header.php";
                                     <input type="submit" class="btn mb-1" value="heractiveren" name="reactivateRubric">
                                 </div>
                             </div>
+                            <table class="table table-bordered table-sm col-lg mt-3">
+                                <thead>
+                                <tr>
+                                    <th scope="col" class="fit"></th>
+                                    <th scope="col" class="fit">#</th>
+                                    <th scope="col">Rubrieknaam
+                                        <?php
+                                        echo "<a  href=\"beheer.php?rubrics=$up\"><i class=\"fas fa-arrow-up\"></i></a>"
+                                        ?>
+
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row" class="fit"></th>
+
+                                    <td class="inputRubric">
+                                        <label for="addRubricNumber"></label>
+                                        <input type="number" name="addRubricNumber" id="addRubricNumber"
+                                               placeholder="Positie rubriek">
+                                    </td>
+                                    <td class="inputRubric">
+                                        <label for="addRubricName"></label>
+                                        <input type="text" name="addRubricName" id="addRubricName"
+                                               placeholder="Naam rubriek">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="row pb-2 mb-2">
+                                <div class="col-lg admin-buttons text-center">
+                                    <input type="submit" class="btn mb-1" value="toevoeg" name="addRubric">
+                                </div>
+                            </div>
                         </div>
-                </form>
-
-                <form method="post">
-                    <table class="table table-bordered table-sm col-lg mt-3">
-                        <thead>
-                        <tr>
-                            <th scope="col" class="fit"></th>
-                            <th scope="col" class="fit">#</th>
-                            <th scope="col">Rubrieknaam
-                                <?php
-                                echo "<a  href=\"beheer.php?rubrics=$up\"><i class=\"fas fa-arrow-up\"></i></a>"
-                                ?>
-
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row" class="fit"></th>
-
-                            <td class="inputRubric">
-                                <label for="addRubricNumber"></label>
-                                <input type="number" name="addRubricNumber" id="addRubricNumber"
-                                       placeholder="Positie rubriek">
-                            </td>
-                            <td class="inputRubric">
-                                <label for="addRubricName"></label>
-                                <input type="text" name="addRubricName" id="addRubricName"
-                                       placeholder="Naam rubriek">
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div class="row pb-2 mb-2">
-                        <div class="col-lg admin-buttons text-center">
-                            <input type="submit" class="btn mb-1" value="toevoeg" name="addRubric">
-                        </div>
-                    </div>
                 </form>
 
                 <div class="tab-pane fade admin-tab text-center " id="follow-classic-shadow" role="tabpanel">
                     <form method="POST" name="block">
                         <div class="col-lg-10 input-group mx-auto mt-3">
-
-                            <label for="blockUsername"></label>
-                            <input type="text" class="form-control" placeholder="block user" name="blockUsername"
+                            <input type="text" class="form-control" placeholder="gebruikersnaam" name="blockUsername"
                                    id="blockUsername">
                             <div class="input-group-append">
-                                <input class="btn" type="submit" id="blockUser" name="blockUser" value="Block">
+                                <button class="btn" type="submit" id="blockUser" name="blockUser" value="Block">
+                                    blokkeer
+                                </button>
                             </div>
                         </div>
                         <div class="text-danger"><?php blockUser() ?></div>
@@ -159,10 +156,10 @@ require "includes/header.php";
     <div class="col-lg-2">
     </div>
 </main>
-<div class="fixed-bottom">
-    <?php
-    include_once "includes/footer.php";
-    ?>
-</div>
+
+<?php
+include_once "includes/footer.php";
+?>
+
 </body>
 </html>

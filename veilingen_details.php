@@ -20,8 +20,6 @@ require "includes/header.php";
         $auctionquery->execute(array($auctionid));
         $auctiondata = $auctionquery->fetch();
 
-        /* all sellers are null atm, hence why sellerinfo will be empty for now */
-
         if ($auctiondata['is_closed'] == 1) {
             $auctionstatus = "Gesloten";
         } elseif ($auctiondata['is_closed'] == 2) {
@@ -229,8 +227,13 @@ require "includes/header.php";
                 <div class=\"col-lg\">
                     <div class=\"bid mb-2\">
                         <h3>Bieden</h3>";
-    if (isset($_SESSION['username']))  {
-        echo "
+
+        if ($auctiondata['is_closed'] == 2) {
+            echo '<p style="color:red">Deze veiling is geblokkeerd, bieden is daarom niet mogelijk.</p>';
+        } else {
+
+            if (isset($_SESSION['username'])) {
+                echo "
                                                 <p id='bidtext' class=\"font-weight-bold\">Mijn bod wordt:</p>
                                                 <form id='bidform' method=\"post\" class=\"form-inline button-left\">
                                                     <button name=\"bidbutton\" type=\"submit\" class=\"btn\" value=\"" . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "\">€" . ($buttonvalue + ($itemprice > $itempricestart ? $itemprice : $itempricestart)) . "</button>
@@ -241,9 +244,12 @@ require "includes/header.php";
                                                 </form>
                                                 <div class=\"my-3\">
                                                     <p class=\"font-weight-bold\">Eerdere biedingen:</p>";
-        } else {
-            echo '<p style="color:red">Je moet ingelogd zijn om te kunnen bieden.</p>';
+            } else {
+                echo '<p style="color:red">Je moet ingelogd zijn om te kunnen bieden.</p>';
+            }
+
         }
+
 
         $html = "";
 
@@ -262,7 +268,7 @@ require "includes/header.php";
             if ($_SESSION['is_admin'] == 1 && $auctiondata['is_closed'] == 0) {
 
                 echo "<form method='POST'>
-            <br><button name='blockAuction' type='submit' class='btn'>Blokkeer veiling</button>
+            <br><button name='blockAuction' type='submit' class='btn btn-block'>Blokkeer veiling</button>
 ";
             }
         }
