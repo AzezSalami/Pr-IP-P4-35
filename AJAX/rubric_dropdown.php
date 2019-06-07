@@ -5,7 +5,7 @@ require_once "../includes/functions.php";
 if(isset($_GET['super'])){
 $super = cleanUpUserInput($_GET['super']);
 
-$rubricQuery = $pdo ->prepare("SELECT rubric, [name] FROM TBL_Rubric where super =?");
+$rubricQuery = $pdo ->prepare("SELECT rubric, [name] FROM TBL_Rubric where super =? AND phased_out != 1");
 $rubricQuery -> execute(array($super));
 
 $rubrics = $rubricQuery->fetchAll();

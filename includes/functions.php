@@ -70,7 +70,7 @@ function loadRubrics()
 
     }
 
-    $subRubricQuery = $pdo->prepare("select * from TBL_Rubric where super = ?");
+    $subRubricQuery = $pdo->prepare("select * from TBL_Rubric where super = ? order by sort_number");
     $subRubricQuery->execute(array($rubric));
 
     while ($subRubric = $subRubricQuery->fetch()) {
@@ -253,23 +253,21 @@ function isPasswordGood($password)
 function register()
 {
     if (isset($_POST['make_account'])) {
+        global $pdo;
+        $email = cleanUpUserInput($_POST['email']);
+        $regPassword = cleanUpUserInput($_POST['reg_password']);
+        $confirm_password = cleanUpUserInput($_POST['confirm_password']);
+        $firstname = cleanUpUserInput($_POST['firstname']);
+        $lastname = cleanUpUserInput($_POST['lastname']);
+        $regUsername = cleanUpUserInput(strtolower($_POST['reg_username']));
+        $address = cleanUpUserInput($_POST['address']);
+        $telephone_number = cleanUpUserInput($_POST['telephone_number']);
+        $cookies = $_POST['cookies'];
 
+        $is_mobile = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
         if (empty($email) || empty($regPassword) || empty($firstname) || empty($lastname) || empty($regUsername)) {
             echo "<p style='color: red'>Alle velden moeten ingevuld zijn.</p><script>document.getElementById('openRegister').click()</script>";
         } else {
-
-            global $pdo;
-            $email = cleanUpUserInput($_POST['email']);
-            $regPassword = cleanUpUserInput($_POST['reg_password']);
-            $confirm_password = cleanUpUserInput($_POST['confirm_password']);
-            $firstname = cleanUpUserInput($_POST['firstname']);
-            $lastname = cleanUpUserInput($_POST['lastname']);
-            $regUsername = cleanUpUserInput(strtolower($_POST['reg_username']));
-            $address = cleanUpUserInput($_POST['address']);
-            $telephone_number = cleanUpUserInput($_POST['telephone_number']);
-            $cookies = $_POST['cookies'];
-
-            $is_mobile = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
 
             $regQuery = $pdo->prepare("Select * from TBL_User where email = ? OR [user] = ?");
             $regQuery->execute(array($email, $regUsername));
@@ -946,6 +944,11 @@ function updateRubrics()
                 $array[] = $rubric;
                 $editQuery = $pdo->prepare("UPDATE TBL_Rubric SET  $values WHERE rubric=?");
                 $editQuery->execute($array);
+//                if(!empty($_POST['editRubricSort_number']) ) {
+//                    $RubricSort_number= $_POST['editRubricSort_number'];
+//                    $editRubricsQuery = $pdo->prepare("Update TBL_Rubric SET sort_number = sort_number +1 WHERE sort_number > ?");
+//                    $editRubricsQuery->execute($RubricSort_number);
+//                }
             } else {
                 return "Voer een geldige waarde in";
             }

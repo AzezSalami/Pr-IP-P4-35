@@ -238,7 +238,7 @@ where (B.[user] is not null and U.is_blocked = 0) and auction = $auctionid order
                     <div class=\"bid mb-2\">
                         <h3>Bieden</h3>";
 
-        if ($auctiondata['is_closed'] == 2) {
+        if ($auctiondata['is_closed'] == !0) {
             echo '<p style="color:red">Deze veiling is gesloten, bieden is daarom niet mogelijk.</p>';
         } else if($isBlocked == "Geblokkeerd") {
             echo '<p style="color:red">Deze veiling is geblokkeerd, bieden is daarom niet mogelijk.</p>';
