@@ -309,7 +309,7 @@ logout();
                             </div>
                             <div class="row">
                                 <div class="col-lg mx-4 mt-0 mb-2">
-                                    <input type="checkbox" class="form-check-input " name="is_mobile">
+                                    <input type="checkbox" class="form-check-input " name="is_mobile" id="is_mobile">
                                     <label class="form-check-label text-dark" for="is_mobile"><i
                                                 class="fas fa-mobile-alt"></i> ?</label>
                                 </div>
@@ -326,7 +326,6 @@ logout();
                                 </div>
                                 <div class="col-lg">
                                     <div class="form-label-group">
-                                        <label class="invisible" for="confirm_password">bevestig wachtwoord</label>
                                         <input class="form-control" placeholder="bevestig wachtwoord" type="password"
                                                name="confirm_password"
                                                id="confirm_password"
@@ -337,7 +336,7 @@ logout();
                             </div>
                             <div class="row">
                                 <div class="col-lg mx-4 mt-0 mb-2">
-                                    <input type="checkbox" class="form-check-input " name="cookies">
+                                    <input type="checkbox" class="form-check-input " name="cookies" id="cookies">
                                     <label class="form-check-label text-dark" for="cookies">Ik ga akkoord met <a href="hulp.php"
                                         target="_blank">
                                             cookies</a></label>
@@ -372,7 +371,7 @@ logout();
 
                         <form class="form-signin" method="POST" name="reset">
                             <div class="row">
-                                <div class="col">
+                                <div class="col p-0">
                                     <p class="text-dark">Weet je het wachtwoord niet meer?
                                         Vul hieronder je e-mailadres in.
                                         We sturen dan binnen enkele minuten een e-mail waarmee een nieuw wachtwoord kan
@@ -389,7 +388,7 @@ logout();
                                     <label for="emailadres">Voer hier je email in</label>
                             </div>
                             <div class="row">
-                                <div class="col">
+                                <div class="col p-0">
                                     <input class="btn bg-lightblue" type="submit" name="pwdforgottensubmit"
                                            value="Verstuur">
                                 </div>
@@ -409,7 +408,7 @@ logout();
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title text-dark">reset verificatiecode</h4>
+                    <h4 class="modal-title text-dark">Nieuw verificatiecode?</h4>
                     <button id="" type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
@@ -417,7 +416,7 @@ logout();
                     <div class="container-fluid">
                         <form class="form-signin" method="POST" name="resendCode">
                             <div class="row">
-                                <div class="col">
+                                <div class="col p-0">
                                     <p class="text-dark">Weet je het wachtwoord niet meer?
                                         Vul hieronder je e-mailadres in.
                                         We sturen dan binnen enkele minuten een e-mail waarmee je accout kan
@@ -433,7 +432,7 @@ logout();
                                     <label for="resendCode_emailadres">Voer hier je email in</label>
                             </div>
                             <div class="row">
-                                <div class="col">
+                                <div class="col p-0">
                                     <input class="btn bg-lightblue" type="submit" name="resendCode"
                                            value="Verstuur">
                                 </div>

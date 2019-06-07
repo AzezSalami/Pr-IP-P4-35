@@ -61,7 +61,7 @@ function loadRubrics()
     //$rubric = 0;
     $rubric = (isset($_GET['rubric']) && (($rubric = cleanUpUserInput($_GET['rubric'])) != "") != 0 ? $rubric : $rubric = -1);
     if ($rubric != -1) {
-        $mainRubricQuery = $pdo->prepare("select * from TBL_Rubric where rubric = ?");
+        $mainRubricQuery = $pdo->prepare("select * from TBL_Rubric where rubric = ? ORDER BY sort_number");
         $mainRubricQuery->execute(array($rubric));
         $mainRubric = $mainRubricQuery->fetch()['super'];
         echo "<button
@@ -672,21 +672,21 @@ where (B.[user] is not null and U.is_blocked = 0) and auction = ?");
 
 function createAuction()
 {
-    if (isset($_POST['createAuction'])) {
-        // var_dump($_POST);
-        global $pdo;
-        $name = cleanUpUserInput($_POST['name']);
-        $description = cleanUpUserInput($_POST['description']);
-        $price_start = cleanUpUserInput($_POST['price_start']);
-        $shipping_instructions = (cleanUpUserInput($_POST['shipping_instructions']) == 'Verzenden' ? 'Verzenden' : 'Ophalen');
-        $shipping_cost = ($shipping_instructions == "Verzenden" && !empty(cleanUpUserInput($_POST['shipping_cost'])) ? cleanUpUserInput($_POST['shipping_cost']) : 0);
-        $durationOptions = array(1, 3, 5, 7, 10);
-        $duration = (in_array(cleanUpUserInput($_POST['duration']), $durationOptions) ? cleanUpUserInput($_POST['duration']) : 0);
-        $address = cleanUpUserInput($_POST['location']);
-        $seller = $_SESSION["username"];
-        $is_promoted = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
-        $rubric_post = cleanUpUserInput((isset($_POST['rubriek']) ? $_POST['rubriek'] : null));
-        echo $price_start;
+        if (isset($_POST['createAuction'])) {
+            // var_dump($_POST);
+            global $pdo;
+            $name = cleanUpUserInput($_POST['name']);
+            $description = cleanUpUserInput($_POST['description']);
+            $price_start = cleanUpUserInput($_POST['price_start']);
+            $shipping_instructions = (cleanUpUserInput($_POST['shipping_instructions']) == 'Verzenden' ? 'Verzenden' : 'Ophalen');
+            $shipping_cost = ($shipping_instructions == "Verzenden" && !empty(cleanUpUserInput($_POST['shipping_cost'])) ? cleanUpUserInput($_POST['shipping_cost']) : 0);
+            $durationOptions = array(1, 3, 5, 7, 10);
+            $duration = (in_array(cleanUpUserInput($_POST['duration']), $durationOptions) ? cleanUpUserInput($_POST['duration']) : 0);
+            $address = cleanUpUserInput($_POST['location']);
+            $seller = $_SESSION["username"];
+            $is_promoted = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
+            $rubric_post = cleanUpUserInput((isset($_POST['rubriek'])?$_POST['rubriek']:null));
+//            echo $price_start;
 
 //            if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
 //                echo "Geen geldig beeld";

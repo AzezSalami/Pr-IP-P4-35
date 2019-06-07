@@ -153,7 +153,7 @@ if (isset($_SESSION['username']) == 0) {
                                            aria-describedby="image">Kies bestand</label>
                                 </div>
                             </div>
-                            <img id=\'img-upload\'/>
+                            <img id="img-upload" alt="uw afbeelding"/>
                         </div>
                     </div>
                 </div>
