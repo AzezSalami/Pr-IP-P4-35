@@ -59,7 +59,7 @@ require "includes/header.php";
                                 </thead>
                                 <tbody>
                                 <?php
-                                $rubricQuery = $pdo->prepare("SELECT * FROM TBL_Rubric WHERE super=?");
+                                $rubricQuery = $pdo->prepare("SELECT * FROM TBL_Rubric WHERE super=? ORDER BY sort_number");
                                 $rubricQuery->execute(array($super));
                                 $rubrics = $rubricQuery->fetchAll();
                                 foreach ($rubrics as $result) {

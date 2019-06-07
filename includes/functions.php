@@ -61,7 +61,7 @@ function loadRubrics()
     //$rubric = 0;
     $rubric = (isset($_GET['rubric']) && (($rubric = cleanUpUserInput($_GET['rubric'])) != "") != 0 ? $rubric : $rubric = -1);
     if ($rubric != -1) {
-        $mainRubricQuery = $pdo->prepare("select * from TBL_Rubric where rubric = ?");
+        $mainRubricQuery = $pdo->prepare("select * from TBL_Rubric where rubric = ? ORDER BY sort_number");
         $mainRubricQuery->execute(array($rubric));
         $mainRubric = $mainRubricQuery->fetch()['super'];
         echo "<button
