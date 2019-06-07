@@ -888,7 +888,7 @@ function blockUser()
                 $usersql = $pdo->prepare("UPDATE TBL_User SET is_blocked = 1 WHERE [user] = ?");
                 $usersql->execute(array($username));
 
-                $auctionsql = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE [user] = ?");
+                $auctionsql = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE seller = ?");
                 $auctionsql->execute(array($username));
 
                 echo " Gebruiker $username is nu geblokkeerd.";
@@ -977,6 +977,20 @@ function checkIBAN($iban)
         return ((98 - $checksum) == $check);
     } else
         return false;
+}
+
+function blockAuction($auctionid) {
+
+    if (isset($_POST['blockAuction'])) {
+
+        global $pdo;
+
+        $blockAuctionQuery = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE auction = ?");
+        $blockAuctionQuery->execute(array($auctionid));
+        echo '<script>window.location.replace("index.php");</script>';
+
+    }
+
 }
 
 ?>
