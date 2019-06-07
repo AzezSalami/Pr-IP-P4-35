@@ -14,7 +14,7 @@ require "includes/header.php";
     <div class="row">
         <div class="col-lg-2">
         </div>
-        <div class="col-lg-8 admin-page pb-4 mb-4">
+        <div class="col-lg-8 admin-page pb-4">
             <div class="classic-tabs mt-2 mx-2">
                 <ul class="nav nav-tabs nav-justified" role="tablist">
                     <li class="nav-item">
@@ -136,12 +136,10 @@ require "includes/header.php";
                 <div class="tab-pane fade admin-tab text-center " id="follow-classic-shadow" role="tabpanel">
                     <form method="POST" name="block">
                         <div class="col-lg-10 input-group mx-auto mt-3">
-
-                            <label for="blockUsername"></label>
-                            <input type="text" class="form-control" placeholder="block user" name="blockUsername"
+                            <input type="text" class="form-control" placeholder="gebruikersnaam" name="blockUsername"
                                    id="blockUsername">
                             <div class="input-group-append">
-                                <input class="btn" type="submit" id="blockUser" name="blockUser" value="Block">
+                                <button class="btn" type="submit" id="blockUser" name="blockUser" value="Block">blokkeer</button>
                             </div>
                         </div>
                         <div class="text-danger"><?php blockUser() ?></div>
