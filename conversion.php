@@ -24,23 +24,23 @@
         ignore_user_abort(true);
         set_time_limit(0);
 
-        $pdo->exec("CREATE DATABASE Temp35");
-        $pdo->exec("use Temp35");
-
-        $pdo->exec(file_get_contents("SQL/CREATE Tables.sql"));
-        echo 'hi';
-        $pdo->exec(mb_convert_encoding(file_get_contents("SQL/CREATE Categorieen.sql"), "UTF-8", "Windows-1252"));
-
-        foreach (array_filter(glob('SQL/*'), 'is_dir') as $dir) {
-            echo "<br>dir: $dir</br>";
-
-            foreach (array_filter(glob($dir . "/*.sql"), 'is_file') as $file) {
-                if (strpos($file, 'CREATE Users.sql') === false) {
-                    echo "<br>file: $file</br>";
-                    $pdo->exec(file_get_contents($file));
-                }
-            }
-        }
+//        $pdo->exec("CREATE DATABASE Temp35");
+//        $pdo->exec("use Temp35");
+//
+//        $pdo->exec(file_get_contents("SQL/CREATE Tables.sql"));
+//        echo 'hi';
+//        $pdo->exec(mb_convert_encoding(file_get_contents("SQL/CREATE Categorieen.sql"), "UTF-8", "Windows-1252"));
+//
+//        foreach (array_filter(glob('SQL/*'), 'is_dir') as $dir) {
+//            echo "<br>dir: $dir</br>";
+//
+//            foreach (array_filter(glob($dir . "/*.sql"), 'is_file') as $file) {
+//                if (strpos($file, 'CREATE Users.sql') === false) {
+//                    echo "<br>file: $file</br>";
+//                    $pdo->exec(file_get_contents($file));
+//                }
+//            }
+//        }
 
         $rubricIDChanges = array();
         $parents = array();
@@ -141,7 +141,7 @@
                                 (isset($coords)?", geography::Point(" . $coords['lat'] . ", " . $coords['lng'] . ", 4326)":"") ."
                                 FROM Temp35.dbo.Items
                                 WHERE ID = " . $item['ID'] . "
-                                
+
                                 SET IDENTITY_INSERT groep35test3.dbo.TBL_Item OFF
                             ");
 
@@ -153,7 +153,7 @@
                                        " . $currentItemID . ",
                                        CASE WHEN (RAND(convert(varbinary, newid())) > 0.9) THEN 1 ELSE 0 END,
                                        '$username'
-                                
+
                                 FROM Temp35.dbo.Items
                                 WHERE ID = " . $item['ID']
                             );
@@ -203,6 +203,9 @@
             }
         }
 
+        var_dump($parents);
+        var_dump($rubricIDChanges);
+
         foreach ($parents as $rubric => $parent) {
             try {
                 $pdo->exec("
@@ -214,44 +217,27 @@
             }
         }
 
-        $pdo->exec("UPDATE groep35test3.dbo.TBL_Rubric SET verzendmethode = 'Ophalen', verzendkosten");
+        $pdo->exec("UPDATE groep35test3.dbo.TBL_Rubric SET shipping_cost = 'Ophalen', shipping_cost = 0");
 
 
-//        $images = $pdo->query("SELECT ItemID, IllustratieFile FROM Temp35.dbo.Illustraties order by ItemID DESC");
-
-
-//        while ($image = $images->fetch()) {
-//
 //            //To download all images to your pc:
+//        $images = $pdo->query("SELECT ItemID, IllustratieFile FROM Temp35.dbo.Illustraties order by ItemID DESC");
+//        while ($image = $images->fetch()) {
 ////            file_put_contents("images/databatch3/" . $image['IllustratieFile'], fopen("http://iproject35.icasites.nl/pics/". $image['IllustratieFile'], 'r'));
-//            //After downloading, put them in a folder on the same machine you'll be running the conversion script from.
-//
-//            if (preg_match('/^.*\.(jpg)$/i', $image['IllustratieFile'])) {
-//                echo "
-//                  INSERT INTO groep35test3.dbo.TBL_Resource (ITEM, [FILE], MEDIA_TYPE) VALUES (
-//                    " . $image['ItemID'] . ",
-//                    (SELECT * FROM OPENROWSET(BULK N'http://iproject35.icasites.nl/pics/" . $image['IllustratieFile'] . "', SINGLE_BLOB) as BLOB),
-//                    'image/jpg'
-//                )";
-//                $pdo->exec("
-//                  INSERT INTO groep35test3.dbo.TBL_Resource (ITEM, [FILE], MEDIA_TYPE) VALUES (
-//                    " . $image['ItemID'] . ",
-//                    (SELECT * FROM OPENROWSET(BULK N'http://iproject35.icasites.nl/pics/" . $image['IllustratieFile'] . "', SINGLE_BLOB) as BLOB),
-//                    'image/jpg'
-//                )");
-//            }
 //        }
+//            //After downloading, put them in a folder on the same machine you'll be running the conversion script from.
 
-//        $pdo->exec("use master DROP DATABASE Temp35");
+
+
     } catch (PDOException $e) {
         echo $e;
         echo "<br>Conversion took " . (microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"]) . " seconds";
     }
 
-    try {
-        $pdo->exec("use master DROP DATABASE Temp35");
-    } catch (PDOException $e) {
-        echo $e;
-    }
+//    try {
+//        $pdo->exec("use master DROP DATABASE Temp35");
+//    } catch (PDOException $e) {
+//        echo $e;
+//    }
     echo "<br>Conversion took " . (microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"]) . " seconds";
 ?>
