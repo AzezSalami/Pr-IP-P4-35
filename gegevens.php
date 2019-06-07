@@ -49,42 +49,7 @@ require "includes/header.php";
         <div class="col-lg-8 data-form mobile-spacing">
             <h1 class="text-dark">Mijn gegevens</h1>
             <?php
-            if (isset($_POST['deleteaccountsubmit'])) {
-                if ($_POST['removePassword'] == $_POST['remconfirm_password']) {
-                    $password = hash('sha1', $_POST['remconfirm_password']);
-
-                    $username = $_SESSION['username'];
-                    global $pdo;
-
-                    /* check if there is only one user with the username/password combination */
-
-                    $query = $pdo->prepare("select count(*) from TBL_User where [user] = ? and password = ?");
-                    $query->execute(array($username, $password));
-                    $userData = $query->fetch();
-
-                    if ($userData[0] == 1) {
-
-                        /* If the user has auctions the user will be set to "null", open auctions from the deleted user will be closed */
-
-                        $query = $pdo->prepare("update TBL_Bid set [user] = null where [user] = ?");
-                        $query->execute(array($username));
-                        $query = $pdo->prepare("update TBL_Auction set seller = null where seller = ?");
-                        $query->execute(array($username));
-                        $query = $pdo->prepare("delete from TBL_Seller where [user] = ?");
-                        $query->execute(array($username, $password));
-                        /* Delete row with information of the deleted user */
-
-                        $query = $pdo->prepare("delete from TBL_User where [user] = ? and password = ?");
-                        $query->execute(array($username, $password));
-                        session_destroy();
-                        echo "<script>window.location.replace('index.php');</script>";
-                    } else {
-                        echo '<p style="color: red">Je gebruikersnaam of wachtwoord zijn niet correct, probeer het alstublieft nog eens.</p>';
-                    }
-                } else {
-                    echo "Error";
-                }
-            }
+            deleteAccount();
             ?>
             <div class="row my-4">
                 <div class="col text-danger"><?php updateAccountData(); ?></div>

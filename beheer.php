@@ -76,14 +76,14 @@ require "includes/header.php";
                                 }
                                 ?>
                                 <tr>
-                                    <th scope="row" class="fit"></th>
+                                    <th scope="row"></th>
 
-                                    <td class="inputRubric">
+                                    <td  class="fit">
                                         <label for="editRubricSort_number"></label>
                                         <input type="number" name="editRubricSort_number" id="editRubricSort_number"
                                                placeholder="Positie rubriek">
                                     </td>
-                                    <td class="inputRubric">
+                                    <td  class="fit">
                                         <label for="editRubricName"></label>
                                         <input type="text" name="editRubricName" id="editRubricName"
                                                placeholder="Naam rubriek">
@@ -95,7 +95,7 @@ require "includes/header.php";
                                 <div class="col-lg admin-buttons text-center">
                                     <input type="submit" class="btn mb-1" value="Aanpassen" name="changeRubric">
                                     <input type="submit" class="btn mb-1" value="Uitfaseren" name="phaseOutRubric">
-                                    <input type="submit" class="btn mb-1" value="heractiveren" name="reactivateRubric">
+                                    <input type="submit" class="btn mb-1" value="Heractiveren" name="reactivateRubric">
                                 </div>
                             </div>
                             <table class="table table-bordered table-sm col-lg mt-3">
@@ -103,24 +103,21 @@ require "includes/header.php";
                                 <tr>
                                     <th scope="col" class="fit"></th>
                                     <th scope="col" class="fit">#</th>
-                                    <th scope="col">Rubrieknaam
-                                        <?php
-                                        echo "<a  href=\"beheer.php?rubrics=$up\"><i class=\"fas fa-arrow-up\"></i></a>"
-                                        ?>
-
-                                    </th>
+                                    <th scope="col">Rubrieknaam</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <div class="col ml-1 text-danger"><?php addRubrics(); ?></div>
                                 <tr>
-                                    <th scope="row" class="fit"></th>
+                                    <th scope="row"></th>
 
-                                    <td class="inputRubric">
-                                        <label for="addRubricNumber"></label>
-                                        <input type="number" name="addRubricNumber" id="addRubricNumber"
+                                    <td class="fit">
+                                        <label for="addRubricSort_number"></label>
+                                        <input type="number" name="addRubricSort_number" id="addRubricSort_number"
                                                placeholder="Positie rubriek">
                                     </td>
-                                    <td class="inputRubric">
+                                    <td
+                                            class="fit">
                                         <label for="addRubricName"></label>
                                         <input type="text" name="addRubricName" id="addRubricName"
                                                placeholder="Naam rubriek">
@@ -130,7 +127,7 @@ require "includes/header.php";
                             </table>
                             <div class="row pb-2 mb-2">
                                 <div class="col-lg admin-buttons text-center">
-                                    <input type="submit" class="btn mb-1" value="toevoeg" name="addRubric">
+                                    <input type="submit" class="btn mb-1" value="Toevoegen" name="addRubric">
                                 </div>
                             </div>
                         </div>

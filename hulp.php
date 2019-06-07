@@ -67,6 +67,10 @@ require "includes/header.php";
                                aria-selected="false">
                                 <i class="mdi mdi-account-settings"></i> Verkopen
                             </a>
+                            <a href="#tab5" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab5"
+                               aria-selected="false">
+                                <i class="mdi mdi-account-settings"></i> Cookies
+                            </a>
                         </div>
                     </div>
                     <div class="col-lg-8 pb-5 mb-3">
@@ -330,6 +334,31 @@ require "includes/header.php";
                                                     uploaden<br><br>
                                                     Wanneer je dit allemaal hebt ingegeven en je op de knop 'Maak
                                                     veiling aan' hebt geklikt wordt de veiling geplaatst.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab5" role="tabpanel" aria-labelledby="tab5">
+                                <div class="accordion" id="accordion-tab-5">
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-5-heading-1">
+                                            <h5>
+                                                <button class="btn btn-hulp" type="button" data-toggle="collapse"
+                                                        data-target="#accordion-tab-5-content-1" aria-expanded="false"
+                                                        aria-controls="accordion-tab-5-content-1">Wat zijn cookies?
+                                                </button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse show" id="accordion-tab-5-content-1"
+                                             aria-labelledby="accordion-tab-5-heading-1" data-parent="#accordion-tab-5">
+                                            <div class="card-body">
+                                                <p>De site gebruikt functionele en analytische cookies. Geen marketing
+                                                    of targeting cookies. Om die reden is de zgn. cookie-melding niet
+                                                    nodig.<br>
+                                                    De site verzamelt geen herleidbare gegevens die tot u als
+                                                    persoon terug te voeren zijn.
                                                 </p>
                                             </div>
                                         </div>
