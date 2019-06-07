@@ -35,6 +35,7 @@ require "includes/header.php";
                              role="tabpanel">
                             <table class="table table-bordered table-sm col-lg mt-3">
                                 <?php
+                                $rubricErr = addRubrics();
                                 echo  "<div class='col ml-1 text-danger'>" . updateRubrics()."</div>";
                                 $super = isset($_GET['rubrics']) ? $_GET['rubrics'] : -1;
 
@@ -95,7 +96,7 @@ require "includes/header.php";
                                 <div class="col-lg admin-buttons text-center">
                                     <input type="submit" class="btn mb-1" value="Aanpassen" name="changeRubric">
                                     <input type="submit" class="btn mb-1" value="Uitfaseren" name="phaseOutRubric">
-                                    <input type="submit" class="btn mb-1" value="heractiveren" name="reactivateRubric">
+                                    <input type="submit" class="btn mb-1" value="Heractiveren" name="reactivateRubric">
                                 </div>
                             </div>
                             <table class="table table-bordered table-sm col-lg mt-3">
@@ -103,21 +104,17 @@ require "includes/header.php";
                                 <tr>
                                     <th scope="col" class="fit"></th>
                                     <th scope="col" class="fit">#</th>
-                                    <th scope="col">Rubrieknaam
-                                        <?php
-                                        echo "<a  href=\"beheer.php?rubrics=$up\"><i class=\"fas fa-arrow-up\"></i></a>"
-                                        ?>
-
-                                    </th>
+                                    <th scope="col">Rubrieknaam</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <div class="col ml-1 text-danger"><?php $rubricErr ?></div>
                                 <tr>
                                     <th scope="row"></th>
 
                                     <td class="fit">
-                                        <label for="addRubricNumber"></label>
-                                        <input type="number" name="addRubricNumber" id="addRubricNumber"
+                                        <label for="addRubricSort_number"></label>
+                                        <input type="number" name="addRubricSort_number" id="addRubricSort_number"
                                                placeholder="Positie rubriek">
                                     </td>
                                     <td
@@ -131,7 +128,7 @@ require "includes/header.php";
                             </table>
                             <div class="row pb-2 mb-2">
                                 <div class="col-lg admin-buttons text-center">
-                                    <input type="submit" class="btn mb-1" value="toevoeg" name="addRubric">
+                                    <input type="submit" class="btn mb-1" value="Toevoegen" name="addRubric">
                                 </div>
                             </div>
                         </div>
