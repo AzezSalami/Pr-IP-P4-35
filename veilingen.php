@@ -66,6 +66,8 @@
 											<div class=\"col p-0\">
 											<input class=\"bg-gray text-center input-details-mobile\" type=\"number\"
 											       id=\"distance-max\"
+											       placeholder=\"max\" " .
+                                            ((isset($_GET['maxDistance']) && ($maxDistance = cleanUpUserInput($_GET['maxDistance'])) != "" && is_numeric($maxDistance) && ((float)$maxDistance) >= 0)?" value='$maxDistance'":"") . ">
 											       placeholder=\"max\"" .
                                     ((isset($_GET['maxDistance']) && ($maxDistance = cleanUpUserInput($_GET['maxDistance'])) != "" && is_numeric($maxDistance) && ((float)$maxDistance) >= 0) ? " value='$maxDistance'" : "") . ">
 										</div>

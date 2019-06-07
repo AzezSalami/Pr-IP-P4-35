@@ -41,7 +41,8 @@ function connectToDatabase()
     }
 }
 
-function loadPlaces(){
+function loadPlaces()
+{
     require 'vendor/autoload.php';
     global $places;
     $places = Algolia\AlgoliaSearch\PlacesClient::create(
@@ -99,7 +100,7 @@ function search($amount = 0, $promoted_only = false)
                         INNER JOIN subRubrics S ON
                             S.rubric = R.super
                     )";
-            $filters[]=$rubric;
+            $filters[] = $rubric;
         }
         $query .= "SELECT A.auction, name, description, price_start, amount, [file] FROM TBL_Auction A
                 INNER JOIN TBL_Item I
@@ -112,22 +113,22 @@ function search($amount = 0, $promoted_only = false)
             $query .= "I.item in (SELECT item from TBL_Item_In_Rubric WHERE rubric in (
                     SELECT rubric
                     FROM subRubrics) OR rubric = ? ) AND ";
-            $filters[]=$rubric;
+            $filters[] = $rubric;
         }
         if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice) && ((float)$minPrice) >= 0) {
             $query .= "(amount > ? OR price_start > ?) AND ";
-            $filters[]=$minPrice;
-            $filters[]=$minPrice;
+            $filters[] = $minPrice;
+            $filters[] = $minPrice;
         }
         if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice) && ((float)$maxPrice) >= 0) {
             $query .= "((amount < ? OR amount is null) AND price_start < ?) AND ";
-            $filters[]=$maxPrice;
-            $filters[]=$maxPrice;
+            $filters[] = $maxPrice;
+            $filters[] = $maxPrice;
         }
         if (isset($_SESSION['username']) && isset($_GET['maxDistance']) && ($maxDistance = cleanUpUserInput($_GET['maxDistance'])) != "" && is_numeric($maxDistance) && ((float)$maxDistance) >= 0) {
             $maxDistance *= 1000;
             $query .= "? >= geolocation.STDistance((select geolocation from TBL_User where [user] = '" . $_SESSION['username'] . "')) AND ";
-            $filters[]=$maxDistance;
+            $filters[] = $maxDistance;
         }
         $query .= ($promoted_only ? "is_promoted = 1 AND " : "");
 
@@ -252,68 +253,69 @@ function isPasswordGood($password)
 function register()
 {
     if (isset($_POST['make_account'])) {
-        global $pdo;
-        $email = cleanUpUserInput($_POST['email']);
-        $regPassword = cleanUpUserInput($_POST['reg_password']);
-        $confirm_password = cleanUpUserInput($_POST['confirm_password']);
-        $firstname = cleanUpUserInput($_POST['firstname']);
-        $lastname = cleanUpUserInput($_POST['lastname']);
-        $regUsername = cleanUpUserInput(strtolower($_POST['reg_username']));
-        $address = cleanUpUserInput($_POST['address']);
-        $telephone_number = cleanUpUserInput($_POST['telephone_number']);
-
-        $is_mobile = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
 
         if (empty($email) || empty($regPassword) || empty($firstname) || empty($lastname) || empty($regUsername)) {
-            echo "Velden met een * zijn verplicht";
-        }
+            echo "<p style='color: red'>Alle velden moeten ingevuld zijn.</p><script>document.getElementById('openRegister').click()</script>";
+        } else {
 
+            global $pdo;
+            $email = cleanUpUserInput($_POST['email']);
+            $regPassword = cleanUpUserInput($_POST['reg_password']);
+            $confirm_password = cleanUpUserInput($_POST['confirm_password']);
+            $firstname = cleanUpUserInput($_POST['firstname']);
+            $lastname = cleanUpUserInput($_POST['lastname']);
+            $regUsername = cleanUpUserInput(strtolower($_POST['reg_username']));
+            $address = cleanUpUserInput($_POST['address']);
+            $telephone_number = cleanUpUserInput($_POST['telephone_number']);
+            $cookies = $_POST['cookies'];
 
-        $regQuery = $pdo->prepare("Select * from TBL_User where email = ? OR [user] = ?");
-        $regQuery->execute(array($email, $regUsername));
-        $canRegister = true;
-        while ($row = $regQuery->fetch()) {
-            if ($row['email'] == $email) {
-                echo 'Dit e-mail adres is al in gebruik<br>';
-                echo "<script>document.getElementById('openRegister').click();</script>";
+            $is_mobile = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
+
+            $regQuery = $pdo->prepare("Select * from TBL_User where email = ? OR [user] = ?");
+            $regQuery->execute(array($email, $regUsername));
+            $canRegister = true;
+            while ($row = $regQuery->fetch()) {
+                if ($row['email'] == $email) {
+                    echo 'Dit e-mail adres is al in gebruik<br>';
+                    echo "<script>document.getElementById('openRegister').click();</script>";
+                    $canRegister = false;
+                }
+                if ($row['user'] == $regUsername) {
+                    echo '<span class="font-weight-bold">De gebruikersnaam:</span> ' . $regUsername . ' is al in gebruik, probeer een andere<br>';
+                    echo "<script>document.getElementById('openRegister').click();</script>";
+                    $canRegister = false;
+                }
+            }
+            if (!isPasswordGood($regPassword)) {
                 $canRegister = false;
             }
-            if ($row['user'] == $regUsername) {
-                echo '<span class="font-weight-bold">De gebruikersnaam:</span> ' . $regUsername . ' is al in gebruik, probeer een andere<br>';
-                echo "<script>document.getElementById('openRegister').click();</script>";
+
+            if (strlen($telephone_number) < 10 || !preg_match("/(([\+]\d{2})|(0{2}\d{2})|(0)){1}\d{9}/", $telephone_number)) {
+                echo "Een telefoonnummer moet uit minimaal 10 cijfers bestaan<br>";
                 $canRegister = false;
             }
-        }
-        if (!isPasswordGood($regPassword)) {
-            $canRegister = false;
-        }
 
-        if (strlen($telephone_number) < 10 || !preg_match("/(([\+]\d{2})|(0{2}\d{2})|(0)){1}\d{9}/", $telephone_number)) {
-            echo "Een telefoonnummer moet uit minimaal 10 cijfers bestaan<br>";
-            $canRegister = false;
-        }
+            if ($canRegister) {
+                if ($confirm_password != $regPassword) {
+                    echo 'Zorg dat beide wachtwoorden hetzelfde zijn';
+                } else {
+                    $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
+                    $token = str_shuffle($token);
+                    $token = substr($token, 0, 10);
+                    loadPlaces();
+                    global $places;
+                    $result = $places->search($address);
+                    $coords = $result['hits'][0]['_geoloc'];
 
-        if ($canRegister) {
-            if ($confirm_password != $regPassword) {
-                echo 'Zorg dat beide wachtwoorden hetzelfde zijn';
-            } else {
-                $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
-                $token = str_shuffle($token);
-                $token = substr($token, 0, 10);
-                loadPlaces();
-                global $places;
-                $result = $places->search($address);
-                $coords = $result['hits'][0]['_geoloc'];
+                    $sql = "INSERT INTO TBL_User ([user],firstname,lastname,address_line_1,email,password ,verification_code, verification_code_valid_until, geolocation) values (?,?,?,?,?,?,?, GETDATE() + DAY(7), geography::Point(?, ?, 4326))";
+                    $query = $pdo->prepare($sql);
+                    $query->execute(array($regUsername, $firstname, $lastname, $address, $email, hash('sha1', $regPassword), $token, $coords['lat'], $coords['lng']));
+                    $phoneQuery = $pdo->prepare(" INSERT INTO TBL_Phone ([user],phone_number,is_mobile) values (?,?,?)");
 
-                $sql = "INSERT INTO TBL_User ([user],firstname,lastname,address_line_1,email,password ,verification_code, verification_code_valid_until, geolocation) values (?,?,?,?,?,?,?, GETDATE() + DAY(7), geography::Point(?, ?, 4326))";
-                $query = $pdo->prepare($sql);
-                $query->execute(array($regUsername, $firstname, $lastname, $address, $email, hash('sha1', $regPassword), $token, $coords['lat'], $coords['lng']));
-                $phoneQuery = $pdo->prepare(" INSERT INTO TBL_Phone ([user],phone_number,is_mobile) values (?,?,?)");
+                    $phoneQuery->execute(array($regUsername, $telephone_number, ($is_mobile ? 1 : 0)));
 
-                $phoneQuery->execute(array($regUsername, $telephone_number, ($is_mobile ? 1 : 0)));
-
-                $subject = "Verifieer je e-mail!";
-                $text = "
+                    $subject = "Verifieer je e-mail!";
+                    $text = "
                     Beste heer of mevrouw $lastname,<br><br>
                     
                     Klik op de link hieronder om je registratie te voltooien.<br>
@@ -328,11 +330,12 @@ function register()
                     
                     Het team van Eenmaal Andermaal
                 ";
-                sendEmail($email, $regUsername, $subject, $text);
-                echo "<p style=\"color: green;\">Er is een bevestigingsmail naar $email verstuurd,<br>klik op de bevestigingslink in de email om je registratie te voltooien .</p>";
+                    sendEmail($email, $regUsername, $subject, $text);
+                    echo "<p style=\"color: green;\">Er is een bevestigingsmail naar $email verstuurd,<br>klik op de bevestigingslink in de email om je registratie te voltooien .</p>";
+                }
             }
+            echo "<script>document.getElementById('openRegister').click();</script>";
         }
-        echo "<script>document.getElementById('openRegister').click();</script>";
     }
 }
 
@@ -654,7 +657,7 @@ function placeNewBid($auctionid, $newPrice, $username)
             if (((int)$newPrice - (int)$sameBids['amount']) == $buttonvalue || (int)$newPrice - (int)$sameBids['amount'] == $buttonvalue * 2 || (int)$newPrice - (int)$sameBids['amount'] == $buttonvalue * 3) {
                 $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
                 $query->execute(array($auctionid, $newPrice, $username));
-            }else{
+            } else {
             }
         }
 
@@ -665,68 +668,68 @@ function placeNewBid($auctionid, $newPrice, $username)
 
 function createAuction()
 {
-        if (isset($_POST['createAuction'])) {
-            // var_dump($_POST);
-            global $pdo;
-            $name = cleanUpUserInput($_POST['name']);
-            $description = cleanUpUserInput($_POST['description']);
-            $price_start = cleanUpUserInput($_POST['price_start']);
-            $shipping_instructions = (cleanUpUserInput($_POST['shipping_instructions']) == 'Verzenden' ? 'Verzenden' : 'Ophalen');
-            $shipping_cost = ($shipping_instructions == "Verzenden" && !empty(cleanUpUserInput($_POST['shipping_cost'])) ? cleanUpUserInput($_POST['shipping_cost']) : 0);
-            $durationOptions = array(1, 3, 5, 7, 10);
-            $duration = (in_array(cleanUpUserInput($_POST['duration']), $durationOptions) ? cleanUpUserInput($_POST['duration']) : 0);
-            $address = cleanUpUserInput($_POST['location']);
-            $seller = $_SESSION["username"];
-            $is_promoted = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
-            $rubric_post = cleanUpUserInput((isset($_POST['rubriek'])?$_POST['rubriek']:null));
-            echo $price_start;
+    if (isset($_POST['createAuction'])) {
+        // var_dump($_POST);
+        global $pdo;
+        $name = cleanUpUserInput($_POST['name']);
+        $description = cleanUpUserInput($_POST['description']);
+        $price_start = cleanUpUserInput($_POST['price_start']);
+        $shipping_instructions = (cleanUpUserInput($_POST['shipping_instructions']) == 'Verzenden' ? 'Verzenden' : 'Ophalen');
+        $shipping_cost = ($shipping_instructions == "Verzenden" && !empty(cleanUpUserInput($_POST['shipping_cost'])) ? cleanUpUserInput($_POST['shipping_cost']) : 0);
+        $durationOptions = array(1, 3, 5, 7, 10);
+        $duration = (in_array(cleanUpUserInput($_POST['duration']), $durationOptions) ? cleanUpUserInput($_POST['duration']) : 0);
+        $address = cleanUpUserInput($_POST['location']);
+        $seller = $_SESSION["username"];
+        $is_promoted = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
+        $rubric_post = cleanUpUserInput((isset($_POST['rubriek']) ? $_POST['rubriek'] : null));
+        echo $price_start;
 
 //            if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
 //                echo "Geen geldig beeld";
 //            } else {
 //                $media_type = getimagesize($_FILES['image']["tmp_name"])["mime"];
-                if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address) || empty($rubric_post)) {
-                    return "Alle velden zijn verplicht";
-                } else {
+        if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address) || empty($rubric_post)) {
+            return "Alle velden zijn verplicht";
+        } else {
 
-                    if (is_array($rubric_post)) {
-                        $rubric = end($rubric_post);
-                    } else {
-                        $rubric = $rubric_post;
-                    }
-                    try {
-                        loadPlaces();
-                        global $places;
-                        $result = $places->search($address);
-                        $coords = $result['hits'][0]['_geoloc'];
-                        $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1, geolocation) VALUES(?,?,?,?,?,?,geography::Point(" . $coords['lat'] . ", " . $coords['lng'] . ", 4326))");
-                        $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
-                    } catch (PDOException $e) {
-                        echo $e;
-                    }
-                    $item = "";
-                    try {
-                        $item=$pdo->lastInsertId();
-                    } catch (PDOException $e) {
-                        echo $e;
-                    }
-                    try {
-                        $rubricquery = $pdo->prepare("INSERT INTO TBL_Item_In_Rubric( item ,rubric) VALUES(?,?)");
-                        $rubricquery->execute(array($item, $rubric));
-                    } catch (PDOException $e) {
-                        echo $e;
-                    }
-                    try {
-                        $auctionquery = $pdo->prepare("INSERT INTO TBL_Auction( seller, item ,moment_end , is_promoted) VALUES(:seller,:item,GETDATE() + DAY(:duration), :is_promoted)");
-                        $duration = (int)$duration;
-                        $auctionquery->bindParam(':duration', $duration, PDO::PARAM_INT);
-                        $auctionquery->bindParam(':seller', $seller, PDO::PARAM_STR);
-                        $auctionquery->bindParam(':item', $item, PDO::PARAM_INT);
-                        $auctionquery->bindParam(':is_promoted', $is_promoted, PDO::PARAM_BOOL);
-                        $auctionquery->execute();
-                    } catch (PDOException $e) {
-                        echo $e;
-                    }
+            if (is_array($rubric_post)) {
+                $rubric = end($rubric_post);
+            } else {
+                $rubric = $rubric_post;
+            }
+            try {
+                loadPlaces();
+                global $places;
+                $result = $places->search($address);
+                $coords = $result['hits'][0]['_geoloc'];
+                $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1, geolocation) VALUES(?,?,?,?,?,?,geography::Point(" . $coords['lat'] . ", " . $coords['lng'] . ", 4326))");
+                $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
+            } catch (PDOException $e) {
+                echo $e;
+            }
+            $item = "";
+            try {
+                $item = $pdo->lastInsertId();
+            } catch (PDOException $e) {
+                echo $e;
+            }
+            try {
+                $rubricquery = $pdo->prepare("INSERT INTO TBL_Item_In_Rubric( item ,rubric) VALUES(?,?)");
+                $rubricquery->execute(array($item, $rubric));
+            } catch (PDOException $e) {
+                echo $e;
+            }
+            try {
+                $auctionquery = $pdo->prepare("INSERT INTO TBL_Auction( seller, item ,moment_end , is_promoted) VALUES(:seller,:item,GETDATE() + DAY(:duration), :is_promoted)");
+                $duration = (int)$duration;
+                $auctionquery->bindParam(':duration', $duration, PDO::PARAM_INT);
+                $auctionquery->bindParam(':seller', $seller, PDO::PARAM_STR);
+                $auctionquery->bindParam(':item', $item, PDO::PARAM_INT);
+                $auctionquery->bindParam(':is_promoted', $is_promoted, PDO::PARAM_BOOL);
+                $auctionquery->execute();
+            } catch (PDOException $e) {
+                echo $e;
+            }
 //                    try {
 //                        $img = addslashes(file_get_contents($_FILES['image']["tmp_name"]));
 //                        //echo "<br>" . ;
@@ -752,12 +755,12 @@ function createAuction()
 //                    } catch (PDOException $e) {
 //                        echo $e;
 //                    }
-                    global $auctionCreated;
-                    $auctionCreated = true;
-                    return "<p style=\"color: green;\"> De veiling is succesvol aangemaakt</P>";
+            global $auctionCreated;
+            $auctionCreated = true;
+            return "<p style=\"color: green;\"> De veiling is succesvol aangemaakt</P>";
 //                }
-            }
         }
+    }
 }
 
 function deleteNotActiveAccount()
@@ -774,20 +777,25 @@ function sendSellerVerification($username)
 
     if (isset($_POST['sendVerification'])) {
 
-        global $pdo;
-
         $bankNumber = $_POST['bankNumber'];
 
-        $newSellerQuery = $pdo->prepare('INSERT INTO TBL_Seller ([user], bank_account, verification_status) VALUES (?, ?, 0)');
-        $newSellerQuery->execute(array($username, $bankNumber));
+        if (checkIBAN($bankNumber)) {
 
-        $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
-        $token = str_shuffle($token);
-        $token = substr($token, 0, 10);
+            global $pdo;
 
-        $verificationQuery = $pdo->prepare('UPDATE TBL_Seller SET verification_code = ?,
+            $newSellerQuery = $pdo->prepare('INSERT INTO TBL_Seller ([user], bank_account, verification_status) VALUES (?, ?, 0)');
+            $newSellerQuery->execute(array($username, $bankNumber));
+
+            $token = 'qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM0123456789!$()*';
+            $token = str_shuffle($token);
+            $token = substr($token, 0, 10);
+
+            $verificationQuery = $pdo->prepare('UPDATE TBL_Seller SET verification_code = ?,
 verification_code_valid_until = GETDATE() + MONTH(1) WHERE [user] = ?');
-        $verificationQuery->execute(array($token, $username));
+            $verificationQuery->execute(array($token, $username));
+        } else {
+            return '<p style="color: red">Ongeldige IBAN ingevoerd.</p>';
+        }
     }
 }
 
@@ -874,13 +882,13 @@ function blockUser()
             $username = cleanUpUserInput($_POST['blockUsername']);
             $sql = $pdo->prepare("SELECT [user] FROM TBL_User WHERE [user] = ?");
             $sql->execute(array($username));
-            $result = $sql ->fetch();
+            $result = $sql->fetch();
 
-            if($result['user'] == $username){
+            if ($result['user'] == $username) {
                 $sql = $pdo->prepare("UPDATE TBL_User SET is_blocked = 1 WHERE [user] = ?");
                 $sql->execute(array($username));
                 echo " Gebruiker $username is nu geblokkeerd.";
-            }else{
+            } else {
                 echo " Gebruiker $username bestaat niet.";
             }
         } else {
@@ -890,8 +898,39 @@ function blockUser()
     }
 }
 
-function updateRubrics(){
-    
+function updateRubrics()
+{
+
+}
+
+function checkIBAN($iban)
+{
+// credit: http://monshouwer.org/code-snipets/check-iban-bank-account-number-in-php/
+    // Normalize input (remove spaces and make upcase)
+    $iban = strtoupper(str_replace(' ', '', $iban));
+
+    if (preg_match('/^[A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}$/', $iban)) {
+        $country = substr($iban, 0, 2);
+        $check = intval(substr($iban, 2, 2));
+        $account = substr($iban, 4);
+
+        // To numeric representation
+        $search = range('A', 'Z');
+        foreach (range(10, 35) as $tmp)
+            $replace[] = strval($tmp);
+        $numstr = str_replace($search, $replace, $account . $country . '00');
+
+        // Calculate checksum
+        $checksum = intval(substr($numstr, 0, 1));
+        for ($pos = 1; $pos < strlen($numstr); $pos++) {
+            $checksum *= 10;
+            $checksum += intval(substr($numstr, $pos, 1));
+            $checksum %= 97;
+        }
+
+        return ((98 - $checksum) == $check);
+    } else
+        return false;
 }
 
 ?>
