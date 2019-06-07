@@ -80,10 +80,15 @@
         margin-top: 5px;
         border-radius: 0 5px 5px 0;
     }
+    
 }
 
 /* RUBRIEKEN DESKTOP */
-
+@media only screen and (max-device-width: 991px) {
+    .rubrics-title{
+        display: none;
+    }
+}
 
 /* range filter */
 

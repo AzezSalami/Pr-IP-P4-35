@@ -27,12 +27,15 @@
                     <div class="desktoprubrics bg-yellow p-4">
                         <div class="container">
                             <div class="row">
-                                <p class="text-white font-weight-bold">Prijs:</p>
+                                <div class="col text-white  p-0">
+                                    <h1 class="rubrics-title font-weight-bold">Filters</h1>
+                                    <p>Prijs:</p>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-5 p-0 text-center">
                                     <input onchange="this.value = parseFloat(this.value).toFixed(2);"
-                                           class="bg-gray text-center input-details" type="number"
+                                           class="bg-gray text-center input-details form-control" type="number"
                                            id="amount-min"
                                            placeholder="min"
                                         <?php
@@ -42,12 +45,12 @@
                                         ?>
                                     >
                                 </div>
-                                <div class="col-2 px-0 text-center">
+                                <div class="col-2 px-0 mt-2 text-center">
                                     <p class="text-white font-weight-bold">-</p>
                                 </div>
                                 <div class="col-5 p-0 text-center">
                                     <input onchange="this.value = parseFloat(this.value).toFixed(2);"
-                                           class="bg-gray text-center input-details" type="number"
+                                           class="bg-gray text-center input-details form-control" type="number"
                                            id="amount-max"
                                            placeholder="max" <?php
                                     if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice) && ((float)$maxPrice) >= 0) {
@@ -56,21 +59,25 @@
                                     ?>>
                                 </div>
                             </div>
+                            <br>
                             <?php if (isset($_SESSION['username'])) {
                                 echo "<div class=\"row\">
 										<div class=\"col-11 p-0\">
-											<p class=\"text-white text-left font-weight-bold\">Maximale afstand in kilometers:</p>
+											<p class=\"text-white text-left\">Maximale afstand in kilometers:</p>
 											</div>
 											</div>
 											<div class=\"row\">
 											<div class=\"col p-0\">
-											<input class=\"bg-gray text-center input-details-mobile\" type=\"number\"
+											    <div class=\"input-group mb-3\">
+											    <input class=\"bg-gray text-center input-details-mobile form-control\" type=\"number\"
 											       id=\"distance-max\"
 											       placeholder=\"max\" " .
-                                            ((isset($_GET['maxDistance']) && ($maxDistance = cleanUpUserInput($_GET['maxDistance'])) != "" && is_numeric($maxDistance) && ((float)$maxDistance) >= 0)?" value='$maxDistance'":"") . ">
-											       placeholder=\"max\"" .
                                     ((isset($_GET['maxDistance']) && ($maxDistance = cleanUpUserInput($_GET['maxDistance'])) != "" && is_numeric($maxDistance) && ((float)$maxDistance) >= 0) ? " value='$maxDistance'" : "") . ">
-										</div>
+                                                  <div class=\"input-group-append\">
+                                                    <span class=\"input-group-text\">km</span>
+                                                  </div>
+                                                </div>
+											</div>
 									</div>
 									";
                             } ?>
