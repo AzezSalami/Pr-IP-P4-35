@@ -888,7 +888,7 @@ function blockUser()
                 $usersql = $pdo->prepare("UPDATE TBL_User SET is_blocked = 1 WHERE [user] = ?");
                 $usersql->execute(array($username));
 
-                $auctionsql = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE [user] = ?");
+                $auctionsql = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE seller = ?");
                 $auctionsql->execute(array($username));
 
                 echo " Gebruiker $username is nu geblokkeerd.";
