@@ -114,12 +114,14 @@
 
                             global $places;
                             $result = $places->search($item['adresregel_1']);
-                            $coords = $result['hits'][0]['_geoloc'];
-
+                            if(isset($result['hits'][0]['_geoloc'])) {
+                                $coords = $result['hits'][0]['_geoloc'];
+                            }
                             $currentItemID = $pdo->query("SELECT TOP(1) item FROM groep35test3.dbo.TBL_Item ORDER BY item DESC")->fetch()['item'] + 1;
                             $pdo->exec("
                                 SET IDENTITY_INSERT groep35test3.dbo.TBL_Item ON
-                                INSERT INTO groep35test3.dbo.TBL_Item (item, name, description, price_start, address_line_1, geolocation)
+                                INSERT INTO groep35test3.dbo.TBL_Item (item, name, description, price_start, address_line_1" .
+                                (isset($coords)?",geolocation":"") .")
                                 SELECT CAST(" . $currentItemID . " AS BIGINT),
                                        CAST(Titel AS VARCHAR(100)),
                                        CAST('" . strip_tags(preg_replace('/<style\b[^>]*>(.*?)/i', "",
@@ -135,8 +137,8 @@
                                             WHEN (Valuta = 'USD') THEN CONVERT(NUMERIC(9, 2), CONVERT(NUMERIC(9,2),Prijs) * 1.15)
                                            WHEN (Valuta = 'GBP') THEN CONVERT(NUMERIC(9, 2), CONVERT(NUMERIC(9,2),Prijs) * 0.89)
                                            END,
-                                       CAST(Postcode + ' ' + Locatie AS VARCHAR(100)),
-                                       geography::Point(" . $coords['lat'] . ", " . $coords['lng'] . ", 4326)
+                                       CAST(Postcode + ' ' + Locatie AS VARCHAR(100))" .
+                                (isset($coords)?", geography::Point(" . $coords['lat'] . ", " . $coords['lng'] . ", 4326)":"") ."
                                 FROM Temp35.dbo.Items
                                 WHERE ID = " . $item['ID'] . "
                                 
@@ -212,7 +214,11 @@
             }
         }
 
-        $images = $pdo->query("SELECT ItemID, IllustratieFile FROM Temp35.dbo.Illustraties order by ItemID DESC");
+        $pdo->exec("UPDATE groep35test3.dbo.TBL_Rubric SET verzendmethode = 'Ophalen', verzendkosten");
+
+
+//        $images = $pdo->query("SELECT ItemID, IllustratieFile FROM Temp35.dbo.Illustraties order by ItemID DESC");
+
 
 //        while ($image = $images->fetch()) {
 //

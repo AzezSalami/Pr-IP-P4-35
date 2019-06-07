@@ -21,9 +21,9 @@ function cleanUpUserInput($input)
 function connectToDatabase()
 {
     $hostname = "51.38.112.111";
-    $databasename = "groep35test2";
-    $username = "iproject35";
-    $password = "iProject35";
+    $databasename = "groep35test3";
+    $username = "sa";
+    $password = "Hoi123!!";
     global $pdo;
 
     try {
@@ -85,19 +85,21 @@ function search($amount = 0, $promoted_only = false)
 
     try {
         $query = "";
+        $filters = array();
         if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
             $query .= "
                     WITH subRubrics AS
                     (
                         SELECT rubric, name, super, sort_number
                         FROM TBL_Rubric
-                        WHERE super = " . $rubric . "
+                        WHERE super = ?
                         UNION ALL
                         SELECT R.rubric, R.name, R.super, R.sort_number
                         FROM TBL_Rubric R
                         INNER JOIN subRubrics S ON
                             S.rubric = R.super
                     )";
+            $filters[]=$rubric;
         }
         $query .= "SELECT A.auction, name, description, price_start, amount, [file] FROM TBL_Auction A
                 INNER JOIN TBL_Item I
@@ -109,22 +111,27 @@ function search($amount = 0, $promoted_only = false)
         if (isset($_GET['rubric']) && ($rubric = cleanUpUserInput($_GET['rubric'])) != "") {
             $query .= "I.item in (SELECT item from TBL_Item_In_Rubric WHERE rubric in (
                     SELECT rubric
-                    FROM subRubrics) OR rubric = " . $rubric . ") AND ";
+                    FROM subRubrics) OR rubric = ? ) AND ";
+            $filters[]=$rubric;
         }
         if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice) && ((float)$minPrice) >= 0) {
-            $query .= "(amount > $minPrice OR price_start > $minPrice) AND ";
+            $query .= "(amount > ? OR price_start > ?) AND ";
+            $filters[]=$minPrice;
+            $filters[]=$minPrice;
         }
         if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice) && ((float)$maxPrice) >= 0) {
-            $query .= "((amount < $maxPrice OR amount is null) AND price_start < $maxPrice) AND ";
+            $query .= "((amount < ? OR amount is null) AND price_start < ?) AND ";
+            $filters[]=$maxPrice;
+            $filters[]=$maxPrice;
         }
         if (isset($_SESSION['username']) && isset($_GET['maxDistance']) && ($maxDistance = cleanUpUserInput($_GET['maxDistance'])) != "" && is_numeric($maxDistance) && ((float)$maxDistance) >= 0) {
             $maxDistance *= 1000;
-            $query .= "$maxDistance >= geolocation.STDistance((select geolocation from TBL_User where [user] = '" . $_SESSION['username'] . "')) AND ";
+            $query .= "? >= geolocation.STDistance((select geolocation from TBL_User where [user] = '" . $_SESSION['username'] . "')) AND ";
+            $filters[]=$maxDistance;
         }
         $query .= ($promoted_only ? "is_promoted = 1 AND " : "");
 
         $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));
-        $filters = array();
 
         foreach ($searchArray as $key => $word) {
             $query .= "CONCAT(name, ' ', description) LIKE ?";
@@ -134,7 +141,7 @@ function search($amount = 0, $promoted_only = false)
             $filters[] = "%$word%";
         }
         $query .= " ORDER BY moment_end DESC
-                    OFFSET " . ($amount > 0 ? $amount * ((isset($_GET['page']) && ($page = cleanUpUserInput($_GET['page'])) > 1 ? $page : 1) - 1) : "0") . " ROWS";
+                    OFFSET " . (int)($amount > 0 ? $amount * ((isset($_GET['page']) && ($page = cleanUpUserInput($_GET['page'])) > 1 ? $page : 1) - 1) : "0") . " ROWS";
         $query .= ($amount > 0 ? " FETCH FIRST $amount ROWS ONLY" : "");
         //echo $query;
         $searchStatement = $pdo->prepare($query);
