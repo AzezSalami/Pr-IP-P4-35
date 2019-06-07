@@ -61,7 +61,7 @@ function loadRubrics()
     //$rubric = 0;
     $rubric = (isset($_GET['rubric']) && (($rubric = cleanUpUserInput($_GET['rubric'])) != "") != 0 ? $rubric : $rubric = -1);
     if ($rubric != -1) {
-        $mainRubricQuery = $pdo->prepare("select * from TBL_Rubric where rubric = ? ORDER BY sort_number");
+        $mainRubricQuery = $pdo->prepare("select * from TBL_Rubric where rubric = ?");
         $mainRubricQuery->execute(array($rubric));
         $mainRubric = $mainRubricQuery->fetch()['super'];
         echo "<button
@@ -70,7 +70,7 @@ function loadRubrics()
 
     }
 
-    $subRubricQuery = $pdo->prepare("select * from TBL_Rubric where super = ? order by sort_number");
+    $subRubricQuery = $pdo->prepare("select * from TBL_Rubric where super = ? AND ( phased_out=0 OR phased_out is null OR rubric in (SELECT rubric from tbl_item_in_rubric TR inner join tbl_auction A on TR.item = A.item where A.is_closed = 0 ) ) order by sort_number");
     $subRubricQuery->execute(array($rubric));
 
     while ($subRubric = $subRubricQuery->fetch()) {
