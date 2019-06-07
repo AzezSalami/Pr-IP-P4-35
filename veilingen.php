@@ -7,7 +7,6 @@
 <body>
 
 <?php require_once "includes/header.php" ?>
-
 <main>
     <div class="row">
         <div class="col-lg-2">
