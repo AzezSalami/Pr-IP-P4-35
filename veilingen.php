@@ -87,10 +87,10 @@
                                                   </div>
                                                 </div>
 											</div>
-									</div>
+									</div><br>
 									";
                             } ?>
-                            <br>
+
                             <button class="btn mb-1" onclick="
 					                document.getElementById('minPrice').value = document.getElementById('amount-min').value;
 					                document.getElementById('maxPrice').value = document.getElementById('amount-max').value;
