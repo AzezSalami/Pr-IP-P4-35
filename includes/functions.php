@@ -631,7 +631,10 @@ function placeNewBid($auctionid, $newPrice, $username)
     global $pdo;
 
     try {
-        $query = $pdo->prepare("select max(amount) as amount from TBL_Bid where auction = ? and user is not null group by auction");
+        $query = $pdo->prepare("select max(amount) as amount from TBL_Bid B
+    full join TBL_User U
+        on B.[user] = U.[user]
+where (B.[user] is not null and U.is_blocked = 0) and auction = ?");
         $query->execute(array($auctionid));
         $sameBids = $query->fetch();
         if (empty($sameBids)) {
@@ -642,6 +645,7 @@ function placeNewBid($auctionid, $newPrice, $username)
 
             $sameBids = array('amount' => $start_price);
         }
+
         if ($sameBids['amount'] < $newPrice) {
             if ($sameBids['amount'] < 1) {
                 $buttonvalue = 0.50;
@@ -966,8 +970,8 @@ function addRubrics()
             $super = isset($_GET['rubrics']) ? $_GET['rubrics'] : -1;
             $RubricSort_number = $_POST['addRubricSort_number'];
             $addRubricsQuery = $pdo->prepare("INSERT INTO TBL_Rubric ([name] ,super ,sort_number) values (?,?,?)");
-            $addRubricsQuery->execute(array($rubricName,$super,$RubricSort_number));
-            }else{
+            $addRubricsQuery->execute(array($rubricName, $super, $RubricSort_number));
+        } else {
             return "Voer een geldige waarde in";
         }
     }
@@ -1003,7 +1007,8 @@ function checkIBAN($iban)
         return false;
 }
 
-function blockAuction($auctionid) {
+function blockAuction($auctionid)
+{
 
     if (isset($_POST['blockAuction'])) {
 
@@ -1017,7 +1022,8 @@ function blockAuction($auctionid) {
 
 }
 
-function deleteAccount() {
+function deleteAccount()
+{
 
     if (isset($_POST['deleteaccountsubmit'])) {
         if ($_POST['removePassword'] == $_POST['remconfirm_password']) {
