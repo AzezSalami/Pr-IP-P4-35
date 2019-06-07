@@ -230,7 +230,7 @@ where (B.[user] is not null and U.is_blocked = 0) and auction = $auctionid order
                 <div class=\"col-lg\">
                     <div class=\"description\">
                         <h3>Beschrijving:</h3>
-                        <p>$itemdescription</p>
+                        <p class=\"text-break\">$itemdescription</p>
                     </div>
                 </div>
                 <div class=\"col-line\"></div>
