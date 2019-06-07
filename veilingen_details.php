@@ -14,7 +14,13 @@ require "includes/header.php";
     <?php
 
     if (isset($_GET['auction'])) {
+
         global $pdo;
+
+        if(isset($_SESSION['username'])) {
+            $username = $_SESSION['username'];
+        }
+
         $auctionquery = $pdo->prepare("SELECT * FROM TBL_Auction WHERE auction = ?");
         $auctionid = $_GET['auction'];
         $auctionquery->execute(array($auctionid));
@@ -32,15 +38,15 @@ require "includes/header.php";
         $item = $auctiondata['item'];
         $seller = $auctiondata['seller'];
 
-        $sellerQuery = $pdo->prepare("SELECT * FROM TBL_Seller WHERE user = ?");
-        $sellerQuery->execute(array($seller));
-        $sellerData = $sellerQuery->fetch();
-        $bankNumber = $sellerData['bank_account'];
-        $verificationStatus = (int)$sellerData['verification_status'];
-        if ($verificationStatus == 1) {
-            $verificationStatus = "Niet geverifieerd";
+        $isBlockedQuery = $pdo->prepare("SELECT * FROM TBL_Auction WHERE user = ?");
+        $isBlockedQuery->execute(array($seller));
+        $isBlockedData = $isBlockedQuery->fetch();
+        $isBlocked = (int)$isBlockedData['is_blocked'];
+
+        if($isBlocked == 1) {
+            $isBlocked = "Geblokkeerd";
         } else {
-            $verificationStatus = "Geverifieerd";
+            $isBlocked = "Geverifieerd";
         }
 
         $itemquery = $pdo->prepare("SELECT * FROM TBL_Item WHERE item = ?");
@@ -58,14 +64,14 @@ require "includes/header.php";
         $itemshippingmethod = $itemdata['shipping_instructions'];
 
 
-        $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid WHERE auction = ? order by amount DESC");
+        $bidquery = $pdo->prepare("SELECT top 5 * FROM TBL_Bid, TBL_User WHERE auction = 98032 AND TBL_Bid.[user] 
+= TBL_User.[user] AND TBL_User.is_blocked = 0 order by amount DESC");
         $bidquery->execute(array($auctionid));
         $biddata = $bidquery->fetchAll();
 
 
         if (isset($_POST['bidbutton'])) {
             $newPrice = $_POST['bidbutton'];
-            $username = $_SESSION['username'];
             placeNewBid($auctionid, $newPrice, $username);
             $bidquery->execute(array($auctionid));
         }
@@ -93,11 +99,7 @@ require "includes/header.php";
         }
 
 
-        if (isset($_POST['blockAuction'])) {
-            $blockAuctionQuery = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE auction = ?");
-            $blockAuctionQuery->execute(array($auctionid));
-            echo '<script>window.location.replace("index.php");</script>';
-        }
+        blockAuction($auctionid);
 
         $emailQuery = $pdo->prepare("SELECT * FROM TBL_User WHERE [user] = ?");
         $emailQuery->execute(array($seller));
@@ -150,8 +152,8 @@ require "includes/header.php";
                         </tr>
                         <tr>
                             <th scope='row'>Status verkoper</th>
-                            <td> $verificationStatus</td>
-                        </tr>
+                            <td> " . $isBlocked . " </td>
+                        </tr>  
                     </table>
                     <a href=\"mailto:$emailSeller \" target=\"_top\" class=\" btn button - left\">Mail verkoper</a>
                 </div>

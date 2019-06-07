@@ -32,30 +32,40 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-5 p-0 text-center">
-                                    <input onchange="this.value = parseFloat(this.value).toFixed(2);"
-                                           class="bg-gray text-center input-details form-control" type="number"
-                                           id="amount-min"
-                                           placeholder="min"
-                                        <?php
-                                        if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice) && ((float)$minPrice) >= 0) {
-                                            echo " value='$minPrice'";
-                                        }
-                                        ?>
-                                    >
+                                <div class="col p-0 text-center">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">€</span>
+                                        </div>
+                                        <input onchange="this.value = parseFloat(this.value).toFixed(2);"
+                                               class="bg-gray text-center input-details form-control" type="number"
+                                               id="amount-min"
+                                               placeholder="min"
+                                            <?php
+                                            if (isset($_GET['minPrice']) && ($minPrice = cleanUpUserInput($_GET['minPrice'])) != "" && is_numeric($minPrice) && ((float)$minPrice) >= 0) {
+                                                echo " value='$minPrice'";
+                                            }
+                                            ?>
+                                        >
+                                    </div>
                                 </div>
-                                <div class="col-2 px-0 mt-2 text-center">
+                                <div class="col-1 px-0 mt-2 text-center">
                                     <p class="text-white font-weight-bold">-</p>
                                 </div>
-                                <div class="col-5 p-0 text-center">
-                                    <input onchange="this.value = parseFloat(this.value).toFixed(2);"
-                                           class="bg-gray text-center input-details form-control" type="number"
-                                           id="amount-max"
-                                           placeholder="max" <?php
-                                    if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice) && ((float)$maxPrice) >= 0) {
-                                        echo " value='$maxPrice'";
-                                    }
-                                    ?>>
+                                <div class="col p-0 text-center">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">€</span>
+                                        </div>
+                                        <input onchange="this.value = parseFloat(this.value).toFixed(2);"
+                                               class="bg-gray text-center input-details form-control" type="number"
+                                               id="amount-max"
+                                               placeholder="max" <?php
+                                        if (isset($_GET['maxPrice']) && ($maxPrice = cleanUpUserInput($_GET['maxPrice'])) != "" && is_numeric($maxPrice) && ((float)$maxPrice) >= 0) {
+                                            echo " value='$maxPrice'";
+                                        }
+                                        ?>>
+                                    </div>
                                 </div>
                             </div>
                             <br>

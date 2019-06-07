@@ -979,4 +979,18 @@ function checkIBAN($iban)
         return false;
 }
 
+function blockAuction($auctionid) {
+
+    if (isset($_POST['blockAuction'])) {
+
+        global $pdo;
+
+        $blockAuctionQuery = $pdo->prepare("UPDATE TBL_Auction SET is_blocked = 1 WHERE auction = ?");
+        $blockAuctionQuery->execute(array($auctionid));
+        echo '<script>window.location.replace("index.php");</script>';
+
+    }
+
+}
+
 ?>
