@@ -682,7 +682,7 @@ function createAuction()
             $seller = $_SESSION["username"];
             $is_promoted = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
             $rubric_post = cleanUpUserInput((isset($_POST['rubriek'])?$_POST['rubriek']:null));
-            echo $price_start;
+//            echo $price_start;
 
 //            if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
 //                echo "Geen geldig beeld";
