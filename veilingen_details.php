@@ -132,11 +132,11 @@ require "includes/header.php";
                                 <td class='text-break'> $itemaddress</td>
                             </tr>
                             <tr>
-                                <th scope='row'>verzendkosten </th>
+                                <th scope='row'>Verzendkosten </th>
                                 <td> $itemshippingcost</td>
                             </tr>
                             <tr>
-                                <th scope='row'> verzendmethode</th>
+                                <th scope='row'> Verzendmethode</th>
                                 <td> $itemshippingmethod</td>
                             </tr>
                         </tbody>                       
@@ -162,11 +162,11 @@ require "includes/header.php";
                         <h3>Veilingdetails</h3>
                         <table class='table table-striped'>
                             <tr>
-                                <th> status van veiling</th>
+                                <th> Status van veiling</th>
                                 <td> $auctionstatus</td>
                             </tr>
                             <tr>
-                                <th> veiling sluit over</th>
+                                <th> Veiling sluit over</th>
                                 <td id=\"timer\"></td>
                             </tr>
                             <tr>
@@ -260,7 +260,7 @@ require "includes/header.php";
         echo '<table class="table table-striped">';
         while ($bid = $bidquery->fetch()) {
             if ($bid['user'] == null) {
-                echo '<tr><th class="text-danger">verwijderd</th><td>€' . $bid['amount'] . '</td></tr>';
+                echo '<tr><th class="text-danger">Verwijderd</th><td>€' . $bid['amount'] . '</td></tr>';
             } else {
                 echo '<tr><th>' . $bid['user'] . '</th><td>€' . $bid['amount'] . '</td></tr>';
             }
