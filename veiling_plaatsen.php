@@ -72,24 +72,27 @@ if (isset($_SESSION['username']) == 0) {
             <div class="row m-3">
                 <h1>Nieuwe veiling</h1>
             </div>
-            <div class=" mb-2 text-danger">'. createAuction().'</div>
+            <div class=" mb-2 text-danger">';
+        echo createAuction();
+        global $auctionCreated;
+        echo '</div>
             <div class="dropdown-divider"></div>
             <form method="post" action="" enctype="multipart/form-data">
                 <div class="row m-3">
                     <div class="col-lg-3">
                         <div class="form-label-group">
-                            <input type="text" class="form-control" name="name" id="name" placeholder="titel">
+                            <input type="text" class="form-control" name="name" id="name" placeholder="titel" ' . (!$auctionCreated && isset($_POST['name']) ? 'value=\'' . cleanUpUserInput($_POST['name']) . '\'' : "") . '>
                             <label for="name">Titel</label>
                         </div>
                         <div class="form-label-group">
                             <input type="number" class="form-control" name="price_start" id="price_start"
-                                   placeholder="prijsStart"' . (isset($_POST['price_start'])? 'value=\'' .cleanUpUserInput($_POST['price_start']) . '\'': "") .'>
+                                   placeholder="prijsStart"' . (!$auctionCreated && isset($_POST['price_start']) ? 'value=\'' . cleanUpUserInput($_POST['price_start']) . '\'' : "") . '>
                             <label for="price_start">Start prijs</label>
                         </div>
                         <div class="form-group">
                             <label class="d-none" for="location">Locatie</label>
                             <input class="form-control mb-3" type="text" name="location" id="location"
-                                   placeholder="Locatie" ' . (isset($_POST['location'])? 'value=\'' .cleanUpUserInput($_POST['location']) . '\'': "") .'>
+                                   placeholder="Locatie" ' . (!$auctionCreated && isset($_POST['location']) ? 'value=\'' . cleanUpUserInput($_POST['location']) . '\'' : "") . '>
                             <script>
                                 var placesAutocomplete = places({
                                     appId: \'plK904BLG7JJ\',
@@ -111,13 +114,16 @@ if (isset($_SESSION['username']) == 0) {
                                 <option value="" disabled selected hidden>Verzendmethode</option>
                                 <option value="Ophalen">Ophalen</option>
                                 <option value="Verzenden">Verzenden</option>
+
                             </select>
                         </div>
                         <div class="form-label-group d-none">
                             <input type="number" class="form-control" name="shipping_cost" id="shipping_cost"
-                                   placeholder="verzendkosten" ' . (isset($_POST['shipping_cost'])? 'value=\'' .cleanUpUserInput($_POST['shipping_cost']) . '\'': "") .'>
+                                   placeholder="verzendkosten" ' . (!$auctionCreated && isset($_POST['shipping_cost']) ? 'value=\'' . cleanUpUserInput($_POST['shipping_cost']) . '\'' : "") . '>
                             <label for="shipping_cost">Verzendkosten</label>
                         </div>
+                                                   ' . (!$auctionCreated && isset($_POST['shipping_instructions']) ? "<script>document.getElementById('shipping_instructions').value = '" . cleanUpUserInput($_POST['shipping_instructions']) . "'; document.getElementById('shipping_cost').parentNode.classList.remove('d-none');</script>" : "") . '
+
                         <div class="form-group">
                             <select class="form-control" name="duration" id="duration">
                                 <option>Looptijd</option>
@@ -128,6 +134,7 @@ if (isset($_SESSION['username']) == 0) {
                                 <option value="10">10 dagen</option>
                             </select>
                             <label class="d-none" for="duration"></label>
+                            ' . (!$auctionCreated && isset($_POST['duration']) ? "<script>document.getElementById('duration').value = " . cleanUpUserInput($_POST['duration']) . ";</script>" : "") . '
                         </div>
                     </div>
 
@@ -158,7 +165,7 @@ if (isset($_SESSION['username']) == 0) {
                                 <span class="input-group-text">Beschrijving</span>
                             </div>
                             <label class="d-none" for="description"></label>
-                            <textarea class="form-control" name="description" id="description" >' . (isset($_POST['description'])? cleanUpUserInput($_POST['description']) : "") .'</textarea>
+                            <textarea class="form-control" name="description" id="description" >' . (!$auctionCreated && isset($_POST['description']) ? cleanUpUserInput($_POST['description']) : "") . '</textarea>
                         </div>
                         <div class="input-group">
                             <div class="input-group-prepend">

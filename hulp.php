@@ -69,7 +69,7 @@ require "includes/header.php";
                             </a>
                         </div>
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 pb-5 mb-3">
                         <div class="tab-content" id="faq-tab-content">
                             <div class="tab-pane show active" id="tab1" role="tabpanel" aria-labelledby="tab1">
                                 <div class="accordion" id="accordion-tab-1">
@@ -242,9 +242,11 @@ require "includes/header.php";
                                                     - De veiling is verlopen.<br>
                                                     - Je internetverbinding was slecht op moment van bieden.<br>
                                                     - Je bent niet ingelogd als verkoper of gebruiker.<br>
-                                                    &emsp;o Weet je niet hoe je moet inloggen ? --> Kijk dan bij het kopje
+                                                    &emsp;o Weet je niet hoe je moet inloggen ? --> Kijk dan bij het
+                                                    kopje
                                                     inloggen.<br>
-                                                    &emsp;o Weet je niet hoe je moet registreren? --> Kijk dan bij het kopje
+                                                    &emsp;o Weet je niet hoe je moet registreren? --> Kijk dan bij het
+                                                    kopje
                                                     registreren.</p>
                                             </div>
                                         </div>
@@ -299,38 +301,36 @@ require "includes/header.php";
                                                     worden?'<br>
                                                     Wanneer je een verkoper bent kun je op de accountknop klikken en het
                                                     kopje 'Nieuwe veiling' aanklikken. <br>
-                                                    Op deze pagina kun je een nieuwe veiling aanmaken. De volgende velden
-                                                    moeten worden ingevuld: <br>
-                                                    - Titel<br>
+                                                    Op deze pagina kun je een nieuwe veiling aanmaken. De volgende
+                                                    velden
+                                                    moeten worden ingevuld: <br><br>
+                                                    <strong>- Titel</strong><br>
                                                     &emsp;o Hier vul je de titel van de veiling in<br>
-                                                    - Start prijs<br>
-                                                    &emsp;o Hier vul je het bedrag in waar de veiling mee moet beginnen<br>
-                                                    - Locatie<br>
+                                                    <strong>- Start prijs</strong><br>
+                                                    &emsp;o Hier vul je het bedrag in waar de veiling mee moet
+                                                    beginnen<br>
+                                                    <strong>- Locatie</strong><br>
                                                     &emsp;o Hier vul je de locatie in waar het product zich bevindt<br>
-                                                    - Ophalen<br>
-                                                    &emsp;o Hier geef<br>
-
+                                                    <strong>- Verzendmethode</strong><br>
+                                                    &emsp;o Hier geef je aan of het product wordt verzonden of moet
+                                                    worden opgehaald<br>
+                                                    <strong>- Looptijd</strong><br>
+                                                    &emsp;o Hier geef je aan hoe lang de veiling op de veilingsite moet
+                                                    blijven staan<br>
+                                                    <strong>- Rubriek</strong><br>
+                                                    &emsp;o Hier geef je aan in welke (sub)rubriek de veiling moet
+                                                    worden geplaatst<br>
+                                                    <strong>- Beschrijving</strong><br>
+                                                    &emsp;o Hier vul je de beschrijving van de veiling in<br>
+                                                    <strong>- Wil je deze veiling promoten?</strong><br>
+                                                    &emsp;o Hier geef je aan of je de veiling wilt promoten (bovenaan
+                                                    alle veilingen plaatsen)<br>
+                                                    <strong>- Kies bestand</strong><br>
+                                                    &emsp;o Hier moet je een foto van het te verkopen product
+                                                    uploaden<br><br>
+                                                    Wanneer je dit allemaal hebt ingegeven en je op de knop 'Maak
+                                                    veiling aan' hebt geklikt wordt de veiling geplaatst.
                                                 </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header" id="accordion-tab-4-heading-3">
-                                            <h5>
-                                                <button class="btn btn-hulp" type="button" data-toggle="collapse"
-                                                        data-target="#accordion-tab-4-content-3" aria-expanded="false"
-                                                        aria-controls="accordion-tab-4-content-3">Ik ben mijn wachtwoord
-                                                    vergeten, wat nu?
-                                                </button>
-                                            </h5>
-                                        </div>
-                                        <div class="collapse" id="accordion-tab-4-content-3"
-                                             aria-labelledby="accordion-tab-4-heading-3" data-parent="#accordion-tab-4">
-                                            <div class="card-body">
-                                                <p>Als je je wachtwoord vergeten bent, klik dan in het inlogvenster op
-                                                    “wachtwoord resetten”.
-                                                    Je zal dan een mail ontvangen met daarin een link om je wachtwoord
-                                                    opnieuw in te stellen.</p>
                                             </div>
                                         </div>
                                     </div>
