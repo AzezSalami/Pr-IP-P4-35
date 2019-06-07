@@ -968,7 +968,7 @@ function addRubrics()
             $addRubricsQuery = $pdo->prepare("INSERT INTO TBL_Rubric ([name] ,super ,sort_number) values (?,?,?)");
             $addRubricsQuery->execute(array($rubricName,$super,$RubricSort_number));
             }else{
-            echo "Voer een geldige waarde in";
+            return "Voer een geldige waarde in";
         }
     }
 }

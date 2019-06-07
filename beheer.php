@@ -35,6 +35,7 @@ require "includes/header.php";
                              role="tabpanel">
                             <table class="table table-bordered table-sm col-lg mt-3">
                                 <?php
+                                $rubricErr = addRubrics();
                                 echo  "<div class='col ml-1 text-danger'>" . updateRubrics()."</div>";
                                 $super = isset($_GET['rubrics']) ? $_GET['rubrics'] : -1;
 
@@ -107,7 +108,7 @@ require "includes/header.php";
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <div class="col ml-1 text-danger"><?php addRubrics(); ?></div>
+                                <div class="col ml-1 text-danger"><?php $rubricErr ?></div>
                                 <tr>
                                     <th scope="row"></th>
 
