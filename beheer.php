@@ -76,14 +76,14 @@ require "includes/header.php";
                                 }
                                 ?>
                                 <tr>
-                                    <th scope="row" class="fit"></th>
+                                    <th scope="row"></th>
 
-                                    <td class="inputRubric">
+                                    <td  class="fit">
                                         <label for="editRubricSort_number"></label>
                                         <input type="number" name="editRubricSort_number" id="editRubricSort_number"
                                                placeholder="Positie rubriek">
                                     </td>
-                                    <td class="inputRubric">
+                                    <td  class="fit">
                                         <label for="editRubricName"></label>
                                         <input type="text" name="editRubricName" id="editRubricName"
                                                placeholder="Naam rubriek">
@@ -113,14 +113,15 @@ require "includes/header.php";
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th scope="row" class="fit"></th>
+                                    <th scope="row"></th>
 
-                                    <td class="inputRubric">
+                                    <td class="fit">
                                         <label for="addRubricNumber"></label>
                                         <input type="number" name="addRubricNumber" id="addRubricNumber"
                                                placeholder="Positie rubriek">
                                     </td>
-                                    <td class="inputRubric">
+                                    <td
+                                            class="fit">
                                         <label for="addRubricName"></label>
                                         <input type="text" name="addRubricName" id="addRubricName"
                                                placeholder="Naam rubriek">
