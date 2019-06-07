@@ -35,6 +35,7 @@ require "includes/header.php";
                              role="tabpanel">
                             <table class="table table-bordered table-sm col-lg mt-3">
                                 <?php
+                                echo  "<div class='col ml-1 text-danger'>" . updateRubrics()."</div>";
                                 $super = isset($_GET['rubrics']) ? $_GET['rubrics'] : -1;
 
                                 $rubricUpQuery = $pdo->prepare("SELECT super FROM TBL_Rubric WHERE rubric=? ");
@@ -64,9 +65,13 @@ require "includes/header.php";
                                     echo " <tr>
                                       <th scope=\"row\" class=\"fit\"><input type=\"radio\" value=\"" . $result['rubric'] . "\"
                                                                    name=\"rubricRadio\"></th>
-                                     <td class=\"fit\">" . $result['sort_number'] . "</td>
-                                     
-                                    <td><a href='beheer.php?rubrics=" . $result['rubric'] . "'>" . $result['name'] . "</a></td>
+                                     <td class=\"fit\">" . $result['sort_number'] . "</td> <td>";
+                                     if($result['phased_out'] == 1){
+                                      echo  "<a class='text-muted'>" . $result['name'] . "</a>" ;
+                                    }else{
+                                    echo "<a href='beheer.php?rubrics=" . $result['rubric'] . "'>" . $result['name'] . "</a>";
+                                    }
+                                    echo "</td>
                                    </tr>";
                                 }
                                 ?>
@@ -74,8 +79,8 @@ require "includes/header.php";
                                     <th scope="row" class="fit"></th>
 
                                     <td class="inputRubric">
-                                        <label for="editRubricNumber"></label>
-                                        <input type="number" name="editRubricNumber" id="editRubricNumber"
+                                        <label for="editRubricSort_number"></label>
+                                        <input type="number" name="editRubricSort_number" id="editRubricSort_number"
                                                placeholder="Positie rubriek">
                                     </td>
                                     <td class="inputRubric">
@@ -89,7 +94,8 @@ require "includes/header.php";
                             <div class="row pb-2 mb-2">
                                 <div class="col-lg admin-buttons text-center">
                                     <input type="submit" class="btn mb-1" value="Aanpassen" name="changeRubric">
-                                    <input type="submit" class="btn mb-1" value="Uitfaseren" name="depracateRubric">
+                                    <input type="submit" class="btn mb-1" value="Uitfaseren" name="phaseOutRubric">
+                                    <input type="submit" class="btn mb-1" value="heractiveren" name="reactivateRubric">
                                 </div>
                             </div>
                             <table class="table table-bordered table-sm col-lg mt-3">
