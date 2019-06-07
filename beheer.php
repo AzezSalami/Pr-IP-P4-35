@@ -35,7 +35,7 @@ require "includes/header.php";
                              role="tabpanel">
                             <table class="table table-bordered table-sm col-lg mt-3">
                                 <?php
-                                echo "<div class='col ml-1 text-danger'>" . updateRubrics() . "</div>";
+                                echo  "<div class='col ml-1 text-danger'>" . updateRubrics()."</div>";
                                 $super = isset($_GET['rubrics']) ? $_GET['rubrics'] : -1;
 
                                 $rubricUpQuery = $pdo->prepare("SELECT super FROM TBL_Rubric WHERE rubric=? ");
@@ -66,24 +66,24 @@ require "includes/header.php";
                                       <th scope=\"row\" class=\"fit\"><input type=\"radio\" value=\"" . $result['rubric'] . "\"
                                                                    name=\"rubricRadio\"></th>
                                      <td class=\"fit\">" . $result['sort_number'] . "</td> <td>";
-                                    if ($result['phased_out'] == 1) {
-                                        echo "<a class='text-muted'>" . $result['name'] . "</a>";
-                                    } else {
-                                        echo "<a href='beheer.php?rubrics=" . $result['rubric'] . "'>" . $result['name'] . "</a>";
+                                     if($result['phased_out'] == 1){
+                                      echo  "<a class='text-muted'>" . $result['name'] . "</a>" ;
+                                    }else{
+                                    echo "<a href='beheer.php?rubrics=" . $result['rubric'] . "'>" . $result['name'] . "</a>";
                                     }
                                     echo "</td>
                                    </tr>";
                                 }
                                 ?>
                                 <tr>
-                                    <th scope="row" class="fit"></th>
+                                    <th scope="row"></th>
 
-                                    <td class="inputRubric">
+                                    <td  class="fit">
                                         <label for="editRubricSort_number"></label>
                                         <input type="number" name="editRubricSort_number" id="editRubricSort_number"
                                                placeholder="Positie rubriek">
                                     </td>
-                                    <td class="inputRubric">
+                                    <td  class="fit">
                                         <label for="editRubricName"></label>
                                         <input type="text" name="editRubricName" id="editRubricName"
                                                placeholder="Naam rubriek">
@@ -109,14 +109,15 @@ require "includes/header.php";
                                 <tbody>
                                 <div class="col ml-1 text-danger"><?php addRubrics(); ?></div>
                                 <tr>
-                                    <th scope="row" class="fit"></th>
+                                    <th scope="row"></th>
 
-                                    <td class="inputRubric">
+                                    <td class="fit">
                                         <label for="addRubricSort_number"></label>
                                         <input type="number" name="addRubricSort_number" id="addRubricSort_number"
                                                placeholder="Positie rubriek">
                                     </td>
-                                    <td class="inputRubric">
+                                    <td
+                                            class="fit">
                                         <label for="addRubricName"></label>
                                         <input type="text" name="addRubricName" id="addRubricName"
                                                placeholder="Naam rubriek">
