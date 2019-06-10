@@ -1,0 +1,383 @@
+.col-lg-10 {
+    padding-right: 0;
+}
+
+.container {
+    max-width: unset;
+}
+
+nav > div.row, main > div.row {
+    margin-right: 0 !important;
+}
+
+
+.logo {
+    height: 3.5em;
+    width: auto;
+}
+
+body {
+    background-color: #EEEEEE;
+}
+
+
+/* COLORS */
+
+.yellow {
+    color: #FFD042;
+    border-color: #FFD042;
+}
+
+.lightblue{
+    color: #4FCBFF;
+}
+
+.bg-orange {
+    background: #FFAD4F;
+}
+
+.bg-yellow {
+    background: #FFD042;
+}
+
+.bg-darkblue {
+    background: #1484B3;
+}
+
+.bg-lightblue {
+    background: #4FCBFF;
+}
+
+.bg-gray {
+    background: #EEEEEE;
+}
+
+.bg-black {
+    background: #000000;
+}
+
+.text-orange {
+    color: #FFAD4F;
+}
+
+
+/* BUTTON */
+
+.btn {
+    background-color: #4FCBFF;
+    border-color: #1484B3;
+}
+
+.btn:hover {
+    background: #1484B3;
+}
+
+.btn-account {
+    width: 100%;
+}
+
+
+/* NAV BAR */
+
+.nav-link {
+    text-align: center;
+    color: black;
+}
+
+.nav-link:hover, .currentpage {
+    background: #EEEEEE;
+}
+
+
+/* FOOTER */
+
+.page-footer {
+    background-color: #FFAD4F;
+    color: white;
+}
+
+/* ARTICLES */
+
+.auction-article-large, .auction-article-small{
+    border: #FFAD4F 2px solid;
+    color: black;
+    background: white;
+}
+
+.auction-article-large img {
+    width: auto;
+    max-width: 90%;
+    height: auto;
+    max-height: 400px;
+
+}
+
+.auction-article-small img {
+    width: auto;
+    max-width: 80%;
+    height: auto;
+    max-height: 300px;
+}
+
+.auction-article-small {
+    min-width: 300px;
+}
+
+.auction-article-large .imageContainer {
+    height: 400px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-left: 0;
+}
+
+.auction-article-small .imageContainer {
+    height: 300px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-left: 0;
+}
+
+.imageContainer > div {
+    margin: auto;
+    height: auto;
+}
+
+.article-description{
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-height:200px;
+    width: 100%;
+}
+
+
+/* SIDENAVBAR */
+
+.sidenav {
+    height: 150vh;
+    top: 0;
+    width: 0;
+    position: fixed;
+    z-index: 3;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    border-top: solid;
+    border-bottom: solid;
+    border-color: #FFAD4F;
+}
+
+.sidenav a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: white;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 3.5rem;
+    margin-left: 50px;
+}
+
+.sidenav .hoofdrubriek {
+    text-align: center;
+    padding: 10px;
+    font-size: 3rem;
+}
+
+.sidenav .navigatiemobiel {
+    text-align: center;
+    padding: 10px;
+    font-size: 3rem;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 1%;
+    }
+
+    .sidenav a {
+        font-size: 2%;
+    }
+}
+
+
+.sidenavhamburger {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    font-size: 3rem;
+    cursor: pointer;
+    color: black;
+}
+
+@media only screen and (max-width: 991px) {
+    .sidenavhamburger {
+        display: block;
+    }
+
+    header > nav {
+        display: none;
+    }
+
+}
+
+
+/* ACCOUNT BUTTON */
+
+
+@media only screen and (min-device-width: 991px) {
+    .accountdropdownmobile {
+        display: none;
+    }
+}
+
+@media only screen and (max-device-width: 991px) {
+    .accountdropdowndesktop {
+        display: none;
+    }
+}
+
+.accountdropdowndesktop .dropdown .dropdown-menu {
+    width: 100%;
+}
+
+.accountdropdowndesktop .dropdown .dropdown-menu a:hover{
+    background-color: unset;
+    color: white;
+}
+
+/* MODAL */
+
+.form-row form {
+    width: 100%;
+}
+
+.modal-footer .row {
+    width: 100%;
+}
+
+.form-control {
+    height: calc(2.1em + .75rem + 2px);
+}
+
+:root {
+    --input-padding-x: .5rem;
+    --input-padding-y: .5rem;
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 475px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-label-group {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.algolia-places > button {
+    margin-top: -0.8rem;
+}
+
+.form-label-group > input,
+.form-label-group > label {
+    padding: var(--input-padding-y) var(--input-padding-x);
+}
+
+.form-label-group > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    margin-bottom: 0; /* Override default `<label>` margin */
+    line-height: 1.5;
+    color: #495057;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    transition: all .1s ease-in-out;
+}
+
+.form-label-group input::-webkit-input-placeholder {
+    color: transparent;
+}
+
+.form-label-group input:-ms-input-placeholder {
+    color: transparent;
+}
+
+.form-label-group input::-ms-input-placeholder {
+    color: transparent;
+}
+
+.form-label-group input::-moz-placeholder {
+    color: transparent;
+}
+
+.form-label-group input::placeholder {
+    color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+    padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (4 / 5));
+    padding-bottom: calc(var(--input-padding-y) / 3);
+}
+
+.form-label-group input:not(:placeholder-shown) ~ label {
+    padding-top: calc(var(--input-padding-y) / 3);
+    padding-bottom: calc(var(--input-padding-y) / 3);
+    font-size: 0.7em;
+    color: #777;
+}
+
+
+
+@media only screen and (max-device-width: 575px) {
+    html {
+        font-size: 2.5em;
+    }
+
+    .form-signin {
+        max-width: unset;
+    }
+
+    .modal-dialog {
+        max-width: unset;
+        margin: 1.75rem 10px;
+    }
+
+    .mobile-spacing{
+        margin: 0 10px 0 10px;
+    }
+}
+
+
+.modal-title {
+    padding-left: 37px;
+}
+
+
+.accordion > .card:not(:first-child) {
+    border-top: 0;
+}
+
+.collapse.show .card-body {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.data-form{
+    min-height: 80.2vh;
+}

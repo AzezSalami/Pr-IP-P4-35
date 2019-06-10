@@ -1,0 +1,28 @@
+.contact-form{
+    min-height: 80.2vh;
+}
+
+.contact-image {
+    text-align: center;
+}
+
+.contact-image img {
+    width: 11%;
+}
+
+form{
+    margin: auto ;
+    width: 50%;
+}
+
+.contact-text {
+    width: 100%;
+    min-height: 176px;
+    max-height: 260px
+}
+
+.contact-title {
+    margin: 10px 0;
+    text-align: center;
+    color: #007bff;
+}
