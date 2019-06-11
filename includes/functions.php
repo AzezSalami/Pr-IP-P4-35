@@ -949,11 +949,7 @@ function updateRubrics()
                 $array[] = $rubric;
                 $editQuery = $pdo->prepare("UPDATE TBL_Rubric SET  $values WHERE rubric=?");
                 $editQuery->execute($array);
-//                if(!empty($_POST['editRubricSort_number']) ) {
-//                    $RubricSort_number= $_POST['editRubricSort_number'];
-//                    $editRubricsQuery = $pdo->prepare("Update TBL_Rubric SET sort_number = sort_number +1 WHERE sort_number > ?");
-//                    $editRubricsQuery->execute($RubricSort_number);
-//                }
+                return "<p style=\"color: green;\">De rubriek is geüpdatet</P>";
             } else {
                 return "Voer een geldige waarde in";
             }
@@ -966,6 +962,7 @@ function updateRubrics()
             $rubric = $_POST['rubricRadio'];
             $phaseOutQuery = $pdo->prepare("UPDATE TBL_Rubric SET phased_out = 1 WHERE rubric=?");
             $phaseOutQuery->execute(array($rubric));
+            return "<p style=\"color: green;\">De rubriek is uitgefaseerd</P>";
         }
     }
     if (isset($_POST['reactivateRubric'])) {
@@ -975,6 +972,7 @@ function updateRubrics()
             $rubric = $_POST['rubricRadio'];
             $phaseOutQuery = $pdo->prepare("UPDATE TBL_Rubric SET phased_out = 0 WHERE rubric=?");
             $phaseOutQuery->execute(array($rubric));
+            return "<p style=\"color: green;\">De rubriek is geactiveerd</P>";
         }
     }
 }
@@ -989,6 +987,7 @@ function addRubrics()
             $RubricSort_number = $_POST['addRubricSort_number'];
             $addRubricsQuery = $pdo->prepare("INSERT INTO TBL_Rubric ([name] ,super ,sort_number) values (?,?,?)");
             $addRubricsQuery->execute(array($rubricName, $super, $RubricSort_number));
+            return "<p style=\"color: green;\">De rubriek is toegevoegd</P>";
         } else {
             return "Voer een geldige waarde in";
         }
