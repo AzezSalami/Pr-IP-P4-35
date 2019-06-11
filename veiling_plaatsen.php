@@ -111,7 +111,7 @@ if (isset($_SESSION['username']) == 0) {
                             <select class="form-control" name="rubriek" id="rubriek" onchange="showRubric(this.value, this)">
                                 <option selected disabled value="">Rubriek</option>';
 
-        $mainRubricQuery = $pdo->prepare("select DISTINCT rubric,[name] from TBL_Rubric WHERE super=-1 AND phased_out != 1");
+        $mainRubricQuery = $pdo->prepare("select DISTINCT rubric,[name] from TBL_Rubric WHERE super=-1 AND (phased_out = 0 OR phased_out IS null)");
         $mainRubricQuery->execute();
         $mainRubric = $mainRubricQuery->fetchAll();
 
@@ -153,7 +153,7 @@ if (isset($_SESSION['username']) == 0) {
                                            aria-describedby="image">Kies bestand</label>
                                 </div>
                             </div>
-                            <img id="img-upload" alt="uw afbeelding"/>
+                            <img id="img-upload" alt=""/>
                         </div>
                     </div>
                 </div>
