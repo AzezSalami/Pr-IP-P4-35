@@ -262,8 +262,7 @@ function register()
         $regUsername = cleanUpUserInput(strtolower($_POST['reg_username']));
         $address = cleanUpUserInput($_POST['address']);
         $telephone_number = cleanUpUserInput($_POST['telephone_number']);
-        $cookies = isset($_POST['cookies'])? $_POST['cookies']:0;
-
+        $cookies = isset($_POST['cookies'])? 1 : 0;
         $is_mobile = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
         if (empty($email) || empty($regPassword) || empty($firstname) || empty($lastname) || empty($regUsername)) {
             echo "<p style='color: red'>Alle velden moeten ingevuld zijn.</p><script>document.getElementById('openRegister').click()</script>";
