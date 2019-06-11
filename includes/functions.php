@@ -262,7 +262,7 @@ function register()
         $regUsername = cleanUpUserInput(strtolower($_POST['reg_username']));
         $address = cleanUpUserInput($_POST['address']);
         $telephone_number = cleanUpUserInput($_POST['telephone_number']);
-        $cookies = $_POST['cookies'];
+        $cookies = isset($_POST['cookies'])? $_POST['cookies']:0;
 
         $is_mobile = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
         if (empty($email) || empty($regPassword) || empty($firstname) || empty($lastname) || empty($regUsername)) {
@@ -284,6 +284,12 @@ function register()
                     $canRegister = false;
                 }
             }
+
+            if($cookies == 0){
+                echo "accepteer de cookies om verder te gaan<br>";
+                $canRegister = false;
+            }
+
             if (!isPasswordGood($regPassword)) {
                 $canRegister = false;
             }

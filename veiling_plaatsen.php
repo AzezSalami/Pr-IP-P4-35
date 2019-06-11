@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <?php include 'includes/head.html'; ?>
+    <script src="JS/veiling_maken.js"></script>
     <link rel="stylesheet" href="CSS/veiling-maken.css" type="text/css">
 </head>
 <body>
