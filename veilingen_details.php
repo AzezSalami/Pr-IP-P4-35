@@ -64,7 +64,7 @@ require "includes/header.php";
 
         $bidquery = $pdo->prepare("select top 5 *
 from TBL_Bid B
-    full join groep35test2.dbo.TBL_User U
+    full join TBL_User U
         on B.[user] = U.[user]
 where U.is_blocked = 0 and auction = ?
 ORDER BY amount DESC");

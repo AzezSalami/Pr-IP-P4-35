@@ -24,6 +24,9 @@ function connectToDatabase()
     $databasename = "groep35test3";
     $username = "sa";
     $password = "Hoi123!!";
+
+
+
     global $pdo;
 
     try {
@@ -466,8 +469,8 @@ function updateAccountData()
             }
         }
         if (!empty($telephone_number)) {
-            if (strlen($telephone_number) != 10 || !preg_match("/([0-9]){10}/", $telephone_number)) {
-                echo "Het ingevulde telefonnummer is niet correct<br>";
+            if (strlen($telephone_number) != 10 || !preg_match("/(([\+]\d{2})|(0{2}\d{2})|(0)){1}\d{9}/", $telephone_number)) {
+                echo "Een telefonnummer moet uit minimaal 10 cijfers bestaan<br>";
             } else {
                 try {
                     $sql = "update TBL_Phone SET phone_number = :telephone_number WHERE [user] = :username";
