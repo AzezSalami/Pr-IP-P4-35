@@ -77,7 +77,7 @@ require "includes/header.php";
                             <label for="telephone_number">Telefoonnummer</label>
                             <input class="form-control" placeholder="<?php placeholderAccountData("phone_number"); ?>"
                                    type="text"
-                                   name="telephone_number" id="telephone_number" maxlength="13" pattern="[0-9]{13}" max="9999999999999">
+                                   name="telephone_number" id="telephone_number" maxlength="13" pattern="(([\+]\d{2})|(0{2}\d{2})|(0)){1}\d{9}">
 
                         </div>
                     </div>

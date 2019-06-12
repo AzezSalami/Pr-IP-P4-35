@@ -24,6 +24,9 @@ function connectToDatabase()
     $databasename = "groep35test3";
     $username = "sa";
     $password = "Hoi123!!";
+
+
+
     global $pdo;
 
     try {
