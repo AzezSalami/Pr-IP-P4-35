@@ -469,21 +469,21 @@ function updateAccountData()
             }
         }
         if (!empty($telephone_number)) {
-            if (strlen($telephone_number) != 10 || !preg_match("/(([\+]\d{2})|(0{2}\d{2})|(0)){1}\d{9}/", $telephone_number)) {
-                echo "Een telefonnummer moet uit minimaal 10 cijfers bestaan<br>";
+            if (!preg_match("/(([\+]\d{2})|(0{2}\d{2})|(0)){1}\d{9}/", $telephone_number)) {
+                echo "Het ingevulde telefoonnummer is incorrect<br>";
             } else {
                 try {
                     $sql = "update TBL_Phone SET phone_number = :telephone_number WHERE [user] = :username";
                     $query = $pdo->prepare($sql);
                     $query->execute(array(':telephone_number' => $telephone_number, ':username' => $username));
-                    echo '<p class="text-success">jouw telefoonnummer is geüpdatet </p>';
+                    echo '<p class="text-success">Jouw telefoonnummer is geüpdatet </p>';
                 } catch (PDOException $e) {
                     echo $e;
                 }
             }
         }
         if (!empty($firstname) || !empty($lastname) || !empty($address) || $password_check) {
-            echo '<p class="text-success">jouw gegevens zijn geüpdatet</p>';
+            echo '<p class="text-success">Jouw gegevens zijn geüpdatet</p>';
             $sql = "update TBL_User SET " . $values . " WHERE [user] = '$username'";
             $query = $pdo->prepare($sql);
             $query->execute($array);
