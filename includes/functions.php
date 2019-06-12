@@ -322,10 +322,10 @@ function register()
                     Beste heer of mevrouw $lastname,<br><br>
                     
                     Klik op de link hieronder om je registratie te voltooien.<br>
-                    <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om je registratie te voltooien</a><br><br>
+                    <a href='https://iproject35.icasites.nl/upload/?email=$email&token=$token'>Klik hier om je registratie te voltooien</a><br><br>
                     
                     Of plak onderstaande link in je browser:<br>
-                    http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token<br><br>
+                    https://iproject35.icasites.nl/upload/?email=$email&token=$token<br><br>
                     
                     Als je geen account aan heeft gemaakt op onze website, kun je deze e-mail negeren.<br><br>
                     
@@ -467,13 +467,13 @@ function updateAccountData()
         }
         if (!empty($telephone_number)) {
             if (strlen($telephone_number) != 10 || !preg_match("/([0-9]){10}/", $telephone_number)) {
-                echo "Een telefonnummer moet uit minimaal 10 cijfers bestaan<br>";
+                echo "Het ingevulde telefonnummer is niet correct<br>";
             } else {
                 try {
                     $sql = "update TBL_Phone SET phone_number = :telephone_number WHERE [user] = :username";
                     $query = $pdo->prepare($sql);
                     $query->execute(array(':telephone_number' => $telephone_number, ':username' => $username));
-                    echo '<p class="text-success">jouw gegevens zijn geüpdatet </p>';
+                    echo '<p class="text-success">jouw telefoonnummer is geüpdatet </p>';
                 } catch (PDOException $e) {
                     echo $e;
                 }
@@ -528,10 +528,10 @@ function sendResetPasswordEmail($email)
                     Geachte heer of mevrouw $lastname,<br><br>
 
                     Klik op de link hieronder om je wachtwoord opnieuw in te stellen.<br>
-                    <a href='http://localhost/iproject/wachtwoordresetten.php?email=$email&verification=$token'>Klik hier om je wachtwoord opnieuw in te stellen</a><br><br>
+                    <a href='https://iproject35.icasites.nl/upload/wachtwoordresetten.php?email=$email&verification=$token'>Klik hier om je wachtwoord opnieuw in te stellen</a><br><br>
 
                     Of plak onderstaande link in je browser:
-                    http://localhost/iproject/wachtwoordresetten.php?email=$email&verification=$token<br>
+                    https://iproject35.icasites.nl/upload/wachtwoordresetten.php?email=$email&verification=$token<br>
                     <br><br>
 
                     Als je geen account aan hebt gemaakt op onze website, kun je deze e-mail negeren.<br><br>
@@ -587,10 +587,10 @@ function sendVerificatiecodeEmail($email)
                     Geachte heer of mevrouw $lastname,<br><br>
                     
                     Klik op de link hieronder om je registratie te voltooien.<br>
-                    <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om je registratie te voltooien</a><br><br>
+                    <a href='https://iproject35.icasites.nl/upload/?email=$email&token=$token'>Klik hier om je registratie te voltooien</a><br><br>
                     
                     Of plak onderstaande link in je browser:<br>
-                    http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token<br><br>
+                    https://iproject35.icasites.nl/upload/?email=$email&token=$token<br><br>
                     
                     Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.<br><br>
                     

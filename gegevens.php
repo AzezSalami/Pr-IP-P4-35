@@ -7,6 +7,9 @@
 
 <?php
 require "includes/header.php";
+if(!isset($_SESSION['username'])){
+    echo '<script>window.location.replace("index.php");</script>';
+}
 ?>
 
 <main>
