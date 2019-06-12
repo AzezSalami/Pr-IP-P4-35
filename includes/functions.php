@@ -20,10 +20,12 @@ function cleanUpUserInput($input)
 
 function connectToDatabase()
 {
-    $hostname = "51.38.112.111";
-    $databasename = "groep35test3";
-    $username = "sa";
-    $password = "Hoi123!!";
+
+    $hostname = "mssql.iproject.icasites.nl";
+    $databasename = "iproject35";
+    $username = "iproject35";
+    $password = file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/../iprojectconfig.txt");
+
     global $pdo;
 
     try {
@@ -739,15 +741,15 @@ function createAuction()
             }
                     try {
 
-                        $sort_number = $pdo->query("SELECT COUNT(*) as sort_number FROM groep35test3.dbo.TBL_Resource WHERE item = " . $item . " GROUP BY item")->fetch()['sort_number'];
-                        $statement = "
-                                          INSERT INTO groep35test3.dbo.TBL_Resource (ITEM, [FILE], MEDIA_TYPE, sort_number) VALUES (
-                                            " . $item . ",
-                                            (SELECT * FROM OPENROWSET(BULK N'" . realpath ($_FILES['image']["tmp_name"]) . "', SINGLE_BLOB) as BLOB),
-                                            'image/jpg',
-                                            " . ($sort_number ? $sort_number : 0) . "
-                                        )";
-                        $pdo->exec($statement);
+//                        $sort_number = $pdo->query("SELECT COUNT(*) as sort_number FROM TBL_Resource WHERE item = " . $item . " GROUP BY item")->fetch()['sort_number'];
+//                        $statement = "
+//                                          INSERT INTO TBL_Resource (ITEM, [FILE], MEDIA_TYPE, sort_number) VALUES (
+//                                            " . $item . ",
+//                                            (SELECT * FROM OPENROWSET(BULK N'" . realpath ($_FILES['image']["tmp_name"]) . "', SINGLE_BLOB) as BLOB),
+//                                            'image/jpg',
+//                                            " . ($sort_number ? $sort_number : 0) . "
+//                                        )";
+//                        $pdo->exec($statement);
 //                        $img = addslashes(file_get_contents($_FILES['image']["tmp_name"]));
 //                        //echo "<br>" . ;
 //                        $img = iconv(mb_detect_encoding($img), 'UTF-8//IGNORE', $img);

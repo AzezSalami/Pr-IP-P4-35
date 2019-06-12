@@ -63,8 +63,8 @@ require "includes/header.php";
 
 
         $bidquery = $pdo->prepare("select top 5 *
-from groep35test2.dbo.TBL_Bid B
-    full join groep35test2.dbo.TBL_User U
+from TBL_Bid B
+    full join TBL_User U
         on B.[user] = U.[user]
 where (B.[user] is null or U.is_blocked = 0) and auction = $auctionid
 ORDER BY amount DESC");
@@ -80,8 +80,8 @@ ORDER BY amount DESC");
 
         //$highestBidQuery = $pdo->prepare("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
         $highestBidQuery = $pdo->prepare("select top 1 *
-from groep35test2.dbo.TBL_Bid B
-    full join groep35test2.dbo.TBL_User U
+from TBL_Bid B
+    full join TBL_User U
         on B.[user] = U.[user]
 where (B.[user] is not null and U.is_blocked = 0) and auction = $auctionid order by amount desc");
         $highestBidQuery->execute(array($auctionid));
