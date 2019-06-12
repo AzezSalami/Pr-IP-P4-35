@@ -698,56 +698,58 @@ function createAuction()
         if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address) || empty($rubric_post)) {
             return "Alle velden zijn verplicht";
         } else {
-
             if (is_array($rubric_post)) {
                 $rubric = end($rubric_post);
             } else {
                 $rubric = $rubric_post;
             }
-            try {
-                loadPlaces();
-                global $places;
-                $result = $places->search($address);
-                $coords = $result['hits'][0]['_geoloc'];
-                $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1, geolocation) VALUES(?,?,?,?,?,?,geography::Point(" . $coords['lat'] . ", " . $coords['lng'] . ", 4326))");
-                $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
-            } catch (PDOException $e) {
-                echo $e;
-            }
-            $item = "";
-            try {
-                $item = $pdo->lastInsertId();
-            } catch (PDOException $e) {
-                echo $e;
-            }
-            try {
-                $rubricquery = $pdo->prepare("INSERT INTO TBL_Item_In_Rubric( item ,rubric) VALUES(?,?)");
-                $rubricquery->execute(array($item, $rubric));
-            } catch (PDOException $e) {
-                echo $e;
-            }
-            try {
-                $auctionquery = $pdo->prepare("INSERT INTO TBL_Auction( seller, item ,moment_end , is_promoted) VALUES(:seller,:item,GETDATE() + DAY(:duration), :is_promoted)");
-                $duration = (int)$duration;
-                $auctionquery->bindParam(':duration', $duration, PDO::PARAM_INT);
-                $auctionquery->bindParam(':seller', $seller, PDO::PARAM_STR);
-                $auctionquery->bindParam(':item', $item, PDO::PARAM_INT);
-                $auctionquery->bindParam(':is_promoted', $is_promoted, PDO::PARAM_BOOL);
-                $auctionquery->execute();
-            } catch (PDOException $e) {
-                echo $e;
-            }
-                    try {
+            if($shipping_cost < 0 || $price_start< 0) {
+                return "negatieve waarde is niet toegestaan";
+            }else{
+                try {
+                    loadPlaces();
+                    global $places;
+                    $result = $places->search($address);
+                    $coords = $result['hits'][0]['_geoloc'];
+                    $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1, geolocation) VALUES(?,?,?,?,?,?,geography::Point(" . $coords['lat'] . ", " . $coords['lng'] . ", 4326))");
+                    $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
+                } catch (PDOException $e) {
+                    echo $e;
+                }
+                $item = "";
+                try {
+                    $item = $pdo->lastInsertId();
+                } catch (PDOException $e) {
+                    echo $e;
+                }
+                try {
+                    $rubricquery = $pdo->prepare("INSERT INTO TBL_Item_In_Rubric( item ,rubric) VALUES(?,?)");
+                    $rubricquery->execute(array($item, $rubric));
+                } catch (PDOException $e) {
+                    echo $e;
+                }
+                try {
+                    $auctionquery = $pdo->prepare("INSERT INTO TBL_Auction( seller, item ,moment_end , is_promoted) VALUES(:seller,:item,GETDATE() + DAY(:duration), :is_promoted)");
+                    $duration = (int)$duration;
+                    $auctionquery->bindParam(':duration', $duration, PDO::PARAM_INT);
+                    $auctionquery->bindParam(':seller', $seller, PDO::PARAM_STR);
+                    $auctionquery->bindParam(':item', $item, PDO::PARAM_INT);
+                    $auctionquery->bindParam(':is_promoted', $is_promoted, PDO::PARAM_BOOL);
+                    $auctionquery->execute();
+                } catch (PDOException $e) {
+                    echo $e;
+                }
+                try {
 
-                        $sort_number = $pdo->query("SELECT COUNT(*) as sort_number FROM groep35test3.dbo.TBL_Resource WHERE item = " . $item . " GROUP BY item")->fetch()['sort_number'];
-                        $statement = "
+                    $sort_number = $pdo->query("SELECT COUNT(*) as sort_number FROM groep35test3.dbo.TBL_Resource WHERE item = " . $item . " GROUP BY item")->fetch()['sort_number'];
+                    $statement = "
                                           INSERT INTO groep35test3.dbo.TBL_Resource (ITEM, [FILE], MEDIA_TYPE, sort_number) VALUES (
                                             " . $item . ",
-                                            (SELECT * FROM OPENROWSET(BULK N'" . realpath ($_FILES['image']["tmp_name"]) . "', SINGLE_BLOB) as BLOB),
+                                            (SELECT * FROM OPENROWSET(BULK N'" . realpath($_FILES['image']["tmp_name"]) . "', SINGLE_BLOB) as BLOB),
                                             'image/jpg',
                                             " . ($sort_number ? $sort_number : 0) . "
                                         )";
-                        $pdo->exec($statement);
+                    $pdo->exec($statement);
 //                        $img = addslashes(file_get_contents($_FILES['image']["tmp_name"]));
 //                        //echo "<br>" . ;
 //                        $img = iconv(mb_detect_encoding($img), 'UTF-8//IGNORE', $img);
@@ -769,9 +771,10 @@ function createAuction()
 //                        $resourcequery->bindParam(':item', $item, PDO::PARAM_INT);
 //                        $resourcequery->bindParam(':media_type', $media_type, PDO::PARAM_STR);
 //                        $resourcequery->execute();
-                    } catch (PDOException $e) {
-                        echo $e;
-                    }
+                } catch (PDOException $e) {
+                    echo $e;
+                }
+            }
             global $auctionCreated;
             $auctionCreated = true;
             return "<p style=\"color: green;\"> De veiling is succesvol aangemaakt</P>";
