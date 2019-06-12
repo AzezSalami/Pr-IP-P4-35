@@ -640,7 +640,7 @@ function placeNewBid($auctionid, $newPrice, $username)
 where (B.[user] is not null and U.is_blocked = 0) and auction = ?");
         $query->execute(array($auctionid));
         $sameBids = $query->fetch();
-        if (empty($sameBids)) {
+        if (is_null($sameBids['amount'])) {
 
             $priceQuery = $pdo->prepare("select price_start from TBL_item where item=(SELECT item FROM TBL_Auction WHERE auction = ?)");
             $priceQuery->execute(array($auctionid));
@@ -648,7 +648,6 @@ where (B.[user] is not null and U.is_blocked = 0) and auction = ?");
 
             $sameBids = array('amount' => $start_price);
         }
-
         if ($sameBids['amount'] < $newPrice) {
             if ($sameBids['amount'] < 1) {
                 $buttonvalue = 0.50;
@@ -664,7 +663,6 @@ where (B.[user] is not null and U.is_blocked = 0) and auction = ?");
             if (((int)$newPrice - (int)$sameBids['amount']) == $buttonvalue || (int)$newPrice - (int)$sameBids['amount'] == $buttonvalue * 2 || (int)$newPrice - (int)$sameBids['amount'] == $buttonvalue * 3) {
                 $query = $pdo->prepare("insert into TBL_Bid values (?, ?, ?, getDate())");
                 $query->execute(array($auctionid, $newPrice, $username));
-            } else {
             }
         }
 
