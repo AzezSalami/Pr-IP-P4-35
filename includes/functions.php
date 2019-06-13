@@ -706,7 +706,7 @@ function createAuction()
                 $rubric = $rubric_post;
             }
             if($shipping_cost < 0 || $price_start< 0) {
-                return "negatieve waarde is niet toegestaan";
+                return "Negatieve bedragen zijn niet toegestaan";
             }else{
                 try {
                     loadPlaces();
