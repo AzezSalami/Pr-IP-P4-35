@@ -1,4 +1,7 @@
 
+<!--/*    N. Eenink, A. Salami, I. Hamoudi            */-->
+<!--/*    M. Vermeulen, D. Haverkamp & J. van Vugt    */-->
+<!--/*    HAN ICA HBO ICT - IProject, 13-06-2019      */-->
 
 <?php
 require_once "../includes/functions.php";

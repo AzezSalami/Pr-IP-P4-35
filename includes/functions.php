@@ -1,3 +1,10 @@
+
+<!--/*        -->
+<!--N. Eenink, A. Salami, I. Hamoudi-->
+<!--M. Vermeulen, D. Haverkamp & J. van Vugt-->
+<!--HAN ICA HBO ICT - IProject, 13-06-2019            -->
+<!--*/-->
+
 <?php
 set_time_limit(0);
 //error_reporting(0);
@@ -677,15 +684,8 @@ where (B.[user] is not null and U.is_blocked = 0) and auction = ?");
 function createAuction()
 {
         if (isset($_POST['createAuction'])) {
-            // var_dump($_POST);
             global $pdo;
 
-//            echo $price_start;
-
-//            if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
-//                echo "Geen geldig beeld";
-//            } else {
-//                $media_type = getimagesize($_FILES['image']["tmp_name"])["mime"];
         if (empty(cleanUpUserInput($_POST['name'])) || empty(cleanUpUserInput($_POST['description'])) || empty($_POST['shipping_instructions']) || empty(cleanUpUserInput($_POST['location'])) || empty($_POST['rubriek'])) {
             return "Alle velden zijn verplicht";
         } else {
@@ -752,27 +752,6 @@ function createAuction()
                                             " . ($sort_number ? $sort_number : 0) . "
                                         )";
                     $pdo->exec($statement);
-//                        $img = addslashes(file_get_contents($_FILES['image']["tmp_name"]));
-//                        //echo "<br>" . ;
-//                        $img = iconv(mb_detect_encoding($img), 'UTF-8//IGNORE', $img);
-//                        $data = base64_encode($img);
-//
-//                        $blob = mb_convert_encoding(fopen($_FILES['image']["tmp_name"], 'rb'), 'UTF-16', 'UTF-8');
-//
-//                        $hex = unpack("H*", file_get_contents($_FILES['image']["tmp_name"]));
-//                        $hex = current($hex);
-//                        $chars = pack("H*", $hex);
-//                        //echo base64_encode($chars);
-//
-//                        $imgData = addslashes(file_get_contents($_FILES['image']['tmp_name']));
-//                        $imageProperties = getimageSize($_FILES['image']['tmp_name']);
-//
-//
-//                        $resourcequery = $pdo->prepare("INSERT INTO TBL_Resource(item , [file] ,media_type, sort_number) VALUES(:item, CONVERT( VARBINARY(MAX),:image) ,:media_type,0)");
-//                        $resourcequery->bindParam(':image', $imgData, PDO::PARAM_LOB);
-//                        $resourcequery->bindParam(':item', $item, PDO::PARAM_INT);
-//                        $resourcequery->bindParam(':media_type', $media_type, PDO::PARAM_STR);
-//                        $resourcequery->execute();
                 } catch (PDOException $e) {
                     echo $e;
                 }
