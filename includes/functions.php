@@ -679,10 +679,20 @@ function createAuction()
         if (isset($_POST['createAuction'])) {
             // var_dump($_POST);
             global $pdo;
+
+//            echo $price_start;
+
+//            if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
+//                echo "Geen geldig beeld";
+//            } else {
+//                $media_type = getimagesize($_FILES['image']["tmp_name"])["mime"];
+        if (empty(cleanUpUserInput($_POST['name'])) || empty(cleanUpUserInput($_POST['description'])) || empty($_POST['shipping_instructions']) || empty(cleanUpUserInput($_POST['location'])) || empty($_POST['rubriek'])) {
+            return "Alle velden zijn verplicht";
+        } else {
             $name = cleanUpUserInput($_POST['name']);
             $description = cleanUpUserInput($_POST['description']);
             $price_start = cleanUpUserInput($_POST['price_start']);
-            $shipping_instructions = (cleanUpUserInput($_POST['shipping_instructions']) == 'Verzenden' ? 'Verzenden' : 'Ophalen');
+            $shipping_instructions = (isset($_POST['shipping_instructions']) && cleanUpUserInput($_POST['shipping_instructions']) == 'Verzenden' ? 'Verzenden' : 'Ophalen');
             $shipping_cost = ($shipping_instructions == "Verzenden" && !empty(cleanUpUserInput($_POST['shipping_cost'])) ? cleanUpUserInput($_POST['shipping_cost']) : 0);
             $durationOptions = array(1, 3, 5, 7, 10);
             $duration = (in_array(cleanUpUserInput($_POST['duration']), $durationOptions) ? cleanUpUserInput($_POST['duration']) : 0);
@@ -690,15 +700,6 @@ function createAuction()
             $seller = $_SESSION["username"];
             $is_promoted = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
             $rubric_post = cleanUpUserInput((isset($_POST['rubriek'])?$_POST['rubriek']:null));
-//            echo $price_start;
-
-//            if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
-//                echo "Geen geldig beeld";
-//            } else {
-//                $media_type = getimagesize($_FILES['image']["tmp_name"])["mime"];
-        if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address) || empty($rubric_post)) {
-            return "Alle velden zijn verplicht";
-        } else {
             if (is_array($rubric_post)) {
                 $rubric = end($rubric_post);
             } else {

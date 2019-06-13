@@ -52,7 +52,7 @@ if (isset($_SESSION['username']) == 0) {
                             <label for="name">Titel</label>
                         </div>
                         <div class="form-label-group">
-                            <input type="number" class="form-control" name="price_start" id="price_start"
+                            <input type="number" step="0.01" class="form-control" name="price_start" id="price_start"
                                    placeholder="prijsStart"' . (!$auctionCreated && isset($_POST['price_start']) ? 'value=\'' . cleanUpUserInput($_POST['price_start']) . '\'' : "") . '>
                             <label for="price_start">Start prijs</label>
                         </div>
@@ -85,7 +85,7 @@ if (isset($_SESSION['username']) == 0) {
                             </select>
                         </div>
                         <div class="form-label-group d-none">
-                            <input type="number" class="form-control" name="shipping_cost" id="shipping_cost"
+                            <input type="number" step="0.01" class="form-control" name="shipping_cost" id="shipping_cost"
                                    placeholder="verzendkosten" ' . (!$auctionCreated && isset($_POST['shipping_cost']) ? 'value=\'' . cleanUpUserInput($_POST['shipping_cost']) . '\'' : "") . '>
                             <label for="shipping_cost">Verzendkosten</label>
                         </div>
