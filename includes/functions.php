@@ -901,7 +901,7 @@ function blockUser()
     if (isset($_POST['blockUser'])) {
         if (isset($_POST['blockUsername'])) {
             global $pdo;
-            $username = cleanUpUserInput($_POST['blockUsername']);
+            $username = strtolower(cleanUpUserInput($_POST['blockUsername']));
             $sql = $pdo->prepare("SELECT [user] FROM TBL_User WHERE [user] = ?");
             $sql->execute(array($username));
             $result = $sql->fetch();
