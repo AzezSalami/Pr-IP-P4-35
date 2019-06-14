@@ -1,3 +1,10 @@
+
+<!--/*-->
+<!--N. Eenink, A. Salami, I. Hamoudi-->
+<!--M. Vermeulen, D. Haverkamp & J. van Vugt-->
+<!--HAN ICA HBO ICT - IProject, 13-06-2019-->
+<!--*/-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +14,9 @@
 
 <?php
 require "includes/header.php";
+if(!isset($_SESSION['username'])){
+    echo '<script>window.location.replace("index.php");</script>';
+}
 ?>
 
 <main>
@@ -77,7 +87,7 @@ require "includes/header.php";
                             <label for="telephone_number">Telefoonnummer</label>
                             <input class="form-control" placeholder="<?php placeholderAccountData("phone_number"); ?>"
                                    type="text"
-                                   name="telephone_number" id="telephone_number" maxlength="13" pattern="[0-9]{13}" max="9999999999999">
+                                   name="telephone_number" id="telephone_number" pattern="(([\+]\d{2})|(0{2}\d{2})|(0)){1}\d{9}">
 
                         </div>
                     </div>

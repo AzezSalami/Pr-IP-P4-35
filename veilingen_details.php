@@ -1,3 +1,10 @@
+
+<!--/*-->
+<!--N. Eenink, A. Salami, I. Hamoudi-->
+<!--M. Vermeulen, D. Haverkamp & J. van Vugt-->
+<!--HAN ICA HBO ICT - IProject, 13-06-2019-->
+<!--*/-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +22,7 @@ require "includes/header.php";
 
         global $pdo;
 
-        if(isset($_SESSION['username'])) {
+        if (isset($_SESSION['username'])) {
             $username = $_SESSION['username'];
         }
 
@@ -41,7 +48,7 @@ require "includes/header.php";
         $isBlockedData = $isBlockedQuery->fetch();
         $isBlocked = (int)$isBlockedData['is_blocked'];
 
-        if($isBlocked == 1) {
+        if ($isBlocked == 1) {
             $isBlocked = "Geblokkeerd";
         } else {
             $isBlocked = "Geverifieerd";
@@ -63,14 +70,14 @@ require "includes/header.php";
 
 
         $bidquery = $pdo->prepare("select top 5 *
-from groep35test2.dbo.TBL_Bid B
-    full join groep35test2.dbo.TBL_User U
+from TBL_Bid B
+    full join TBL_User U
         on B.[user] = U.[user]
-where (B.[user] is null or U.is_blocked = 0) and auction = $auctionid
+where U.is_blocked = 0 and auction = ?
 ORDER BY amount DESC");
+
         $bidquery->execute(array($auctionid));
         $biddata = $bidquery->fetchAll();
-
 
         if (isset($_POST['bidbutton'])) {
             $newPrice = $_POST['bidbutton'];
@@ -78,20 +85,16 @@ ORDER BY amount DESC");
             $bidquery->execute(array($auctionid));
         }
 
-        //$highestBidQuery = $pdo->prepare("SELECT top 1 amount FROM TBL_Bid WHERE auction = ? and [user] is not null order by amount DESC");
-        $highestBidQuery = $pdo->prepare("select top 1 *
-from groep35test2.dbo.TBL_Bid B
-    full join groep35test2.dbo.TBL_User U
+        $highestBidQuery = $pdo->prepare("select max(amount) as amount from TBL_Bid B
+    full join TBL_User U
         on B.[user] = U.[user]
-where (B.[user] is not null and U.is_blocked = 0) and auction = $auctionid order by amount desc");
+where (B.[user] is not null and U.is_blocked = 0) and auction = ?");
         $highestBidQuery->execute(array($auctionid));
-        $highestBidData = $highestBidQuery->fetchAll();
+        $highestBidData = $highestBidQuery->fetch();
 
-        if (sizeof($highestBidData) == null) {
+        if (is_null($highestBidData['amount'])) {
             $itemprice = $itempricestart;
         } else {
-            $highestBidQuery->execute(array($auctionid));
-            $highestBidData = $highestBidQuery->fetch();
             $itemprice = (float)$highestBidData['amount'];
         }
 
@@ -240,10 +243,9 @@ where (B.[user] is not null and U.is_blocked = 0) and auction = $auctionid order
 
         if ($auctiondata['is_closed'] == !0) {
             echo '<p style="color:red">Deze veiling is gesloten, bieden is daarom niet mogelijk.</p>';
-        } else if($isBlocked == "Geblokkeerd") {
+        } else if ($isBlocked == "Geblokkeerd") {
             echo '<p style="color:red">Deze veiling is geblokkeerd, bieden is daarom niet mogelijk.</p>';
-        }
-            else {
+        } else {
 
             if (isset($_SESSION['username'])) {
                 echo "

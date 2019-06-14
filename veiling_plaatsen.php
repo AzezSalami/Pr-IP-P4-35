@@ -1,7 +1,15 @@
+
+<!--/*-->
+<!--N. Eenink, A. Salami, I. Hamoudi-->
+<!--M. Vermeulen, D. Haverkamp & J. van Vugt-->
+<!--HAN ICA HBO ICT - IProject, 13-06-2019-->
+<!--*/-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php include 'includes/head.html'; ?>
+    <script src="JS/veiling_maken.js"></script>
     <link rel="stylesheet" href="CSS/veiling-maken.css" type="text/css">
 </head>
 <body>
@@ -51,7 +59,7 @@ if (isset($_SESSION['username']) == 0) {
                             <label for="name">Titel</label>
                         </div>
                         <div class="form-label-group">
-                            <input type="number" class="form-control" name="price_start" id="price_start"
+                            <input type="number" step="0.01" class="form-control" name="price_start" id="price_start"
                                    placeholder="prijsStart"' . (!$auctionCreated && isset($_POST['price_start']) ? 'value=\'' . cleanUpUserInput($_POST['price_start']) . '\'' : "") . '>
                             <label for="price_start">Start prijs</label>
                         </div>
@@ -84,7 +92,7 @@ if (isset($_SESSION['username']) == 0) {
                             </select>
                         </div>
                         <div class="form-label-group d-none">
-                            <input type="number" class="form-control" name="shipping_cost" id="shipping_cost"
+                            <input type="number" step="0.01" class="form-control" name="shipping_cost" id="shipping_cost"
                                    placeholder="verzendkosten" ' . (!$auctionCreated && isset($_POST['shipping_cost']) ? 'value=\'' . cleanUpUserInput($_POST['shipping_cost']) . '\'' : "") . '>
                             <label for="shipping_cost">Verzendkosten</label>
                         </div>
@@ -111,7 +119,7 @@ if (isset($_SESSION['username']) == 0) {
                             <select class="form-control" name="rubriek" id="rubriek" onchange="showRubric(this.value, this)">
                                 <option selected disabled value="">Rubriek</option>';
 
-        $mainRubricQuery = $pdo->prepare("select DISTINCT rubric,[name] from TBL_Rubric WHERE super=-1 AND phased_out != 1");
+        $mainRubricQuery = $pdo->prepare("select DISTINCT rubric,[name] from TBL_Rubric WHERE super=-1 AND (phased_out = 0 OR phased_out IS null)");
         $mainRubricQuery->execute();
         $mainRubric = $mainRubricQuery->fetchAll();
 
@@ -153,7 +161,7 @@ if (isset($_SESSION['username']) == 0) {
                                            aria-describedby="image">Kies bestand</label>
                                 </div>
                             </div>
-                            <img id="img-upload" alt="uw afbeelding"/>
+                            <img id="img-upload" alt=""/>
                         </div>
                     </div>
                 </div>
