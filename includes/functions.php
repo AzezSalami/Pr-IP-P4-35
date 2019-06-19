@@ -21,10 +21,15 @@ function cleanUpUserInput($input)
 function connectToDatabase()
 {
 
-    $hostname = "mssql.iproject.icasites.nl";
-    $databasename = "iproject35";
-    $username = "iproject35";
-    $password = file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/../iprojectconfig.txt");
+//    $hostname = "mssql.iproject.icasites.nl";
+//    $databasename = "iproject35";
+//    $username = "iproject35";
+//    $password = file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/../iprojectconfig.txt");
+
+    $hostname = "localhost";
+    $databasename = "groep35test3";
+    $username = "sa";
+    $password = "gmuP7xt";
 
     global $pdo;
 
@@ -136,6 +141,8 @@ function search($amount = 0, $promoted_only = false)
 
         $searchArray = explode(" ", (isset($_GET['search']) ? cleanUpUserInput($_GET['search']) : ""));
 
+        $query.="DATEDIFF(second, GETDATE(), MOMENT_END) > 73 AND ";
+
         foreach ($searchArray as $key => $word) {
             $query .= "CONCAT(name, ' ', description) LIKE ?";
             if ($key < count($searchArray) - 1) {
@@ -143,7 +150,7 @@ function search($amount = 0, $promoted_only = false)
             }
             $filters[] = "%$word%";
         }
-        $query .= " ORDER BY moment_end DESC
+        $query .= " ORDER BY moment_end
                     OFFSET " . (int)($amount > 0 ? $amount * ((isset($_GET['page']) && ($page = cleanUpUserInput($_GET['page'])) > 1 ? $page : 1) - 1) : "0") . " ROWS";
         $query .= ($amount > 0 ? " FETCH FIRST $amount ROWS ONLY" : "");
         //echo $query;
@@ -324,10 +331,10 @@ function register()
                     Beste heer of mevrouw $lastname,<br><br>
                     
                     Klik op de link hieronder om je registratie te voltooien.<br>
-                    <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om je registratie te voltooien</a><br><br>
+                    <a href='http://localhost/iproject/index.php?email=$email&token=$token'>Klik hier om je registratie te voltooien</a><br><br>
                     
                     Of plak onderstaande link in je browser:<br>
-                    http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token<br><br>
+                    http://localhost/iproject/index.php?email=$email&token=$token<br><br>
                     
                     Als je geen account aan heeft gemaakt op onze website, kun je deze e-mail negeren.<br><br>
                     
@@ -589,10 +596,10 @@ function sendVerificatiecodeEmail($email)
                     Geachte heer of mevrouw $lastname,<br><br>
                     
                     Klik op de link hieronder om je registratie te voltooien.<br>
-                    <a href='http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token'>Klik hier om je registratie te voltooien</a><br><br>
+                    <a href='http://localhost/iproject/index.php?email=$email&token=$token'>Klik hier om je registratie te voltooien</a><br><br>
                     
                     Of plak onderstaande link in je browser:<br>
-                    http://localhost/Pr-IP-P4-35/index.php?email=$email&token=$token<br><br>
+                    http://localhost/iproject/index.php?email=$email&token=$token<br><br>
                     
                     Als u geen account aan heeft gemaakt op onze website, kunt u deze e-mail negeren.<br><br>
                     
@@ -739,36 +746,15 @@ function createAuction()
             }
                     try {
 
-//                        $sort_number = $pdo->query("SELECT COUNT(*) as sort_number FROM TBL_Resource WHERE item = " . $item . " GROUP BY item")->fetch()['sort_number'];
-//                        $statement = "
-//                                          INSERT INTO TBL_Resource (ITEM, [FILE], MEDIA_TYPE, sort_number) VALUES (
-//                                            " . $item . ",
-//                                            (SELECT * FROM OPENROWSET(BULK N'" . realpath ($_FILES['image']["tmp_name"]) . "', SINGLE_BLOB) as BLOB),
-//                                            'image/jpg',
-//                                            " . ($sort_number ? $sort_number : 0) . "
-//                                        )";
-//                        $pdo->exec($statement);
-//                        $img = addslashes(file_get_contents($_FILES['image']["tmp_name"]));
-//                        //echo "<br>" . ;
-//                        $img = iconv(mb_detect_encoding($img), 'UTF-8//IGNORE', $img);
-//                        $data = base64_encode($img);
-//
-//                        $blob = mb_convert_encoding(fopen($_FILES['image']["tmp_name"], 'rb'), 'UTF-16', 'UTF-8');
-//
-//                        $hex = unpack("H*", file_get_contents($_FILES['image']["tmp_name"]));
-//                        $hex = current($hex);
-//                        $chars = pack("H*", $hex);
-//                        //echo base64_encode($chars);
-//
-//                        $imgData = addslashes(file_get_contents($_FILES['image']['tmp_name']));
-//                        $imageProperties = getimageSize($_FILES['image']['tmp_name']);
-//
-//
-//                        $resourcequery = $pdo->prepare("INSERT INTO TBL_Resource(item , [file] ,media_type, sort_number) VALUES(:item, CONVERT( VARBINARY(MAX),:image) ,:media_type,0)");
-//                        $resourcequery->bindParam(':image', $imgData, PDO::PARAM_LOB);
-//                        $resourcequery->bindParam(':item', $item, PDO::PARAM_INT);
-//                        $resourcequery->bindParam(':media_type', $media_type, PDO::PARAM_STR);
-//                        $resourcequery->execute();
+                        $sort_number = $pdo->query("SELECT COUNT(*) as sort_number FROM TBL_Resource WHERE item = " . $item . " GROUP BY item")->fetch()['sort_number'];
+                        $statement = "
+                                          INSERT INTO TBL_Resource (ITEM, [FILE], MEDIA_TYPE, sort_number) VALUES (
+                                            " . $item . ",
+                                            (SELECT * FROM OPENROWSET(BULK N'" . realpath ($_FILES['image']["tmp_name"]) . "', SINGLE_BLOB) as BLOB),
+                                            'image/jpg',
+                                            " . ($sort_number ? $sort_number : 0) . "
+                                        )";
+                        $pdo->exec($statement);
                     } catch (PDOException $e) {
                         echo $e;
                     }

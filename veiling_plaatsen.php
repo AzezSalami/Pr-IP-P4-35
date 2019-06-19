@@ -14,9 +14,9 @@ global $pdo;
 
 if (isset($_SESSION['username']) == 0) {
 
-    echo '<div class="notloggedin"><br><h1>Verkoper worden</h1>
+    echo '<main><div class="notloggedin"><br><h1>Verkoper worden</h1>
                 <p>Om een verkoper te worden moet je eerst een account aanmaken, lees hierover meer op onze 
-                <a href="hulp.php">hulp</a> pagina.</p><br></div>';
+                <a href="hulp.php">hulp</a> pagina.</p><br></div></main>';
 
 } else {
 
@@ -142,7 +142,7 @@ if (isset($_SESSION['username']) == 0) {
                                 </div>
                             </div>
                             <input class="form-control" aria-label="With textarea"
-                                   placeholder="Wilt u deze veiling promoten?" readonly>
+                                   placeholder="Wilt u deze veiling promoten? (€5,-)" readonly>
                         </div>
                     </div>
                     <div class="col-lg-5">

@@ -20,6 +20,9 @@ body {
     background-color: #EEEEEE;
 }
 
+main{
+    min-height: calc(100vh - 11.5rem);
+}
 
 /* COLORS */
 
@@ -90,7 +93,9 @@ body {
 
 
 /* FOOTER */
-
+footer{
+    height:3.5rem;
+}
 .page-footer {
     background-color: #FFAD4F;
     color: white;
@@ -380,4 +385,8 @@ body {
 
 .data-form{
     min-height: 80.2vh;
+}
+input[type = checkbox]{
+    width:0.9em;
+    height:0.9em;
 }
