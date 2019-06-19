@@ -1,3 +1,10 @@
+
+<!--/*        -->
+<!--N. Eenink, A. Salami, I. Hamoudi-->
+<!--M. Vermeulen, D. Haverkamp & J. van Vugt-->
+<!--HAN ICA HBO ICT - IProject, 13-06-2019            -->
+<!--*/-->
+
 <?php
 set_time_limit(0);
 //error_reporting(0);
@@ -26,10 +33,12 @@ function connectToDatabase()
 //    $username = "iproject35";
 //    $password = file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/../iprojectconfig.txt");
 
-    $hostname = "localhost";
+    $hostname = "51.38.112.111";
     $databasename = "groep35test3";
     $username = "sa";
-    $password = "gmuP7xt";
+    $password = "Hoi123!!";
+
+
 
     global $pdo;
 
@@ -475,21 +484,21 @@ function updateAccountData()
             }
         }
         if (!empty($telephone_number)) {
-            if (strlen($telephone_number) != 10 || !preg_match("/([0-9]){10}/", $telephone_number)) {
-                echo "Een telefonnummer moet uit minimaal 10 cijfers bestaan<br>";
+            if (!preg_match("/(([\+]\d{2})|(0{2}\d{2})|(0)){1}\d{9}/", $telephone_number)) {
+                echo "Het ingevulde telefoonnummer is incorrect<br>";
             } else {
                 try {
                     $sql = "update TBL_Phone SET phone_number = :telephone_number WHERE [user] = :username";
                     $query = $pdo->prepare($sql);
                     $query->execute(array(':telephone_number' => $telephone_number, ':username' => $username));
-                    echo '<p class="text-success">jouw gegevens zijn geüpdatet </p>';
+                    echo '<p class="text-success">Jouw telefoonnummer is geüpdatet </p>';
                 } catch (PDOException $e) {
                     echo $e;
                 }
             }
         }
         if (!empty($firstname) || !empty($lastname) || !empty($address) || $password_check) {
-            echo '<p class="text-success">jouw gegevens zijn geüpdatet</p>';
+            echo '<p class="text-success">Jouw gegevens zijn geüpdatet</p>';
             $sql = "update TBL_User SET " . $values . " WHERE [user] = '$username'";
             $query = $pdo->prepare($sql);
             $query->execute($array);
@@ -537,10 +546,10 @@ function sendResetPasswordEmail($email)
                     Geachte heer of mevrouw $lastname,<br><br>
 
                     Klik op de link hieronder om je wachtwoord opnieuw in te stellen.<br>
-                    <a href='http://localhost/iproject/wachtwoordresetten.php?email=$email&verification=$token'>Klik hier om je wachtwoord opnieuw in te stellen</a><br><br>
+                    <a href='https://iproject35.icasites.nl/upload/wachtwoordresetten.php?email=$email&verification=$token'>Klik hier om je wachtwoord opnieuw in te stellen</a><br><br>
 
                     Of plak onderstaande link in je browser:
-                    http://localhost/iproject/wachtwoordresetten.php?email=$email&verification=$token<br>
+                    https://iproject35.icasites.nl/upload/wachtwoordresetten.php?email=$email&verification=$token<br>
                     <br><br>
 
                     Als je geen account aan hebt gemaakt op onze website, kun je deze e-mail negeren.<br><br>
@@ -683,12 +692,15 @@ where (B.[user] is not null and U.is_blocked = 0) and auction = ?");
 function createAuction()
 {
         if (isset($_POST['createAuction'])) {
-            // var_dump($_POST);
             global $pdo;
+
+        if (empty(cleanUpUserInput($_POST['name'])) || empty(cleanUpUserInput($_POST['description'])) || empty($_POST['shipping_instructions']) || empty(cleanUpUserInput($_POST['location'])) || empty($_POST['rubriek'])) {
+            return "Alle velden zijn verplicht";
+        } else {
             $name = cleanUpUserInput($_POST['name']);
             $description = cleanUpUserInput($_POST['description']);
             $price_start = cleanUpUserInput($_POST['price_start']);
-            $shipping_instructions = (cleanUpUserInput($_POST['shipping_instructions']) == 'Verzenden' ? 'Verzenden' : 'Ophalen');
+            $shipping_instructions = (isset($_POST['shipping_instructions']) && cleanUpUserInput($_POST['shipping_instructions']) == 'Verzenden' ? 'Verzenden' : 'Ophalen');
             $shipping_cost = ($shipping_instructions == "Verzenden" && !empty(cleanUpUserInput($_POST['shipping_cost'])) ? cleanUpUserInput($_POST['shipping_cost']) : 0);
             $durationOptions = array(1, 3, 5, 7, 10);
             $duration = (in_array(cleanUpUserInput($_POST['duration']), $durationOptions) ? cleanUpUserInput($_POST['duration']) : 0);
@@ -696,61 +708,54 @@ function createAuction()
             $seller = $_SESSION["username"];
             $is_promoted = cleanUpUserInput((isset($_POST['is_mobile'])) ? $_POST['is_mobile'] : 0);
             $rubric_post = cleanUpUserInput((isset($_POST['rubriek'])?$_POST['rubriek']:null));
-//            echo $price_start;
-
-//            if (getimagesize($_FILES['image']["tmp_name"]) == false || getimagesize($_FILES['image']["tmp_name"])["mime"] == "image/jpg") {
-//                echo "Geen geldig beeld";
-//            } else {
-//                $media_type = getimagesize($_FILES['image']["tmp_name"])["mime"];
-        if (empty($name) || empty($description) || empty($shipping_instructions) || empty($address) || empty($rubric_post)) {
-            return "Alle velden zijn verplicht";
-        } else {
-
             if (is_array($rubric_post)) {
                 $rubric = end($rubric_post);
             } else {
                 $rubric = $rubric_post;
             }
-            try {
-                loadPlaces();
-                global $places;
-                $result = $places->search($address);
-                $coords = $result['hits'][0]['_geoloc'];
-                $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1, geolocation) VALUES(?,?,?,?,?,?,geography::Point(" . $coords['lat'] . ", " . $coords['lng'] . ", 4326))");
-                $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
-            } catch (PDOException $e) {
-                echo $e;
-            }
-            $item = "";
-            try {
-                $item = $pdo->lastInsertId();
-            } catch (PDOException $e) {
-                echo $e;
-            }
-            try {
-                $rubricquery = $pdo->prepare("INSERT INTO TBL_Item_In_Rubric( item ,rubric) VALUES(?,?)");
-                $rubricquery->execute(array($item, $rubric));
-            } catch (PDOException $e) {
-                echo $e;
-            }
-            try {
-                $auctionquery = $pdo->prepare("INSERT INTO TBL_Auction( seller, item ,moment_end , is_promoted) VALUES(:seller,:item,GETDATE() + DAY(:duration), :is_promoted)");
-                $duration = (int)$duration;
-                $auctionquery->bindParam(':duration', $duration, PDO::PARAM_INT);
-                $auctionquery->bindParam(':seller', $seller, PDO::PARAM_STR);
-                $auctionquery->bindParam(':item', $item, PDO::PARAM_INT);
-                $auctionquery->bindParam(':is_promoted', $is_promoted, PDO::PARAM_BOOL);
-                $auctionquery->execute();
-            } catch (PDOException $e) {
-                echo $e;
-            }
-                    try {
+            if($shipping_cost < 0 || $price_start< 0) {
+                return "Negatieve bedragen zijn niet toegestaan";
+            }else{
+                try {
+                    loadPlaces();
+                    global $places;
+                    $result = $places->search($address);
+                    $coords = $result['hits'][0]['_geoloc'];
+                    $itemquery = $pdo->prepare("INSERT INTO TBL_Item( name, description, price_start,shipping_cost ,shipping_instructions ,address_line_1, geolocation) VALUES(?,?,?,?,?,?,geography::Point(" . $coords['lat'] . ", " . $coords['lng'] . ", 4326))");
+                    $itemquery->execute(array($name, $description, $price_start, $shipping_cost, $shipping_instructions, $address));
+                } catch (PDOException $e) {
+                    echo $e;
+                }
+                $item = "";
+                try {
+                    $item = $pdo->lastInsertId();
+                } catch (PDOException $e) {
+                    echo $e;
+                }
+                try {
+                    $rubricquery = $pdo->prepare("INSERT INTO TBL_Item_In_Rubric( item ,rubric) VALUES(?,?)");
+                    $rubricquery->execute(array($item, $rubric));
+                } catch (PDOException $e) {
+                    echo $e;
+                }
+                try {
+                    $auctionquery = $pdo->prepare("INSERT INTO TBL_Auction( seller, item ,moment_end , is_promoted) VALUES(:seller,:item,GETDATE() + DAY(:duration), :is_promoted)");
+                    $duration = (int)$duration;
+                    $auctionquery->bindParam(':duration', $duration, PDO::PARAM_INT);
+                    $auctionquery->bindParam(':seller', $seller, PDO::PARAM_STR);
+                    $auctionquery->bindParam(':item', $item, PDO::PARAM_INT);
+                    $auctionquery->bindParam(':is_promoted', $is_promoted, PDO::PARAM_BOOL);
+                    $auctionquery->execute();
+                } catch (PDOException $e) {
+                    echo $e;
+                }
+                try {
 
                         $sort_number = $pdo->query("SELECT COUNT(*) as sort_number FROM TBL_Resource WHERE item = " . $item . " GROUP BY item")->fetch()['sort_number'];
                         $statement = "
                                           INSERT INTO TBL_Resource (ITEM, [FILE], MEDIA_TYPE, sort_number) VALUES (
                                             " . $item . ",
-                                            (SELECT * FROM OPENROWSET(BULK N'" . realpath ($_FILES['image']["tmp_name"]) . "', SINGLE_BLOB) as BLOB),
+                                            (SELECT * FROM OPENROWSET(BULK N'" . realpath($_FILES['image']["tmp_name"]) . "', SINGLE_BLOB) as BLOB),
                                             'image/jpg',
                                             " . ($sort_number ? $sort_number : 0) . "
                                         )";
@@ -882,7 +887,7 @@ function blockUser()
     if (isset($_POST['blockUser'])) {
         if (isset($_POST['blockUsername'])) {
             global $pdo;
-            $username = cleanUpUserInput($_POST['blockUsername']);
+            $username = strtolower(cleanUpUserInput($_POST['blockUsername']));
             $sql = $pdo->prepare("SELECT [user] FROM TBL_User WHERE [user] = ?");
             $sql->execute(array($username));
             $result = $sql->fetch();
